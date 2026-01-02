@@ -1,0 +1,142 @@
+---
+title: "Week 1 BIO144 Course Content"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction
+
+On this web page you will find the practical exercises and weekly quiz for Week 1 of BIO144.
+
+* A practical session on Thursday or Friday.
+* A weekly quiz to check your understanding.
+
+All other information for the course is on the main course web page: [BIO144 Course Information
+
+## Practical
+
+### Exercise 1
+
+During the first lecture you collected data on class reaction times.
+
+The exercise this week is for you to use R to analyse the dataset. To help, here is a nearly complete and working script of R code. It does, however, contain some deliberate errors. You'll need to find and correct these! It also contains some "???" that you need to replace with appropriate text. The errors get a bit harder as you go through the script. Good luck!
+
+Script file: [reaction_time_analysis.r](assets/scripts/reaction_time_analysis.r)
+
+Data file: <a href="https://tinyurl.com/ye255bdm" target="_blank">
+  Link to Reaction Time Dataset
+</a>
+
+
+Click on the link, and hopefully the files will be download. If they appears in your browser do `Save As...` and save them to somewhere safe on your computer. Do not add a file extension. Leave the file extension as they are. Do not open the data file in Excel or any other program.
+
+Get organised by setting up a project folder on your computer and downloading the above files into it.
+
+Then open the script in RStudio and get it working, not forgetting to think about the questions in the script, about assumptions, effect size, biological significance, statistical significance, and so on.
+
+Write a sentence about the finding. Cover statistical and practical significance. Be critical. 
+
+If you finish early and are happy with everything so far, and you want a challenge, figure out how to use RMarkdown to create a word document, html file, or pdf of your findings.
+
+
+
+
+
+
+## Weekly Quiz
+
+
+
+```{r quiz2}
+question_numeric(
+  "What is pi rounded to 2 digits?",
+  answer(3, message = "Don't forget to use the digits argument"),
+  answer(3.1, message = "Too few digits"),
+  answer(3.142, message = "Too many digits"),
+  answer(3.14, correct = TRUE),
+  allow_retry = TRUE,
+  min = 3,
+  max = 4,
+  step = 0.01
+)
+```
+
+
+```{r quiz3}
+question_checkbox(
+  "Select all the toppings that belong on a Margherita Pizza:",
+  answer("tomato", correct = TRUE),
+  answer("mozzarella", correct = TRUE),
+  answer("basil", correct = TRUE),
+  answer("extra virgin olive oil", correct = TRUE),
+  answer("pepperoni", message = "Great topping! ... just not on a Margherita Pizza"),
+  answer("onions"),
+  answer("bacon"),
+  answer("spinach"),
+  random_answer_order = TRUE,
+  allow_retry = TRUE,
+  try_again = "Be sure to select all four toppings!"
+)
+```
+
+```{r weekly-quiz-1, echo=FALSE}
+question(
+    "The workflow\n\nIn the workflow we use for data analysis, which order should the following come in?\n\nA. Visualisation.\nB. Statistical test.\nC. Defining the question.\nD. Data tidying and cleaning.\nE. Checking assumptions.\nF. Data collection.\n\n(Choose the best ordering.)",
+    answer("C, F, D, A, E, B", correct = TRUE),
+    answer("A, C, F, E, B, D"),
+    answer("F, D, A, E, B, C"),
+    answer("C, F, D, A, B, E"),
+    correct = "Correct!",
+    incorrect = "Don't start anything without a question. Don't do any statistics before visualising your data. Check assumptions of your model before looking at the p-value (or other statistics).",
+    allow_retry = TRUE
+  )
+```
+
+
+```{r weekly-quiz-2, echo=FALSE}
+question(
+    "Getting help\n\nFor each R function there is a help file. You can get these in R by typing in the Console a question mark (?) followed immediately by the function name. For example, to see the help file for the function t.test, type ?t.test.\n\nGo to the help file for t.test. What is the name of the third argument you can give it?",
+    answer("alternative", correct = TRUE),
+    answer("method"),
+    answer("confidence"),
+    answer("var.equal"),
+    correct = "Correct!",
+    incorrect = "In the section of the help file named 'Arguments', the third entry is 'alternative', which allows one-sided or two-sided hypotheses to be tested.",
+    allow_retry = TRUE
+  )
+```
+
+
+```{r weekly-quiz-3, echo=FALSE}
+question(
+    "Most common problem in R\n\nWhen you were correcting the script, you came across various things that needed fixing. Based on this experience, and your intuition: what is the most common cause of error messages we get from R?",
+    answer("Variables changing name by themselves"),
+    answer("A bug in R"),
+    answer("Small typographical mistakes we make", correct = TRUE),
+    answer("R making mistakes"),
+    correct = "Correct!",
+    incorrect = "Errors/problems with code almost always result from small typos we make. R is less forgiving than many other programming languages, especially about spelling. Most problems can be fixed by carefully checking names and syntax.",
+    allow_retry = TRUE
+  )
+```
+
+
+```{r weekly-quiz-4, echo=FALSE}
+question(
+    "Add-on packages\n\nCheck the true statements about add-on packages.",
+    answer("Add-on packages are only for experts; everything a beginner needs is in the base packages"),
+    answer("You need to download add-on packages into R each time you start your computer"),
+    answer("RStudio has a nice pane for help with packages (including installation)", correct = TRUE),
+    answer("You need to load add-on packages into R each time you start R", correct = TRUE),
+    answer("You need to download add-on packages only once", correct = TRUE),
+    correct = "Correct!",
+    incorrect = "You need to load (using library()) packages each session, but you only need to install them once. Add-on packages are useful for beginners as well as experts.",
+    allow_retry = TRUE
+  )
+```
