@@ -1,0 +1,13 @@
+name: Unit1
+title: Unit1
+username: owenpetchey
+account: owenpetchey
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 16384755
+bundleId: 11411599
+url: https://owenpetchey.shinyapps.io/Unit1/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: old/Multiweek BIO144.Rmd|old/Multiweek-BIO144.html

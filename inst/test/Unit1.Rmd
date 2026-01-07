@@ -12,16 +12,18 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Introduction
 
-On this web page you will find the practical exercises and weekly quiz for Week 1 of BIO144.
+On this web page you will find the homework, practical exercises and weekly quiz for Week 1 of BIO144.
 
-* A practical session on Thursday or Friday.
-* A weekly quiz to check your understanding.
+All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
 
-All other information for the course is on the main course web page: [BIO144 Course Information
+
+## Homework
+
+
 
 ## Practical
 
-### Exercise 1
+### Exercise 1 (of 1)
 
 During the first lecture you collected data on class reaction times.
 
