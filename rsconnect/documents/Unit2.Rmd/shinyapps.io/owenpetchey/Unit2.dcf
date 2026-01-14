@@ -1,0 +1,13 @@
+name: Unit2
+title: Unit2
+username: owenpetchey
+account: owenpetchey
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 16384826
+bundleId: 11443066
+url: https://owenpetchey.shinyapps.io/Unit2/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .gitattributes|.Rbuildignore|assets/scripts/reaction_time_analysis_needs_fixing.r|assets/scripts/reaction_time_analysis_working.r|Unit1.html|Unit1.Rmd|Unit2_files/figure-html/unnamed-chunk-1-1.png|Unit2.html|Unit3.Rmd|Unit4.Rmd|Unit5.Rmd|old

@@ -1,5 +1,5 @@
 ---
-title: "Week 2 BIO144 Course Content"
+title: "Unit 2 BIO144 Homework, Practical, and Quiz"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
@@ -12,22 +12,751 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Introduction
 
-On this web page you will find the homework, practical exercises and weekly quiz for Week 2 of BIO144.
+On this web page you will find the homework, practical exercises and weekly quiz for Unit 2 of BIO144.
 
 All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
 
+In this set of web pages, in the left margin you will see a navigation pane. You can use this to navigate between the different units of the course, and between the different sections within each unit. At the bottom of this navigation pane you will see "Start Over". If you press this, you will return to the start of the tutorial, and all your progress in all questions will be reset. Feel free to do this if you want to start again from the beginning. Your answers and progress in the homework, practical, and weekly quiz are only for your own practice and learning. They will not be marked or graded.
 
 ## Homework
 
+All homework is for your own practice and learning. It will not be marked or graded.
+
+**Homework common to all weeks:**
+
+* Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
+
+* When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
+
+**Homework specific to Unit 2:**
 
 
-## Practical
 
-### Exercise 1 (of 1)
+* **Getting acquainted with R and RStudio**. When you'd like to consolidate the understanding you gained from the course book and lecture, take a look at Chapter 2 of *Insights from Data with R*. A link to this book is in the [relevant course information web page](https://opetchey.github.io/BIO144_Course_Information/1.1-general-information.html#course-texts)
+
+* **Data wrangling**. When you'd like another perspective on data wrangling covered in the course book and lecture, take a look at Chapter 5 of *Insights from Data with R*.
+
+* **Data visualization**. When you're ready to get a deeper understanding of `ggplot`, take a look at Chapter 7 of *Insights from Data with R*.
 
 
+## Practical part 1
+
+
+Check some of your understanding from the course book and lecture with the following questions:
+
+```{r quiz-dplyr-mutate, echo=FALSE}
+question(
+    "Which function in the dplyr package would you use to add to your data frame a new column of transformed data?",
+    
+    learnr::answer("arrange"),
+    learnr::answer("mutate", correct = TRUE),
+    learnr::answer("filter"),
+    learnr::answer("slice"),
+    learnr::answer("select"),
+    
+    correct = "Correct! mutate() is used to create new variables or transform existing ones while keeping the data frame structure.",
+    incorrect = "mutate() is the dplyr function used to add new columns or transform existing ones. The other functions are used for ordering, filtering rows, or selecting columns.",
+    allow_retry = TRUE
+  )
+```
+
+
+```{r quiz-dplyr-select, echo=FALSE}
+question(
+  "Which function in the dplyr package would you use to get specific columns of your data frame?",
+    
+    learnr::answer("select", correct = TRUE),
+    learnr::answer("slice"),
+    learnr::answer("mutate"),
+    learnr::answer("arrange"),
+    learnr::answer("filter"),
+    
+    correct = "Correct! select() is used to choose specific columns from a data frame.",
+    incorrect = "select() is the dplyr function used to choose specific columns. The other functions work on rows or create/transform columns.",
+    allow_retry = TRUE
+  )
+```
+
+```{r quiz-dplyr-slice, echo=FALSE}
+learnr::question(
+  "Which function in the dplyr package would you use to get particular rows of your data frame (e.g. rows 1 through 10)?",
+  
+  learnr::answer("slice", correct = TRUE),
+  learnr::answer("select"),
+  learnr::answer("filter"),
+  learnr::answer("arrange"),
+  learnr::answer("mutate"),
+  
+  correct = "Correct! slice() is used to select rows by their position in the data frame.",
+  incorrect = "slice() selects rows by position. select() works on columns, filter() selects rows based on conditions, arrange() reorders rows, and mutate() creates or transforms columns.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-dplyr-filter, echo=FALSE}
+learnr::question(
+  "Which function in the dplyr package would you use to get the rows of your data frame that correspond to a particular condition (i.e. give all the rows where the values in a column are less than 10)?",
+  
+  learnr::answer("slice"),
+  learnr::answer("arrange"),
+  learnr::answer("select"),
+  learnr::answer("mutate"),
+  learnr::answer("filter", correct = TRUE),
+  
+  correct = "Correct! filter() is used to select rows that satisfy a logical condition.",
+  incorrect = "filter() selects rows based on conditions. slice() selects rows by position, select() chooses columns, arrange() reorders rows, and mutate() creates or transforms columns.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-dplyr-arrange, echo=FALSE}
+learnr::question(
+  "Which function in the dplyr package would you use to sort the rows of your data frame into a particular order?",
+  
+  learnr::answer("arrange", correct = TRUE),
+  learnr::answer("mutate"),
+  learnr::answer("select"),
+  learnr::answer("filter"),
+  learnr::answer("slice"),
+  
+  correct = "Correct! arrange() is used to sort rows of a data frame into a specified order.",
+  incorrect = "arrange() sorts rows. mutate() creates or transforms columns, select() chooses columns, filter() selects rows based on conditions, and slice() selects rows by position.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-dplyr-groupby, echo=FALSE}
+learnr::question(
+  "You use the group_by function to tell R which columns / variables in your data frame contain the information that you'd like to do the grouping by.\n\nWhat would be the first argument you give to the function?",
+  
+  learnr::answer("the statistic to calculate (e.g. mean)"),
+  learnr::answer("the data frame to do the work on", correct = TRUE),
+  learnr::answer("the variable containing the grouping information"),
+  
+  correct = "Correct! In dplyr, the first argument to group_by() is the data frame you want to work with.",
+  incorrect = "The first argument to group_by() is always the data frame. Even when you use a pipe, the data frame is the first argument, its just that its invisible. The grouping variables are given in the arguments that follow.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-dplyr-groupby-second-arg, echo=FALSE}
+learnr::question(
+  "You use the group_by function to tell R which columns / variables in your data frame contain the information that you'd like to do the grouping by.\n\nWhat would be the second argument you give to the function?",
+  
+  learnr::answer("the variable containing the grouping information", correct = TRUE),
+  learnr::answer("the statistic to calculate (e.g. mean)"),
+  learnr::answer("the data frame to do the work on"),
+  
+  correct = "Correct! After the data frame, group_by() takes the variable (or variables) that define the groups.",
+  incorrect = "The second argument to group_by() is the variable that contains the grouping information. The statistic to calculate is used later, for example in summarise().",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-dplyr-summarise, echo=FALSE}
+learnr::question(
+  "After grouping your data frame using the group_by function, you need to use the summarise function. Assume correct names of data frame and variables.\n\nWhich of these will work (i.e. R will give the mean heights by the grouping variable)?",
+  
+  learnr::answer("summarise(my_grouped_data, mean=height)"),
+  learnr::answer("summarise(my_grouped_data, mean=mean(height))", correct = TRUE),
+  learnr::answer("summarise(my_grouped_data, mean==mean(height))"),
+  learnr::answer("summarise(mean=mean(height), my_grouped_data)"),
+  
+  correct = "Correct! summarise() requires you to define a new variable name and assign it the result of a summary function such as mean(height).",
+  incorrect = "Only summarise(my_grouped_data, mean=mean(height)) is valid. You must use a single = to assign the result of mean(height), and the data frame must be the first argument.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-ggplot-aes, echo=FALSE}
+learnr::question(
+  "You use the ggplot function to set up the basic features of your graph, like which variable in your data frame goes on the x-axis, which on the y-axis, and perhaps a variable that you want the points coloured according to.\n\nWhat is the name of the function that you use within the ggplot function (i.e. it is an argument to the ggplot function) with which you define these basic features?",
+  
+  learnr::answer("aes", correct = TRUE),
+  learnr::answer("geom_point"),
+  learnr::answer("theme"),
+  learnr::answer("labs"),
+  
+  correct = "Correct! aes() (short for aesthetics) is used inside ggplot() to map variables to visual properties such as x, y, and colour.",
+  incorrect = "The function used to define mappings between variables and visual properties inside ggplot() is aes(). The other functions control how things are drawn or styled.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-ggplot-first-arg, echo=FALSE}
+learnr::question(
+  "What do you always give ggplot as its first argument?",
+  
+  learnr::answer("The title of the graph."),
+  learnr::answer("The type of plot to make (e.g. line graph or scatterplot)."),
+  learnr::answer("The aesthetics to use."),
+  learnr::answer("The data frame containing the data it should work on.", correct = TRUE),
+  
+  correct = "Correct! The first argument to ggplot() is always the data frame that contains the data to be plotted.",
+  incorrect = "The first argument to ggplot() is the data frame. Even if you use a pipe, the data frame is the first argument, its just that its invisible. Aesthetics are defined using aes(), and the type of plot is specified using geom_ functions.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-ggplot-facets, echo=FALSE}
+learnr::question(
+  "What are facets in ggplot2?",
+  
+  learnr::answer("They are the axis of a graph."),
+  learnr::answer("They are multiple graphs in a figure.", correct = TRUE),
+  learnr::answer("They are the sides of a graph."),
+  learnr::answer("They are the data points."),
+  
+  correct = "Correct! Facets are used to split data into subsets and display them as multiple panels within the same figure.",
+  incorrect = "Facets in ggplot2 create multiple panels (small multiples), each showing a subset of the data. They are not axes, sides, or data points.",
+  allow_retry = TRUE
+)
+```
+
+
+## Practical part 2
+
+The general aim of this practical exercise is to increase your confidence looking at a dataset and getting a feel for the patterns in the data. Such patterns can include:
+
+* Looking at the distributions of variables
+* Looking for extreme values in variables, and potentially excluding them
+* Looking for correlations between variables
+* Ordering datasets by values in a particular variable
+* Doing all this will involve importing data into R, data wrangling and visualisation. We will work with a few example datasets.
+
+### Preliminaries
+
+Make a new script.
+
+Write comments in the script about what you're doing.
+
+Make the first line of R code the command that clears R's memory.
+
+Make the next few lines of R code ones that load some useful libraries, e.g., readr and tidyverse. (tidyverse automatically loads ggplot2, dplyr, and other useful packages).
+
+In the next line of R code, import the dataset called "bodyfat.txt". (Remember that you can get all datasets used in the course from the usual place (the course information web page). This dataset is about the body fat of 252 individuals. Quite a lot of things were measured about these individuals... so the dataset contains nineteen variables!
+
+Note that this is a txt file (not csv), so you will need to change the delimiter used by `read_csv` for importing it.
+
+Check that the dataset is correctly imported: check the types of variables are correct, and that the number of rows and columns are correct.
+
+### Exploring the dataset
+
+Make a graph that allows you to see the frequency distribution of the response variable (bodyfat). That is the distribution of values of body fat of the individual people in the study. Hint: use the ggplot function and the geom_histogram function.
+
+```{r quiz-normal-distribution-bodyfat, echo=FALSE}
+learnr::question(
+  "Do you think the values of bodyfat are normally distributed?",
+  
+  learnr::answer("No, its clearly bimodal."),
+  learnr::answer("No, it has a sharp peak (has kurtosis)."),
+  learnr::answer("Its quite normally distributed, but there are a couple of rather high values.", correct = TRUE),
+  learnr::answer("Yes, it looks quite normally distributed."),
+  
+  correct = "Correct! The distribution appears approximately normal, but with a few relatively high values that stand out.",
+  incorrect = "The distribution is roughly normal overall, but there are a couple of higher values that deviate from a perfect normal distribution.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-bodyfat-mean-median, echo=FALSE}
+learnr::question(
+  "Which of these is likely true regarding the body fat variable / distribution?\n\nHint: Don't do any calculations, just look at the distribution, and consider the answer to the previous question.",
+  
+  learnr::answer("The mean is much greater than the median."),
+  learnr::answer("The mean and median are very similar.", correct = TRUE),
+  learnr::answer("The mean is much less than the median."),
+  
+  correct = "Correct! For a distribution that is roughly symmetric with only a few higher values, the mean and median will be very similar.",
+  incorrect = "Because the distribution is approximately symmetric overall, the mean and median are expected to be very similar.",
+  allow_retry = TRUE
+)
+```
+
+Use the filter function from the dplyr package to show the individuals with bodyfat greater than 35. Don't forget to first load the dplyr package (or tidyverse).
+
+```{r quiz-bodyfat-count, echo=FALSE}
+learnr::question_numeric(
+  "How many individuals have body fat greater than 35?",
+  
+  learnr::answer(4, correct = TRUE),
+  
+  correct = "Correct! There are 4 individuals with body fat greater than 35.",
+  incorrect = "Not quite. Try looking directly at the data in R, e.g., with the View() function. The sort the variables in the viewer by clicking on the variable name.",
+  allow_retry = TRUE
+)
+```
+
+When we identify a potentially problematic value in the response variable, we might want to look at that particular row. There are a few ways to do this in R / RStudio.
+
+
+```{r quiz-bodyfat-bmi-outlier, echo=FALSE}
+learnr::question_numeric(
+  "However you find easiest, find the bmi of the individual with the highest value of bodyfat and type it in below.",
+  
+  answer(37.62, correct = TRUE),
+  
+  
+  
+  correct = "Correct! The bmi of the individual with the highest bodyfat value is 37.62.",
+  incorrect = "Not quite. Find the row with the highest bodyfat value and then look up the corresponding bmi.",
+  allow_retry = TRUE
+)
+```
+
+
+We have so far focused on looking at the distribution of the response variable (bodyfat in this dataset). We should also, however, look at the distribution of the other variables, for example to check if there are any rather unusual / extreme values, and whether a transformation might be in order.\n\nLook at the distribution of all the other variables.
+
+```{r quiz-bodyfat-extreme-values, echo=FALSE}
+learnr::question(
+  "Which of the ones listed below seem to have at least one rather extreme / unusual value?\n\nHint: Use your current knowledge of R to make all the histograms; probably this means copy and paste the code for one, and change the variable name. There is a quicker way, that you'll see in the explanation text you will get when you answer the question.",
+  
+  learnr::answer("hip", correct = TRUE),
+  learnr::answer("wrist"),
+  learnr::answer("forearm"),
+  learnr::answer("density"),
+  learnr::answer("ankle", correct = TRUE),
+  learnr::answer("height", correct = TRUE),
+  
+  correct = "Correct! The variables ankle, hip, and height each show at least one rather extreme or unusual value in their distributions.",
+  incorrect = "Look carefully at the histograms. The variables ankle, hip, and height each show at least one rather extreme or unusual value.",
+  allow_retry = TRUE
+)
+```
+
+We've seen that several of the variables contain rather extreme / unusual values. An important question now, is whether it is the same few individuals (rows) that have the extreme values for all these variables, or whether its different individuals. I.e. is the individual that is much heavier than all the others also the individual that is much shorter than the others. Have a think about how you might find this out. Remember that you can find it out visually, by looking at and sorting the dataset, and by looking at graphs. But its also useful to be able to do this with code, so we could then work with data not including such data, if we wished to do so.
+
+There are ways of coding this in R, but at this point in your data analysis careers, and even in mine, I might still go the old fashioned way of looking for extreme values in each variable individually, and writing down the individuals these belong to, then working with that list.
+
+A different subject is looking for correlations between variables. In this dataset, we even have some duplicated variables (i.e., variables that measure the same thing, but in different units). For example, we have both weight in pounds, and weight in kilograms.
+
+```{r quiz-bodyfat-duplicate-variables, echo=FALSE}
+learnr::question_numeric(
+  "How many pairs of duplicates are there?",
+  
+  learnr::answer(2, correct = TRUE),
+  
+  correct = "Correct! There are two pairs of variables that are duplicates of each other, measured in different units.",
+  incorrect = "Not quite. Look carefully for variables that represent the same quantity but in different units.",
+  allow_retry = TRUE
+)
+```
+
+The dataset contains a variable called bmi. This is body mass index. We can calculate this ourselves, from two other variables in the dataset. Find the formula for calculating bmi, and add your own calculation of bmi to the dataset. Hints: Unfortunately the units of the measures in the dataset are not clear. You need to do some sleuthing to know if this matters for calculating bmi.
+
+```{r quiz-bmi-calculation, echo=FALSE}
+learnr::question(
+  "Do you think it is better to calculate the bmi values in R, or to do the calculation somewhere else, as has happened with this dataset?",
+  
+  learnr::answer("Do such calculations in R", correct = TRUE),
+  learnr::answer("It doesn't matter."),
+  learnr::answer("Do them elsewhere."),
+  
+  correct = "Correct! Doing calculations in R makes your analysis transparent, reproducible, and easier to check or modify later.",
+  incorrect = "In general, it is better to do such calculations in R so that they are transparent, reproducible, and clearly documented as part of your analysis.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-bodyfat-extreme-individuals, echo=FALSE}
+learnr::question(
+  "Across all variables, which individuals (identified by the number in the Nr column) seem to have rather extreme or unusual values in at least one variable?",
+  
+  learnr::answer("12, 39, 86, 101"),
+  learnr::answer("31, 39, 42, 86", correct = TRUE),
+  learnr::answer("24, 31, 39, 68"),
+  learnr::answer("31, 49, 86"),
+  
+  correct = "Correct! Individuals 31, 39, 42, and 86 each show at least one rather extreme or unusual value across the variables.",
+  incorrect = "Look again at which individuals appear as extremes in at least one variable. The correct set is 31, 39, 42, and 86.",
+  allow_retry = TRUE
+)
+```
+
+Make a copy of the data that doesn't include the individuals in the correct answer to the previous question.
+
+
+One way to do this is with this code, if for example, you didn't want to keep individuals with numbers 1, 2, 3, 4, 5, and 6..
+
+`bodyfat_c <- filter(bodyfat, !(Nr %in% c(1, 2, 3, 4, 5, 6)))`
+
+(Make sure you use the name you gave your data in place of bodyfat.
+
+Looking at relationships among variables: We should now try to get a feel for relationships among all of our variables. We'll let R do the hard work of making all the graphs we want to see, though this still leaves us all the hard work of looking at and interpreting the graphs. We will use a new package GGally to help us. So install that package onto your computer, and then load it into R with library(GGally). Now, in R, use the function ggpairs(). Beware that this can take a while to run, and you'll need to look at the resulting panel of graphs on a big screen (or export the graph, and then move and zoom around it in a graphics viewer). (Oh, by the way, you could use the function pairs() to get all the bivariate relationships, but not the other information given by ggpairs().)
+
+Wow! There is a lot of graphs and information! However, focus on the column of graphs with bodyfat at the top. Where are the strongest looking relationships? Note that on the diagonal of the ggpairs plot you get a line that is a curve showing the distribution of that variable, and in the top right triangle you get the correlation coefficients.
+
+Now, about the biology. Measuring the body fat of individuals is not so easy. It involves special equipment and training. However, measuring other things about individuals is much easier. For example, measuring their weight, height, and various circumferences of body parts is much easier. The aim of the study that produced this dataset was to find out which of these easily taken measurements might be good predictors of body fat (which is itself not so easy to measure).
+
+```{r quiz-bodyfat-predictors, echo=FALSE}
+learnr::question(
+  "Which of these variables do you think are likely to be good predictors of body fat?\n\nHint: look at the relationships between the variables using ggpairs in the GGally package, or just pairs().",
+  
+  learnr::answer("abdomen", correct = TRUE),
+  learnr::answer("height"),
+  learnr::answer("weight", correct = TRUE),
+  learnr::answer("age"),
+  
+  correct = "Correct! Abdomen circumference and weight show strong relationships with body fat and are likely to be good predictors.",
+  incorrect = "Look again at the pairwise relationships. Abdomen circumference and weight show clear associations with body fat, whereas height and age are much weaker predictors.",
+  allow_retry = TRUE
+)
+```
+
+
+## Practical part 3
+
+### Preliminaries
+
+You'll work with a dataset about international health care investment and financing system and health outcomes. A particularly interesting and important question one can delve into with this dataset is if there is a relationship between health care expenditure and child mortality. We wouldn't be surprised to find a negative relationship (greater spending associated with lower child mortality), but what is the strength and shape of the relationship? We will get to that question in good time. For now, we'll work on getting familarised with the data by looking at some basic patterns in it.
+
+The dataset you'll use comes from a package called "ourworldindata". You do not need to install this package though, as we've provided a copy of the dataset in the usual place (see section Getting Datasets), with the name "financing_healthcare.csv".
+
+As before:
+
+* Make a new script for this exercise.
+* Write comments in the script about what you're doing.
+* Make the next few lines of R code ones that load some useful libraries, e.g., readr, ggplot2, dplyr.
+
+Next, import the dataset, "financing_healthcare.csv". Its a quite large dataset, but nothing too hard for R to handle... it has 36873 rows, and 18 variables.
+
+Each row of the dataset is a information about a country in a particular year.
+
+Note that the `child_mort` variable is child mortality rate (number of children per 1000 dying before the age of 5). And the `health_exp_total` variable is total per capita health care expenditure.
+
+```{r quiz-number-of-countries, echo=FALSE}
+learnr::question_numeric(
+  "How many countries are in the dataset?\n\nHint: try using the summarise function in dplyr, and ask for the length of the unique list of countries.",
+  
+  answer(319, correct = TRUE),
+  
+  correct = "Correct! There are 319 countries in the dataset.",
+  incorrect = "Not quite. Try counting the number of unique values in the country variable.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-number-of-years, echo=FALSE}
+learnr::question_numeric(
+  "How many years are there?",
+  
+  answer(255, correct = TRUE),
+  
+  correct = "Correct! There are 255 years in the dataset.",
+  incorrect = "Not quite. Try counting the number of unique values in the year variable.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-non-na-health-childmort, echo=FALSE}
+learnr::question_numeric(
+  "How many rows have a non \"NA\" value for both of the two variables we're most interested in: health_exp_total and child_mort?\n\nHint: you can ask if a value in a variable is NA with the function is.na(). Or if you use !is.na() then you get the ones that are not NA.\n\nHint: Use the ampersand symbol (&) to ask two things.\n\nHint: use filter in the dplyr library.",
+  
+  answer(3510, correct = TRUE),
+  
+  correct = "Correct! There are 3510 rows with non-NA values for both health_exp_total and child_mort.",
+  incorrect = "Not quite. Try filtering the data to keep only rows where both health_exp_total and child_mort are not NA, and then count the number of remaining rows.",
+  allow_retry = TRUE
+)
+```
+
+There are lots of interesting things we could do with this dataset, and we'll get to some in future weeks. For now lets do two things. First, let us have a go at getting statistics for groups of observations, and then making a graph to visualise those statistics.
+
+The first thing to do is to reduce the dataset a bit more...
+
+Make a dataset:
+
+* containing only observations from 2013 (hint, use the filter function in the dplyr package)
+* that contains only these variables: year, country, continent, health_exp_total, child_mort, life_expectancy (hint: use the select function in the dplyr package)
+* that contains no missing values (hint: use the drop_na() function in the tidyr package)
+
+Your new dataset should have 178 rows and 6 variables.
+
+Now, let's say we want to know the average and standard deviation of the child mortality in each continent.
+
+Use the group_by() and summarise() functions of the dplyr package to calculate these.
+
+```{r quiz-child-mort-africa-2013, echo=FALSE}
+learnr::question_numeric(
+  "Rounded to one decimal place, what is the average number of children that died before the age of five, per 1000 born, in Africa in 2013?\n\n(Recall that the child_mort variable gives number of deaths by age five per 1000 births.)\n\n(Make sure you do the rounding on the accurate value, and not one already rounded by R somehow.)",
+  
+  answer(75.5, correct = TRUE),
+  
+  correct = "Correct! The average child mortality rate in Africa in 2013 is 75.5 deaths per 1000 births.",
+  incorrect = "Not quite. Filter the data to Africa and 2013, calculate the mean of child_mort, and then round the result to one decimal place.",
+  allow_retry = TRUE
+)
+```
+
+Now make a box and whisker plot of child mortality (y-axis / response variable) for each continent (x-axis / explanatory variable). Hint: work with the dataset containing the 178 observations. Do not use the averages you just calculated. Hint: Use ggplot and geom_boxplot.
+
+```{r quiz-child-mort-boxplot, echo=FALSE}
+learnr::question(
+  "Looking at your boxplot, which of these are reasonably correct?",
+  
+  learnr::answer("The child_mort values within continents look quite normally distributed."),
+  learnr::answer(
+    "The child mortality values appear rather non-normally distributed, with some rather rare and extreme high values.",
+    correct = TRUE
+  ),
+  learnr::answer("The amount of variability in child mortality among the countries within a continent looks quite similar between the continents."),
+  learnr::answer("The child mortality values appear rather non-normally distributed, with some rather rare and extreme low values."),
+  learnr::answer(
+    "The amount of variability in child mortality among the countries within a continent looks larger in some continents that other.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! The distributions are clearly non-normal, with rare but extreme high values, and the amount of variability differs noticeably between continents.",
+  incorrect = "Look carefully at the boxplots. Child mortality is not normally distributed, extreme values tend to be high rather than low, and variability differs between continents.",
+  allow_retry = TRUE
+)
+```
+
+Practice visualising the data (i.e. practice with ggplot). For a little practice with graphing, make some bivariate scatterplots of child mortality on the y-axis and total health care expenditure on the x-axis.
+
+In one visualisation, assign colours to the points corresponding to their continent. (I.e. map the colour aesthetic to the levels in the continent variable.) Hint: use ggplot, because it will automatically make a nice key, showing which continents are which colour.
+
+In another, make a separate graph (i.e. facet) for each continent. Hint: use ggplot because then its real easy! Hint: the ggplot default is to make the axes limits the same on all facets, but we have quite different data ranges in different continents. Using the help for facet_wrap, see if you can work out how to make the axes limits free to vary among the facets.
+
+```{r quiz-child-mort-health-spend-facets, echo=FALSE}
+learnr::question(
+  "When you made the axes limits free to vary among the facets, you get a better view of the relationship between child mortality and healthcare spending.\n\nWhich of these do you think is most appropriate, given what you see?",
+  
+  learnr::answer("There is little evidence of a relationship in Asia."),
+  learnr::answer("In the Americas there is an odd positive relationship."),
+  learnr::answer(
+    "In Europe there is very low child mortality in all countries, such that there seems to be little relationship with healthcare spend.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "In Africa, child mortality appears negatively related with healthcare spend, but there appears to be quite a lot of scatter.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! In Europe, child mortality is uniformly low, so there is little visible relationship with healthcare spending. In Africa, there is a clear negative relationship, but with substantial scatter among countries.",
+  incorrect = "Look carefully at the faceted plots with free axes. Europe shows uniformly low child mortality, while Africa shows a negative relationship with considerable scatter.",
+  allow_retry = TRUE
+)
+```
 
 
 ## Weekly Quiz
+
+
+
+```{r lo-exploration-distributions, echo=FALSE}
+learnr::question(
+  "When you look at the distribution of a response variable, you see many small values and a few much larger ones (i.e. the distribution is strongly right-skewed).\n\nWhich of the following statements are reasonable?",
+  
+  learnr::answer("We should probably just ignore the large values."),
+  learnr::answer(
+    "The distribution is skewed, and it could be unsafe to assume it is normally distributed.",
+    correct = TRUE
+  ),
+  learnr::answer("It is probably fine to assume the data are normally distributed."),
+  learnr::answer("The mean of the distribution will be lower than the median."),
+  learnr::answer(
+    "If the largest value looks very unusual compared to the others, we should check it carefully in the dataset.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! Skewed distributions make normality assumptions questionable, and unusually large values should always be checked rather than ignored.",
+  incorrect = "Think about the shape of the distribution. Skewness affects assumptions, and extreme values should be investigated, not ignored.",
+  allow_retry = TRUE
+)
+```
+
+
+
+
+```{r lo-dplyr-functions, echo=FALSE}
+learnr::question(
+  "The dplyr package provides several core functions that are used again and again:\n\n1. filter()\n2. select()\n3. mutate()\n4. group_by()\n5. summarise()\n\nBelow are descriptions of what these functions do.\n\nA. Add a new variable to the dataset based on existing variables.\nB. Calculate summaries for groups of observations.\nC. Pick out some of the variables (columns) in a dataset.\nD. Define the variable(s) that contain the grouping information.\nE. Pick out some of the rows in a dataset.\n\nWhich option correctly pairs functions with descriptions?",
+  
+  learnr::answer("1C, 2B, 3A, 4D, 5E"),
+  learnr::answer("1E, 2C, 3A, 4D, 5B", correct = TRUE),
+  learnr::answer("1C, 2E, 3A, 4B, 5D"),
+  learnr::answer("1E, 2A, 3B, 4D, 5C"),
+  learnr::answer("1D, 2A, 3B, 4C, 5E"),
+  
+  correct = "Correct! Each dplyr function has a very specific role, which makes data manipulation readable and consistent.",
+  incorrect = "Take it one function at a time. dplyr is designed so that each function does one clear job.",
+  allow_retry = TRUE
+)
+```
+
+```{r weekly-quiz-4, echo=FALSE}
+question(
+    "Add-on packages\n\nCheck the true statements about add-on packages.",
+    answer("Add-on packages are only for experts; everything a beginner needs is in the base packages"),
+    answer("You need to download add-on packages into R each time you start your computer"),
+    answer("RStudio has a nice pane for help with packages (including installation)", correct = TRUE),
+    answer("You need to load add-on packages into R each time you start R", correct = TRUE),
+    answer("You need to download add-on packages only once", correct = TRUE),
+    correct = "Correct! You load add-on packages with the library() function each session, but only need to install them once. RStudio's Packages pane makes installation easy.",
+    incorrect = "You need to load (using library()) packages each session, but you only need to install them once. Add-on packages are useful for beginners as well as experts.",
+    allow_retry = TRUE
+  )
+```
+
+
+
+```{r lo-reproducible-workflows, echo=FALSE}
+learnr::question(
+  "You wrote some calculations on paper, then entered them into Excel, and later retyped them into R.\n\nWhich of the following statements about good data-analysis practice are reasonable?",
+  
+  learnr::answer(
+    "We should try to do calculations directly in R whenever possible.",
+    correct = TRUE
+  ),
+  learnr::answer("Excel automatically keeps a complete record of everything we do."),
+  learnr::answer(
+    "An R script can act as a clear record of the calculations we’ve performed.",
+    correct = TRUE
+  ),
+  learnr::answer("It is fine to do all calculations in Excel; reproducibility is not important."),
+  learnr::answer(
+    "If calculations are done in R, they are easy to redo if new data arrive.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! Scripts provide transparency, reproducibility, and make it easy to repeat or update analyses.",
+  incorrect = "Think about reproducibility and record-keeping. R scripts clearly document what was done and can be rerun at any time.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r lo-visualisation-choice, echo=FALSE}
+learnr::question(
+  "Which graphical methods are most appropriate for each situation?\n\nSituations:\n1. Assessing whether there is a relationship between two continuous variables.\n2. Comparing the distribution of values between groups.\n3. Examining whether a single variable appears normally distributed.\n\nGraphical tools:\nA. Box and whisker plot.\nB. Histogram.\nC. Scatterplot.\n\nWhich option correctly matches situations to graphical tools?",
+  
+  learnr::answer("1C, 2B, 3A"),
+  learnr::answer("1B, 2A, 3C"),
+  learnr::answer("1C, 2A, 3B", correct = TRUE),
+  
+  correct = "Correct! Scatterplots show relationships, boxplots compare groups, and histograms show distributions.",
+  incorrect = "Match each plot to what it is designed to reveal: relationships, group differences, or distributions.",
+  allow_retry = TRUE
+)
+```
+
+```{r}
+# --------------------------------------------
+# Recreate plots for Assessment 2 – Question 5
+# --------------------------------------------
+
+# Load required packages
+library(ggplot2)
+library(patchwork)   # for combining plots
+
+# ------------------------------------------------
+# Assume a data frame called `dat` exists
+# with variables:
+#   x  (positive, skewed)
+#   y  (positive, skewed)
+# ------------------------------------------------
+
+# If you need a placeholder to test the script,
+# uncomment the following lines:
+# -------------------------------------------------
+# Create data: nonlinear in x–y, linear in log–log
+# -------------------------------------------------
+
+set.seed(42)   # reproducibility
+n <- 200
+
+# Right-skewed x (log-normal)
+x <- rlnorm(n, meanlog = 1, sdlog = 0.8)
+
+# Power-law relationship with multiplicative noise
+# y = a * x^b * error
+a <- 0.5
+b <- 2
+
+error <- rlnorm(n, meanlog = 0, sdlog = 0.4)
+
+y <- a * x^b * error
+
+# Combine into data frame
+dat <- data.frame(
+  x = x,
+  y = y
+)
+
+# ------------------------------------------------
+# 1. Distribution of x
+# ------------------------------------------------
+p_x <- ggplot(dat, aes(x = x)) +
+  geom_histogram(bins = 30, colour = "white") +
+  labs(
+    x = "x",
+    y = "density"
+  )
+
+# ------------------------------------------------
+# 2. Distribution of y
+# ------------------------------------------------
+p_y <- ggplot(dat, aes(x = y)) +
+  geom_histogram(bins = 30, colour = "white") +
+  labs(
+    x = "y",
+    y = "density"
+  )
+
+# ------------------------------------------------
+# 3. Relationship between x and y
+# ------------------------------------------------
+p_xy <- ggplot(dat, aes(x = x, y = y)) +
+  geom_point(alpha = 0.6) +
+  labs(
+    x = "x",
+    y = "y"
+  )
+
+# ------------------------------------------------
+# 4. Relationship between log(x) and log(y)
+# ------------------------------------------------
+p_log <- ggplot(dat, aes(x = log(x), y = log(y))) +
+  geom_point(alpha = 0.6) +
+  labs(
+    x = "log(x)",
+    y = "log(y)"
+  )
+
+# ------------------------------------------------
+# Combine plots into a single figure (2 × 2)
+# ------------------------------------------------
+(p_x | p_y) /
+(p_xy | p_log)
+```
+
+
+```{r lo-transformations, echo=FALSE}
+learnr::question(
+  "You examine the plots above showing the distributions of x and y, and their relationship.\n\nWhich of the following statements are reasonable?",
+  
+  learnr::answer(
+    "There is a clear linear relationship between log(x) and log(y).",
+    correct = TRUE
+  ),
+  learnr::answer("There is a clear linear relationship between x and y."),
+  learnr::answer(
+    "The x variable is skewed.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "The y variable is skewed.",
+    correct = TRUE
+  ),
+  learnr::answer("The variables cannot be log-transformed because they contain negative values."),
+  
+  correct = "Correct! Both variables are skewed but positive, and log transformation reveals a clearer linear relationship.",
+  incorrect = "Skewed but positive variables are often good candidates for log transformation, which can clarify relationships.",
+  allow_retry = TRUE
+)
+```
 
 

@@ -1,5 +1,5 @@
 ---
-title: "Unit 1 BIO144 Course Content"
+title: "Unit 1 BIO144 Homework, Practical, and Quiz"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
@@ -16,45 +16,128 @@ On this web page you will find the homework, practical exercises and weekly quiz
 
 All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
 
+In this set of web pages, in the left margin you will see a navigation pane. You can use this to navigate between the different units of the course, and between the different sections within each unit. At the bottom of this navigation pane you will see "Start Over". If you press this, you will return to the start of the tutorial, and all your progress in all questions will be reset. Feel free to do this if you want to start again from the beginning. Your answers and progress in the homework, practical, and weekly quiz are only for your own practice and learning. They will not be marked or graded.
 
 ## Homework
 
-To be determined.
+In every week there will be the following homework. In some weeks there may be additional homework. All homework is for your own practice and learning. It will not be marked or graded.
+
+**Homework common to all weeks:**
+
+* Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
+* When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
+
+There is no other homework for this week.
 
 ## Practical
 
 ### Exercise 1 (of 1)
 
-During the first lecture you collected data on class reaction times.
+During the first lecture you collected data on class reaction times. The exercise this unit is for you to use R to analyse the dataset.
 
-The exercise this unit is for you to use R to analyse the dataset. To help, here is a nearly complete and working script of R code. It does, however, contain some deliberate errors. You'll need to find and correct these! It also contains some "???" that you need to replace with appropriate text. The errors get a bit harder as you go through the script. Good luck!
+To help, we give you a nearly complete and working script of R code. The script does, however, contain some deliberate errors! You'll need to find and correct these! This is a common feature of code we write -- we usually make a mistake of some kind, get and error message, and need to troubleshoot and correct. So this exercise is good practice for what you'll experience during the course!
 
-Script file: [reaction_time_analysis.r](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/reaction_time_analysis_working.r)
+The script also contains some "???" that you need to replace with appropriate text. The errors get a bit harder as you go through the script. Good luck!
+
+Click on the links below, and hopefully the files will download. If they appears in your browser do `Save As...` and save them to somewhere safe on your computer. Do not add a file extension. Do not let a file extension be added (e.g., the Chrome browser automatically attempts to add a `.txt` file extension... you have to delete it!). Leave the file extension as they are (only `.r` or `.csv`) . Do not open the data file in Excel or any other program.
+
+Script file: [reaction_time_analysis.r](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/reaction_time_analysis_needs_fixing.r)
 
 Data file: <a href="https://tinyurl.com/ye255bdm" target="_blank">
   Link to Reaction Time Dataset
 </a>
 
-
-Click on the link, and hopefully the files will be download. If they appears in your browser do `Save As...` and save them to somewhere safe on your computer. Do not add a file extension. Leave the file extension as they are. Do not open the data file in Excel or any other program.
-
-Get organised by setting up a project folder on your computer and downloading the above files into it.
+Get organised by setting up a project folder on your computer and downloading the above files into it. This will be important so you can know where your copy of the data files is located. You must know this to be able to read the data into R.
 
 Then open the script in RStudio and get it working, not forgetting to think about the questions in the script, about assumptions, effect size, biological significance, statistical significance, and so on.
 
-Write a sentence about the finding. Cover statistical and practical significance. Be critical. As a teaching assistant (TA) for feedback, see if they can make suggests of how you could improve what you've done.
+Write a sentence about the finding. Cover statistical and practical significance. Be critical. Ask a teaching assistant (TA) for feedback, see if they can make suggests of how you could improve what you've done.
+
+The statistical test used in the script is a t-test. Hopefully you have experienced this in previous studies. Please ensure you have reviewed that material if you are not familiar with it anymore. If you are new to t-tests, please ask a TA for help.
+
+
+Here are some questions to help you think about your experience correcting the script and analysing the data.
+
+```{r quiz-install-packages, echo=FALSE}
+question(
+    "Did you get an error when trying to run the lines:\n\nlibrary(readr)\n\nlibrary(dplyr)\n\nlibrary(ggplot2)\n\nIf you did get an error, it was probably because you had not installed one or more of these packages on your computer.\n\nWhich of these could you use to install the dplyr package? (Select all that apply.)",
+    answer("In RStudio, click on the Tools menu, then Install Packages, type the name of the package you want into the Packages box, and click on Install.",
+      correct = TRUE
+    ),
+    answer(
+      "In RStudio, go to the Packages pane, click Install, type the name of the package you want into the Packages box, and click on Install.",
+      correct = TRUE
+    ),
+    answer(
+      "In the Console, type install.packages(\"dplyr\")",
+      correct = TRUE
+    ),
+    
+    correct = "Correct! All of these methods will install the dplyr package.",
+    incorrect = "All three options shown are valid ways to install an R package. You only need to install a package once, but you must load it with library() each time you start R.",
+    allow_retry = TRUE
+  )
+```
+
+```{r quiz-fixing-errors, echo=FALSE}
+question(
+  "When you ran the code to read in the data you got an error that included the text:
+  could not find function read_cvs. What was the problem?",
+  answer("You had not installed the readr package"),
+  answer("You had not loaded the readr package with library(readr)"),
+  answer("There was a typo in the function name; it should be read_csv, not read_cvs", correct = TRUE),
+  answer("You should have used read.csv instead of read_csv"),
+  answer("R could not find the data file... maybe it was missing or in the wrong folder"),
+  correct = "Correct! The function name was misspelled.",
+  incorrect = "The error message indicates that R could not find the function read_cvs. Some of the other problems might have caused errors, but they would have given different error messages.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-code-diagnostics, echo=FALSE}
+question(
+    "In RStudio, in the script editor window, in the left margin, you might see on some lines some symbols, such as an X in a red circle, and an ! in a yellow triangle.\n\nIf you don't see these, have a look at this web page:\nhttps://support.rstudio.com/hc/en-us/articles/205753617-Code-Diagnostics\n\nWhat is the other symbol you might see in the script?",
+    
+    learnr::answer("a sad face"),
+    learnr::answer("an i in a blue circle", correct = TRUE),
+    learnr::answer("a thumbs up"),
+    learnr::answer("a happy face"),
+    
+    correct = "Correct! The information symbol (an i in a blue circle) is also used in RStudio code diagnostics.",
+    incorrect = "You won't see this symbol!",
+    allow_retry = TRUE
+  )
+```
+
+```{r quiz-degrees-of-freedom, echo=FALSE}
+question(
+    "The last part of the exercise is to report your findings, including the direction and size of the difference in reaction times between males and females, and a measure of uncertainty in that difference.\n\nWhich of these is the number of observations in the dataset (i.e. the number of people) minus the number of categories (two: male and female)?",
+    
+    learnr::answer("The p-value"),
+    learnr::answer("The degrees of freedom", correct = TRUE),
+    learnr::answer("The 95% confidence interval"),
+    learnr::answer("The t-statistics"),
+    
+    correct = "Correct! For a two-sample t-test, the degrees of freedom are equal to the number of observations minus the number of groups.",
+    incorrect = "The quantity described is the degrees of freedom. It depends on the sample size and the number of groups being compared, not on the p-value, confidence interval, or t-statistic.",
+    allow_retry = TRUE
+  )
+```
+
 
 If you finish early and are happy with everything so far, and you want a challenge, figure out how to use RMarkdown to create a word document, html file, or pdf of your findings.
+
+Here is a working version of the script. Please don't look at it until you have finished your own corrections! [working_reaction_time_analysis.r](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/reaction_time_analysis_working.r)
 
 
 ## Weekly Quiz
 
+In the final exam you will experience questions that ask for a numeric answer. Then you will need to give the answer with the specified precision. For example, if the question asks for pi rounded to 2 digits, you should answer 3.14. If you answer 3.1 or 3.142 you could be marked wrong. Here is what that might look like in a question. Try giving a wrong answer to see what happens!
 
-
-```{r quiz2}
+```{r quiz2, echo=FALSE}
 question_numeric(
   "What is pi rounded to 2 digits?",
-  answer(3, message = "Don't forget to use the digits argument"),
+  answer(3, message = "Too few digits"),
   answer(3.1, message = "Too few digits"),
   answer(3.142, message = "Too many digits"),
   answer(3.14, correct = TRUE),
@@ -65,23 +148,30 @@ question_numeric(
 )
 ```
 
+In the final exam you will sometimes get multiple choice questions where more than one answer is correct. Here is an example question. Try it out!
 
-```{r quiz3}
+
+```{r quiz3, echo=FALSE}
 question_checkbox(
   "Select all the toppings that belong on a Margherita Pizza:",
   answer("tomato", correct = TRUE),
   answer("mozzarella", correct = TRUE),
   answer("basil", correct = TRUE),
   answer("extra virgin olive oil", correct = TRUE),
-  answer("pepperoni", message = "Great topping! ... just not on a Margherita Pizza"),
-  answer("onions"),
-  answer("bacon"),
-  answer("spinach"),
+  answer("pepperoni", message = "Pepperoni is a great topping! ... just not on a Margherita Pizza"),
+  answer("onions", message = "Onion is a questionable topping, and definitely not on a Margherita Pizza"),
+  answer("bacon", message = "Never put bacon on a pizza, please!"),
+  answer("spinach", message = "Spinach is a great topping! ... just not on a Margherita Pizza"),
   random_answer_order = TRUE,
-  allow_retry = TRUE,
-  try_again = "Be sure to select all four toppings!"
+  allow_retry = TRUE
 )
 ```
+
+(Obviously pizza toppings are not part of the BIO144 course content. This question is just to illustrate the question type.)
+
+***Please note that if you selected only two of the correct toppings you get the message "Incorrect. Be sure to select every correct answer." This is because all four correct toppings need to be selected to get the question right. It does not necessarily mean that the options you selected are wrong (though they might be). It means that you might have missed some correct options, and or you might have selected some incorrect options.***
+
+In the final exam there may be more complex types of questions. Here is an example of one such question type. Try it out!
 
 ```{r weekly-quiz-1, echo=FALSE}
 question(
@@ -96,6 +186,7 @@ question(
   )
 ```
 
+And now for some more questions about this weeks content. These, like the questions in all the following Weekly Quizzes are just for you to practice with. They do not count towards your final grade. They should help you know if you're following and understanding the material.
 
 ```{r weekly-quiz-2, echo=FALSE}
 question(
@@ -105,11 +196,12 @@ question(
     answer("confidence"),
     answer("var.equal"),
     correct = "Correct!",
-    incorrect = "In the section of the help file named 'Arguments', the third entry is 'alternative', which allows one-sided or two-sided hypotheses to be tested.",
+    incorrect = "Try again... look in the section of the help file named 'Arguments', and find the third entry.",
     allow_retry = TRUE
   )
 ```
 
+Some questions in the weekly quizzes, and during the course might appear a bit subjective. They are designed to make you think about the material, and to reflect on your own experience. There are no right or wrong answers to these questions. (There are no questions like this in the final exam, of course!) Here is an example:
 
 ```{r weekly-quiz-3, echo=FALSE}
 question(
@@ -119,22 +211,54 @@ question(
     answer("Small typographical mistakes we make", correct = TRUE),
     answer("R making mistakes"),
     correct = "Correct!",
-    incorrect = "Errors/problems with code almost always result from small typos we make. R is less forgiving than many other programming languages, especially about spelling. Most problems can be fixed by carefully checking names and syntax.",
+    incorrect = "Try again, and recall the types of errors you encountered while fixing the script.",
     allow_retry = TRUE
   )
 ```
 
+Sometimes a weekly quiz question might even need you to look up something new, or something from a previous course. This is to encourage you to develop good habits of looking things up, and learning independently. Here might be an example:
 
-```{r weekly-quiz-4, echo=FALSE}
+```{r weekly-quiz-5, echo=FALSE}
 question(
-    "Add-on packages\n\nCheck the true statements about add-on packages.",
-    answer("Add-on packages are only for experts; everything a beginner needs is in the base packages"),
-    answer("You need to download add-on packages into R each time you start your computer"),
-    answer("RStudio has a nice pane for help with packages (including installation)", correct = TRUE),
-    answer("You need to load add-on packages into R each time you start R", correct = TRUE),
-    answer("You need to download add-on packages only once", correct = TRUE),
+    "When to use a t-test\n\nWhich of the following situations is most appropriate for using a t-test?",
+    answer("Comparing the means of two groups", correct = TRUE),
+    answer("Comparing the means of more than two groups"),
+    answer("Testing for a relationship between two continuous variables"),
+    answer("Measuring the slope of a regression line"),
     correct = "Correct!",
-    incorrect = "You need to load (using library()) packages each session, but you only need to install them once. Add-on packages are useful for beginners as well as experts.",
+    incorrect = "Try again. For more than two groups, an ANOVA is more appropriate. For relationships between continuous variables, correlation or regression is used. You will learn about these types of analyses later in the course.",
     allow_retry = TRUE
   )
 ```
+
+Another example:
+
+```{r weekly-quiz-6, echo=FALSE}
+question(
+    "Sometimes when we run a line of code we get no response from R. What does this usually mean?",
+    answer("It depends on whether we see a flashing cursor or not", correct = TRUE),
+    answer("If we see a plus sign (+) prompt, it means R is waiting for us to finish the command. We might have left a bracket or quote unclosed.", correct = TRUE),
+    answer("If we see the usual > prompt, it means the command has run successfully but there is no output to show. No news is good news", correct = TRUE),
+    answer("We asked R to do something that is taking a long time, so we need to wait!", correct = TRUE),
+    correct = "Correct! All of these are possible explanations for getting no response from R. We have to look carefully in the Console to see which is the case.",
+    allow_retry = TRUE
+  )
+```
+
+Final question for this week:
+
+```{r weekly-quiz-7, echo=FALSE}
+question(
+  "We will often get error messages from R. What is the best way to deal with these?",
+  answer("Panic!", message = "Panic is not helpful. Take a deep breath and read the error message carefully."),
+  answer("Copy and paste the error message into ChatGPT and see what it says", correct = TRUE),
+  answer("Read the error message carefully, and try to understand what it is telling you. Then check your code for mistakes.", correct = TRUE),
+  answer("Ask a teaching assistant (TA) for help immediately", correct = TRUE),
+  correct = "Correct! Dealing with error messages is a key skill in programming. Understanding what the error message is telling you, and checking your code carefully, is the best approach. TAs can also help you when you're stuck. ChatGPT and other AI assistants can help sometimes, but be careful about trusting everything they say.",
+  allow_retry = TRUE
+)
+```
+
+
+
+
