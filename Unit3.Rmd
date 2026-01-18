@@ -66,6 +66,9 @@ The [full R script of this walkthrough is here](https://raw.githubusercontent.co
 
 In this week's in class practical you will continue working with the financing healthcare data from the practical session last week. You will also explore QQ-plots.
 
+
+### Exercise 1 (of 2
+
 From last week, you should already have a script with the necessary preliminaries (though don't assume you can use these without any changes -- you might need some):
 
 Being sure of the question and data. Here we are interested in if there is a relationship between healthcare spending in a country and child mortality in that country. To simplify the question, let's ask that question for only 2013. I.e. is there a relationship between healthcare spending of a country and child mortality in that country in 2013.
@@ -94,11 +97,16 @@ learnr::question_numeric(
 
 Regression preliminaries include at least three steps, the first of which involves us looking at the graph we just made, of health care spending on the x-axis and child mortality on the y-axis:
 
-```{r echo=FALSE}
-fh_data <- read.csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/data/financing_healthcare.csv")
-
-
-
+```{r echo=FALSE, messages=FALSE, warning=FALSE}
+fh_data <- suppressMessages(readr::read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/financing_healthcare.csv",show_col_types = FALSE))
+fh_2013 <- fh_data |>
+  dplyr::filter(year == 2013) |>
+  dplyr::select(country, health_exp_total, child_mort) |>
+  tidyr::drop_na()
+library(ggplot2)
+ggplot(data = fh_2013, aes(x = health_exp_total, y = child_mort)) +
+  geom_point() +
+  labs(x = "Health care spending (total, per capita, USD)", y = "Child mortality (per 1000 live births)")
 ```
 
 
@@ -114,12 +122,396 @@ learnr::question(
   incorrect = "Think about the assumptions of linear regression. The main issue is not the number of data points or overplotting, but that the relationship itself does not appear linear.",
   allow_retry = TRUE
 )
+```
+
+```{r quiz-transformation-right-skew, echo=FALSE}
+learnr::question(
+  "Let's attempt to fix the problem by transforming the data. Knowing which transformation to make, and which axis to transform, needs a bit of experience.\n\nIf you look at the distribution of each variable, you will see that both have many small values and a few large ones (i.e. they are right / positively skewed, with a long right tail).\n\nWhich transformation tends to spread out the small values and compress the large ones, and therefore can make a right-skewed distribution more nearly normal?",
+  
+  learnr::answer("inversion"),
+  learnr::answer("sine transformation"),
+  learnr::answer("log transformation", correct = TRUE),
+  learnr::answer("square root transformation"),
+  
+  correct = "Correct! A log transformation spreads out small values and compresses large ones, which often makes a right-skewed distribution more symmetric.",
+  incorrect = "Think about how each transformation changes distances between values. Log transformations compress large values and expand small ones, which is why they are commonly used for right-skewed data.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-log-transform-linear, echo=FALSE}
+learnr::question(
+  "Now apply the appropriate transformation from the previous question to the data (both variables) and make a new graph of those transformed variables.\n\nDoes the relationship now look more linear?",
+  
+  learnr::answer("No"),
+  learnr::answer("Nothing changed"),
+  learnr::answer("Yes", correct = TRUE),
+  
+  correct = "Correct! After applying the transformation, the relationship between the variables appears much more linear.",
+  incorrect = "Look again at the transformed plot. Applying the transformation spreads out small values, compresses large ones, and reveals a clearer linear relationship.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-log10-interpretation, echo=FALSE}
+learnr::question(
+  "It is often useful to use a log10 transformation rather than the natural log, because the axis values are easier to relate back to the raw data.\n\nWhen we make a graph of log10-transformed variables, we might see values like 0.5, 1, 1.5, 2.0, etc on the axes.\n\nWhat value of the raw variable does a log10-transformed value of 2.0 correspond to?",
+  
+  learnr::answer("100.0", correct = TRUE),
+  learnr::answer("10.0"),
+  learnr::answer("1000.0"),
+  learnr::answer("2.0"),
+  
+  correct = "Correct! A log10 value of 2.0 corresponds to a raw value of 10² = 100.",
+  incorrect = "Remember that log10(x) = 2 means x = 10², which equals 100.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-guess-intercept-log10, echo=FALSE}
+learnr::question_numeric(
+  "The second regression preliminary: It is worth making a guess of the intercept and slope of our regression before letting R loose!\n\nTo guess the intercept, it is useful to have a version of the graph in which the x-axis reaches zero. You can make this happen by adding to your ggplot:\n\n+ xlim(0, 5)\n\nIt is also useful to have the y-axis go far enough to include the guessed intercept:\n\n+ ylim(0, 4)\n\nWith this graph, put a pen (or something straight) on your screen where you think the best-fit regression line will be. Then look where your pen cuts the y-axis. This value is your guessed intercept (on the log-transformed scale — do not back-transform to the raw scale).\n\nWhat is your guess?",
+  
+  learnr::answer(3.25, correct = TRUE),
+  
+  correct = "Correct! A reasonable visual guess for the intercept on the log-transformed scale is about 3.25.",
+  incorrect = "Not quite. Use the plot with xlim(0, 5) and ylim(0, 4), place a straight edge where you think the best-fit line lies, and read off where it crosses the y-axis.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-guess-slope-log10, echo=FALSE}
+learnr::question_numeric(
+  "We can also make a guess of the slope (β₁). Recall that the slope is the change in y divided by the change in x.\n\nLooking at the log10–log10 plot, what number is the slope close to?",
+  
+  learnr::answer(-0.76, correct = TRUE),
+  
+  correct = "Correct! A reasonable visual estimate for the slope is about −0.76.",
+  incorrect = "Not quite. Use two well-separated points along your imagined best-fit line, estimate the change in y divided by the change in x, and remember the slope is negative.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-degrees-of-freedom-regression, echo=FALSE}
+learnr::question_numeric(
+  "The third regression preliminary, and a very worthwhile preliminary of any analysis, is to figure out the degrees of freedom for error you expect.\n\nOne way to think about degrees of freedom for error is as how much freedom the data have, given the model. A model with more coefficients (parameters) leaves the data with less freedom.\n\nTo quantify this, we count the number of data points and subtract the number of coefficients in the model.\n\nSo, how many degrees of freedom for error will there be in our regression of the healthcare spending data?\n\nHints:\n- How many data points (i.e. countries) do we have?\n- How many coefficients / parameters do we estimate in a simple linear regression?\n- Subtract the answer to the second question from the answer to the first.",
+  
+  learnr::answer(184.0, correct = TRUE),
+  
+  correct = "Correct! With 186 data points and 2 estimated coefficients (intercept and slope), there are 184 degrees of freedom for error.",
+  incorrect = "Not quite. Remember to subtract the number of estimated coefficients (intercept and slope) from the number of data points.",
+  allow_retry = TRUE
+)
+```
+
+Now for a really short step, though quite critical... we fit the regression model to the data.
+
+```{r quiz-lm-meaning, echo=FALSE}
+learnr::question(
+  "In the line of code shown above, what does `lm` stand for?",
+  
+  learnr::answer("linear model", correct = TRUE),
+  learnr::answer("least mean"),
+  learnr::answer("log model"),
+  learnr::answer("local mean"),
+  
+  correct = "Correct! `lm` stands for linear model.",
+  incorrect = "`lm` is short for linear model, which is used in R to fit linear regression models.",
+  allow_retry = TRUE
+)
+```
 
 
+As you've seen in the before class reading and viewing, fitting the regression model is just one line of R code:
+
+`my_model <- lm(??1?? ~ ??2??, data=??3??)`
+
+```{r quiz-lm-formula-components, echo=FALSE}
+learnr::question(
+  "`my_model <- lm(??1?? ~ ??2??, data = ??3??)`\n\nMatch what should go in place of ??X?? in the information we give to the lm() function.\n\nA. The dataframe (data set) in which the variables reside.\nB. The response variable.\nC. The explanatory variable.\n\nWhich option correctly matches ??1??, ??2??, and ??3???",
+  
+  learnr::answer("??1?? = B, ??2?? = C, ??3?? = A", correct = TRUE),
+  learnr::answer("??1?? = C, ??2?? = B, ??3?? = A"),
+  learnr::answer("??1?? = A, ??2?? = B, ??3?? = C"),
+  learnr::answer("??1?? = B, ??2?? = A, ??3?? = C"),
+  
+  correct = "Correct! In lm(response ~ explanatory, data = dataframe), ??1?? is the response variable, ??2?? is the explanatory variable, and ??3?? is the data frame.",
+  incorrect = "Remember the structure of lm(): response ~ explanatory, with the data frame supplied using the data argument.",
+  allow_retry = TRUE
+)
+```
+
+Finally, we need to check the assumptions of the regression model, to see if they are badly violated.
+
+```{r quiz-get-residuals, echo=FALSE}
+learnr::question(
+  "What R function do you use to get the residuals of a fitted model?",
+  
+  learnr::answer("residuals", correct = TRUE),
+  learnr::answer("errors"),
+  learnr::answer("fitted"),
+  learnr::answer("summary"),
+  
+  correct = "Correct! The residuals() function extracts the residuals from a fitted model.",
+  incorrect = "The function used to extract residuals from a fitted model is residuals.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-get-fitted-values, echo=FALSE}
+learnr::question(
+  "What R function do you use to get the fitted values from a fitted model?",
+  
+  learnr::answer("fitted", correct = TRUE),
+  learnr::answer("residuals"),
+  learnr::answer("predict"),
+  learnr::answer("summary"),
+  
+  correct = "Correct! The fitted() function extracts the fitted (predicted) values from a fitted model.",
+  incorrect = "The function used to extract fitted values from a fitted model is fitted().",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-residuals-normality, echo=FALSE}
+learnr::question(
+  "Make a histogram of the residuals.\n\nDo you think we can safely assume that the residuals are normally distributed?",
+  
+  learnr::answer("I don't really know"),
+  learnr::answer("No"),
+  learnr::answer("Yes", correct = TRUE),
+  
+  correct = "Correct! Based on the histogram, the residuals look reasonably symmetric and bell-shaped, so assuming normality seems reasonable.",
+  incorrect = "Look again at the histogram of the residuals. They appear roughly symmetric and bell-shaped, which supports the normality assumption.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-residuals-vs-fitted, echo=FALSE}
+learnr::question(
+  "Make a graph of the residuals (on the y-axis) against the fitted values (on the x-axis).\n\nDo you think there is a pattern in how the residuals are related to the fitted values?\n\nFor example, if the data followed a curve, we might conclude that the relationship is not well described by a linear model.",
+  
+  learnr::answer("Yes"),
+  learnr::answer("No", correct = TRUE),
+  learnr::answer("I don't really know"),
+  
+  correct = "Correct! There does not appear to be a clear pattern in the residuals versus fitted values plot, which supports the use of a linear model.",
+  incorrect = "Look again at the residuals versus fitted values plot. The residuals appear randomly scattered without a clear pattern, which is what we hope to see for a good linear model fit.",
+  allow_retry = TRUE
+)
+```
+
+The transformation has helped us achieve a more nearly linear relationship, and the assumptions of the regression model do not appear to be badly violated. Well done!
+
+In contrast, and you should try this, if you try to fit the regression model to the untransformed data, you will find that the assumptions are badly violated. You can see this by making the same diagnostic plots as above (histogram of residuals, and residuals vs fitted values). You should see a very non-normal distribution of residuals, and a clear pattern in the residuals vs fitted values plot. And a very non-linear QQ-plot of residuals too!
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Example code to fit the model on untransformed data and check assumptions
+untransformed_model <- lm(child_mort ~ health_exp_total, data = fh_2013)
+## residuals versus fitted
+p1 <- ggplot(data = data.frame(fitted = fitted(untransformed_model), residuals = residuals(untransformed_model)), aes(x = fitted, y = residuals)) +
+  geom_point() +
+  labs(x = "Fitted values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted\n(Untransformed Data)")
+## qqplot
+p2 <- ggplot(data = data.frame(sample = residuals(untransformed_model)), aes(sample = sample)) +
+  stat_qq() +
+  stat_qq_line() +
+  ggtitle("QQ-Plot of Residuals\n(Untransformed Data)")
+patchwork::wrap_plots(p1, p2)
+```
 
 
-### Exercise 1 (of 1)
+**Potential sources of non-independence** Recall that an assumption of linear regression is that the data points are independent. That is, the value of one data point does not influence the value of another data point. Or put another way, if one data value is larger than expected, that does not make it more likely that another data value is larger than expected.
 
+Think about how our data points were produced. In this case, each data point (row of data) is information about a country. So the question is, is information from countries independent? Or the opposite: what might make information from countries non-independent. Lets look at things that could make data from countries non-independent.
+
+First, groups of countries may share political systems (e.g. democracy, dictatorship, etc). Countries with the same political system may be considered as non-independent, as they share something in common. Geographic closeness may also be considered a source of non-independence. These things we could perhaps take into account in analyses. For now, however, we will ignore them.
+
+Second, data for one group of countries may have been collected in a different way to data for another group of countries. We might not know about this; we might not be able to know about this. This kind of possibility we need to look for in the data itself, for example by looking at the residuals, as you've been doing.
+
+In one of the last lectures of this course we will look at methods for dealing with non-independence in data, such as mixed effects models.
+
+
+### Exercise 2 (of 2)
+
+**Fun with QQ-plots**
+
+For a moment, we step outside the regression practical and have some fun with QQ-plots.
+
+Linear regression (which is a type of linear model) requires some assumptions. One is that the residuals are normally distributed
+
+How do we assess if the residuals are normally distributed? Interestingly, we mostly decide this by looking at graphs and making a visual assessment. There are quantitative / statistical tests, and we'll show you one, but often looking at a suitable graph gives as much insight as the tests one could do.
+
+There are two useful graphs. One is the frequency distribution (histogram) of the residuals. You've already used this type of graph to visualise and assess the shape of a distribution. The other is the QQ-plot (quantile-quantile plot).
+
+Let's play with these two ways of looking at distributions, using synthetic data, so we can be sure of how the data should be distributed.
+
+Recap: Normally distributed residuals
+First make / synthesise some normally distributed residuals, by drawing some random numbers from the normal distribution. The function to do this in R is rnorm().
+
+`resids <- rnorm(30, 0, 1)`
+
+Then use ggplot to plot the distribution of these residuals. You know how to do this! Don't forget to load the package that ggplot is in -- you will get the error "Error: could not find function "ggplot"" if you forget to do this.
+
+In this case, the distribution really should look normal, as we drew numbers from a normal distribution!
+
+The QQ-plot is quite easy to make:
+
+`qqnorm(resids)`
+
+And we can put a line on where we expect the points to lie if the data is normally distributed:
+
+`qqline(resids)`
+
+**Exploring and interpreting QQ-plots**
+
+The QQ-plot is a very valuable tool for assessing if the assumption of normally distributed residuals is justified.
+
+In this exercise you will make a series of QQ-plots from synthetic data that we know the distribution of. Specifically, you will make QQ-plots of normally distributed data, of right skewed data, left skewed data, bimodal data, and even kurtotic data!
+
+You will also use a tool that helps us interpret if odd looking QQ-plots really are odd or not (i.e. if one can say the assumption of normality is or is not justified).
+
+For each of the following distributions, draw some random numbers, plot their distribution, and make the qq-plot. Use the code above as an example.
+
+In a word (or other document) put the pairs of plots side by side. E.g., distribution of random numbers on the left, and qq-plot on the right.
+
+Use the following distributions:
+
+* A normal distribution, as above.
+* A uniform distribution, using the function `runif()`
+* A left-skewed distribution, using the code `rbeta(100,5,2)`
+* A right-skewed distribution, using the code `rbeta(100,2,5)`
+* A log-normal distribution, using the function `rlnorm`
+* A Poisson distribution, using the function `rpois`
+* A binomial distribution, using the function `rbinom`
+
+For some of these functions / distributions, you will need to choose parameter values, e.g., you will need to specify the mean of the Poisson distribution, and you will need to specify the size and probability for the binomial.
+
+Your mission is to match the qq-plot to the distribution. This is an extremely relevant problem in data analysis. We might not know the distribution of our residuals, and so be using a QQ-plot to help us infer this distribution.
+
+Don't be fooled by each having the title "Normal Q-Q Plot". They are not all showing the qqplot of normally distributed residuals.
+
+And here is a quiz for you...
+
+---
+
+**QQ-Plot 1**
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+## poisson qq plot
+resids_poisson <- rpois(1000, lambda = 3)
+qqnorm(resids_poisson)
+qqline(resids_poisson)
+```
+
+---
+
+**QQ-Plot 2**
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+## binomial qq plot
+resids_binomial <- rbinom(1000, size = 10, prob = 0.5)
+qqnorm(resids_binomial)
+qqline(resids_binomial)
+```
+
+---
+
+**QQ-Plot 3**
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+## very left skewed qq plot
+resids_left_skewed <- rbeta(1000, 5, 2)
+#hist(resids_left_skewed)
+qqnorm(resids_left_skewed)
+qqline(resids_left_skewed)
+```
+
+---
+
+**QQ-Plot 4**
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+## right skewed qq plot
+resids_right_skewed <- rbeta(1000, 2, 5)
+#hist(resids_right_skewed)
+qqnorm(resids_right_skewed)
+qqline(resids_right_skewed)
+```
+
+---
+
+**QQ-Plot 5**
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+## normal qq plot
+resids_normal <- rnorm(1000, 0, 1)
+qqnorm(resids_normal)
+qqline(resids_normal)
+```
+
+---
+
+**QQ-Plot 6**
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+## uniform qq plot
+resids_uniform <- runif(1000, min = 0, max = 1)
+qqnorm(resids_uniform)
+qqline(resids_uniform)
+```
+
+
+```{r quiz-qqplot-uniform, echo=FALSE}
+learnr::question_numeric(
+  "Which numbered QQ-plot most likely indicates uniformly distributed data?\n\n(Just type a single number. For example, if you think the answer is QQ-plot 1, just type 1.)",
+  
+  learnr::answer(6, correct = TRUE),
+  
+  correct = "Correct! QQ-plot 6 is most consistent with uniformly distributed data.",
+  incorrect = "Not quite. Look for the QQ-plot where the points curve away from the reference line in a systematic but bounded way, characteristic of a uniform distribution.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-qqplot-left-skewed, echo=FALSE}
+learnr::question_numeric(
+  "Which numbered QQ-plot most likely indicates left-skewed data?",
+  
+  learnr::answer(3, correct = TRUE),
+  
+  correct = "Correct! QQ-plot 3 is most consistent with left-skewed data.",
+  incorrect = "Not quite. Left-skewed data typically show a systematic deviation below the reference line at the lower quantiles and below it at the upper quantiles.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-qqplot-poisson-binom, echo=FALSE}
+learnr::question_numeric(
+  "Which numbered QQ-plot most likely indicates Poisson- or binomially-distributed data?",
+  
+  learnr::answer(2, correct = TRUE),
+  learnr::answer(1, correct = TRUE),
+  
+  correct = "Correct! QQ-plot 1 or 2 is most consistent with discrete data such as Poisson or binomial distributions.",
+  incorrect = "Not quite. Poisson and binomial data are discrete, which often produces a stepped or irregular QQ-plot compared to continuous distributions.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-qqplot-right-skewed, echo=FALSE}
+learnr::question_numeric(
+  "Which numbered QQ-plot most likely indicates right-skewed data?",
+  
+  learnr::answer(4, correct = TRUE),
+  
+  correct = "Correct! QQ-plot 4 is most consistent with right-skewed data.",
+  incorrect = "Not quite. Right-skewed data typically show points falling above the reference line at lower quantiles and above it at higher quantiles.",
+  allow_retry = TRUE
+)
+```
 
 
 
