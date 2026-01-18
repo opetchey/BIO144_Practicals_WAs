@@ -19,9 +19,104 @@ All other information for the course is on the OLAT course webpages, and web pag
 
 ## Homework
 
+### Reading
+
+This homework aims to help you learn how to do linear regression in R. The various steps involved are below.
+
+* Being sure of the question and data. *
+* Preparing your script (e.g., introductory comments, load libraries, etc).
+* Read the data into R.
+* Wrangle and quality control the data.
+* Visualise the data, with question in mind.
+* Make guesses of model parameters (intercept, slope) and statistical significance.
+* Figure out degrees of freedom.
+* Fit the line.
+* Check the assumptions and whether they are badly violated.
+
+(In Unit 4, we will interpret the regression model, for example by calculating and reporting R-squared, p-values, confidence intervals, etc.)
+
+A great starting point for a demonstration and explanation of these steps, in R, is in Section 5.4 and 5.5 - 5.5.4 of Beckerman, Childs, and Petchey. This would be good to read and work through before the practical class.
+
+### Video walkthrough
+
+You can, if you wish, watch and hear Prof. Petchey going through the analysis of the plant growth experiment in the two videos below. **Please note, however, that in these videos are quite old now and contain some older methods, such as an old method for making graphs. Please use the method in the book sections. More specifically, here is the code to use in place of the code in the videos, by line number of the code in the video:
+
+Preliminaries: the videos do not load the packages ggplot2 and ggfortify. You must do this: library(ggplot2) and library(ggfortify).
+
+Line 15. Use `ggplot(data=dd, aes(x = soil.moisture.content, y = plant.growth.rate))`
+
+Line 18. You obviously won't be able to paste in the text here, as the text in line 15 in your script will be different (see above!).
+
+Line 32-36. This is the old way to make a nice looking graph for communication. Replace this with a graph made with ggplot, by adding to and adjusting what you used in line 15. (On page 117 of Beckerman, Childs, and Petchey, you can see the code to make a relatively beautiful graph, in case you need a hand.)
+
+
+
+**Regression walkthrough -- part 1**
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MHev9Edu1cs?si=47Ji5gxOEMgowY3c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+**Regression walkthrough -- part 2**
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jFfFvP3sqo8?si=Spu7GYQOJdwyUBxs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+The [full R script of this walkthrough is here](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/Plant_growth_rate_script.r), though note that some comments have been added and hence the line numbers do not match those above. Note that there are four videos in this series. You will have a chance to see the other two videos in Week 4, when we cover interpretation of regression models.
 
 
 ## Practical
+
+In this week's in class practical you will continue working with the financing healthcare data from the practical session last week. You will also explore QQ-plots.
+
+From last week, you should already have a script with the necessary preliminaries (though don't assume you can use these without any changes -- you might need some):
+
+Being sure of the question and data. Here we are interested in if there is a relationship between healthcare spending in a country and child mortality in that country. To simplify the question, let's ask that question for only 2013. I.e. is there a relationship between healthcare spending of a country and child mortality in that country in 2013.
+
+Its a good idea to use all the available data, so make sure you use all available countries (rows) for which there is data for the two variables of interest.
+
+Now, please make code to do the following:
+
+* Read the data into R.
+* Wrangle and quality control the data.
+* Visualise the data, with question in mind.
+
+
+```{r quiz-number-of-countries-available, echo=FALSE}
+learnr::question_numeric(
+  "How many countries (rows = number of data points) are available for the question at hand?\n\nHint: the answer is not 178.\n\n(Do not include the life expectancy variable in the dataset.)",
+  
+  learnr::answer(186, correct = TRUE),
+  
+  correct = "Correct! There are 186 countries (rows) available for this analysis.",
+  incorrect = "Not quite. Make sure you are counting rows after excluding the life expectancy variable, and then count the remaining countries.",
+  allow_retry = TRUE
+)
+```
+
+
+Regression preliminaries include at least three steps, the first of which involves us looking at the graph we just made, of health care spending on the x-axis and child mortality on the y-axis:
+
+```{r echo=FALSE}
+fh_data <- read.csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/data/financing_healthcare.csv")
+
+
+
+```
+
+
+```{r quiz-linear-regression-problem, echo=FALSE}
+learnr::question(
+  "Stop! Looking at this graph, it should be very clear that we have at least one problem to deal with before we proceed with linear regression.\n\nWhich of these best describes the biggest problem? (This is not a trick question.)",
+  
+  learnr::answer("There are too many data points."),
+  learnr::answer("The relationship does not seem to be linear.", correct = TRUE),
+  learnr::answer("Many of the data points lie on top of each other, obscuring the general pattern in the data."),
+  
+  correct = "Correct! One of the key assumptions of linear regression is that the relationship between the explanatory and response variables is approximately linear, which is clearly not the case here.",
+  incorrect = "Think about the assumptions of linear regression. The main issue is not the number of data points or overplotting, but that the relationship itself does not appear linear.",
+  allow_retry = TRUE
+)
+
+
+
 
 ### Exercise 1 (of 1)
 
