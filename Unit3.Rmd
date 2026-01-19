@@ -23,7 +23,7 @@ All other information for the course is on the OLAT course webpages, and web pag
 
 This homework aims to help you learn how to do linear regression in R. The various steps involved are below.
 
-* Being sure of the question and data. *
+* Being sure of the question and data. 
 * Preparing your script (e.g., introductory comments, load libraries, etc).
 * Read the data into R.
 * Wrangle and quality control the data.
@@ -62,12 +62,9 @@ Line 32-36. This is the old way to make a nice looking graph for communication. 
 The [full R script of this walkthrough is here](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/Plant_growth_rate_script.r), though note that some comments have been added and hence the line numbers do not match those above. Note that there are four videos in this series. You will have a chance to see the other two videos in Week 4, when we cover interpretation of regression models.
 
 
-## Practical
+## Practical part 1
 
 In this week's in class practical you will continue working with the financing healthcare data from the practical session last week. You will also explore QQ-plots.
-
-
-### Exercise 1 (of 2
 
 From last week, you should already have a script with the necessary preliminaries (though don't assume you can use these without any changes -- you might need some):
 
@@ -333,7 +330,7 @@ Second, data for one group of countries may have been collected in a different w
 In one of the last lectures of this course we will look at methods for dealing with non-independence in data, such as mixed effects models.
 
 
-### Exercise 2 (of 2)
+## Practical part 2
 
 **Fun with QQ-plots**
 
@@ -516,5 +513,189 @@ learnr::question_numeric(
 
 
 ## Weekly Quiz
+
+
+### Question 1 — What to do *before* fitting a linear model
+
+
+```{r q1-preliminaries, echo=FALSE}
+learnr::question(
+  "Before we fit a linear regression model, which of the following are good things to do?",
+  
+  learnr::answer("Make a guess of the slope and intercept.", correct = TRUE),
+  learnr::answer("Decide whether the slope is statistically significant."),
+  learnr::answer("Make an assessment of whether we think the relationship is linear.", correct = TRUE),
+  learnr::answer("Check whether the residuals seem normally distributed."),
+  learnr::answer("Be clear about the question we are trying to answer.", correct = TRUE),
+  learnr::answer("Calculate the p-value."),
+  learnr::answer("Visualise the data.", correct = TRUE),
+  learnr::answer("Figure out the degrees of freedom for error.", correct = TRUE),
+  
+  correct = "Correct! Before fitting a model, it is important to understand the question, visualise the data, think about linearity, and work out basic quantities like degrees of freedom. Calculating p-values comes later.",
+  incorrect = "Think about what can (and cannot) be done before the model is fitted. P-values and residual checks require a fitted model, for example.",
+  allow_retry = TRUE
+)
+```
+
+
+
+
+### Question 2 — Degrees of freedom (numeric)
+
+
+```{r q2-df-numeric, echo=FALSE}
+learnr::question_numeric(
+  "Imagine we have a dataset on weight and blood pressure for **48 people**.\n\nIf we fit a simple linear regression to test for a relationship between these two variables, how many **degrees of freedom for error** will the regression model have?",
+  
+  learnr::answer(46, correct = TRUE),
+  
+  correct = "Correct! With 48 data points and 2 estimated parameters (intercept and slope), there are 48 − 2 = 46 degrees of freedom for error.",
+  incorrect = "Remember: degrees of freedom for error = number of data points − number of estimated parameters.",
+  allow_retry = TRUE
+)
+```
+
+
+---
+
+### Question 3 — What does a histogram of residuals tell us?
+
+
+```{r q3-residual-histogram, echo=FALSE}
+learnr::question(
+  "Looking at the distribution of model residuals (e.g. using a histogram) is particularly useful for checking which assumption of linear regression?",
+  
+  learnr::answer("Normally distributed residuals.", correct = TRUE),
+  learnr::answer("Independently distributed residuals."),
+  learnr::answer("Equality (homogeneity) of variances."),
+  
+  correct = "Correct! A histogram of residuals is mainly used to assess whether the residuals are approximately normally distributed.",
+  incorrect = "A histogram helps us judge the *shape* of the residual distribution, not independence or constant variance.",
+  allow_retry = TRUE
+)
+```
+
+
+
+
+### Question 4 — Response vs explanatory variable in `lm()`
+
+
+```{r q4-lm-order, echo=FALSE}
+learnr::question(
+  "In R, we often fit a linear regression model using code like:\n\n`lm(variable1 ~ variable2, data = my_data)`\n\nWhat should `variable1` and `variable2` represent?",
+  
+  learnr::answer("It does not matter; the result will be the same."),
+  learnr::answer("variable1 should be the explanatory variable, variable2 the response variable."),
+  learnr::answer("variable1 should be the response variable, variable2 the explanatory variable.", correct = TRUE),
+  
+  correct = "Correct! In `lm(response ~ explanatory, data = ...)`, the response variable is always on the left of the `~`.",
+  incorrect = "Remember the formula structure in R: response on the left, explanatory variable on the right.",
+  allow_retry = TRUE
+)
+```
+
+
+
+### Question 5 — Least squares distances
+
+
+```{r q5-least-squares, echo=FALSE}
+learnr::question(
+  "When the parameters of a simple linear regression model are estimated, which distances are minimised by the **least squares** algorithm?",
+  
+  learnr::answer("Horizontal distances."),
+  learnr::answer("Vertical distances.", correct = TRUE),
+  
+  correct = "Correct! Least squares minimises the sum of squared **vertical** distances between observations and the fitted line.",
+  incorrect = "In linear regression, it is unexplained variation in the response (y) variable that is minimised. Think about what direction this is on a graph of y (vertical axis) against x (horizontal axis).",
+  allow_retry = TRUE
+)
+```
+
+
+---
+
+### Question 6 — Assumptions of simple linear regression
+
+
+```{r q6-assumptions, echo=FALSE}
+learnr::question(
+  "Which of the following are assumptions of a simple linear regression model?",
+  
+  learnr::answer("The response variable must be normally distributed."),
+  learnr::answer("The errors must be normally distributed.", correct = TRUE),
+  learnr::answer("The covariate must be normally distributed."),
+  learnr::answer("The relationship between x and y is linear.", correct = TRUE),
+  
+  correct = "Correct! Linear regression assumes linearity, normally distributed errors, and a continuous response variable.",
+  incorrect = "Be careful to distinguish between the distribution of the response variable and the distribution of the *errors*.",
+  allow_retry = TRUE
+)
+```
+
+
+---
+
+### Question 7 — Checking assumptions after fitting a model
+
+
+```{r q7-diagnostics, echo=FALSE}
+learnr::question(
+  "After fitting a linear regression model, how can you visually check whether the modelling assumptions seem reasonable?",
+  
+  learnr::answer("By plotting a diagram of the residuals against the fitted values.", correct = TRUE),
+  learnr::answer("By examining the distribution of the response variable."),
+  learnr::answer("By testing whether the slope coefficient is 0."),
+  learnr::answer("By looking at the raw data files without plotting."),
+  learnr::answer("By plotting a histogram of the residuals.", correct = TRUE),
+  
+  correct = "Correct! Residuals vs fitted values and histograms of residuals are key diagnostic plots.",
+  incorrect = "Diagnostic plots rely on residuals, which are only available after fitting the model.",
+  allow_retry = TRUE
+)
+```
+
+
+
+### Question 8 — Diagnostic plots in `ggfortify`
+
+
+```{r q8-ggfortify, echo=FALSE}
+learnr::question(
+  "In R, we can produce diagnostic regression plots using a function from the **ggfortify** package.\n\nWhat is the name of this function?",
+  
+  learnr::answer("autoplot", correct = TRUE),
+  learnr::answer("ggplot"),
+  learnr::answer("fortify"),
+  learnr::answer("diagnose"),
+  
+  correct = "Correct! `autoplot()` can automatically generate standard diagnostic plots for fitted models.",
+  incorrect = "The ggfortify package extends `autoplot()` to work with model objects.",
+  allow_retry = TRUE
+)
+```
+
+---
+
+### Question 9 — Scale–location plot
+
+
+```{r q9-scale-location, echo=FALSE}
+learnr::question(
+  "What assumption of linear regression is a **scale–location plot** primarily used to assess?",
+  
+  learnr::answer("Constancy, or lack of constancy, or Var(εᵢ).", correct = TRUE),
+  learnr::answer("β₁ = 0."),
+  learnr::answer("β₁ ≠ 0."),
+  learnr::answer("The errors are normally distributed."),
+  learnr::answer("The errors are independent."),
+  
+  correct = "Correct! The scale–location plot is used to assess whether the variance of the residuals is approximately constant.",
+  incorrect = "The scale–location plot focuses on variance patterns, not normality or independence.",
+  allow_retry = TRUE
+)
+```
+
 
 
