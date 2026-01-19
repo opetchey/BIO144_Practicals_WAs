@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+<meta name="learnr-version-prerender" content="0.11.5" />
+
+<title>Unit 5 BIO144 Course Content</title>
+
+<!-- header-includes START -->
+<!-- HEAD_CONTENT -->
+<!-- header-includes END -->
+<!-- HEAD_CONTENT -->
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/de8a9c38618903627ca509f5401d50a0876079f7/inst/rmd/h/default.html#L293-L343 -->
+<!-- tabsets -->
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+<!-- end tabsets -->
+
+
+</head>
+
+<body>
+<a class='sr-only sr-only-focusable visually-hidden-focusable' href='#learnr-tutorial-content'>Skip to Tutorial Content</a>
+
+
+
+<div class="pageContent band">
+<main class="bandContent page">
+
+<article class="topics" id="learnr-tutorial-content">
+
+<div id="section-introduction" class="section level2">
+<h2>Introduction</h2>
+<p>On this web page you will find the homework, practical exercises and
+weekly quiz for Unit 5 of BIO144.</p>
+<p>All other information for the course is on the OLAT course webpages,
+and web pages linked to from there: <a
+href="https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740">OLAT
+BIO144 Info. Hub</a></p>
+</div>
+<div id="section-homework" class="section level2">
+<h2>Homework</h2>
+<p>All homework is for your own practice and learning. It will not be
+marked or graded.</p>
+<div id="section-homework-common-to-all-weeks" class="section level3">
+<h3>Homework common to all weeks</h3>
+<ul>
+<li><p>Review the material from the lecture(s) this week. Make sure you
+understand the concepts and ideas presented. Ensure you can follow any
+mathematical or statistical explanations. Ensure you can do the R that
+is needed for the week’s learning objectives.</p></li>
+<li><p>When you find things you don’t understand or have trouble doing
+(e.g., in R), make a note of these. You can then ask a teaching
+assistant (TA) for help during the practical session, and you can ask on
+the Discussion Forum on OLAT. You can also ask questions during the
+lectures.</p></li>
+</ul>
+</div>
+<div id="section-reading" class="section level3">
+<h3>Reading</h3>
+<p>Here is some reading covering various aspects of one-way ANOVA. The
+reading covers the core concepts and practices of ANOVA, as well as
+talking about other important topics, such as degrees of freedom and
+hypothesis testing. You might think there is some overlap with what
+you’ve already heard and read, and in some cases you’d be right.
+Hopefully you can decide if what you’re reading you already know, if its
+giving you a new perspective on something you already know, or its it
+really quite new to you. So, here’s the reading for this week, with some
+notes:</p>
+<ul>
+<li>One-way analysis of variance, example with effects of parasites on
+Daphnia growth rate – Section 5.6 from Getting Started with R,
+Beckerman, Childs &amp; Petchey.</li>
+<li>For a different perspective and a bit more statistical detail, see
+one-way analysis of variance, example of plant height and pollination,
+Chapter 2 of The New Statistics with R, Hector. (Section 2.4 is not so
+important, and there are better methods for changing between the two
+mentioned data formats).</li>
+<li>Post-hoc tests, multiple comparisons are covered in Box 6.3 and 6.4
+of the New Statistics with R. Some interesting perspective in
+there.</li>
+</ul>
+</div>
+<div id="section-anova-and-the-f-test" class="section level3">
+<h3>ANOVA and the F-test</h3>
+<p>Its worth being really clear about the null and alternate hypothesis
+tested in ANOVA by the F-test. Therefore, this is a reminder of what’s
+already in the course book.</p>
+<p>Imagine we’re going one-way ANOVA, and our treatment and therefore
+explanatory variable has four categories (levels). Lets call them A, B,
+C, and D.</p>
+<p>It is useful and helpful to think of the null hypothesis of the
+F-test in ANOVA as “the means of the groups are all the same”, or at
+least “the means of the groups are not significantly different”. This
+means that the alternate hypothesis is that they are not all the same!
+That’s it.</p>
+<p>So, if we get a large F value, and consequently a low p-value, we can
+reject the null hypothesis, and say that not all the mean are the same.
+That leaves a lot of possibilities though. It could be that A is
+different from B, C, &amp; D, which are all the same. Or A and B are the
+same, and C and D are the same, and A is less than C. And so on and so
+on. The F-test doesn’t say anything about which means are different from
+which.</p>
+<p>So when we look at the ANOVA table in R (or anywhere) this is what
+we’re testing.</p>
+<p>If we look at the summary table, we get some of the pairwise
+comparisons among the categories, but not all of them. We can get them
+all if we want (this is called multiple post-hoc comparison), but its a
+bit of a minefield. Better to specify specific questions and the
+corresponding hypothesis to be tested at the start of a study than to
+look at every possible pairwise comparison, report the significant ones,
+and attempt to explain that pattern.</p>
+<p>From Wikipedia “This [the F-test] is an example of an”omnibus” test,
+meaning that a single test is performed to detect any of several
+possible differences.”</p>
+<p>(By the way, please be careful with Wikipedia, and more generally the
+internet. It feels a bit patronising to write this, but not everything
+there is correct/true.)</p>
+<p>Another perspective on the same… Actually, the F-value is a ratio of
+two variances… it is the explained variance / unexplained variance. The
+explained variance is the part of the total that is “explained” when one
+accounts for the means of the groups / categories. The unexplained is
+the part of the total that then remains unexplained. There are no
+differences between specific groups / categories in this calculation, so
+the F-test can’t tell us (and was not designed to) tell us anything
+about differences between particular categories.</p>
+</div>
+<div id="section-dont-forget-dogs" class="section level3">
+<h3>Don’t forget dogs!</h3>
+<p>A few weeks ago we played with a graph of cats. We should also not
+forget dogs! If you have some spare time, see if you can get the
+following code to run!</p>
+</div>
+</div>
+<div id="section-practical" class="section level2">
+<h2>Practical</h2>
+<p>In this exercise, you will:</p>
+<ol style="list-style-type: decimal">
+<li>Prepare a script, load the data, and make some basic checks on the
+dataset.</li>
+<li>Visualise blood pressure change by treatment group
+(e.g. boxplots).</li>
+<li>Fit a one-way ANOVA model to test for differences between
+treatments.</li>
+<li>Check the assumptions of ANOVA using residual diagnostics.</li>
+<li>Interpret the ANOVA table.</li>
+<li>Make a visualisation of the data, good for publication.</li>
+<li>Write a short reporting sentence describing your findings.</li>
+<li>(Optionally) Perform post-hoc comparisons to identify which
+treatments differ.</li>
+</ol>
+<p>You will analyse simulated data from a fictitious small clinical
+study investigating the effect of different treatments on systolic blood
+pressure (SBP). High systolic blood pressure is a major risk factor for
+cardiovascular disease. A new drug (Drug A) is being tested at two
+different dose levels, and its performance is compared with both a
+placebo and standard care. Participants were randomly assigned to one of
+four treatment groups and had their systolic blood pressure
+measured:</p>
+<ul>
+<li>at baseline (before treatment), and</li>
+<li>after 8 weeks of treatment.</li>
+</ul>
+<p>The primary question of interest is whether the average change in
+systolic blood pressure differs between treatment groups.</p>
+<p>This is a classic one-way ANOVA question, where:</p>
+<ul>
+<li>the response variable is the change in systolic blood pressure,
+and</li>
+<li>the explanatory variable is treatment group.</li>
+</ul>
+<p>You will work with the dataset <code>systbp_drug_effect.csv</code>,
+which contains one row per participant.</p>
+<p>The variables are:</p>
+<ul>
+<li>id: A unique identifier for each participant.</li>
+<li>treatment: The treatment group the participant was assigned to:
+Placebo, DrugA_Low, DrugA_High, StandardCare</li>
+<li>sex: Biological sex of the participant (F or M).</li>
+<li>age_years: Age of the participant in years.</li>
+<li>baseline_sbp: Baseline systolic blood pressure (mmHg), measured
+before treatment.</li>
+<li>followup_sbp: Systolic blood pressure (mmHg) measured after 8 weeks
+of treatment.</li>
+<li>sbp_change</li>
+</ul>
+<p>Change in systolic blood pressure, calculated as:</p>
+<p> - </p>
+<p>Negative values indicate a reduction in blood pressure.</p>
+<p>Some participants have missing follow-up measurements. You will need
+to decide how to handle these when performing your analysis.</p>
+<p><strong>Important note</strong> This dataset is synthetic (made up
+for teaching purposes), but it is designed to resemble real biomedical
+data. As in real studies, the data are not perfect: there is variability
+within groups, some missing values, and the effects are not identical
+for all individuals. Your task is not just to “run the analysis”, but to
+think critically about what the results do and do not tell you.</p>
+<div id="section-get-organised-and-prepared" class="section level3">
+<h3>1. Get organised and prepared</h3>
+<p>Get the dataset from the usual place. It is named
+“systbp_drug_effect.csv”.</p>
+<p>Make a new script, write a comment or comments in the first lines to
+say what the script is for, and load the tidyverse. Then read in the
+dataset and take a look at it.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-nrows" class="tutorial-question panel-body">
+<div id="quiz-anova-nrows-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-nrows-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-nrows-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Actually, in that question we assumed that number of rows equals
+number of participants. Is that true? Check the number of unique
+participant IDs to be sure. There are 100 unique IDs, so yes, each row
+corresponds to a different participant. But this does not have to be so
+in all datasets! Be careful. Don’t assume!</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-n-observations" class="tutorial-question panel-body">
+<div id="quiz-anova-n-observations-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-n-observations-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-n-observations-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Safest now is to create a version of the dataset without the missing
+values for the response variable. Please do this now.</p>
+<p>Before we move on, let’t think about <strong>degrees of
+freedom</strong>.</p>
+<p>In one-way ANOVA, there are two types of degrees of freedom to
+consider. One is associated with the treatment groups, and the other
+with the residuals (within groups). So when we eventually report our
+ANOVA results, we will need to know both. We will then be able to write
+something like: “Blood pressure was reduced by … (one-way ANOVA
+F(???1???, ???2???) = 5.67, p &lt; 0.01).” Where ???1??? is the degrees
+of freedom associated with the treatment groups, and ???2??? is the
+degrees of freedom associated with the residuals.</p>
+<p>Before we get to those degrees of freedom, we need to know two
+things:</p>
+<ul>
+<li>How many treatment groups are there?</li>
+<li>How many total observations (non-missing values) are there? We know
+this already… 98.</li>
+</ul>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-n-groups" class="tutorial-question panel-body">
+<div id="quiz-anova-n-groups-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-n-groups-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-n-groups-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>The degrees of freedom associated with the treatment groups is simply
+the number of groups minus one. So here, with 4 treatment groups, the
+degrees of freedom for the treatment groups is 4 - 1 = 3.</p>
+<p>There are two ways to calculate the degrees of freedom associated
+with the residuals (error degrees of freedom). The first is to take the
+total number of observations and subtract the number of groups (= number
+of beta coefficients estimated). The second corresponds better to the
+ANOVA table calculation, and is to take the total number of observations
+minus one, and then subtract the treatment degrees of freedom, where the
+treatment degrees of freedom is the number of groups minus one.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-total-df" class="tutorial-question panel-body">
+<div id="quiz-anova-total-df-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-total-df-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-total-df-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-visualise" class="section level3">
+<h3>2. Visualise</h3>
+<p>Now make a graph to visualise the change in systolic blood pressure
+by treatment group.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-graph-choice" class="tutorial-question panel-body">
+<div id="quiz-anova-graph-choice-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-graph-choice-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-graph-choice-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>In the graph, you likely see that the DrugA high treatment is first,
+from left to right. This is because R orders factor levels
+alphabetically by default. It would be better to have the treatments
+ordered in a more logical way. Please do this now. Hint:</p>
+<pre class="r"><code>library(forcats)
+systbp_data &lt;- systbp_data %&gt;%
+  mutate(treatment = fct_relevel(treatment,
+                                 &quot;StandardCare&quot;, &quot;Placebo&quot;, &quot;DrugA_Low&quot;, &quot;DrugA_High&quot;))</code></pre>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-interpret-graph" class="tutorial-question panel-body">
+<div id="quiz-anova-interpret-graph-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-interpret-graph-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-interpret-graph-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-assumptions-graph" class="tutorial-question panel-body">
+<div id="quiz-anova-assumptions-graph-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-assumptions-graph-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-assumptions-graph-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-expected-pvalue-from-boxplot" class="tutorial-question panel-body">
+<div id="quiz-expected-pvalue-from-boxplot-answer_container" class="shiny-html-output"></div>
+<div id="quiz-expected-pvalue-from-boxplot-message_container" class="shiny-html-output"></div>
+<div id="quiz-expected-pvalue-from-boxplot-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-fit-a-one-way-anova-model" class="section level3">
+<h3>3. Fit a one-way ANOVA model</h3>
+<p>Now fit a one-way ANOVA model to test for differences between
+treatment groups.</p>
+</div>
+<div id="section-check-assumptions" class="section level3">
+<h3>4. Check assumptions</h3>
+<p>Make the four standard diagnostic plots used when making linear
+models. Do the assumptions of ANOVA seem reasonable here?</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-diagnostic-plots" class="tutorial-question panel-body">
+<div id="quiz-anova-diagnostic-plots-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-diagnostic-plots-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-diagnostic-plots-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-interpret-the-anova-table" class="section level3">
+<h3>5. Interpret the ANOVA table</h3>
+<p>Now create the anova table, using the <code>anova()</code>
+function.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-df-as-expected" class="tutorial-question panel-body">
+<div id="quiz-anova-df-as-expected-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-df-as-expected-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-df-as-expected-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-table-interpretation" class="tutorial-question panel-body">
+<div id="quiz-anova-table-interpretation-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-table-interpretation-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-table-interpretation-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-make-a-great-visualisation" class="section level3">
+<h3>6. Make a great visualisation</h3>
+<p>Now make a publication-quality graph showing the results of your
+analysis. When you’re done, ask a TA to have a look, suggest what you
+did well, and what could be even better.</p>
+</div>
+<div id="section-reporting-sentence" class="section level3">
+<h3>7. Reporting sentence</h3>
+<p>Write a short reporting sentence describing your findings. When
+you’re done, ask a TA to have a look, suggest what you did well, and
+what could be even better.</p>
+<p>Hint: it would be good to include an effect size or two, e.g., effect
+of DrugA_High compared to StandardCare. When you have set the
+“StandardCare” as the reference level of the treatment factor, you can
+get these effect sizes from the model summary table (using the
+<code>summary()</code> function on the model object).</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-effect-druga-high" class="tutorial-question panel-body">
+<div id="quiz-effect-druga-high-answer_container" class="shiny-html-output"></div>
+<div id="quiz-effect-druga-high-message_container" class="shiny-html-output"></div>
+<div id="quiz-effect-druga-high-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div
+id="section-perform-a-post-hoc-comparisons-to-identify-which-treatments-differ"
+class="section level3">
+<h3>8. Perform a post-hoc comparisons to identify which treatments
+differ</h3>
+<p>Recall that the ANOVA F-test only tells us whether there is evidence
+that at least one group mean differs from the others. It does not tell
+us which groups differ. To find this out, we can perform post-hoc
+pairwise comparisons. There are many methods for doing this. Use Tukey’s
+Honest Significant Difference (HSD) test to perform the post-hoc
+comparisons now.</p>
+<p>Hint: You need to use the <code>aov()</code> function to convert the
+linear model object into an ANOVA model object before passing it to
+<code>TukeyHSD()</code>.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-tukey-hsd-multiple-true" class="tutorial-question panel-body">
+<div id="quiz-tukey-hsd-multiple-true-answer_container" class="shiny-html-output"></div>
+<div id="quiz-tukey-hsd-multiple-true-message_container" class="shiny-html-output"></div>
+<div id="quiz-tukey-hsd-multiple-true-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-critique" class="section level3">
+<h3>Critique</h3>
+<p>One issue with our analysis is that we did not consider any
+covariates that might influence blood pressure change, such as age and
+sex. We could do that using two-way ANOVA or ANCOVA. These analyses are
+beyond the scope of this exercise, but you will soon see them!</p>
+<p>Another issue is we don’t quite know the exact design of the study.
+Specifically, we don’t know if the Placebo treatment also included
+standard care, or if it was just a placebo pill with no other treatment.
+This matters because it affects how we interpret the results. If Placebo
+and the drug treatments included standard care, then the comparison
+between Placebo and StandardCare tells us about the effect relative to
+standard care. If Placebo and drug treatments did not include standard
+care (probably the case give the pattern in the data), then the
+comparisons tells us about the effects relative to no standard care. So,
+for example, placebo (with no standard care) is worse than standard care
+without placebo. This ambiguity highlights the importance of clearly
+understanding the study design when interpreting statistical results.
+What design do you think would be best here?</p>
+<p>Personally, I would like to see control, in which participants
+receive standard care only, without any placebo or drug. This would
+allow us to isolate the effect of the drug itself more clearly. And then
+placebo could be standard care plus a placebo pill. And the drug
+treatments would be standard care plus the drug at different doses. This
+design would help us understand the added benefit of the drug over
+standard care. Maybe it would be even better to have a group without any
+treatment at all, but that might be unethical if standard care is known
+to be beneficial.</p>
+<p>Another point we might want to address is the potential effect of the
+data points with large residuals. These points could be outliers or
+influential points that unduly affect the model fit and the ANOVA
+results. It would be prudent to investigate these points further,
+perhaps by examining their characteristics. If you have time, make a new
+version of the analysis excluding these points, and see if the results
+change substantially. If they do, we need to be cautious in interpreting
+the findings, as they may be driven by a few extreme observations.</p>
+</div>
+<div id="section-some-things-to-note" class="section level3">
+<h3>Some things to note</h3>
+<p>We did not look at the summary table of the model using the
+<code>summary()</code> function. This is because for one-way ANOVA, the
+key results are in the ANOVA table produced by the <code>anova()</code>
+function. The summary table provides coefficient estimates for each
+treatment group compared to a reference group, but it does not directly
+test the overall hypothesis of equal means across all groups. Therefore,
+for our purposes here, the ANOVA table is more informative.</p>
+<p>We didn’t calculate the r-squared value for the model either. While
+r-squared can provide some information about the proportion of variance
+explained by the treatment groups, it is not the primary focus in
+one-way ANOVA. The main goal is to test whether there are significant
+differences between group means, which is accomplished through the
+F-test in the ANOVA table. R-squared is more commonly used in regression
+contexts where the emphasis is on prediction rather than hypothesis
+testing.</p>
+</div>
+</div>
+<div id="section-weekly-quiz" class="section level2">
+<h2>Weekly Quiz</h2>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="ga5-q3-sample-size" class="tutorial-question panel-body">
+<div id="ga5-q3-sample-size-answer_container" class="shiny-html-output"></div>
+<div id="ga5-q3-sample-size-message_container" class="shiny-html-output"></div>
+<div id="ga5-q3-sample-size-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="ga6-q3-anova-pvalue" class="tutorial-question panel-body">
+<div id="ga6-q3-anova-pvalue-answer_container" class="shiny-html-output"></div>
+<div id="ga6-q3-anova-pvalue-message_container" class="shiny-html-output"></div>
+<div id="ga6-q3-anova-pvalue-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-f-statistic" class="tutorial-question panel-body">
+<div id="quiz-anova-f-statistic-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-f-statistic-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-f-statistic-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-nonsignificant-pvalue" class="tutorial-question panel-body">
+<div id="quiz-anova-nonsignificant-pvalue-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-nonsignificant-pvalue-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-nonsignificant-pvalue-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-causal-interpretation" class="tutorial-question panel-body">
+<div id="quiz-anova-causal-interpretation-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-causal-interpretation-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-causal-interpretation-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-effect-size-from-summary-5levels" class="tutorial-question panel-body">
+<div id="quiz-effect-size-from-summary-5levels-answer_container" class="shiny-html-output"></div>
+<div id="quiz-effect-size-from-summary-5levels-message_container" class="shiny-html-output"></div>
+<div id="quiz-effect-size-from-summary-5levels-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>And here are some question not specific to ANOVA, but rather about
+linear models in general.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="ga5-q7-assumptions" class="tutorial-question panel-body">
+<div id="ga5-q7-assumptions-answer_container" class="shiny-html-output"></div>
+<div id="ga5-q7-assumptions-message_container" class="shiny-html-output"></div>
+<div id="ga5-q7-assumptions-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="ga5-q6-linear-model-definition" class="tutorial-question panel-body">
+<div id="ga5-q6-linear-model-definition-answer_container" class="shiny-html-output"></div>
+<div id="ga5-q6-linear-model-definition-message_container" class="shiny-html-output"></div>
+<div id="ga5-q6-linear-model-definition-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>
+<script type="application/shiny-prerendered" data-context="server-start">
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::prepare_tutorial_state(session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::i18n_observe_tutorial_language(input, session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::event_trigger(session, "session_stop")
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-anova-nrows", 
+    question = structure("How many rows (participants) are there in the dataset?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_3924791", 
+        option = "100", value = 100, label = structure("100", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The dataset contains 100 rows, corresponding to 100 participants.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Try counting the number of rows in the dataset (e.g. using nrow()).", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Try counting the number of rows in the dataset (e.g. using nrow()).", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-nrows-answer", question = "quiz-anova-nrows"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 628941687.207126, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-anova-n-observations", 
+    question = structure("How many observations do we have for answering our question?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_521a3b", 
+        option = "98", value = 98, label = structure("98", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! There are 98 observations with non-missing values for systolic blood pressure change.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Remember to count only rows with a non-missing value for the response variable (sbp_change).", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Remember to count only rows with a non-missing value for the response variable (sbp_change).", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-n-observations-answer", question = "quiz-anova-n-observations"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1204408587.93915, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-anova-n-groups", 
+    question = structure("How many treatment groups are included in this study?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_3848983", 
+        option = "4", value = 4, label = structure("4", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! There are 4 treatment groups in the study.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Count the number of distinct treatment groups in the dataset.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Count the number of distinct treatment groups in the dataset.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-n-groups-answer", question = "quiz-anova-n-groups"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 745422087.152886, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-anova-total-df", 
+    question = structure("What will be the error degrees of freedom in this analysis?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_42c8f7b", 
+        option = "94", value = 94, label = structure("94", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The error of degrees of freedom will be / should be 94.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Try again. Write down carefully one of the methods above, and work through it.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Try again. Write down carefully one of the methods above, and work through it.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-total-df-answer", question = "quiz-anova-total-df"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 236278481.889974, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-anova-graph-choice", 
+    question = structure("To help answer the question <em>“Do the mean changes in systolic blood pressure differ between the treatment groups?”<\u002fem>, which of the following type of graphs would be a good choice?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_1e8915", 
+        option = "A box-and-whisker plot of blood pressure change for each treatment group.", 
+        value = "A box-and-whisker plot of blood pressure change for each treatment group.", 
+        label = structure("A box-and-whisker plot of blood pressure change for each treatment group.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9549c47", 
+        option = "A plot showing the mean blood pressure change for each treatment group, with error bars.", 
+        value = "A plot showing the mean blood pressure change for each treatment group, with error bars.", 
+        label = structure("A plot showing the mean blood pressure change for each treatment group, with error bars.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d956407", 
+        option = "A histogram of blood pressure change, ignoring treatment group.", 
+        value = "A histogram of blood pressure change, ignoring treatment group.", 
+        label = structure("A histogram of blood pressure change, ignoring treatment group.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b666a37", 
+        option = "A scatterplot of baseline blood pressure against follow-up blood pressure.", 
+        value = "A scatterplot of baseline blood pressure against follow-up blood pressure.", 
+        label = structure("A scatterplot of baseline blood pressure against follow-up blood pressure.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_783dd0f", 
+        option = "A line graph connecting individual participants across treatment groups.", 
+        value = "A line graph connecting individual participants across treatment groups.", 
+        label = structure("A line graph connecting individual participants across treatment groups.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Boxplots are well suited for comparing a continuous response variable across multiple groups.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about graphs that allow you to compare the <em>distribution<\u002fem> of a response variable across groups. Some plots ignore the grouping variable or imply an ordering that is not present. Showing on the mean and error bars is not a good choice because so much information is hidden.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about graphs that allow you to compare the <em>distribution<\u002fem> of a response variable across groups. Some plots ignore the grouping variable or imply an ordering that is not present. Showing on the mean and error bars is not a good choice because so much information is hidden.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-graph-choice-answer", question = "quiz-anova-graph-choice"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1245163059.42018, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "quiz-anova-interpret-graph", 
+    question = structure("<p>Look at your graph showing systolic blood pressure change for each treatment group.<\u002fp>\n<p>Which of the following interpretations is most appropriate?<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_f4c1a56", 
+        option = "All treatments have exactly the same effect on systolic blood pressure.", 
+        value = "All treatments have exactly the same effect on systolic blood pressure.", 
+        label = structure("All treatments have exactly the same effect on systolic blood pressure.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_fc7141f", 
+        option = "There appears to be variation in blood pressure change within each treatment group.", 
+        value = "There appears to be variation in blood pressure change within each treatment group.", 
+        label = structure("There appears to be variation in blood pressure change within each treatment group.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8fecd7a", 
+        option = "At least one treatment group appears to have a different average blood pressure change compared with the others.", 
+        value = "At least one treatment group appears to have a different average blood pressure change compared with the others.", 
+        label = structure("At least one treatment group appears to have a different average blood pressure change compared with the others.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c314c75", 
+        option = "The graph proves that DrugA_High causes the largest reduction in blood pressure.", 
+        value = "The graph proves that DrugA_High causes the largest reduction in blood pressure.", 
+        label = structure("The graph proves that DrugA_High causes the largest reduction in blood pressure.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1464081", 
+        option = "Because the data and boxplots overlap, there cannot be any real differences between treatments.", 
+        value = "Because the data and boxplots overlap, there cannot be any real differences between treatments.", 
+        label = structure("Because the data and boxplots overlap, there cannot be any real differences between treatments.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The graph shows substantial variability within groups, but also suggests that some treatment groups differ in their average blood pressure change. This motivates a formal ANOVA test.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Be careful not to over-interpret the graph. The plot can suggest differences and variability, but it does not by itself prove causation or exact equality between groups.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-interpret-graph-answer", question = "quiz-anova-interpret-graph"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 593013758.223856, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "quiz-anova-assumptions-graph", 
+    question = structure("How can your graph of systolic blood pressure change by treatment group help you assess whether the assumptions of a one-way ANOVA are reasonable?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_c0c6386", 
+        option = "It allows you to check whether the residuals are independent.", 
+        value = "It allows you to check whether the residuals are independent.", 
+        label = structure("It allows you to check whether the residuals are independent.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9a795d1", 
+        option = "It allows you to assess whether the variability (spread) of the response looks similar across treatment groups.", 
+        value = "It allows you to assess whether the variability (spread) of the response looks similar across treatment groups.", 
+        label = structure("It allows you to assess whether the variability (spread) of the response looks similar across treatment groups.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_125483e", 
+        option = "It allows you to assess whether the group distributions look approximately symmetric and free of extreme outliers.", 
+        value = "It allows you to assess whether the group distributions look approximately symmetric and free of extreme outliers.", 
+        label = structure("It allows you to assess whether the group distributions look approximately symmetric and free of extreme outliers.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6ced862", 
+        option = "It allows you to formally test whether the group means are equal.", 
+        value = "It allows you to formally test whether the group means are equal.", 
+        label = structure("It allows you to formally test whether the group means are equal.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b7ea50", 
+        option = "It proves that all ANOVA assumptions are satisfied if the boxplots overlap.", 
+        value = "It proves that all ANOVA assumptions are satisfied if the boxplots overlap.", 
+        label = structure("It proves that all ANOVA assumptions are satisfied if the boxplots overlap.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! From the graph we can visually assess approximate normality within groups and whether the variances appear similar, both of which are key assumptions of ANOVA.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about which ANOVA assumptions can be checked visually from group-wise plots, and which require other information or formal tests.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-assumptions-graph-answer", question = "quiz-anova-assumptions-graph"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 2030035110.55469, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-expected-pvalue-from-boxplot", 
+    question = structure("After looking at your plot of systolic blood pressure change by treatment group, what would you <strong>expect<\u002fstrong> the p-value from the ANOVA to be?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_a795cf6", 
+        option = "Very close to 1, because the groups overlap.", 
+        value = "Very close to 1, because the groups overlap.", 
+        label = structure("Very close to 1, because the groups overlap.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ad5c033", 
+        option = "Exactly equal to 0.05.", value = "Exactly equal to 0.05.", 
+        label = structure("Exactly equal to 0.05.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d431ec2", 
+        option = "Quite a lot less than 0.05, because the group means appear to differ relative to the within-group variability.", 
+        value = "Quite a lot less than 0.05, because the group means appear to differ relative to the within-group variability.", 
+        label = structure("Quite a lot less than 0.05, because the group means appear to differ relative to the within-group variability.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bd55d47", 
+        option = "Greater than 0.05, because the group means appear to differ.", 
+        value = "Greater than 0.05, because the group means appear to differ.", 
+        label = structure("Greater than 0.05, because the group means appear to differ.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a6d7f57", 
+        option = "Impossible to guess without running the ANOVA.", 
+        value = "Impossible to guess without running the ANOVA.", 
+        label = structure("Impossible to guess without running the ANOVA.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The boxplot suggests clear differences between group means compared with the within-group variability, so we would expect a p-value well below 0.05.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("While we cannot know the exact p-value without running the analysis, exploratory plots often give a good indication of whether a statistically significant result is likely.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("While we cannot know the exact p-value without running the analysis, exploratory plots often give a good indication of whether a statistically significant result is likely.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-expected-pvalue-from-boxplot-answer", 
+        question = "quiz-expected-pvalue-from-boxplot"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 841931183.107945, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "quiz-anova-diagnostic-plots", 
+    question = structure("Which of the following do you agree with?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_7f03ba1", 
+        option = "There normal qq plot does not show major deviations from normality of the residuals.", 
+        value = "There normal qq plot does not show major deviations from normality of the residuals.", 
+        label = structure("There normal qq plot does not show major deviations from normality of the residuals.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7d05d98", 
+        option = "The residuals show a clear pattern in the residuals vs fitted plot, indicating non-linearity.", 
+        value = "The residuals show a clear pattern in the residuals vs fitted plot, indicating non-linearity.", 
+        label = structure("The residuals show a clear pattern in the residuals vs fitted plot, indicating non-linearity.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_89570f0", 
+        option = "The scale–location plot shows that the variance of the residuals is roughly constant across fitted values (i.e. homoscedasticity.", 
+        value = "The scale–location plot shows that the variance of the residuals is roughly constant across fitted values (i.e. homoscedasticity.", 
+        label = structure("The scale–location plot shows that the variance of the residuals is roughly constant across fitted values (i.e. homoscedasticity.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a089b2a", 
+        option = "There are a few data points with high residuals that could unduly influence the model fit.", 
+        value = "There are a few data points with high residuals that could unduly influence the model fit.", 
+        label = structure("There are a few data points with high residuals that could unduly influence the model fit.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2ec9269", 
+        option = "The qq plot clearly shows that the residuals are independent.", 
+        value = "The qq plot clearly shows that the residuals are independent.", 
+        label = structure("The qq plot clearly shows that the residuals are independent.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The residuals vs fitted plot helps assess linearity, the QQ-plot assesses normality of residuals, and the scale–location plot helps assess homoscedasticity.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Carefully consider what each diagnostic plot is designed to reveal. Independence usually cannot be assessed directly from these plots.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-diagnostic-plots-answer", question = "quiz-anova-diagnostic-plots"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 701395067.173388, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-anova-df-as-expected", 
+    question = structure("Are the degrees of freedom reported by the ANOVA as we expected?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d78ea4f", 
+        option = "Yes", value = "Yes", label = structure("Yes", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d79a3b2", 
+        option = "No", value = "No", label = structure("No", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Great! All is good. The reported degrees of freedom match what we expect based on the number of observations and the number of treatment groups.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Well, if we really did find a mismatch, we better go back to the data, and look at our expectation, and also the ANOVA table again. Something is wrong and we have to figure it out.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Well, if we really did find a mismatch, we better go back to the data, and look at our expectation, and also the ANOVA table again. Something is wrong and we have to figure it out.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-df-as-expected-answer", question = "quiz-anova-df-as-expected"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 64161103.9701227, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "quiz-anova-table-interpretation", 
+    question = structure("Consider the ANOVA table. Which of the following interpretations of the ANOVA table is most appropriate?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d3b29dc", 
+        option = "The ANOVA table tells us which specific treatment groups differ from each other.", 
+        value = "The ANOVA table tells us which specific treatment groups differ from each other.", 
+        label = structure("The ANOVA table tells us which specific treatment groups differ from each other.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_21174cb", 
+        option = "The ANOVA table tests whether **all treatment group means are equal**, versus the alternative that at least one group mean differs.", 
+        value = "The ANOVA table tests whether **all treatment group means are equal**, versus the alternative that at least one group mean differs.", 
+        label = structure("The ANOVA table tests whether <strong>all treatment group means are equal<\u002fstrong>, versus the alternative that at least one group mean differs.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_acbb80b", 
+        option = "A significant ANOVA result shows that the treatment caused the change in blood pressure.", 
+        value = "A significant ANOVA result shows that the treatment caused the change in blood pressure.", 
+        label = structure("A significant ANOVA result shows that the treatment caused the change in blood pressure.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2ac290a", 
+        option = "If the p-value is small, it means that all treatment groups differ from each other.", 
+        value = "If the p-value is small, it means that all treatment groups differ from each other.", 
+        label = structure("If the p-value is small, it means that all treatment groups differ from each other.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4d7cea0", 
+        option = "If the p-value is large, it means that the treatments have no effect at all.", 
+        value = "If the p-value is large, it means that the treatments have no effect at all.", 
+        label = structure("If the p-value is large, it means that the treatments have no effect at all.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The ANOVA table tests the null hypothesis that all group means are equal, not which groups differ or why they differ. Also, we can infer causation because this was a clinical trial with random assignment to treatment groups.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Be careful: ANOVA tells us whether there is evidence for <em>any<\u002fem> difference among group means, but not which groups differ or whether the effect is causal.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-table-interpretation-answer", question = "quiz-anova-table-interpretation"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 705904868.671287, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-effect-druga-high", 
+    question = structure("<p>What is the estimated <strong>effect of DrugA_High relative to StandardCare<\u002fstrong> on systolic blood pressure change?<\u002fp>\n<p>(Give your answer rounded to <strong>two decimal places<\u002fstrong>.)<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d47bc40", 
+        option = "-5.48", value = -5.48, label = structure("-5.48", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The estimated effect of DrugA_High relative to StandardCare is −5.48 mmHg.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Remember to set StandardCare as the reference level of the treatment factor, then look at the model summary table.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Remember to set StandardCare as the reference level of the treatment factor, then look at the model summary table.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-effect-druga-high-answer", question = "quiz-effect-druga-high"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 2066592770.03767, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "quiz-tukey-hsd-multiple-true", 
+    question = structure("<p>The table below shows the results of a Tukey HSD post-hoc test following a one-way ANOVA of systolic blood pressure change by treatment group.<\u002fp>\n<p>Which of the following statements are supported by the Tukey HSD results?<\u002fp>\n<p>(Select all that apply. Use a p-value of 0.05 as threshold for significance.)<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_c035879", 
+        option = "Placebo differs significantly from StandardCare.", 
+        value = "Placebo differs significantly from StandardCare.", 
+        label = structure("Placebo differs significantly from StandardCare.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5ce18a8", 
+        option = "DrugA_High differs significantly from StandardCare.", 
+        value = "DrugA_High differs significantly from StandardCare.", 
+        label = structure("DrugA_High differs significantly from StandardCare.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8f6ef80", 
+        option = "DrugA_Low differs significantly from StandardCare.", 
+        value = "DrugA_Low differs significantly from StandardCare.", 
+        label = structure("DrugA_Low differs significantly from StandardCare.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f6e5966", 
+        option = "DrugA_Low differs significantly from Placebo.", 
+        value = "DrugA_Low differs significantly from Placebo.", 
+        label = structure("DrugA_Low differs significantly from Placebo.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a0aa578", 
+        option = "DrugA_High differs significantly from Placebo.", 
+        value = "DrugA_High differs significantly from Placebo.", 
+        label = structure("DrugA_High differs significantly from Placebo.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d9cf119", 
+        option = "DrugA_High differs significantly from DrugA_Low.", 
+        value = "DrugA_High differs significantly from DrugA_Low.", 
+        label = structure("DrugA_High differs significantly from DrugA_Low.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The Tukey HSD test indicates significant differences for Placebo vs StandardCare, DrugA_High vs StandardCare, DrugA_Low vs Placebo, and DrugA_High vs Placebo. The other comparisons are not statistically significant after adjusting for multiple comparisons.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Check the adjusted p-values carefully. Only comparisons with p adj &lt; 0.05 are considered statistically significant.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-tukey-hsd-multiple-true-answer", question = "quiz-tukey-hsd-multiple-true"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1088677158.99305, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "ga5-q3-sample-size", 
+    question = structure("A study is conducted to investigate the effect of different diets on the growth rate of cows. The dataset contains measurements of growth rates for cows assigned to four different diet groups. A one-way ANOVA is performed to test for differences in mean growth rates between the diet groups. The ANOVA table reports the following degrees of freedom for residuals = 233.\nHow many individuals (observations) were in the study?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_47217d9", 
+        option = "237", value = 237, label = structure("237", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! There were 237 observations in the study.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Remember: number of observations = residual degrees of freedom + number of estimated parameters.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Remember: number of observations = residual degrees of freedom + number of estimated parameters.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "ga5-q3-sample-size-answer", question = "ga5-q3-sample-size"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 203859594.40507, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "ga6-q3-anova-pvalue", 
+    question = structure("Our F-test in a one-way ANOVA gives a p-value smaller than 0.01. What can we infer?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_e6a6a6e", 
+        option = "There is no difference between any of the group means.", 
+        value = "There is no difference between any of the group means.", 
+        label = structure("There is no difference between any of the group means.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e48b215", 
+        option = "That the means of the different categories are not all the same.", 
+        value = "That the means of the different categories are not all the same.", 
+        label = structure("That the means of the different categories are not all the same.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_577656c", 
+        option = "Which groups differ from which other groups.", 
+        value = "Which groups differ from which other groups.", 
+        label = structure("Which groups differ from which other groups.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_10b7c6c", 
+        option = "That all of the means are different from each other.", 
+        value = "That all of the means are different from each other.", 
+        label = structure("That all of the means are different from each other.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! A significant ANOVA result tells us that not all group means are equal, but not which ones differ.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("ANOVA tests whether all group means are equal, not whether every pair differs.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("ANOVA tests whether all group means are equal, not whether every pair differs.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "ga6-q3-anova-pvalue-answer", question = "ga6-q3-anova-pvalue"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 552329670.242801, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-anova-f-statistic", 
+    question = structure("In a one-way ANOVA, what does a <strong>large F-statistic<\u002fstrong> indicate?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_c769f0e", 
+        option = "That the within-group variability is much larger than the between-group variability.", 
+        value = "That the within-group variability is much larger than the between-group variability.", 
+        label = structure("That the within-group variability is much larger than the between-group variability.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_859453d", 
+        option = "That the group means differ relative to the variability within groups.", 
+        value = "That the group means differ relative to the variability within groups.", 
+        label = structure("That the group means differ relative to the variability within groups.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_896bd3f", 
+        option = "That the sample size is very large.", value = "That the sample size is very large.", 
+        label = structure("That the sample size is very large.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9a513f9", 
+        option = "That all group means are exactly equal.", value = "That all group means are exactly equal.", 
+        label = structure("That all group means are exactly equal.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ad85ee0", 
+        option = "That the ANOVA assumptions must be violated.", 
+        value = "That the ANOVA assumptions must be violated.", 
+        label = structure("That the ANOVA assumptions must be violated.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! A large F-statistic indicates that the variability between group means is large compared to the variability within groups, suggesting evidence against the null hypothesis of equal means.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Recall that the F-statistic compares between-group variability to within-group variability, not sample size or assumption violations.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Recall that the F-statistic compares between-group variability to within-group variability, not sample size or assumption violations.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-f-statistic-answer", question = "quiz-anova-f-statistic"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1077602158.9982, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-anova-nonsignificant-pvalue", 
+    question = structure("If the p-value from a one-way ANOVA is <strong>0.42<\u002fstrong>, which conclusion is most appropriate?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_acc016", 
+        option = "There is strong evidence that at least one group mean differs from the others.", 
+        value = "There is strong evidence that at least one group mean differs from the others.", 
+        label = structure("There is strong evidence that at least one group mean differs from the others.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f9124f5", 
+        option = "There is no difference at all between the group means.", 
+        value = "There is no difference at all between the group means.", 
+        label = structure("There is no difference at all between the group means.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3675612", 
+        option = "There is not enough evidence to conclude that the group means differ.", 
+        value = "There is not enough evidence to conclude that the group means differ.", 
+        label = structure("There is not enough evidence to conclude that the group means differ.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_887ad70", 
+        option = "The ANOVA assumptions must have been violated.", 
+        value = "The ANOVA assumptions must have been violated.", 
+        label = structure("The ANOVA assumptions must have been violated.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1d5b405", 
+        option = "The effect is practically unimportant.", value = "The effect is practically unimportant.", 
+        label = structure("The effect is practically unimportant.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! A large p-value indicates that the data do not provide sufficient evidence to reject the null hypothesis that all group means are equal.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Be careful: a non-significant p-value does not prove that the group means are identical, only that we lack evidence to say they differ.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Be careful: a non-significant p-value does not prove that the group means are identical, only that we lack evidence to say they differ.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-nonsignificant-pvalue-answer", question = "quiz-anova-nonsignificant-pvalue"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1148050104.9654, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-anova-causal-interpretation", 
+    question = structure("Under what conditions could results from an ANOVA reasonably support a <strong>causal interpretation<\u002fstrong>?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_c1a3cd1", 
+        option = "When the p-value is smaller than 0.05.", value = "When the p-value is smaller than 0.05.", 
+        label = structure("When the p-value is smaller than 0.05.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_30f701a", 
+        option = "When the group means are very different.", 
+        value = "When the group means are very different.", label = structure("When the group means are very different.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2a95cf7", 
+        option = "When the data come from a randomised experiment with controlled treatments and no major violations of assumptions.", 
+        value = "When the data come from a randomised experiment with controlled treatments and no major violations of assumptions.", 
+        label = structure("When the data come from a randomised experiment with controlled treatments and no major violations of assumptions.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5ecd850", 
+        option = "When the sample size is large.", value = "When the sample size is large.", 
+        label = structure("When the sample size is large.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ecc22e", 
+        option = "When the residuals are normally distributed.", 
+        value = "When the residuals are normally distributed.", 
+        label = structure("When the residuals are normally distributed.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Causal interpretation is justified primarily by the <strong>study design<\u002fstrong>—in particular random assignment to treatments—not by the p-value or effect size alone.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Statistical significance, large effects, or good model assumptions are not sufficient for causal claims without an appropriate experimental design.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Statistical significance, large effects, or good model assumptions are not sufficient for causal claims without an appropriate experimental design.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-causal-interpretation-answer", question = "quiz-anova-causal-interpretation"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1007305029.03094, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-effect-size-from-summary-5levels", 
+    question = structure("Below is an example of a regression summary table, similar to what you would see from <code>summary(model)<\u002fcode> in R.<br />\nThe reference group is <b>control<\u002fb>.<br><br><\u002fp>\n<table>\n  <thead>\n    <tr>\n      <th>Term<\u002fth>\n      <th>Estimate<\u002fth>\n      <th>Std. Error<\u002fth>\n      <th>t value<\u002fth>\n      <th>Pr(&gt;|t|)<\u002fth>\n    <\u002ftr>\n  <\u002fthead>\n  <tbody>\n    <tr>\n      <td>(Intercept)<\u002ftd>\n      <td>12.40<\u002ftd>\n      <td>1.10<\u002ftd>\n      <td>11.3<\u002ftd>\n      <td>&lt;0.001<\u002ftd>\n    <\u002ftr>\n    <tr>\n      <td>treatmentA<\u002ftd>\n      <td>5.34<\u002ftd>\n      <td>2.15<\u002ftd>\n      <td>2.48<\u002ftd>\n      <td>0.015<\u002ftd>\n    <\u002ftr>\n    <tr>\n      <td>treatmentB<\u002ftd>\n      <td>-0.93<\u002ftd>\n      <td>2.05<\u002ftd>\n      <td>-0.45<\u002ftd>\n      <td>0.65<\u002ftd>\n    <\u002ftr>\n    <tr>\n      <td>treatmentC<\u002ftd>\n      <td>-5.48<\u002ftd>\n      <td>1.95<\u002ftd>\n      <td>-2.81<\u002ftd>\n      <td>0.006<\u002ftd>\n    <\u002ftr>\n    <tr>\n      <td>treatmentD<\u002ftd>\n      <td>-2.10<\u002ftd>\n      <td>2.00<\u002ftd>\n      <td>-1.05<\u002ftd>\n      <td>0.30<\u002ftd>\n    <\u002ftr>\n  <\u002ftbody>\n<\u002ftable>\n<br>\nWhich of the following best describes the <b>effect size<\u002fb> of <code>treatmentC<\u002fcode> relative to <code>control<\u002fcode>?\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_9599ce7", 
+        option = "treatmentC is associated with an average reduction of about 5.5 units in the response variable compared with the control group.", 
+        value = "treatmentC is associated with an average reduction of about 5.5 units in the response variable compared with the control group.", 
+        label = structure("treatmentC is associated with an average reduction of about 5.5 units in the response variable compared with the control group.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_aeb7b81", 
+        option = "treatmentC explains 5.48% of the total variance in the response variable.", 
+        value = "treatmentC explains 5.48% of the total variance in the response variable.", 
+        label = structure("treatmentC explains 5.48% of the total variance in the response variable.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_38a7fc4", 
+        option = "treatmentC reduces the response variable by exactly 5.48 units for every individual.", 
+        value = "treatmentC reduces the response variable by exactly 5.48 units for every individual.", 
+        label = structure("treatmentC reduces the response variable by exactly 5.48 units for every individual.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_371b5ac", 
+        option = "treatmentC has no effect because some other treatments are not statistically significant.", 
+        value = "treatmentC has no effect because some other treatments are not statistically significant.", 
+        label = structure("treatmentC has no effect because some other treatments are not statistically significant.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1556fce", 
+        option = "treatmentC has the smallest p-value, so it is the most important treatment.", 
+        value = "treatmentC has the smallest p-value, so it is the most important treatment.", 
+        label = structure("treatmentC has the smallest p-value, so it is the most important treatment.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The coefficient for treatmentC indicates that, on average, the response variable is about 5.5 units lower than in the control group.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Effect size refers to the estimated difference relative to the reference group, not to p-values or variance explained.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Effect size refers to the estimated difference relative to the reference group, not to p-values or variance explained.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-effect-size-from-summary-5levels-answer", 
+        question = "quiz-effect-size-from-summary-5levels"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 40414249.9811806, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "ga5-q7-assumptions", 
+    question = structure("<p>Assume that diagnostic plots indicate that one or more linear regression assumptions are violated.<\u002fp>\n<p>What are reasonable strategies to solve the problem?<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_1755599", 
+        option = "Transform one or more covariates.", value = "Transform one or more covariates.", 
+        label = structure("Transform one or more covariates.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8f5818a", 
+        option = "Transform the response variable.", value = "Transform the response variable.", 
+        label = structure("Transform the response variable.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f9e678e", 
+        option = "Look for potential outliers.", value = "Look for potential outliers.", 
+        label = structure("Look for potential outliers.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6edcb50", 
+        option = "Add more terms or interactions to the regression equation.", 
+        value = "Add more terms or interactions to the regression equation.", 
+        label = structure("Add more terms or interactions to the regression equation.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2eb36a", 
+        option = "Use another model.", value = "Use another model.", 
+        label = structure("Use another model.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! All of these are reasonable strategies for addressing violated regression assumptions.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("There is often more than one valid approach to dealing with violated assumptions.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "ga5-q7-assumptions-answer", question = "ga5-q7-assumptions"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1526790774.28903, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "ga5-q6-linear-model-definition", 
+    question = structure("<p>Which of the following statements is correct about the model / equation<\u002fp>\n<p>\\(log(Y) = \\beta_0 + \\beta_1 X + \\beta_2 X^2 + \\epsilon\\)<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_745c718", 
+        option = "This is not a linear regression model, because the equation contains a quadratic term.", 
+        value = "This is not a linear regression model, because the equation contains a quadratic term.", 
+        label = structure("This is not a linear regression model, because the equation contains a quadratic term.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e582a3d", 
+        option = "This is not a linear regression model, because the response is log-transformed.", 
+        value = "This is not a linear regression model, because the response is log-transformed.", 
+        label = structure("This is not a linear regression model, because the response is log-transformed.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ebc89fa", 
+        option = "This is a linear regression model, because the model is linear in the coefficients.", 
+        value = "This is a linear regression model, because the model is linear in the coefficients.", 
+        label = structure("This is a linear regression model, because the model is linear in the coefficients.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1c77b0", 
+        option = "This is a linear regression model, if the coefficient $\beta_0$ is zero.", 
+        value = "This is a linear regression model, if the coefficient $\beta_0$ is zero.", 
+        label = structure("This is a linear regression model, if the coefficient \\(\beta_0\\) is zero.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! A linear regression model is defined by being linear in the coefficients, regardless of transformations of variables.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Linearity refers to the coefficients, not to whether variables are transformed or squared.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Linearity refers to the coefficients, not to whether variables are transformed or squared.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "ga5-q6-linear-model-definition-answer", question = "ga5-q6-linear-model-definition"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 98338150.9542077, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+</p>
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.28"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"character","attributes":{},"value":["<style>h1 {font-size: 34px;}\n       h1.title {font-size: 38px;}\n       h2 {font-size: 30px;}\n       h3 {font-size: 24px;}\n       h4 {font-size: 18px;}\n       h5 {font-size: 16px;}\n       h6 {font-size: 12px;}\n       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}\n       pre:not([class]) { background-color: white }<\/style>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["i18n"]},{"type":"character","attributes":{},"value":["21.6.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/i18n"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["i18next.min.js","tutorial-i18n-init.js"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["<script id=\"i18n-cstm-trns\" type=\"application/json\">{\"language\":\"en\",\"resources\":{\"en\":{\"translation\":{\"button\":{\"runcode\":\"Run Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hints\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Next Hint\",\"hintprev\":\"Previous Hint\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copy to Clipboard\",\"startover\":\"Start Over\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continue\",\"submitanswer\":\"Submit Answer\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Previous Topic\",\"nexttopic\":\"Next Topic\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Try Again\"},\"text\":{\"startover\":\"Start Over\",\"areyousure\":\"Are you sure you want to start over? (all exercise progress will be reset)\",\"youmustcomplete\":\"You must complete the\",\"exercise\":\"exercise\",\"exercise_plural\":\"exercises\",\"inthissection\":\"in this section before continuing.\",\"code\":\"Code\",\"enginecap\":\"{{engine}} $t(text.code)\",\"quiz\":\"Quiz\",\"blank\":\"blank\",\"blank_plural\":\"blanks\",\"exercisecontainsblank\":\"This exercise contains {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Please replace {{blank}} with valid code.\",\"unparsable\":\"It looks like this might not be valid R code. R cannot determine how to turn your text into a complete command. You may have forgotten to fill in a blank, to remove an underscore, to include a comma between arguments, or to close an opening <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> or <code>{<\\/code> with a matching <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> or <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>It looks like your R code contains specially formatted quotation marks or &quot;curly&quot; quotes (<code>{{character}}<\\/code>) around character strings, making your code invalid. R requires character values to be contained in straight quotation marks (<code>&quot;<\\/code> or <code>'<\\/code>).<\\/p> {{code}} <p>Don't worry, this is a common source of errors when you copy code from another app that applies its own formatting to text. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. Try deleting the special character from your code and retyping it manually.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"and\":\"and\",\"or\":\"or\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"fr\":{\"translation\":{\"button\":{\"runcode\":\"Lancer le Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Indication\",\"hint_plural\":\"Indications\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Indication Suivante\",\"hintprev\":\"Indication Précédente\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copier dans le Presse-papier\",\"startover\":\"Recommencer\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuer\",\"submitanswer\":\"Soumettre\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Chapitre Précédent\",\"nexttopic\":\"Chapitre Suivant\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Réessayer\"},\"text\":{\"startover\":\"Recommencer\",\"areyousure\":\"Êtes-vous certains de vouloir recommencer? (La progression sera remise à zéro)\",\"youmustcomplete\":\"Vous devez d'abord compléter\",\"exercise\":\"l'exercice\",\"exercise_plural\":\"des exercices\",\"inthissection\":\"de cette section avec de continuer.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"et\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"es\":{\"translation\":{\"button\":{\"runcode\":\"Ejecutar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Pista\",\"hint_plural\":\"Pistas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Siguiente pista\",\"hintprev\":\"Pista anterior\",\"solution\":\"Solución\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar al portapapeles\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar respuesta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tema anterior\",\"nexttopic\":\"Tema siguiente\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Volver a intentar\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"¿De verdad quieres empezar de nuevo? (todo el progreso del ejercicio se perderá)\",\"youmustcomplete\":\"Debes completar\",\"exercise\":\"el ejercicio\",\"exercise_plural\":\"los ejercicios\",\"inthissection\":\"en esta sección antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Cuestionario\",\"and\":\"y\",\"or\":\"o\",\"oxfordcomma\":\"\"}}},\"pt\":{\"translation\":{\"button\":{\"runcode\":\"Executar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Dica\",\"hint_plural\":\"Dicas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Próxima dica\",\"hintprev\":\"Dica anterior\",\"solution\":\"Solução\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar para a área de transferência\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar resposta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tópico anterior\",\"nexttopic\":\"Próximo tópico\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tentar novamente\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"Tem certeza que deseja começar novamente? (todo o progresso feito será perdido)\",\"youmustcomplete\":\"Você deve completar\",\"exercise\":\"o exercício\",\"exercise_plural\":\"os exercícios\",\"inthissection\":\"nesta seção antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"e\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"tr\":{\"translation\":{\"button\":{\"runcode\":\"Çalıştırma Kodu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Ipucu\",\"hint_plural\":\"İpuçları\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Sonraki İpucu\",\"hintprev\":\"Önceki İpucu\",\"solution\":\"Çözüm\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Pano'ya Kopyala\",\"startover\":\"Baştan Başlamak\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Devam et\",\"submitanswer\":\"Cevabı onayla\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Önceki Konu\",\"nexttopic\":\"Sonraki Konu\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tekrar Deneyin\"},\"text\":{\"startover\":\"Baştan Başlamak\",\"areyousure\":\"Baştan başlamak istediğinizden emin misiniz? (tüm egzersiz ilerlemesi kaybolacak)\",\"youmustcomplete\":\"Tamamlamalısın\",\"exercise\":\"egzersiz\",\"exercise_plural\":\"egzersizler\",\"inthissection\":\"devam etmeden önce bu bölümde\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Sınav\",\"oxfordcomma\":\"\"}}},\"emo\":{\"translation\":{\"button\":{\"runcode\":\"🏃\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"💡\",\"hint_plural\":\"$t(button.hint)\",\"hinttitle\":\"$t(button.hint)\",\"solution\":\"🎯\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"📋\",\"startover\":\"⏮\",\"startovertitle\":\"Start Over\",\"continue\":\"✅\",\"submitanswer\":\"🆗\",\"submitanswertitle\":\"Submit Answer\",\"previoustopic\":\"⬅\",\"nexttopic\":\"➡\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"🔁\"},\"text\":{\"startover\":\"⏮\",\"areyousure\":\"🤔\",\"youmustcomplete\":\"⚠️ 👉 🧑‍💻\",\"exercise\":\"\",\"exercise_plural\":\"\",\"inthissection\":\"\",\"code\":\"💻\",\"enginecap\":\"$t(text.code) {{engine}}\",\"oxfordcomma\":\"\"}}},\"eu\":{\"translation\":{\"button\":{\"runcode\":\"Kodea egikaritu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Laguntza\",\"hint_plural\":\"Laguntza\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Aurreko laguntza\",\"hintprev\":\"Hurrengo laguntza\",\"solution\":\"Ebazpena\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Arbelean kopiatu\",\"startover\":\"Berrabiarazi\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Jarraitu\",\"submitanswer\":\"Erantzuna bidali\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Aurreko atala\",\"nexttopic\":\"Hurrengo atala\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Berriro saiatu\"},\"text\":{\"startover\":\"Berrabiarazi\",\"areyousure\":\"Berriro hasi nahi duzu? (egindako lana galdu egingo da)\",\"youmustcomplete\":\"Aurrera egin baino lehen atal honetako\",\"exercise\":\"ariketa egin behar duzu.\",\"exercise_plural\":\"ariketak egin behar dituzu.\",\"inthissection\":\"\",\"code\":\"Kodea\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Galdetegia\",\"oxfordcomma\":\"\"}}},\"de\":{\"translation\":{\"button\":{\"runcode\":\"Code ausführen\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Tipp\",\"hint_plural\":\"Tipps\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Nächster Tipp\",\"hintprev\":\"Vorheriger Tipp\",\"solution\":\"Lösung\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"In die Zwischenablage kopieren\",\"startover\":\"Neustart\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Weiter\",\"submitanswer\":\"Antwort einreichen\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Vorheriges Kapitel\",\"nexttopic\":\"Nächstes Kapitel\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Nochmal versuchen\"},\"text\":{\"startover\":\"Neustart\",\"areyousure\":\"Bist du sicher, dass du neustarten willst? (der gesamte Lernfortschritt wird gelöscht)\",\"youmustcomplete\":\"Vervollstädinge\",\"exercise\":\"die Übung\",\"exercise_plural\":\"die Übungen\",\"inthissection\":\"in diesem Kapitel, bevor du fortfährst.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"Lücke\",\"blank_plural\":\"Lücken\",\"pleasereplaceblank\":\"Bitte ersetze {{blank}} mit gültigem Code.\",\"unparsable\":\"Dies scheint kein gültiger R Code zu sein. R kann deinen Text nicht in einen gültigen Befehl übersetzen. Du hast vielleicht vergessen, die Lücke zu füllen, einen Unterstrich zu entfernen, ein Komma zwischen Argumente zu setzen oder ein eröffnendes <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> oder <code>{<\\/code> mit einem zugehörigen <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> oder <code>}<\\/code> zu schließen.\\n\",\"and\":\"und\",\"or\":\"oder\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"ko\":{\"translation\":{\"button\":{\"runcode\":\"코드 실행\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"힌트\",\"hint_plural\":\"힌트들\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"다음 힌트\",\"hintprev\":\"이전 힌트\",\"solution\":\"솔루션\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"클립보드에 복사\",\"startover\":\"재학습\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"다음 학습으로\",\"submitanswer\":\"정답 제출\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"이전 토픽\",\"nexttopic\":\"다음 토픽\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"재시도\"},\"text\":{\"startover\":\"재학습\",\"areyousure\":\"다시 시작 하시겠습니까? (모든 예제의 진행 정보가 재설정됩니다)\",\"youmustcomplete\":\"당신은 완료해야 합니다\",\"exercise\":\"연습문제\",\"exercise_plural\":\"연습문제들\",\"inthissection\":\"이 섹션을 실행하기 전에\",\"code\":\"코드\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"퀴즈\",\"blank\":\"공백\",\"blank_plural\":\"공백들\",\"exercisecontainsblank\":\"이 연습문제에는 {{count}}개의 $t(text.blank)이 포함되어 있습니다.\",\"pleasereplaceblank\":\"{{blank}}를 유효한 코드로 바꾸십시오.\",\"unparsable\":\"이것은 유효한 R 코드가 아닐 수 있습니다. R은 텍스트를 완전한 명령으로 변환하는 방법을 결정할 수 없습니다. 당신은 공백이나 밑줄을 대체하여 채우기, 인수를 컴마로 구분하기, 또는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> , <code>{<\\/code>로 시작하는 구문을 닫는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>, <code>}<\\/code>을 잊었을 수도 있습니다.\\n\",\"and\":\"그리고\",\"or\":\"혹은\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}},\"zh\":{\"translation\":{\"button\":{\"runcode\":\"运行代码\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"提示\",\"hint_plural\":\"提示\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"下一个提示\",\"hintprev\":\"上一个提示\",\"solution\":\"答案\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"复制到剪切板\",\"startover\":\"重新开始\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"继续\",\"submitanswer\":\"提交答案\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"上一专题\",\"nexttopic\":\"下一专题\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"再试一次\"},\"text\":{\"startover\":\"重置\",\"areyousure\":\"你确定要重新开始吗? (所有当前进度将被重置)\",\"youmustcomplete\":\"你必须完成\",\"exercise\":\"练习\",\"exercise_plural\":\"练习\",\"inthissection\":\"在进行本节之前\",\"code\":\"代码\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"测试\",\"blank\":\"空\",\"blank_plural\":\"空\",\"exercisecontainsblank\":\"本练习包含{{count}}个$t(text.blank)\",\"pleasereplaceblank\":\"请在{{blank}}内填写恰当的代码\",\"unparsable\":\"这似乎不是有效的R代码。 R不知道如何将您的文本转换为完整的命令。 您是否忘了填空，忘了删除下划线，忘了在参数之间包含逗号，或者是忘了用<code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>,<code>}<\\/code>来封闭<code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code>。 or <code>{<\\/code>。\\n\",\"unparsablequotes\":\"<p>您的R代码中似乎含有特殊格式的引号，或者弯引号(<code>{{character}}<\\/code>) 在字符串前后，在R中字符串应该被直引号(<code>&quot;<\\/code> 或者 <code>'<\\/code>)包裹。<\\/p> {{code}} <p>别担心，该错误经常在复制粘贴包含格式的代码时遇到， 您可以尝试将该行中的代码替换为以下代码，也许还有其他地方需要修改。<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"and\":\"且\",\"or\":\"或\",\"listcomma\":\",\",\"oxfordcomma\":\",\"}}},\"pl\":{\"translation\":{\"button\":{\"runcode\":\"Uruchom kod\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Podpowiedź\",\"hint_plural\":\"Podpowiedzi\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Następna podpowiedź\",\"hintprev\":\"Poprzednia podpowiedź\",\"solution\":\"Rozwiązanie\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Kopiuj do schowka\",\"startover\":\"Zacznij od początku\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Kontynuuj\",\"submitanswer\":\"Wyślij\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Poprzednia sekcja\",\"nexttopic\":\"Następna sekcja\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Spróbuj ponownie\"},\"text\":{\"startover\":\"Zacznij od początku\",\"areyousure\":\"Czy na pewno chcesz zacząć od początku? (cały postęp w zadaniu zostanie utracony)\",\"youmustcomplete\":\"Musisz ukończyć\",\"exercise\":\"ćwiczenie\",\"exercise_plural\":\"ćwiczenia\",\"inthissection\":\"w tej sekcji przed kontynuowaniem\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"luka\",\"blank_plural\":\"luk(i)\",\"exercisecontainsblank\":\"To ćwiczenie zawiera {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Proszę uzupełnić {{blank}} prawidłowym kodem.\",\"unparsable\":\"Wygląda na to, że może to nie być prawidłowy kod R. R nie jest w stanie przetworzyć Twojego tekstu na polecenie. Mogłeś(-aś) zapomnieć wypełnić luki, usunąć podkreślnik, umieścić przecinka między argumentami, lub zamknąć znak <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> lub <code>{<\\/code> odpowiadającym <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> lub <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>Wygląda na to, że Twój kod zawiera szczególnie sformatowane cudzysłowy lub cudzysłowy typograficzne (<code>{{character}}<\\/code>) przy ciągach znaków, co sprawia, że kod jest niepoprawny. R wymaga cudzysłowów prostych (<code>&quot;<\\/code> albo <code>'<\\/code>).<\\/p> {{code}} <p>Nie martw się, to powszechne źródło błędów, gdy kopiuje się kod z innego programu, który sam formatuje teskt. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Spróbuj usunąć znak specjalny i wpisać do ponownie ręcznie.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"and\":\"i\",\"or\":\"lub\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}}}}<\/script>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["6.4.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.min.css","css/v4-shims.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fontawesome"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["5.5.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","checkmate","cli","commonmark","compiler","datasets","digest","ellipsis","evaluate","fastmap","fontawesome","graphics","grDevices","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","magrittr","markdown","methods","mime","promises","R6","Rcpp","rlang","rmarkdown","rprojroot","rstudioapi","sass","shiny","stats","tools","utils","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.4.1","0.8.0","1.1.0","2.3.2","3.6.5","1.9.1","4.4.1","4.4.1","0.6.37","0.3.2","1.0.5","1.2.0","0.5.2","4.4.1","4.4.1","0.5.8.1","1.6.4","1.6.15","0.1.4","2.0.0","1.48","1.3.2","0.11.5","1.0.4","2.0.3","1.13","4.4.1","0.12","1.3.0","2.6.1","1.0.13","1.1.7","2.28","2.1.1","0.16.0","0.4.9","1.9.1","4.4.1","4.4.1","4.4.1","3.0.2","0.47","1.8-4","2.3.10"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+
+</article> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h1 class="title toc-ignore" style="display:none;">Unit 5 BIO144 Course
+Content</h1>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</main> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+<!-- Build Tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>

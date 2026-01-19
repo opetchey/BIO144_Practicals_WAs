@@ -22,13 +22,13 @@ In this set of web pages, in the left margin you will see a navigation pane. You
 
 All homework is for your own practice and learning. It will not be marked or graded.
 
-**Homework common to all weeks:**
+### Homework common to all weeks
 
 * Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
 
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
-**Homework specific to Unit 2:**
+### Homework specific to Unit 2
 
 
 
@@ -37,6 +37,17 @@ All homework is for your own practice and learning. It will not be marked or gra
 * **Data wrangling**. When you'd like another perspective on data wrangling covered in the course book and lecture, take a look at Chapter 5 of *Insights from Data with R*.
 
 * **Data visualization**. When you're ready to get a deeper understanding of `ggplot`, take a look at Chapter 7 of *Insights from Data with R*.
+
+## Why ggplot2? It's so tricky!
+
+There are lots of ways to makes graphs in R. There are even lots of ways to make the same graph. Prof. Petchey promotes the use of the ggplot function in the ggplot2 package, so you will see this being used again and again and again during the practicals and elsewhere. You might find ggplot tricky at first (Prof. Petchey did -- really -- but maybe that was because he already knew other methods). But don't worry, Prof. Petchey now knows what he's doing with ggplot and has infinite patience explaining how it works :)
+
+You won't get penalised for using other methods for making graphs. Its just that it will be a bit harder for us to help you, since we'll first have to think about how to do it that way, rather than just how to make it work with ggplot (or qplot).
+
+[Some reasons for using ggplot are here.](http://varianceexplained.org/r/teach_ggplot2_to_beginners/)
+
+Another reason is that with ggplot you can do just about anything worth doing. Have a look at the [ggplot2 book online version](https://ggplot2-book.org/). It really is pretty amazing.
+ 
 
 
 ## Practical part 1

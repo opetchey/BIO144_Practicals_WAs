@@ -1,5 +1,5 @@
 ---
-title: "Week 3 BIO144 Course Content"
+title: "Unit 3 BIO144 Course Content"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
@@ -12,12 +12,21 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Introduction
 
-On this web page you will find the homework, practical exercises and weekly quiz for Week 3 of BIO144.
+On this web page you will find the homework, practical exercises and weekly quiz for Unit 3 of BIO144.
 
 All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
 
 
 ## Homework
+
+All homework is for your own practice and learning. It will not be marked or graded.
+
+### Homework common to all weeks:**
+
+* Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
+
+* When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
+
 
 ### Reading
 
@@ -39,7 +48,11 @@ A great starting point for a demonstration and explanation of these steps, in R,
 
 ### Video walkthrough
 
-You can, if you wish, watch and hear Prof. Petchey going through the analysis of the plant growth experiment in the two videos below. **Please note, however, that in these videos are quite old now and contain some older methods, such as an old method for making graphs. Please use the method in the book sections. More specifically, here is the code to use in place of the code in the videos, by line number of the code in the video:
+You can, if you wish, watch and hear Prof. Petchey going through the analysis of the plant growth experiment in the two videos below. A few things to note, however:
+
+* The second video includes a little bit of interpretation of the regression model, which we will cover in Unit 4. You can ignore that part for now.
+
+* These videos are quite old now and contain some older methods, such as an old method for making graphs. Please use the method in the course book sections. More specifically, here is the code to use in place of the code in the videos, by line number of the code in the video:
 
 Preliminaries: the videos do not load the packages ggplot2 and ggfortify. You must do this: library(ggplot2) and library(ggfortify).
 
@@ -50,7 +63,6 @@ Line 18. You obviously won't be able to paste in the text here, as the text in l
 Line 32-36. This is the old way to make a nice looking graph for communication. Replace this with a graph made with ggplot, by adding to and adjusting what you used in line 15. (On page 117 of Beckerman, Childs, and Petchey, you can see the code to make a relatively beautiful graph, in case you need a hand.)
 
 
-
 **Regression walkthrough -- part 1**
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/MHev9Edu1cs?si=47Ji5gxOEMgowY3c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -59,7 +71,33 @@ Line 32-36. This is the old way to make a nice looking graph for communication. 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jFfFvP3sqo8?si=Spu7GYQOJdwyUBxs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-The [full R script of this walkthrough is here](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/Plant_growth_rate_script.r), though note that some comments have been added and hence the line numbers do not match those above. Note that there are four videos in this series. You will have a chance to see the other two videos in Week 4, when we cover interpretation of regression models.
+The [full R script of this walkthrough is here](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/Plant_growth_rate_script.r), though note that some comments have been added and hence the line numbers do not match those above. Note that there are four videos in this series. You will have the chance to watch the final video in the next unit. 
+
+
+### Fun with regression
+
+Some things to try, if you feel the need... [Here’s an interactive tool](https://gallery.shinyapps.io/simple_regression/) that challenges you to find the best intercept and slope to fit a straight line through some data. This is you doing the regression modelling! Have a play with this.
+
+Here is another interactive tool. [This one lets you make some data, and then shows what linear regression makes of this data](https://paternogbc.shinyapps.io/SS_regression/), in terms of sums of squares, residuals, and estimates of coefficients. * If you make some data with no relationship (i.e. slope = 0), which sum of squares is small and which large, and why? Approximately what percentage of variance in the data is explained by the regression? * If you make some data with a strong relationship (i.e. slope = 2) and little variation (i.e. standard deviation close to zero), which sum of squares is small and which large, and why? Approximately what percentage of variance in the data is explained by the regression?
+
+
+
+### But I like cats!
+
+Some light relief from all this statistics... see if you can get this code to run:
+
+```{r eval = FALSE}}
+install.packages("devtools")
+library(devtools)
+install_github("Gibbsdavidl/CatterPlots")
+library(CatterPlots)
+meow <- multicat(xs=runif(21), ys=rnorm(21),
+                 cat=c(1,2,3,4,5,6,7,8,9,10),
+                 catcolor=list(c(1,1,1,1)),
+                 canvas=c(-0.1,1.1, -0.1, 1.1),
+                 xlab="some cats", ylab="other cats", main="Random Cats")
+```
+
 
 
 ## Practical part 1

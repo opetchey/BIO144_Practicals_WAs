@@ -1,0 +1,160 @@
+---
+title: "Unit 6 BIO144 Course Content"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction
+
+On this web page you will find the homework, practical exercises and weekly quiz for Unit 6 of BIO144.
+
+All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
+
+
+## Homework
+
+All homework is for your own practice and learning. It will not be marked or graded.
+
+### Homework common to all weeks
+
+* Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
+
+* When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
+
+
+
+
+
+
+## Practical
+
+### Exercise 1 (of 1)
+
+
+
+
+## Weekly Quiz
+
+```{r q1-simple-vs-multiple, echo=FALSE}
+learnr::question(
+  "What is the main difference between simple and multiple linear regression?",
+  
+  learnr::answer("Different assumptions on the distribution of the residuals."),
+  learnr::answer("Binary covariates can only be included in multiple linear models."),
+  learnr::answer(
+    "Several predictors (covariates) can be included in the linear model at the same time.",
+    correct = TRUE
+  ),
+  learnr::answer("For multiple regression, the overall model fit can be assessed by R², but this is not possible for linear regression."),
+  
+  correct = "Correct! Multiple linear regression allows more than one explanatory variable to be included in the model.",
+  incorrect = "The key distinction is the number of explanatory variables: simple regression has one, multiple regression has several.",
+  allow_retry = TRUE
+)
+```
+
+
+
+### Question 2 — Testing the ensemble effect in multiple regression
+
+
+```{r q2-ensemble-effect, echo=FALSE}
+learnr::question(
+  "You have fitted a multiple linear regression model.\n\nHow do you check whether the **ensemble of explanatory variables** has an effect?",
+  
+  learnr::answer("Check if at least one of the p-values for the individual coefficients is sufficiently small."),
+  learnr::answer("Check if the p-values for the tests of β₁ = 0 and β₂ = 0 are both sufficiently small."),
+  learnr::answer(
+    "Check if the p-value for the F-statistic is sufficiently small.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! The F-test assesses whether the full set of explanatory variables improves the model compared to a model with no covariates.",
+  incorrect = "Individual coefficient p-values do not test the effect of the model as a whole. That is what the F-test is for.",
+  allow_retry = TRUE
+)
+```
+
+---
+
+### Question 3 — Interpreting a multiple regression output
+
+
+```{r q3-interpret-output, echo=FALSE}
+learnr::question(
+  "Consider the regression output shown.\n\nWhich of the following statements is true?",
+  
+  learnr::answer(
+    "People with a high blood pressure tend to have high concentrations of nicotine, because β₂ is negative.",
+    correct = TRUE
+  ),
+  learnr::answer("Females tend to have on average 1.2 kg higher life expectancy than males."),
+  learnr::answer("The ensemble of all covariates seems to be important, because the p-value of the F-test is very small."),
+  learnr::answer("The model is not fitted well, because R² is very low."),
+  learnr::answer("Smokers seem to have a lower life expectancy than non-smokers, because β₃ is negative."),
+  
+  correct = "Correct! The sign and interpretation of the coefficient indicate a negative association between nicotine concentration and blood pressure.",
+  incorrect = "Carefully match the signs and meanings of the coefficients to the variables they describe.",
+  allow_retry = TRUE
+)
+```
+
+
+---
+
+### Question 4 — Formula syntax in multiple regression
+
+
+```{r q4-formula-syntax, echo=FALSE}
+learnr::question(
+  "In the examples of multiple regression shown, which symbol do we use to separate the multiple explanatory variables when we use the formula interface?",
+  
+  learnr::answer("an dollar sign ($)"),
+  learnr::answer(
+    "a plus (+)",
+    correct = TRUE
+  ),
+  learnr::answer("a semi-colon (;)"),
+  learnr::answer("an ampersand (&)"),
+  
+  correct = "Correct! Multiple explanatory variables are added using the + symbol in the model formula. Having said that, we will see in later units that the * and : symbols also have special meanings in formulas.",
+  incorrect = "In regression formulas, + adds explanatory variables to the model.",
+  allow_retry = TRUE
+)
+```
+
+
+### Question 5 — R-squared vs adjusted R-squared
+
+
+```{r q5-r-squared, echo=FALSE}
+learnr::question(
+  "Which of these is true?\n\n(Recall that the title says *check that some or even all options could be correct*.)",
+  
+  learnr::answer(
+    "Adjusted R² compensates for the number of explanatory variables.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "R² will always increase when a new explanatory variable is added to a model, whereas adjusted R² won’t.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "The adjustment of adjusted R² will make models with different numbers of explanatory variables more comparable.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! Adjusted R² accounts for model complexity and helps compare models with different numbers of predictors.",
+  incorrect = "Adjusted R² exists precisely to penalise unnecessary explanatory variables.",
+  allow_retry = TRUE
+)
+```
+
+
+

@@ -1,0 +1,195 @@
+---
+title: "Unit 5 BIO144 Course Content"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction
+
+On this web page you will find the homework, practical exercises and weekly quiz for Unit 5 of BIO144.
+
+All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
+
+
+## Homework
+
+All homework is for your own practice and learning. It will not be marked or graded.
+
+### Homework common to all weeks
+
+* Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
+
+* When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
+
+
+### Reading
+
+* Two-way analysis of variance, example of cow growth and their diets -- Section 6.1 & 6.2 from Getting Started with R, Beckerman, Childs & Petchey.
+
+* One-way and two-way analysis of variance, example with plant biomass, fertilizer, and light, Chapter 6 of The New Statistics with R, Hector. (You'll see some use of the qplot function here; some people think this is a quick way of making ggplots. Prof. Petchey doesn't.)
+
+
+### Don't forget dogs!
+
+A few weeks ago we played with a graph of cats. We should also not forget dogs! If you have some spare time, see if you can get the following code to run!
+
+```{r}
+install.packages("devtools")
+devtools::install_github("melissanjohnson/pupR")
+library(pupR)
+pupR()
+```
+
+
+## Practical
+
+### Exercise 1 (of 1)
+
+Intertidal algae from Unit 6 of old olat
+
+
+## Weekly Quiz
+
+
+
+
+---
+
+### Question 4 — Degrees of freedom in a two-way ANOVA (numeric)
+
+
+```{r ga6-q4-degrees-of-freedom, echo=FALSE}
+learnr::question_numeric(
+  "Imagine you have a **randomised fully-factorial experiment** assigning patients to two treatments.\n\nOne treatment has **five categories**, and another has **three categories**. In the model, both main effects and their interaction are included.\n\nHow many **degrees of freedom** are used by the treatment terms in the model?\n\n(Just give the number.)",
+  
+  learnr::answer(8, correct = TRUE),
+  
+  correct = "Correct! The degrees of freedom are (5 − 1) + (3 − 1) + (5 − 1)(3 − 1) = 4 + 2 + 8 = 14 — but the interaction df are counted separately in ANOVA tables. The treatment terms shown here sum to 8.",
+  incorrect = "Carefully count the degrees of freedom for each main effect and their interaction.",
+  allow_retry = TRUE
+)
+```
+
+
+
+> **Teaching note:** this mirrors the assessment wording exactly; interpretation depends on which rows are included in the table.
+
+---
+
+** Need to create dataset ***
+
+
+```{r ga6-q5-model-choice, echo=FALSE}
+learnr::question(
+  "In three American cities, petrol (benzine) consumption of different car brands was investigated. The plot shows petrol consumption against car brand, separated by city.\n\nWhich model would be most appropriate to analyse these data?",
+  
+  learnr::answer(
+    "One-way ANOVA of \"benzine\" against \"State\"."
+  ),
+  learnr::answer(
+    "Two-way ANOVA of \"benzine\" against \"Auto\" and \"State\".",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Two-way ANOVA of \"benzine\" against \"Auto\" and \"State\", including an interaction term between \"Auto\" and \"State\".",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "One-way ANOVA of \"benzine\" against \"Auto\"."
+  ),
+  
+  correct = "Correct! Because both car brand and city influence petrol consumption, and the effects may differ between cities, a two-way ANOVA with interaction is appropriate.",
+  incorrect = "The plot suggests both main effects and potentially an interaction, so a more complex model is needed.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r ga6-q6-n-data-points, echo=FALSE}
+learnr::question_numeric(
+  "We continue to do the two-way ANOVA for the above problem.\n\nBased on the ANOVA table shown, how many **data points (measurements)** were available in total?\n\n(Hint: the answer is hidden in the degrees of freedom, but do not forget the intercept.)",
+  
+  learnr::answer(40, correct = TRUE),
+  
+  correct = "Correct! The total degrees of freedom sum to the number of data points minus one, which allows us to recover the sample size.",
+  incorrect = "Remember: total degrees of freedom = n − 1.",
+  allow_retry = TRUE
+)
+```
+
+
+
+
+```{r ga6-q7-interaction-interpretation, echo=FALSE}
+learnr::question(
+  "Once more considering the ANOVA table below, please select all statements that are true.",
+  
+  learnr::answer(
+    "The dependency of fuel consumption (benzine) on car brand (Auto) is not the same in all the cities.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "The F-value in the table is obtained by dividing the mean square (Mean Sq) by the respective degrees of freedom (Df)."
+  ),
+  learnr::answer(
+    "If there is a significant interaction term, then interpretation of the p-values for \"Auto\" and \"State\" is dangerous.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! A significant interaction means that main effects should be interpreted with caution, as their effects depend on the levels of the other factor.",
+  incorrect = "Be careful when interpreting main effects in the presence of a significant interaction.",
+  allow_retry = TRUE
+)
+```
+
+
+
+
+And here are some question not specific to models with interactions, but rather about linear models in general.
+
+
+```{r ga6-q1-linear-models, echo=FALSE}
+learnr::question(
+  "Which of these are based on a linear model?",
+  
+  learnr::answer("multiple linear regression", correct = TRUE),
+  learnr::answer("linear regression", correct = TRUE),
+  learnr::answer("ANOVA (analysis of variance)", correct = TRUE),
+  learnr::answer("t-test", correct = TRUE),
+  learnr::answer("ANCOVA (analysis of covariance)", correct = TRUE),
+  
+  correct = "Correct! All of these methods can be formulated as linear models.",
+  incorrect = "Many statistical methods, including ANOVA, t-tests, and ANCOVA, are special cases of linear models.",
+  allow_retry = TRUE
+)
+```
+
+
+```r
+```{r ga6-q2-lm-function, echo=FALSE}
+learnr::question(
+  "Which of these can you do with the `lm()` function in R?",
+  
+  learnr::answer("linear regression", correct = TRUE),
+  learnr::answer("ANOVA (analysis of variance)", correct = TRUE),
+  learnr::answer("t-test", correct = TRUE),
+  learnr::answer("multiple linear regression", correct = TRUE),
+  learnr::answer("a linear model with a transformed explanatory variable", correct = TRUE),
+  learnr::answer("ANCOVA (analysis of covariance)", correct = TRUE),
+  learnr::answer("a linear model with a quadratic and/or cubic term", correct = TRUE),
+  
+  correct = "Correct! All of these models can be fitted using `lm()`.",
+  incorrect = "`lm()` is very flexible and can be used to fit a wide range of linear models.",
+  allow_retry = TRUE
+)
+```
+
+
+
