@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+<meta name="learnr-version-prerender" content="0.11.5" />
+
+<title>Unit 5 BIO144 Course Content</title>
+
+<!-- header-includes START -->
+<!-- HEAD_CONTENT -->
+<!-- header-includes END -->
+<!-- HEAD_CONTENT -->
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/de8a9c38618903627ca509f5401d50a0876079f7/inst/rmd/h/default.html#L293-L343 -->
+<!-- tabsets -->
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+<!-- end tabsets -->
+
+
+</head>
+
+<body>
+<a class='sr-only sr-only-focusable visually-hidden-focusable' href='#learnr-tutorial-content'>Skip to Tutorial Content</a>
+
+
+
+<div class="pageContent band">
+<main class="bandContent page">
+
+<article class="topics" id="learnr-tutorial-content">
+
+<div id="section-introduction" class="section level2">
+<h2>Introduction</h2>
+<p>On this web page you will find the homework, practical exercises and
+weekly quiz for Unit 5 of BIO144.</p>
+<p>All other information for the course is on the OLAT course webpages,
+and web pages linked to from there: <a
+href="https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740">OLAT
+BIO144 Info. Hub</a></p>
+</div>
+<div id="section-homework" class="section level2">
+<h2>Homework</h2>
+<p>All homework is for your own practice and learning. It will not be
+marked or graded.</p>
+<div id="section-homework-common-to-all-weeks" class="section level3">
+<h3>Homework common to all weeks</h3>
+<ul>
+<li><p>Review the material from the lecture(s) this week. Make sure you
+understand the concepts and ideas presented. Ensure you can follow any
+mathematical or statistical explanations. Ensure you can do the R that
+is needed for the week’s learning objectives.</p></li>
+<li><p>When you find things you don’t understand or have trouble doing
+(e.g., in R), make a note of these. You can then ask a teaching
+assistant (TA) for help during the practical session, and you can ask on
+the Discussion Forum on OLAT. You can also ask questions during the
+lectures.</p></li>
+</ul>
+</div>
+<div id="section-reading" class="section level3">
+<h3>Reading</h3>
+<p>Remember, all this is optional, for your own learning and practice.
+You do not have to do any of this reading if you don’t want to.</p>
+<ul>
+<li>Two-way analysis of variance, example of cow growth and their diets
+– Section 6.1 &amp; 6.2 from Getting Started with R, Beckerman, Childs
+&amp; Petchey.</li>
+<li>One-way and two-way analysis of variance, example with plant
+biomass, fertilizer, and light, Chapter 6 of The New Statistics with R,
+Hector. (You’ll see some use of the qplot function here; some people
+think this is a quick way of making ggplots. Prof. Petchey
+doesn’t.)</li>
+<li>Read about ANCOVA in section 6.3 of Getting Started with R, by
+Beckerman, Childs, and Petchey.</li>
+<li>For an alternate perspective on ANCOVA, read chapter 7 of The New
+Statistics with R. This chapter includes Box 7.3 about something called
+orthogonality… which is a quite important difference between data coming
+from well designed experiments and data coming from elsewhere.</li>
+</ul>
+</div>
+<div id="section-videos-about-ancova" class="section level3">
+<h3>Videos about ANCOVA</h3>
+<p>In this series of videos, Prof. Petchey explains ANCOVA, and shows
+how to do it in R. He does this by showing first regression, then ANOVA,
+then ANCOVA, all with one dataset. The videos were made a while back, so
+some details of the content does not fit perfectly with the current
+content and structure of the course. But the statistics don’t
+change!</p>
+<p>The first video introduces the case study and dataset, and then
+performs simple linear regression.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/n3Lt0-yTbNk?si=QzwpWqo9kVgZplkO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<p>The second video performs a one-way ANOVA, including how to interpret
+the beta coefficients.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/On32bU7Kbjw?si=HuanaUJv85PFtiTy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<p>The third video concerns ANCOVA. Finally!</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lEDcDxa6w8o?si=YfFoHp-kB0VUpCxG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+</div>
+<div id="section-dont-forget-dogs" class="section level3">
+<h3>Don’t forget dogs!</h3>
+<p>A few weeks ago we played with a graph of cats. We should also not
+forget dogs! If you have some spare time, see if you can get the
+following code to run!</p>
+</div>
+</div>
+<div id="section-practical-part-1" class="section level2">
+<h2>Practical part 1</h2>
+<p>In this exercise, you will work through two-way analysis of
+variance.</p>
+<p>The steps to follow are:</p>
+<ol start="0" style="list-style-type: decimal">
+<li>Get introduced to and think about the biological question.</li>
+<li>Prepare a script, load the data, and make some basic checks on the
+dataset.</li>
+<li>Visualise to answer the question.</li>
+<li>Fit an appropriate model. treatments.</li>
+<li>Check the assumptions of the model.</li>
+<li>Interpret the model.</li>
+<li>Make a visualisation of the data, good for publication.</li>
+<li>Write a short reporting sentence describing your findings.</li>
+<li>Critique and reflection</li>
+</ol>
+<div id="section-the-biological-question" class="section level3">
+<h3>0. The biological question</h3>
+<p>The seashore is a lovely place, though in Zurich we’re not best
+placed to often enjoy one. Fortunately we have the lake. But I digress.
+One of the great things about some seashores is the animal and plants
+that live there, especially in the intertidal, the area between low and
+high tide where environmental conditions vary enormously over short
+distances and short timescales. In the intertidal, interactions among
+organisms can be quite important. The study you’re going to work on in
+this practical exercise is about herbivory by organisms such as limpets,
+and how this might vary across the intertidal, from low in the
+intertidal to higher up. The example comes from the book <em>The
+Analysis of Biological Data</em> by Whitlock and Schluter, and was
+originally made and published by <a
+href="https://tinyurl.com/yvymcpsm">Harley, C. D. G. 2003. Ecology 84:
+1477-1488</a>.</p>
+<p>The question is: does the effect of herbivory on algal area depend on
+height in the intertidal?</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-biological-question" class="tutorial-question panel-body">
+<div id="quiz-intertidal-biological-question-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-biological-question-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-biological-question-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>In the experiment, 32 plots were cleared of algae just below low
+tide, these plots were therefore always underwater. Another 32 plots
+were in the intertidal. A small amount of transplanted algae was glued
+in the middle of each plot. 16 randomly chosen plots below low tide were
+fenced, to exclude herbivores. The same was done for 16 plots in the
+intertidal. The remaining plots were accessible to herbivores. The area
+of algae remaining after a certain time was measured.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-factors" class="tutorial-question panel-body">
+<div id="quiz-intertidal-factors-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-factors-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-factors-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-response-explicit" class="tutorial-question panel-body">
+<div id="quiz-intertidal-response-explicit-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-response-explicit-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-response-explicit-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-expected-pattern" class="tutorial-question panel-body">
+<div id="quiz-intertidal-expected-pattern-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-expected-pattern-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-expected-pattern-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-design-why-shuffled" class="tutorial-question panel-body">
+<div id="quiz-intertidal-design-why-shuffled-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-design-why-shuffled-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-design-why-shuffled-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Another way to describe the design of the experiment is: a two-way
+fully factorial experiment with treatments height (low or high) and
+herbivory (minus or plus). There were 16 replicates per treatment
+combination (i.e., 16 plots low height with herbivores, 16 plots low
+height without herbivores, 16 plots high height with herbivores, and 16
+plots high height without herbivores). Therefore, there were 64 plots in
+total.</p>
+<p>Now let’s think about degrees of freedom in this design. There are 64
+observations.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-number-of-betas" class="tutorial-question panel-body">
+<div id="quiz-intertidal-number-of-betas-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-number-of-betas-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-number-of-betas-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-df-error" class="tutorial-question panel-body">
+<div id="quiz-intertidal-df-error-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-df-error-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-df-error-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Great, so we know how many degrees of freedom for error to expect. We
+can also make some expectations about what the ANOVA table will look
+like when we fit the model.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-anova-table-structure" class="tutorial-question panel-body">
+<div id="quiz-intertidal-anova-table-structure-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-anova-table-structure-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-anova-table-structure-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-df-model-terms" class="tutorial-question panel-body">
+<div id="quiz-intertidal-df-model-terms-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-df-model-terms-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-df-model-terms-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Awesome, we know what to expect from the ANOVA table when we fit the
+model.</p>
+<p>If you’re a bit uncertain about this, sketch out the ANOVA table on a
+piece of paper, and fill in the degrees of freedom you expect to see.
+And ask a TA to check your sketch and thinking.</p>
+</div>
+<div
+id="section-prepare-a-script-load-the-data-and-make-some-basic-checks-on-the-dataset."
+class="section level3">
+<h3>1. Prepare a script, load the data, and make some basic checks on
+the dataset.</h3>
+<p>You’ve done this before a few times now. Go for it! The dataset
+<code>intertidalalgae.csv</code> is in the usual place.</p>
+<p>The experimental design is known as “balanced” because there were
+equal number of replicates (16) per treatment combination. This is
+important to know, because in a balanced design, the statistical
+analysis is simpler and more robust.</p>
+<p>However, even when the <em>design</em> is balanced, the outcome data
+may not be perfectly balanced (e.g., due to missing data). Therefore, it
+is always important to check the data after loading it. Do a “group_by”
+(with both explanatory variables) and “summarise” to check the number of
+data points per treatment combination.</p>
+<p>Also check that the two treatments do each indeed contain only two
+levels. Here is how to do this with the <code>distinct</code>
+function.</p>
+<pre class="r"><code>intertidal %&gt;%
+  distinct(height)</code></pre>
+<p>And we need to check for NAs. A quick method is to again do a
+“group_by” and “summarise”, this time make it on a version of the
+dataset with na.omit() applied. This function removes any rows with NAs
+in any column.</p>
+<p>Same result, so there are no NAs anywhere in the dataset. Note that
+if we had found fewer rows in the na.omit() version, we would need to
+investigate which rows and variables were missing data, and why.
+Depending on the situation, we might need to exclude some treatment
+combinations from the analysis if they had too few data points.</p>
+<p>Have a look at the distribution of the response variable
+<code>Area_cm2</code> in each of the four treatment combinations. Your
+friend here is <code>facet_grid</code>.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-low-values" class="tutorial-question panel-body">
+<div id="quiz-intertidal-low-values-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-low-values-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-low-values-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>What do you think is going on here? Why might algal area be so low
+when herbivores are present at low tidal height? Discuss with your
+neighbour or a TA. And why might there be more algae in the other
+treatment combinations?</p>
+<p>Whitlock and Schluter (in their book) transform the
+<code>Area_cm2</code> variable by taking the square root. This might
+make sense so it becomes a linear measure, rather than a being a square.
+On the other hand, it doesn’t really make the distributions much
+better!</p>
+<p>But in any case, go ahead and square root transform it. Use the
+square root for everything from now on. (Do make sure you do this,
+otherwise you could get wrong some of the following questions.)</p>
+</div>
+<div id="section-visualise-the-answer-to-the-question"
+class="section level3">
+<h3>2. Visualise the answer to the question</h3>
+<p>Now make a graph that will tell you the answer, about the effects of
+herbivores and height, and in particular if the effect of herbivores
+differs depending on height (i.e. is there an interaction?).</p>
+<p>Use ggplot (of course) and map height to the x axis, and herbivores
+to colour, and your transformed area variable to the y axis. The use
+either <code>geom_boxplot</code> or <code>geom_point</code> (or both).
+If you use <code>geom_point</code>, you might want to consider putting
+this inside the brackets
+<code>position=position_jitterdodge(jitter.width = 0.2)</code></p>
+<p><code>jitterdodge</code> sounds a bit funny eh! It does just what it
+says, jitter the points a bit, so they don’t lie on top of each other,
+and dodges the treatments out of each other’s way. Compare the graph to
+if this wasn’t in the geom_point brackets.</p>
+<p><img src="Unit7_files/figure-html/unnamed-chunk-9-1.png" width="624" /></p>
+<p>Look at the graph, imagine a line connecting the means of the two
+herbivore treatments at low height, and another line connecting the
+means of the two herbivore treatments at mid height. Are these lines
+parallel, or are they not parallel?</p>
+<p>Look again. What is the effect of herbivores at low height? The
+answer is that there is a large effect of herbivores at low height, with
+much less algae when herbivores are present.</p>
+<p>Now, what is the effect of herbivores at mid height? The answer is
+that there no clear effect of herbivores at mid height, with similar
+amounts of algae whether herbivores are present or not.</p>
+<p>So we can pretty confidently say that the effect of herbivores
+depends on tidal height. This is an interaction. Given the strength of
+the pattern in the graph, we can be quite confident in our answer to the
+question, even without making and interpreting a statistical model.</p>
+<p>And in the ANOVA table, we expect that the interaction term will have
+a large F value, and a small p value (less than 0.05).</p>
+<hr />
+<p>Just for some practice, and less so for answering any biological
+question, calculate the mean and the standard deviation of each of the
+treatment combinations. Hint: use <code>group_by</code>, include both
+the explanatory variables, and then use <code>summarise</code>.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-mean-noherb-low" class="tutorial-question panel-body">
+<div id="quiz-intertidal-mean-noherb-low-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-mean-noherb-low-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-mean-noherb-low-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-sd-withherb-midh" class="tutorial-question panel-body">
+<div id="quiz-intertidal-sd-withherb-midh-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-sd-withherb-midh-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-sd-withherb-midh-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-fit-an-appropriate-statistical-model"
+class="section level3">
+<h3>3. Fit an appropriate statistical model</h3>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-linear-model-interaction-syntax" class="tutorial-question panel-body">
+<div id="quiz-linear-model-interaction-syntax-answer_container" class="shiny-html-output"></div>
+<div id="quiz-linear-model-interaction-syntax-message_container" class="shiny-html-output"></div>
+<div id="quiz-linear-model-interaction-syntax-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Now fit the linear model with two main effect and the interaction
+term.</p>
+</div>
+<div id="section-check-the-assumptions-of-model" class="section level3">
+<h3>4. Check the assumptions of model</h3>
+<p>Make the four plots we use to check if the model assumptions are
+reasonably well met by the data and our model.</p>
+<p>Write a sentence describing your assessment of how well each of the
+five assumptions of a linear model are met. Check in with a TA for
+feedback on your assessment.</p>
+</div>
+<div id="section-interpret-the-model" class="section level3">
+<h3>5. Interpret the model</h3>
+<p>Get the ANOVA table for the model.</p>
+<p>The first thing to check, and this is really important, is the
+degrees of freedom for each of the terms in the ANOVA table. Do they
+match what you expected?</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-anova-df-unexpected-misspecified" class="tutorial-question panel-body">
+<div id="quiz-anova-df-unexpected-misspecified-answer_container" class="shiny-html-output"></div>
+<div id="quiz-anova-df-unexpected-misspecified-message_container" class="shiny-html-output"></div>
+<div id="quiz-anova-df-unexpected-misspecified-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>We can also see that, as expected, the ANOVA table contains rows for
+both main effects and their interaction. And that each of these terms
+has 1 degree of freedom, as we expected. Everything is good.</p>
+<p>If we add up all the sums of squares, we get the total sum of
+squares. Here it is about 18’500. We can check this:</p>
+<pre class="r"><code>sum((intertidal$Area_sqrt - mean(intertidal$Area_sqrt))^2)</code></pre>
+<pre><code>## [1] 18488.63</code></pre>
+<p>(<em>Took me ages to get the brackets in the correct place
+there!</em>)</p>
+<p>Use the total sum of squares to calculate the
+<strong>UN</strong>adjusted R squared for the model.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-intertidal-adjusted-r2" class="tutorial-question panel-body">
+<div id="quiz-intertidal-adjusted-r2-answer_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-adjusted-r2-message_container" class="shiny-html-output"></div>
+<div id="quiz-intertidal-adjusted-r2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Now look at the <span class="math inline">\(F\)</span> values and
+<span class="math inline">\(p\)</span> values. Do they match what you
+expected from looking at the graph?</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-interaction-main-effects-meaning" class="tutorial-question panel-body">
+<div id="quiz-interaction-main-effects-meaning-answer_container" class="shiny-html-output"></div>
+<div id="quiz-interaction-main-effects-meaning-message_container" class="shiny-html-output"></div>
+<div id="quiz-interaction-main-effects-meaning-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>We can see there is a statistically significant effect of herbivores,
+but as we have an interaction, this must be interpreted with caution.
+The effect of herbivores depends on tidal height. Looking at the graph,
+there really is no effect of herbivores at mid intertidal range. So it
+is pretty meaningless to say there is an overall effect of herbivores,
+even when the model detects this.</p>
+<p>With such a clear pattern in the graph, and in the ANOVA table, we
+can be quite confident in saying that there is an interaction between
+tidal height and herbivory. And we can see what causes this in the data:
+a strong effect of herbivory at low tidal height, and no effect of
+herbivory at mid tidal height.</p>
+<p>In this situation, I (Owen) do not find it necessary to do post-hoc
+tests to find out which treatments differ from which others. The graph
+and the ANOVA table already tell us this quite clearly.</p>
+<hr />
+<p>If, however, we wanted to know if algal area was significantly
+different between mid and low height in the absence of herbivores, then
+we could do a post-hoc test for this specific comparison. But, be really
+careful here… we have “mission creep” – we specified a clear and
+important biological question at the start, and now we are moving on to
+another question. Reasons to avoid this include: increasing the risk of
+false positives, and the danger of “cherry picking” results that support
+a desired conclusion.</p>
+<p>Another really important reason to avoid this, or at least be very
+careful, is that we can end up not finishing our projects because we
+keep adding more and more questions! <strong>This is one of the most
+important reasons for having a clear, well researched, and well
+justified research question at the start of a project.</strong> Because
+the end of the project is then already clearly defined at the beginning
+of the project: <strong>the project ends when the question is
+answered</strong>. (Of course there will be follow on questions, but
+these go to the next project.)</p>
+</div>
+<div id="section-make-a-visualisation-of-the-data-good-for-publication"
+class="section level3">
+<h3>6. Make a visualisation of the data, good for publication</h3>
+<p>Make a publication quality figure. Build it up step by step. Check
+each new feature or adjustment works before making another. Work towards
+a figure that meets the following criteria. The criteria are
+intentionally “high-level”, so you will have to think about what they
+mean in practice. This also gives you freedom to be creative in how you
+meet the criteria.</p>
+<ol style="list-style-type: decimal">
+<li>Is in a style that matches the intended publication (e.g., academic
+journal, or popular science magazine). (You choose the publication
+style.)</li>
+<li>Clearly and directly addresses the research question.</li>
+<li>Is interpretable on its own.</li>
+<li>Shows the data honestly.</li>
+<li>Make uncertainty visible.</li>
+<li>Is visually clear and readable.</li>
+<li>Is reproducible.</li>
+</ol>
+<p>When you’re done, or if you want feedback along the way, check in
+with a TA, or with a neighbour. See what wonderful figures they
+produced.</p>
+<p>(Only if you really really have nothing better to do, here is a fun
+challenge for you. Create a figure that would be suitable for inclusion
+in a cyberpunk-style science magazine (think neon lights, high contrast,
+futuristic vibes) while still being scientifically honest and
+interpretable. If you do this, and are happy to share, please email your
+figure to Owen so he can show it in a lecture! If you want to choose
+another style, please go ahead, and please also share to Owen!)</p>
+</div>
+<div id="section-write-reporting-sentences." class="section level3">
+<h3>7. Write reporting sentence(s).</h3>
+<p>Write a few sentences reporting the results of your analysis. The
+sentences should include:</p>
+<ol style="list-style-type: decimal">
+<li>A brief description of the analysis performed.</li>
+<li>A brief interpretation of the results in relation to the biological
+question.</li>
+<li>The key statistics.</li>
+</ol>
+<p>When you’re done, check in with a TA and or neighbour for feedback on
+your reporting.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-reporting-df-why-useful" class="tutorial-question panel-body">
+<div id="quiz-reporting-df-why-useful-answer_container" class="shiny-html-output"></div>
+<div id="quiz-reporting-df-why-useful-message_container" class="shiny-html-output"></div>
+<div id="quiz-reporting-df-why-useful-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-critique-and-reflection" class="section level3">
+<h3>8. Critique and reflection</h3>
+<p>Reflect on your analysis and reporting, and your learning. What went
+well? What could be improved? Discuss with a neighbour or a TA.</p>
+<p>What could be done better in the experiment? Discuss with a neighbour
+or a TA.</p>
+<p>One place where we could have improved the study is to have made a
+hypothesis and prediction before doing the experiment. We may have
+thought the following:</p>
+<ul>
+<li><strong>Hypothesis</strong>: in the mid intertidal the herbivores
+are not active and perhaps even not present, due to the very variable
+environmental conditions (e.g., exposure to air, temperature
+fluctuations). Therefore, herbivory will have little effect on algal
+area at mid tidal height. Whereas in the low intertidal, herbivores are
+active and abundant, and will therefore strongly reduce algal area when
+present.</li>
+<li><strong>Prediction</strong>: we expect to find an interaction
+between tidal height and herbivory, with a strong effect of herbivory at
+low tidal height, and little or no effect of herbivory at mid tidal
+height.</li>
+</ul>
+<p>(<strong>PLEASE NOTE</strong>: in reality we <strong>MUST
+NOT</strong> make up the hypothesis and prediction after seeing the
+data! This is just an example of what could have been done before the
+experiment was performed.)</p>
+</div>
+</div>
+<div id="section-practical-part-2" class="section level2">
+<h2>Practical part 2</h2>
+<p>In this practical part, you will work through an analysis of
+covariance. Please use this structure for your work on this
+exercise:</p>
+<ol start="0" style="list-style-type: decimal">
+<li>Get introduced to and think about the biological question.</li>
+<li>Prepare a script, load the data, and make some basic checks on the
+dataset.</li>
+<li>Visualise to answer the question.</li>
+<li>Fit an appropriate model. treatments.</li>
+<li>Check the assumptions of the model.</li>
+<li>Interpret the model.</li>
+<li>Make a visualisation of the data, good for publication.</li>
+<li>Write a short reporting sentence describing your findings.</li>
+<li>Critique and reflection</li>
+</ol>
+<p><em>In this practical part, there is less guidance for you, and fewer
+questions. This is intentional. As you experience more, you become more
+capable to do what you already experienced, and more able and confident
+to tackle new things. As you get the hang of these, we increase our
+expectations of you! This is how learning works. Of course, reach out
+for support at any point!</em></p>
+<p>(The dataset in this exercise, and some text (itallic below) comes
+from the excellent book <em>Statistical Rethinking</em> by Richard
+McElreath.)</p>
+<p>“<em>Africa is special. The second largest continent, it is the most
+culturally and genetically diverse. Africa has about 3 billon fewer
+people than Asia, but it has just as many living languages. Africa is so
+genetically diverse that most of the genetic variation outside Africa is
+just a subset of the variation within Africa. Africa is also
+geographically special, in a puzzling way: Bad geography tends to be
+related to bad economies outside of Africa, but African economies seem
+immune to bad geography.</em>”</p>
+<p>In this exercise, you will look at and analyse some data about the
+last statement, that Africa is immune to bad geography, whereas the rest
+of the world is not.</p>
+<p>In the dataset <code>rugged.csv</code>, which you can find from the
+usual place, each row is a country, and there are three variables of
+interest to us:</p>
+<ul>
+<li><code>rugged</code> – this is the Terrain Ruggedness Index, that
+quantified the topographic heterogeneity of the landscape. E.g.,
+Netherlands = low, Switzerland = high.</li>
+<li><code>rgdppc_2000</code> – this is real gross domestic product per
+capita in year 2000. In his book McElreath puts forward a good argument
+for why one can already expect such a variable to be exponentially
+distributed, such that we will need to log transform it. His argument is
+based on growth being a multiplicative process.</li>
+<li><code>cont_africa</code> – this is a binary variable (0s and 1s)
+with 0 if a country is not in Africa and 1 if it is.</li>
+</ul>
+<p>Get the dataset, do all the preliminaries in R, including reading in
+the data.</p>
+<p>Then:</p>
+<ul>
+<li><p>Look at the distribution of the <code>rgdppc_2000</code> variable
+– and then create a log10 transformed version of it.</p></li>
+<li><p>Create a new variable (name it <code>cont_africa1</code>) in
+which a row contains “Africa” if the country is in Africa, and “not
+Africa” if it isn’t. We do this, as its easier and nicer to work with
+this information in the variable, rather than just 0 and 1s. (In
+general, in R, don’t use codes for things that can be represented by
+words. Use the meaningful words. This is a good thing to do, because
+then tables and graphs have those words, rather than cryptic codes, and
+will be easier for you and others to interpret. Hint: use the function
+ifelse inside mutate.)</p></li>
+</ul>
+<p>Good, now you’re all set to work through the following questions…</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-countries-africa" class="tutorial-question panel-body">
+<div id="quiz-countries-africa-answer_container" class="shiny-html-output"></div>
+<div id="quiz-countries-africa-message_container" class="shiny-html-output"></div>
+<div id="quiz-countries-africa-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-countries-not-africa" class="tutorial-question panel-body">
+<div id="quiz-countries-not-africa-answer_container" class="shiny-html-output"></div>
+<div id="quiz-countries-not-africa-message_container" class="shiny-html-output"></div>
+<div id="quiz-countries-not-africa-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-rugged-distribution" class="tutorial-question panel-body">
+<div id="quiz-rugged-distribution-answer_container" class="shiny-html-output"></div>
+<div id="quiz-rugged-distribution-message_container" class="shiny-html-output"></div>
+<div id="quiz-rugged-distribution-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-rugged-lowest-country" class="tutorial-question panel-body">
+<div id="quiz-rugged-lowest-country-answer_container" class="shiny-html-output"></div>
+<div id="quiz-rugged-lowest-country-message_container" class="shiny-html-output"></div>
+<div id="quiz-rugged-lowest-country-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-rugged-switzerland-rank" class="tutorial-question panel-body">
+<div id="quiz-rugged-switzerland-rank-answer_container" class="shiny-html-output"></div>
+<div id="quiz-rugged-switzerland-rank-message_container" class="shiny-html-output"></div>
+<div id="quiz-rugged-switzerland-rank-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-gdp-na-total" class="tutorial-question panel-body">
+<div id="quiz-gdp-na-total-answer_container" class="shiny-html-output"></div>
+<div id="quiz-gdp-na-total-message_container" class="shiny-html-output"></div>
+<div id="quiz-gdp-na-total-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-gdp-na-africa" class="tutorial-question panel-body">
+<div id="quiz-gdp-na-africa-answer_container" class="shiny-html-output"></div>
+<div id="quiz-gdp-na-africa-message_container" class="shiny-html-output"></div>
+<div id="quiz-gdp-na-africa-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-gdp-na-not-africa" class="tutorial-question panel-body">
+<div id="quiz-gdp-na-not-africa-answer_container" class="shiny-html-output"></div>
+<div id="quiz-gdp-na-not-africa-message_container" class="shiny-html-output"></div>
+<div id="quiz-gdp-na-not-africa-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Now make a version of the dataset with no observations with NAs in
+any of the three variables of interest. You can use the
+<code>na.omit()</code> function for this, after selecting the three
+variables of interest. You should have a dataset with 170 rows.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-rugged-df-error" class="tutorial-question panel-body">
+<div id="quiz-rugged-df-error-answer_container" class="shiny-html-output"></div>
+<div id="quiz-rugged-df-error-message_container" class="shiny-html-output"></div>
+<div id="quiz-rugged-df-error-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Now make a log transformed version of the <code>rgdppc_2000</code>
+variable. Use log base 10. And plot a graph that will tell you the
+answer to the question… does the relationship between GDP and landscape
+ruggedness differ between countries in Africa and those not in Africa.
+Make a guess of if you think there is a statistically significant
+difference.</p>
+<p>Write one or two sentences about what you see in the graph. Is there
+a difference between Africa and not Africa? If so, what is the
+difference?</p>
+<p>Fit an appropriate model to test if there is a statistically
+significant difference in the relationship between GDP and ruggedness
+between Africa and not Africa.</p>
+<p>Check the assumptions of the model. Are they reasonably well met?</p>
+<p>Interpret the model. Look at the ANOVA table. Check the degrees of
+freedom for each term. Do they match what you expected?</p>
+<p>What does the ANOVA table tell you about the relationship between GDP
+and ruggedness in Africa versus not Africa? Is there a statistically
+significant difference? Is Africa special in this respect?</p>
+<p>Yes, we see that the interaction term is statistically significant,
+indicating that the relationship between GDP and ruggedness differs
+between African countries and those not in Africa.</p>
+<p>Now make a beautiful figure suitable for publication, that shows the
+relationship between GDP and ruggedness in Africa and not Africa. Make
+sure it meets the criteria we discussed earlier.</p>
+<p>Perhaps this is appropriate:</p>
+<p><img src="Unit7_files/figure-html/unnamed-chunk-24-1.png" width="624" /></p>
+<p>Note that to be absolutely sure that the plotted model is the same as
+the one you fitted, you should use the <code>predict()</code> function
+to get predicted values from your model, and then plot these predicted
+values rather than using <code>geom_smooth()</code>.</p>
+<p>Write a sentence or two about the pattern and the statistical
+support.</p>
+<p>Critique and reflect.</p>
+</div>
+<div id="section-weekly-quiz" class="section level2">
+<h2>Weekly Quiz</h2>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-interaction-meaning" class="tutorial-question panel-body">
+<div id="quiz-interaction-meaning-answer_container" class="shiny-html-output"></div>
+<div id="quiz-interaction-meaning-message_container" class="shiny-html-output"></div>
+<div id="quiz-interaction-meaning-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-multiple-regression-interaction" class="tutorial-question panel-body">
+<div id="quiz-multiple-regression-interaction-answer_container" class="shiny-html-output"></div>
+<div id="quiz-multiple-regression-interaction-message_container" class="shiny-html-output"></div>
+<div id="quiz-multiple-regression-interaction-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ancova-interaction" class="tutorial-question panel-body">
+<div id="quiz-ancova-interaction-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ancova-interaction-message_container" class="shiny-html-output"></div>
+<div id="quiz-ancova-interaction-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-two-way-anova-interaction" class="tutorial-question panel-body">
+<div id="quiz-two-way-anova-interaction-answer_container" class="shiny-html-output"></div>
+<div id="quiz-two-way-anova-interaction-message_container" class="shiny-html-output"></div>
+<div id="quiz-two-way-anova-interaction-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="ga6-q4-degrees-of-freedom" class="tutorial-question panel-body">
+<div id="ga6-q4-degrees-of-freedom-answer_container" class="shiny-html-output"></div>
+<div id="ga6-q4-degrees-of-freedom-message_container" class="shiny-html-output"></div>
+<div id="ga6-q4-degrees-of-freedom-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="ga6-q5-model-choice" class="tutorial-question panel-body">
+<div id="ga6-q5-model-choice-answer_container" class="shiny-html-output"></div>
+<div id="ga6-q5-model-choice-message_container" class="shiny-html-output"></div>
+<div id="ga6-q5-model-choice-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="ga6-q6-n-data-points" class="tutorial-question panel-body">
+<div id="ga6-q6-n-data-points-answer_container" class="shiny-html-output"></div>
+<div id="ga6-q6-n-data-points-message_container" class="shiny-html-output"></div>
+<div id="ga6-q6-n-data-points-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>And here are some question not specific to models with interactions,
+but rather about linear models in general.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="ga6-q1-linear-models" class="tutorial-question panel-body">
+<div id="ga6-q1-linear-models-answer_container" class="shiny-html-output"></div>
+<div id="ga6-q1-linear-models-message_container" class="shiny-html-output"></div>
+<div id="ga6-q1-linear-models-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="ga6-q2-lm-function" class="tutorial-question panel-body">
+<div id="ga6-q2-lm-function-answer_container" class="shiny-html-output"></div>
+<div id="ga6-q2-lm-function-message_container" class="shiny-html-output"></div>
+<div id="ga6-q2-lm-function-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>
+<script type="application/shiny-prerendered" data-context="server-start">
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::prepare_tutorial_state(session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::i18n_observe_tutorial_language(input, session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::event_trigger(session, "session_stop")
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-intertidal-biological-question", 
+    question = structure("In statistical terms, what are we really asking?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_62070ef", 
+        option = "Whether there is an interaction between height in the intertidal and herbivory.", 
+        value = "Whether there is an interaction between height in the intertidal and herbivory.", 
+        label = structure("Whether there is an interaction between height in the intertidal and herbivory.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_37a98b2", 
+        option = "Whether herbivores always reduce algal area.", 
+        value = "Whether herbivores always reduce algal area.", 
+        label = structure("Whether herbivores always reduce algal area.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8b66da9", 
+        option = "Whether tidal height affects algal area.", 
+        value = "Whether tidal height affects algal area.", label = structure("Whether tidal height affects algal area.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3da1cfd", 
+        option = "Whether the mean algal area differs among plots.", 
+        value = "Whether the mean algal area differs among plots.", 
+        label = structure("Whether the mean algal area differs among plots.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Asking whether the effect of herbivory depends on tidal height is equivalent to asking whether there is an interaction between the two factors.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect! Try again. The question is about if the effect of one factor (herbivory) depends on the level of another factor (tidal height).", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect! Try again. The question is about if the effect of one factor (herbivory) depends on the level of another factor (tidal height).", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-biological-question-answer", 
+        question = "quiz-intertidal-biological-question"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1521316674.79158, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "quiz-intertidal-factors", 
+    question = structure("Which of the following are the <strong>experimental factors/treatments<\u002fstrong> in this study?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_a152027", 
+        option = "Height (below low tide vs middle of intertidal)", 
+        value = "Height (below low tide vs middle of intertidal)", 
+        label = structure("Height (below low tide vs middle of intertidal)", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4023dc9", 
+        option = "Herbivore presence (minus vs plus)", value = "Herbivore presence (minus vs plus)", 
+        label = structure("Herbivore presence (minus vs plus)", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d85d1d7", 
+        option = "Amount of algae glued into each plot", value = "Amount of algae glued into each plot", 
+        label = structure("Amount of algae glued into each plot", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4371e73", 
+        option = "Distance between plots", value = "Distance between plots", 
+        label = structure("Distance between plots", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The experiment manipulates height and herbivore presence.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Focus on which variables were deliberately manipulated by the experimenter.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-factors-answer", question = "quiz-intertidal-factors"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1975001564.58032, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-intertidal-response-explicit", 
+    question = structure("What is the <strong>response variable<\u002fstrong> in this experiment?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_f72ba16", 
+        option = "Area of algae remaining after a certain time.", 
+        value = "Area of algae remaining after a certain time.", 
+        label = structure("Area of algae remaining after a certain time.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cb0ba7f", 
+        option = "Tidal height.", value = "Tidal height.", label = structure("Tidal height.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b5a7a78", 
+        option = "Presence or absence of herbivores.", value = "Presence or absence of herbivores.", 
+        label = structure("Presence or absence of herbivores.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b2ef6cc", 
+        option = "Number of plots in each treatment.", value = "Number of plots in each treatment.", 
+        label = structure("Number of plots in each treatment.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The response variable is the measured outcome: the area of algae remaining after a certain time.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("The response variable is what we measure as the outcome of the experimental manipulations.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("The response variable is what we measure as the outcome of the experimental manipulations.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-response-explicit-answer", 
+        question = "quiz-intertidal-response-explicit"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 547571748.745017, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-intertidal-expected-pattern", 
+    question = structure("Suppose the effect of herbivory <strong>does depend on tidal height<\u002fstrong>. Which of the following patterns would you expect to see in a graph?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_e521f58", 
+        option = "The difference between fenced and unfenced plots is larger at one tidal height than the other.", 
+        value = "The difference between fenced and unfenced plots is larger at one tidal height than the other.", 
+        label = structure("The difference between fenced and unfenced plots is larger at one tidal height than the other.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_491a6e7", 
+        option = "Fenced plots always have more algae, emphasising the same difference at both tidal heights.", 
+        value = "Fenced plots always have more algae, emphasising the same difference at both tidal heights.", 
+        label = structure("Fenced plots always have more algae, emphasising the same difference at both tidal heights.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4c871ed", 
+        option = "All plots have similar algal area regardless of treatment.", 
+        value = "All plots have similar algal area regardless of treatment.", 
+        label = structure("All plots have similar algal area regardless of treatment.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7534cf3", 
+        option = "Only tidal height matters, not herbivory.", 
+        value = "Only tidal height matters, not herbivory.", 
+        label = structure("Only tidal height matters, not herbivory.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! An interaction means that the effect of herbivory changes depending on tidal height.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Look for patterns where the size of the herbivory effect differs between tidal heights.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Look for patterns where the size of the herbivory effect differs between tidal heights.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-expected-pattern-answer", question = "quiz-intertidal-expected-pattern"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1001191230.03378, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-intertidal-design-why-shuffled", 
+    question = structure("Why is <strong>“two-way fully factorial experiment”<\u002fstrong> the most appropriate term to describe the design of this study?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_20dc973", 
+        option = "Because the response variable is continuous.", 
+        value = "Because the response variable is continuous.", 
+        label = structure("Because the response variable is continuous.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cd7a76", 
+        option = "Because the experiment includes exactly two treatments.", 
+        value = "Because the experiment includes exactly two treatments.", 
+        label = structure("Because the experiment includes exactly two treatments.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a075149", 
+        option = "Because two factors are experimentally manipulated, and all combinations of their levels are represented.", 
+        value = "Because two factors are experimentally manipulated, and all combinations of their levels are represented.", 
+        label = structure("Because two factors are experimentally manipulated, and all combinations of their levels are represented.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1720be1", 
+        option = "Because the data were collected observationally.", 
+        value = "Because the data were collected observationally.", 
+        label = structure("Because the data were collected observationally.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a0af07f", 
+        option = "Because the plots were measured only once.", 
+        value = "Because the plots were measured only once.", 
+        label = structure("Because the plots were measured only once.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The study manipulates two factors and includes all combinations of their levels, which is exactly what defines a two-way fully factorial experiment.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Focus on how many factors are manipulated and whether all combinations of their levels are included.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Focus on how many factors are manipulated and whether all combinations of their levels are included.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-design-why-shuffled-answer", 
+        question = "quiz-intertidal-design-why-shuffled"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1326340925.38237, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-intertidal-number-of-betas", 
+    question = structure("If we fit a model that includes <strong>both main effects and their interaction term<\u002fstrong> for this experiment (tidal height × herbivore access), how many <strong>beta coefficients (group means)<\u002fstrong> are estimated?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_97ef794", 
+        option = "4", value = 4, label = structure("4", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! With two factors each having two levels, a fully factorial design estimates one mean for each combination of factor levels, giving 2 × 2 = 4 means.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think in terms of factor combinations: how many unique treatment combinations are there?", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think in terms of factor combinations: how many unique treatment combinations are there?", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-number-of-betas-answer", question = "quiz-intertidal-number-of-betas"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 964589625.550828, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-intertidal-df-error", 
+    question = structure("<p>In this experiment there are <strong>64 plots in total<\u002fstrong>, and we fit a model with <strong>both main effects and their interaction<\u002fstrong> (a two-way fully factorial model with two levels per factor).<\u002fp>\n<p>How many <strong>degrees of freedom for error<\u002fstrong> does the model have?<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_6974b2c", 
+        option = "60", value = 60, label = structure("60", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! With 64 observations and 4 estimated group means (2 × 2 combinations), the degrees of freedom for error are 64 − 4 = 60.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Remember: degrees of freedom for error = number of observations minus the number of estimated means (or parameters).", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Remember: degrees of freedom for error = number of observations minus the number of estimated means (or parameters).", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-df-error-answer", question = "quiz-intertidal-df-error"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1286783262.40079, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-intertidal-anova-table-structure", 
+    question = structure("If we analyse these data using a two-way ANOVA with <strong>tidal height<\u002fstrong>, <strong>herbivore access<\u002fstrong>, and their <strong>interaction<\u002fstrong>, how will the ANOVA table appear?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_1af13b0", 
+        option = "It will contain a single row comparing fenced and unfenced plots.", 
+        value = "It will contain a single row comparing fenced and unfenced plots.", 
+        label = structure("It will contain a single row comparing fenced and unfenced plots.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cb3151", 
+        option = "It will contain only rows for the two main effects, but no interaction term.", 
+        value = "It will contain only rows for the two main effects, but no interaction term.", 
+        label = structure("It will contain only rows for the two main effects, but no interaction term.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cba89f", 
+        option = "It will contain rows for tidal height, herbivore access, their interaction, and residuals.", 
+        value = "It will contain rows for tidal height, herbivore access, their interaction, and residuals.", 
+        label = structure("It will contain rows for tidal height, herbivore access, their interaction, and residuals.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_776905e", 
+        option = "It will contain one row for each of the four treatment combinations.", 
+        value = "It will contain one row for each of the four treatment combinations.", 
+        label = structure("It will contain one row for each of the four treatment combinations.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f80ca19", 
+        option = "It will contain only an F-statistic and a p-value, without degrees of freedom.", 
+        value = "It will contain only an F-statistic and a p-value, without degrees of freedom.", 
+        label = structure("It will contain only an F-statistic and a p-value, without degrees of freedom.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! A two-way ANOVA table includes separate rows for each main effect, their interaction, and the residual (error) term.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about how ANOVA partitions variation: each main effect, the interaction, and the residual variation each get their own row.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about how ANOVA partitions variation: each main effect, the interaction, and the residual variation each get their own row.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-anova-table-structure-answer", 
+        question = "quiz-intertidal-anova-table-structure"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1187172368.94718, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-intertidal-df-model-terms", 
+    question = structure("<p>In this two-way fully factorial experiment, both factors (tidal height and herbivore access) have <strong>two levels<\u002fstrong>, and the model includes <strong>both main effects and their interaction<\u002fstrong>.<\u002fp>\n<p>How many <strong>degrees of freedom in total<\u002fstrong> are associated with the two main effects <strong>and<\u002fstrong> the interaction term?<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_6135c3e", 
+        option = "3", value = 3, label = structure("3", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Each main effect with two levels has 1 degree of freedom, and the interaction between two two-level factors also has 1 degree of freedom, giving 1 + 1 + 1 = 3.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Each two-level factor contributes 1 degree of freedom, and their interaction contributes 1 more.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Each two-level factor contributes 1 degree of freedom, and their interaction contributes 1 more.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-df-model-terms-answer", question = "quiz-intertidal-df-model-terms"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 483143283.275019, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-intertidal-low-values", 
+    question = structure("Looking at the distributions of algal area for the different treatment combinations, which treatment combination shows <strong>many very low values, close to zero or zero<\u002fstrong>, compared to the others?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_b440273", 
+        option = "without herbivore, low height", value = "without herbivore, low height", 
+        label = structure("without herbivore, low height", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7c22581", 
+        option = "with herbivore, mid height", value = "with herbivore, mid height", 
+        label = structure("with herbivore, mid height", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_46629ed", 
+        option = "with herbivore, low height", value = "with herbivore, low height", 
+        label = structure("with herbivore, low height", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b9d57eb", 
+        option = "without herbivore, mid height", value = "without herbivore, mid height", 
+        label = structure("without herbivore, mid height", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! When herbivores are present at low tidal height, algal area is often reduced to very low values, indicating strong herbivory effects in this zone.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Compare the distributions carefully. Look for the treatment where values frequently cluster near zero.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Compare the distributions carefully. Look for the treatment where values frequently cluster near zero.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-low-values-answer", question = "quiz-intertidal-low-values"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1357810192.86772, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-intertidal-mean-noherb-low", 
+    question = structure("Rounded to <strong>two decimal places<\u002fstrong>, what was the <strong>mean square root algal area<\u002fstrong> for the <strong>no herbivore, low height<\u002fstrong> treatment?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ba2f8e", 
+        option = "32.91", value = 32.91, label = structure("32.91", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The mean algal area for the no-herbivore, low-height treatment is 32.91.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Calculate the mean algal area for the no-herbivore, low-height group and round to two decimal places.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Calculate the mean algal area for the no-herbivore, low-height group and round to two decimal places.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-mean-noherb-low-answer", question = "quiz-intertidal-mean-noherb-low"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 2099891684.52216, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-intertidal-sd-withherb-midh", 
+    question = structure("Rounded to <strong>two decimal places<\u002fstrong>, what is the <strong>standard deviation<\u002fstrong> of square root algal area for the <strong>with herbivore, mid height<\u002fstrong> treatment?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_b116e2f", 
+        option = "15.56", value = 15.56, label = structure("15.56", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The standard deviation for the with-herbivore, mid-height treatment is 15.56.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Calculate the standard deviation for the with-herbivore, mid-height group and round to two decimal places.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Calculate the standard deviation for the with-herbivore, mid-height group and round to two decimal places.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-sd-withherb-midh-answer", question = "quiz-intertidal-sd-withherb-midh"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 424907355.802137, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-linear-model-interaction-syntax", 
+    question = structure("In R, there are two equivalent ways to specify a linear model with <strong>two main effects<\u002fstrong> and their <strong>interaction term<\u002fstrong>. Which of the following correctly describes these two methods?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_78d16df", 
+        option = "Using `y ~ x1 + x2` or `y ~ x1 * x2`.", value = "Using `y ~ x1 + x2` or `y ~ x1 * x2`.", 
+        label = structure("Using <code>y ~ x1 + x2<\u002fcode> or <code>y ~ x1 * x2<\u002fcode>.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_954a309", 
+        option = "Using `y ~ x1:x2` or `y ~ x1 + x2`.", value = "Using `y ~ x1:x2` or `y ~ x1 + x2`.", 
+        label = structure("Using <code>y ~ x1:x2<\u002fcode> or <code>y ~ x1 + x2<\u002fcode>.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_790cdc", 
+        option = "Using `y ~ x1 + x2 + x1:x2` or `y ~ x1 * x2`.", 
+        value = "Using `y ~ x1 + x2 + x1:x2` or `y ~ x1 * x2`.", 
+        label = structure("Using <code>y ~ x1 + x2 + x1:x2<\u002fcode> or <code>y ~ x1 * x2<\u002fcode>.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_556ce4a", 
+        option = "Using `y ~ x1 * x2` or `y ~ x1:x2`.", value = "Using `y ~ x1 * x2` or `y ~ x1:x2`.", 
+        label = structure("Using <code>y ~ x1 * x2<\u002fcode> or <code>y ~ x1:x2<\u002fcode>.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f9f832f", 
+        option = "Using `y ~ x1 + x2 + x2:x1:x2`.", value = "Using `y ~ x1 + x2 + x2:x1:x2`.", 
+        label = structure("Using <code>y ~ x1 + x2 + x2:x1:x2<\u002fcode>.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The formula <code>x1 * x2<\u002fcode> is shorthand for including both main effects and their interaction, and is equivalent to <code>x1 + x2 + x1:x2<\u002fcode>.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Recall that <code>*<\u002fcode> expands to main effects plus the interaction, while <code>:<\u002fcode> includes only the interaction term.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Recall that <code>*<\u002fcode> expands to main effects plus the interaction, while <code>:<\u002fcode> includes only the interaction term.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-linear-model-interaction-syntax-answer", 
+        question = "quiz-linear-model-interaction-syntax"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1175342306.95269, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-anova-df-unexpected-misspecified", 
+    question = structure("<p>Suppose the <strong>degrees of freedom for the residuals<\u002fstrong> shown in the ANOVA table are <strong>different from what you expected<\u002fstrong> based on the experimental design.<\u002fp>\n<p>We have already checked that:<\u002fp>\n<ul>\n<li>there are no missing values,<\u002fli>\n<li>all treatment combinations have the expected number of observations,<\u002fli>\n<li>and the data are balanced.<\u002fli>\n<\u002ful>\n<p>Given this, what is the <strong>most likely explanation<\u002fstrong> for the unexpected residual degrees of freedom?<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_c84f876", 
+        option = "Some observations were missing from the dataset.", 
+        value = "Some observations were missing from the dataset.", 
+        label = structure("Some observations were missing from the dataset.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c7c61ac", 
+        option = "The residuals are not normally distributed.", 
+        value = "The residuals are not normally distributed.", 
+        label = structure("The residuals are not normally distributed.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3024efc", 
+        option = "R automatically adjusts degrees of freedom to improve model fit.", 
+        value = "R automatically adjusts degrees of freedom to improve model fit.", 
+        label = structure("R automatically adjusts degrees of freedom to improve model fit.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f92d751", 
+        option = "The response variable was transformed.", value = "The response variable was transformed.", 
+        label = structure("The response variable was transformed.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e527b30", 
+        option = "The model was mis-specified, for example by not including an interaction term that should have been included.", 
+        value = "The model was mis-specified, for example by not including an interaction term that should have been included.", 
+        label = structure("The model was mis-specified, for example by not including an interaction term that should have been included.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! If missing data, imbalance, and data handling issues have already been ruled out, then an unexpected number of residual degrees of freedom usually indicates that the model was mis-specified, for example by omitting an interaction term that should be included.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Some of the explanations can sometimes affect degrees of freedom, but in this case they have already been checked and ruled out.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Some of the explanations can sometimes affect degrees of freedom, but in this case they have already been checked and ruled out.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-anova-df-unexpected-misspecified-answer", 
+        question = "quiz-anova-df-unexpected-misspecified"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 284925800.367321, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-intertidal-adjusted-r2", 
+    question = structure("<p>How much of the variability of the response does the <strong>model with interaction<\u002fstrong> explain?<\u002fp>\n<p>Give the <strong>UNadjusted R-squared<\u002fstrong>, rounded to <strong>two decimal places<\u002fstrong>.<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_8181e1b", 
+        option = "0.19", value = 0.19, label = structure("0.19", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The unadjusted R-squared of the model with interaction is 0.19.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. The unadjusted R-squared is calculated as the model sum of squares divided by the total sum of squares. Round your answer to two decimal places.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. The unadjusted R-squared is calculated as the model sum of squares divided by the total sum of squares. Round your answer to two decimal places.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-intertidal-adjusted-r2-answer", question = "quiz-intertidal-adjusted-r2"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 2001911271.06779, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-interaction-main-effects-meaning", 
+    question = structure("Given that the <strong>interaction term is statistically significant<\u002fstrong>, what do the <strong>main effects<\u002fstrong> (even the significant one) tell us?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d3ed601", 
+        option = "They give the true causal effect of each factor on the response.", 
+        value = "They give the true causal effect of each factor on the response.", 
+        label = structure("They give the true causal effect of each factor on the response.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_53bede3", 
+        option = "They can be interpreted as if the interaction were not present.", 
+        value = "They can be interpreted as if the interaction were not present.", 
+        label = structure("They can be interpreted as if the interaction were not present.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8539c56", 
+        option = "They describe the average effects across levels of the other factor, but must be interpreted with caution because the effect changes depending on the other factor.", 
+        value = "They describe the average effects across levels of the other factor, but must be interpreted with caution because the effect changes depending on the other factor.", 
+        label = structure("They describe the average effects across levels of the other factor, but must be interpreted with caution because the effect changes depending on the other factor.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_886e926", 
+        option = "They are meaningless and should be ignored completely.", 
+        value = "They are meaningless and should be ignored completely.", 
+        label = structure("They are meaningless and should be ignored completely.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3ee9897", 
+        option = "They indicate that the interaction term was unnecessary.", 
+        value = "They indicate that the interaction term was unnecessary.", 
+        label = structure("They indicate that the interaction term was unnecessary.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! When an interaction is significant, main effects represent average effects across levels of the other factor. Because the effect of one factor depends on the other, main effects—even if statistically significant—must be interpreted cautiously.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Remember that a significant interaction means the effect of one factor depends on the level of the other. Main effects are therefore averages and can be misleading if interpreted on their own.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Remember that a significant interaction means the effect of one factor depends on the level of the other. Main effects are therefore averages and can be misleading if interpreted on their own.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-interaction-main-effects-meaning-answer", 
+        question = "quiz-interaction-main-effects-meaning"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 157039773.926873, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-reporting-df-why-useful", 
+    question = structure("Why is it important to include the <strong>degrees of freedom for the treatment term and for error<\u002fstrong> when reporting the results of an analysis (e.g. in an ANOVA or regression)?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_9e53afd", 
+        option = "Because degrees of freedom are required to calculate the p-value.", 
+        value = "Because degrees of freedom are required to calculate the p-value.", 
+        label = structure("Because degrees of freedom are required to calculate the p-value.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_139a0a2", 
+        option = "So that readers can check that they have correctly understood the experimental design and the statistical analysis.", 
+        value = "So that readers can check that they have correctly understood the experimental design and the statistical analysis.", 
+        label = structure("So that readers can check that they have correctly understood the experimental design and the statistical analysis.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_74ad3c9", 
+        option = "Because journals require degrees of freedom to be reported for formatting reasons.", 
+        value = "Because journals require degrees of freedom to be reported for formatting reasons.", 
+        label = structure("Because journals require degrees of freedom to be reported for formatting reasons.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ac3aeea", 
+        option = "Because degrees of freedom indicate whether the residuals are normally distributed.", 
+        value = "Because degrees of freedom indicate whether the residuals are normally distributed.", 
+        label = structure("Because degrees of freedom indicate whether the residuals are normally distributed.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e2fc93b", 
+        option = "Because degrees of freedom determine the size of the treatment effect.", 
+        value = "Because degrees of freedom determine the size of the treatment effect.", 
+        label = structure("Because degrees of freedom determine the size of the treatment effect.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Reporting degrees of freedom allows readers to check that they have understood the experimental design and statistics correctly. They can do this by calculating the expected error degrees of freedom from the methods and comparing these with the degrees of freedom reported alongside the test statistics.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about how a careful reader can verify that the statistical analysis matches the experimental design described in the methods.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about how a careful reader can verify that the statistical analysis matches the experimental design described in the methods.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-reporting-df-why-useful-answer", question = "quiz-reporting-df-why-useful"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 2094935174.52447, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-countries-africa", 
+    question = structure("<p>How many countries in the dataset are in <strong>Africa<\u002fstrong>?<\u002fp>\n<p><em>Hint: use the <code>table()<\u002fcode> function.<\u002fem><\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_7465fef", 
+        option = "57", value = 57, label = structure("57", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! There are 57 countries from Africa in the dataset.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Try again. You could use <code>group_by<\u002fcode> and <code>summarise<\u002fcode>, with the Africa variable in the <code>group_by<\u002fcode>, and then count the number of countries with something like <code>length(cont_africa1)<\u002fcode> in the <code>summarise<\u002fcode>.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Try again. You could use <code>group_by<\u002fcode> and <code>summarise<\u002fcode>, with the Africa variable in the <code>group_by<\u002fcode>, and then count the number of countries with something like <code>length(cont_africa1)<\u002fcode> in the <code>summarise<\u002fcode>.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-countries-africa-answer", question = "quiz-countries-africa"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1065736078.00373, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-countries-not-africa", 
+    question = structure("<p>How many countries in the dataset are <strong>not in Africa<\u002fstrong>?<\u002fp>\n<p><em>Hint: subtract the number of African countries from the total number of countries.<\u002fem><\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_3d4a1b1", 
+        option = "177", value = 177, label = structure("177", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! There are 177 countries not in Africa in the dataset.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Take the total number of countries and subtract the number that are in Africa.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Take the total number of countries and subtract the number that are in Africa.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-countries-not-africa-answer", question = "quiz-countries-not-africa"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1208368490.93731, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-rugged-distribution", 
+    question = structure("What does the distribution of the variable <strong><code>rugged<\u002fcode><\u002fstrong>, which describes landscape ruggedness, look like?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ad9137", 
+        option = "symmetric", value = "symmetric", label = structure("symmetric", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1b30e", 
+        option = "strongly bimodal", value = "strongly bimodal", 
+        label = structure("strongly bimodal", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6f29a19", 
+        option = "really skewed", value = "really skewed", label = structure("really skewed", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The <code>rugged<\u002fcode> variable has many low values and relatively few high values, giving it a strongly right-skewed distribution.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Look carefully at the histogram or density plot of <code>rugged<\u002fcode>. Most values are small, with a long tail towards larger values.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Look carefully at the histogram or density plot of <code>rugged<\u002fcode>. Most values are small, with a long tail towards larger values.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-rugged-distribution-answer", question = "quiz-rugged-distribution"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 2069372729.53637, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "quiz-rugged-lowest-country", 
+    question = structure("<p>Which country has the <strong>lowest ruggedness<\u002fstrong> (i.e. is the flattest country)?<\u002fp>\n<p>(Type the country name.)<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_e2ada4e", 
+        option = "Tokelau", value = "Tokelau", label = structure("Tokelau", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Tokelau has the lowest ruggedness in the dataset.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Identify the country corresponding to the minimum value of the <code>rugged<\u002fcode> variable. You can do this with code, or by looking at the dataset using the <code>View<\u002fcode> function.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Identify the country corresponding to the minimum value of the <code>rugged<\u002fcode> variable. You can do this with code, or by looking at the dataset using the <code>View<\u002fcode> function.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-rugged-lowest-country-answer", question = "quiz-rugged-lowest-country"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 2041861706.04918, options = list(placeholder = "Enter answer here...", 
+        trim = TRUE)), class = c("learnr_text", "tutorial_question"
+)), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-rugged-switzerland-rank", 
+    question = structure("<p>In the league table of landscape ruggedness, where does <strong>Switzerland<\u002fstrong> rank?<\u002fp>\n<p>(1 = most rugged)<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_5c96f99", 
+        option = "10", value = 10, label = structure("10", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Switzerland ranks 10th in terms of landscape ruggedness in the dataset.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Look at the ranked list of countries by ruggedness and find Switzerland’s position.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Look at the ranked list of countries by ruggedness and find Switzerland’s position.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-rugged-switzerland-rank-answer", question = "quiz-rugged-switzerland-rank"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 684797683.681116, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-gdp-na-total", 
+    question = structure("How many <strong>NA values<\u002fstrong> are there in the <strong><code>rgdppc_2000<\u002fcode><\u002fstrong> variable?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_5827da0", 
+        option = "64", value = 64, label = structure("64", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! There are 64 NA values in the <code>rgdppc_2000<\u002fcode> variable.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Count the number of missing (NA) values in the <code>rgdppc_2000<\u002fcode> variable.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Count the number of missing (NA) values in the <code>rgdppc_2000<\u002fcode> variable.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-gdp-na-total-answer", question = "quiz-gdp-na-total"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 405632256.811113, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-gdp-na-africa", 
+    question = structure("How many of the <strong>NA values in <code>rgdppc_2000<\u002fcode><\u002fstrong> correspond to countries in <strong>Africa<\u002fstrong>?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_40331c", 
+        option = "8", value = 8, label = structure("8", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! There are 8 African countries with missing GDP values.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Subset the data to African countries and count the NA values in <code>rgdppc_2000<\u002fcode>.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Subset the data to African countries and count the NA values in <code>rgdppc_2000<\u002fcode>.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-gdp-na-africa-answer", question = "quiz-gdp-na-africa"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 656683040.194208, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-gdp-na-not-africa", 
+    question = structure("How many of the <strong>NA values in <code>rgdppc_2000<\u002fcode><\u002fstrong> correspond to countries <strong>not in Africa<\u002fstrong>?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_43cc22", 
+        option = "56", value = 56, label = structure("56", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! There are 56 non-African countries with missing GDP values.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Not quite. Subtract the African NA count from the total number of NA values. Or count directly.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Not quite. Subtract the African NA count from the total number of NA values. Or count directly.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-gdp-na-not-africa-answer", question = "quiz-gdp-na-not-africa"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1806231204.65891, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-rugged-df-error", 
+    question = structure("<p>If we fit a model with:<\u002fp>\n<ul>\n<li><code>rugged<\u002fcode> (a continuous explanatory variable)<\u002fli>\n<li><code>cont_africa1<\u002fcode> (a categorical variable with <strong>two levels<\u002fstrong>)<\u002fli>\n<\u002ful>\n<p>How many <strong>degrees of freedom for error<\u002fstrong> would the model have?<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_e290f48", 
+        option = "166", value = 166, label = structure("166", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The model would estimate four parameters in total (and intercept and a slope for each of in africa and not in africa), so the degrees of freedom for error would be 170 − 4 = 166.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Remember to subtract one degree of freedom for each estimated parameter. Think about how many regression lines are fit, and how many parameters that needs.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Remember to subtract one degree of freedom for each estimated parameter. Think about how many regression lines are fit, and how many parameters that needs.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-rugged-df-error-answer", question = "quiz-rugged-df-error"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 213179762.90073, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-interaction-meaning", 
+    question = structure("In a statistical model, what does a <strong>significant interaction term<\u002fstrong> between two explanatory variables indicate?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_463bb9", 
+        option = "That both explanatory variables have statistically significant main effects.", 
+        value = "That both explanatory variables have statistically significant main effects.", 
+        label = structure("That both explanatory variables have statistically significant main effects.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b3bf398", 
+        option = "That the effect of one explanatory variable on the response depends on the value of the other explanatory variable.", 
+        value = "That the effect of one explanatory variable on the response depends on the value of the other explanatory variable.", 
+        label = structure("That the effect of one explanatory variable on the response depends on the value of the other explanatory variable.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c3b76d4", 
+        option = "That the response variable is non-normally distributed.", 
+        value = "That the response variable is non-normally distributed.", 
+        label = structure("That the response variable is non-normally distributed.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f6f2c77", 
+        option = "That the model explains most of the variability in the response.", 
+        value = "That the model explains most of the variability in the response.", 
+        label = structure("That the model explains most of the variability in the response.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! A significant interaction means that the relationship between one explanatory variable and the response changes depending on the level or value of the other explanatory variable.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Focus on how interaction terms describe <em>dependency of effects<\u002fem>, not just whether variables are important.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Focus on how interaction terms describe <em>dependency of effects<\u002fem>, not just whether variables are important.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-interaction-meaning-answer", question = "quiz-interaction-meaning"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1876174608.12634, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-multiple-regression-interaction", 
+    question = structure("In a multiple regression model that includes an interaction between two continuous variables, how should the slope of one variable be interpreted?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_6e7f6be", 
+        option = "As the average effect of that variable across all values of the other variable.", 
+        value = "As the average effect of that variable across all values of the other variable.", 
+        label = structure("As the average effect of that variable across all values of the other variable.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cb1a769", 
+        option = "As the effect of that variable when the other variable equals zero (or its reference value).", 
+        value = "As the effect of that variable when the other variable equals zero (or its reference value).", 
+        label = structure("As the effect of that variable when the other variable equals zero (or its reference value).", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d55215c", 
+        option = "As the marginal correlation between the variable and the response.", 
+        value = "As the marginal correlation between the variable and the response.", 
+        label = structure("As the marginal correlation between the variable and the response.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_46de40d", 
+        option = "As a causal effect that is independent of other variables in the model.", 
+        value = "As a causal effect that is independent of other variables in the model.", 
+        label = structure("As a causal effect that is independent of other variables in the model.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! When an interaction is present, the slope of one variable is conditional on the value of the other variable, typically interpreted at zero or the reference value.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("With interactions, slopes are conditional, not global averages.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("With interactions, slopes are conditional, not global averages.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-multiple-regression-interaction-answer", 
+        question = "quiz-multiple-regression-interaction"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 16748899.4922007, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-ancova-interaction", 
+    question = structure("In an ANCOVA model with a categorical factor and a continuous covariate, what does a <strong>significant interaction between the factor and the covariate<\u002fstrong> indicate?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_de9d856", 
+        option = "That the covariate should be removed from the model.", 
+        value = "That the covariate should be removed from the model.", 
+        label = structure("That the covariate should be removed from the model.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2b281bc", 
+        option = "That the relationship between the covariate and the response differs between groups.", 
+        value = "That the relationship between the covariate and the response differs between groups.", 
+        label = structure("That the relationship between the covariate and the response differs between groups.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_39f8792", 
+        option = "That the group means differ after adjusting for the covariate.", 
+        value = "That the group means differ after adjusting for the covariate.", 
+        label = structure("That the group means differ after adjusting for the covariate.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6c560f4", 
+        option = "That the assumptions of ANCOVA have been violated.", 
+        value = "That the assumptions of ANCOVA have been violated.", 
+        label = structure("That the assumptions of ANCOVA have been violated.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! A significant interaction in ANCOVA indicates that the slope of the covariate differs between groups, meaning the effect of the covariate is group-dependent.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about how ANCOVA combines regression and group comparisons: interactions imply different regression lines for different groups.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about how ANCOVA combines regression and group comparisons: interactions imply different regression lines for different groups.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ancova-interaction-answer", question = "quiz-ancova-interaction"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 777088423.13814, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-two-way-anova-interaction", 
+    question = structure("In a two-way ANOVA with factors A and B, what does a <strong>significant A:B interaction<\u002fstrong> imply?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_c0cf68b", 
+        option = "That factor A has a stronger main effect than factor B.", 
+        value = "That factor A has a stronger main effect than factor B.", 
+        label = structure("That factor A has a stronger main effect than factor B.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_61f68eb", 
+        option = "That the effect of factor A differs across the levels of factor B.", 
+        value = "That the effect of factor A differs across the levels of factor B.", 
+        label = structure("That the effect of factor A differs across the levels of factor B.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f6228ff", 
+        option = "That both factors must be removed from the model.", 
+        value = "That both factors must be removed from the model.", 
+        label = structure("That both factors must be removed from the model.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_39a5ef2", 
+        option = "That the residual variance is too large for reliable inference.", 
+        value = "That the residual variance is too large for reliable inference.", 
+        label = structure("That the residual variance is too large for reliable inference.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! In two-way ANOVA, a significant interaction means that the effect of one factor depends on the level of the other factor.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Remember that interactions describe how factors modify each other’s effects, not their overall importance.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Remember that interactions describe how factors modify each other’s effects, not their overall importance.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-two-way-anova-interaction-answer", question = "quiz-two-way-anova-interaction"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1749388937.68538, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "ga6-q4-degrees-of-freedom", 
+    question = structure("<p>Imagine you have a <strong>randomised fully-factorial experiment<\u002fstrong> assigning patients to two treatments.<\u002fp>\n<p>One treatment has <strong>five categories<\u002fstrong>, and another has <strong>three categories<\u002fstrong>. There are 10 patients in each treatment. In the model, both main effects and their interaction are included.<\u002fp>\n<p>How many <strong>degrees of freedom<\u002fstrong> are there for error<\u002fp>\n", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_c6af7bb", 
+        option = "135", value = 135, label = structure("135", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! There are 150 observations (3<em>5<\u002fem>10) and there are 15 treatment combinations. 150 - 15 = 135.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("This one is tricky! First calculate the total number of observations. Then the number of treatment combinations (= the number of means estimated in the model with interaction). Then one more step is needed…", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("This one is tricky! First calculate the total number of observations. Then the number of treatment combinations (= the number of means estimated in the model with interaction). Then one more step is needed…", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "ga6-q4-degrees-of-freedom-answer", question = "ga6-q4-degrees-of-freedom"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 2016160965.56115, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "ga6-q5-model-choice", 
+    question = structure("In three American states, petrol (benzine) consumption of six different car brands was investigated. Which model would be most appropriate to analyse these data when we suspect that the effect of car brand on petrol consumption may differ between cities?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_bce60ef", 
+        option = "One-way ANOVA of \"benzine\" against \"State\".", 
+        value = "One-way ANOVA of \"benzine\" against \"State\".", 
+        label = structure("One-way ANOVA of “benzine” against “State”.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8bc22cb", 
+        option = "Two-way ANOVA of \"benzine\" against \"Auto\" and \"State\" without an interaction term.", 
+        value = "Two-way ANOVA of \"benzine\" against \"Auto\" and \"State\" without an interaction term.", 
+        label = structure("Two-way ANOVA of “benzine” against “Auto” and “State” without an interaction term.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9c3cd53", 
+        option = "Two-way ANOVA of \"benzine\" against \"Auto\" and \"State\", including an interaction term between \"Auto\" and \"State\".", 
+        value = "Two-way ANOVA of \"benzine\" against \"Auto\" and \"State\", including an interaction term between \"Auto\" and \"State\".", 
+        label = structure("Two-way ANOVA of “benzine” against “Auto” and “State”, including an interaction term between “Auto” and “State”.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e6e627d", 
+        option = "One-way ANOVA of \"benzine\" against \"Auto\".", 
+        value = "One-way ANOVA of \"benzine\" against \"Auto\".", 
+        label = structure("One-way ANOVA of “benzine” against “Auto”.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5e4b915", 
+        option = "Two one-way ANOVAs one for \"benzine\" against \"Auto\" and one for \"benzine\" against \"State\".", 
+        value = "Two one-way ANOVAs one for \"benzine\" against \"Auto\" and one for \"benzine\" against \"State\".", 
+        label = structure("Two one-way ANOVAs one for “benzine” against “Auto” and one for “benzine” against “State”.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! We need to include the interaction term to account for the possibility that the effect of car brand on petrol consumption differs between cities.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Try again. Remember that an interaction term is needed when the effect of one factor may depend on the level of another factor. And we should not run separate ANOVAs for each factor when we have multiple factors.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "ga6-q5-model-choice-answer", question = "ga6-q5-model-choice"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 969628634.048481, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "ga6-q6-n-data-points", 
+    question = structure("We continue to do the two-way ANOVA for the above problem. We find that the error degrees of freedom is 75. How many data points were in the dataset?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ad09204", 
+        option = "90", value = 90, label = structure("90", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! The model will take into account 5 (car brands) * 3 (states) = 15 treatment combinations. Therefore, the total number of data points is 75 + 15 = 90.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Get the total number of treatment combinations first, then add this to the error degrees of freedom to get the total number of data points.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Get the total number of treatment combinations first, then add this to the error degrees of freedom to get the total number of data points.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "ga6-q6-n-data-points-answer", question = "ga6-q6-n-data-points"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1397398390.34929, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "ga6-q1-linear-models", 
+    question = structure("Which of these are based on a linear model?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_3b142b5", 
+        option = "multiple linear regression", value = "multiple linear regression", 
+        label = structure("multiple linear regression", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d4155a1", 
+        option = "linear regression", value = "linear regression", 
+        label = structure("linear regression", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_517c966", 
+        option = "ANOVA (analysis of variance)", value = "ANOVA (analysis of variance)", 
+        label = structure("ANOVA (analysis of variance)", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ee91d24", 
+        option = "t-test", value = "t-test", label = structure("t-test", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4fd66e0", 
+        option = "ANCOVA (analysis of covariance)", value = "ANCOVA (analysis of covariance)", 
+        label = structure("ANCOVA (analysis of covariance)", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! All of these methods can be formulated as linear models.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Many statistical methods, including ANOVA, t-tests, and ANCOVA, are special cases of linear models.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "ga6-q1-linear-models-answer", question = "ga6-q1-linear-models"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 101794210.952598, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "ga6-q2-lm-function", 
+    question = structure("Which of these can you do with the <code>lm()<\u002fcode> function in R?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ec9c566", 
+        option = "linear regression", value = "linear regression", 
+        label = structure("linear regression", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bc9e02f", 
+        option = "ANOVA (analysis of variance)", value = "ANOVA (analysis of variance)", 
+        label = structure("ANOVA (analysis of variance)", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6317914", 
+        option = "t-test", value = "t-test", label = structure("t-test", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_56c426a", 
+        option = "multiple linear regression", value = "multiple linear regression", 
+        label = structure("multiple linear regression", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d35598", 
+        option = "a linear model with a transformed explanatory variable", 
+        value = "a linear model with a transformed explanatory variable", 
+        label = structure("a linear model with a transformed explanatory variable", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7c688db", 
+        option = "ANCOVA (analysis of covariance)", value = "ANCOVA (analysis of covariance)", 
+        label = structure("ANCOVA (analysis of covariance)", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_15f5823", 
+        option = "a linear model with a quadratic and/or cubic term", 
+        value = "a linear model with a quadratic and/or cubic term", 
+        label = structure("a linear model with a quadratic and/or cubic term", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! All of these models can be fitted using <code>lm()<\u002fcode>.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("<code>lm()<\u002fcode> is very flexible and can be used to fit a wide range of linear models.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "ga6-q2-lm-function-answer", question = "ga6-q2-lm-function"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1112263033.98206, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+</p>
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.28"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"character","attributes":{},"value":["<style>h1 {font-size: 34px;}\n       h1.title {font-size: 38px;}\n       h2 {font-size: 30px;}\n       h3 {font-size: 24px;}\n       h4 {font-size: 18px;}\n       h5 {font-size: 16px;}\n       h6 {font-size: 12px;}\n       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}\n       pre:not([class]) { background-color: white }<\/style>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["i18n"]},{"type":"character","attributes":{},"value":["21.6.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/i18n"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["i18next.min.js","tutorial-i18n-init.js"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["<script id=\"i18n-cstm-trns\" type=\"application/json\">{\"language\":\"en\",\"resources\":{\"en\":{\"translation\":{\"button\":{\"runcode\":\"Run Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hints\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Next Hint\",\"hintprev\":\"Previous Hint\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copy to Clipboard\",\"startover\":\"Start Over\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continue\",\"submitanswer\":\"Submit Answer\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Previous Topic\",\"nexttopic\":\"Next Topic\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Try Again\"},\"text\":{\"startover\":\"Start Over\",\"areyousure\":\"Are you sure you want to start over? (all exercise progress will be reset)\",\"youmustcomplete\":\"You must complete the\",\"exercise\":\"exercise\",\"exercise_plural\":\"exercises\",\"inthissection\":\"in this section before continuing.\",\"code\":\"Code\",\"enginecap\":\"{{engine}} $t(text.code)\",\"quiz\":\"Quiz\",\"blank\":\"blank\",\"blank_plural\":\"blanks\",\"exercisecontainsblank\":\"This exercise contains {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Please replace {{blank}} with valid code.\",\"unparsable\":\"It looks like this might not be valid R code. R cannot determine how to turn your text into a complete command. You may have forgotten to fill in a blank, to remove an underscore, to include a comma between arguments, or to close an opening <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> or <code>{<\\/code> with a matching <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> or <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>It looks like your R code contains specially formatted quotation marks or &quot;curly&quot; quotes (<code>{{character}}<\\/code>) around character strings, making your code invalid. R requires character values to be contained in straight quotation marks (<code>&quot;<\\/code> or <code>'<\\/code>).<\\/p> {{code}} <p>Don't worry, this is a common source of errors when you copy code from another app that applies its own formatting to text. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. Try deleting the special character from your code and retyping it manually.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"and\":\"and\",\"or\":\"or\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"fr\":{\"translation\":{\"button\":{\"runcode\":\"Lancer le Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Indication\",\"hint_plural\":\"Indications\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Indication Suivante\",\"hintprev\":\"Indication Précédente\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copier dans le Presse-papier\",\"startover\":\"Recommencer\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuer\",\"submitanswer\":\"Soumettre\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Chapitre Précédent\",\"nexttopic\":\"Chapitre Suivant\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Réessayer\"},\"text\":{\"startover\":\"Recommencer\",\"areyousure\":\"Êtes-vous certains de vouloir recommencer? (La progression sera remise à zéro)\",\"youmustcomplete\":\"Vous devez d'abord compléter\",\"exercise\":\"l'exercice\",\"exercise_plural\":\"des exercices\",\"inthissection\":\"de cette section avec de continuer.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"et\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"es\":{\"translation\":{\"button\":{\"runcode\":\"Ejecutar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Pista\",\"hint_plural\":\"Pistas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Siguiente pista\",\"hintprev\":\"Pista anterior\",\"solution\":\"Solución\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar al portapapeles\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar respuesta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tema anterior\",\"nexttopic\":\"Tema siguiente\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Volver a intentar\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"¿De verdad quieres empezar de nuevo? (todo el progreso del ejercicio se perderá)\",\"youmustcomplete\":\"Debes completar\",\"exercise\":\"el ejercicio\",\"exercise_plural\":\"los ejercicios\",\"inthissection\":\"en esta sección antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Cuestionario\",\"and\":\"y\",\"or\":\"o\",\"oxfordcomma\":\"\"}}},\"pt\":{\"translation\":{\"button\":{\"runcode\":\"Executar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Dica\",\"hint_plural\":\"Dicas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Próxima dica\",\"hintprev\":\"Dica anterior\",\"solution\":\"Solução\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar para a área de transferência\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar resposta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tópico anterior\",\"nexttopic\":\"Próximo tópico\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tentar novamente\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"Tem certeza que deseja começar novamente? (todo o progresso feito será perdido)\",\"youmustcomplete\":\"Você deve completar\",\"exercise\":\"o exercício\",\"exercise_plural\":\"os exercícios\",\"inthissection\":\"nesta seção antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"e\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"tr\":{\"translation\":{\"button\":{\"runcode\":\"Çalıştırma Kodu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Ipucu\",\"hint_plural\":\"İpuçları\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Sonraki İpucu\",\"hintprev\":\"Önceki İpucu\",\"solution\":\"Çözüm\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Pano'ya Kopyala\",\"startover\":\"Baştan Başlamak\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Devam et\",\"submitanswer\":\"Cevabı onayla\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Önceki Konu\",\"nexttopic\":\"Sonraki Konu\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tekrar Deneyin\"},\"text\":{\"startover\":\"Baştan Başlamak\",\"areyousure\":\"Baştan başlamak istediğinizden emin misiniz? (tüm egzersiz ilerlemesi kaybolacak)\",\"youmustcomplete\":\"Tamamlamalısın\",\"exercise\":\"egzersiz\",\"exercise_plural\":\"egzersizler\",\"inthissection\":\"devam etmeden önce bu bölümde\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Sınav\",\"oxfordcomma\":\"\"}}},\"emo\":{\"translation\":{\"button\":{\"runcode\":\"🏃\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"💡\",\"hint_plural\":\"$t(button.hint)\",\"hinttitle\":\"$t(button.hint)\",\"solution\":\"🎯\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"📋\",\"startover\":\"⏮\",\"startovertitle\":\"Start Over\",\"continue\":\"✅\",\"submitanswer\":\"🆗\",\"submitanswertitle\":\"Submit Answer\",\"previoustopic\":\"⬅\",\"nexttopic\":\"➡\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"🔁\"},\"text\":{\"startover\":\"⏮\",\"areyousure\":\"🤔\",\"youmustcomplete\":\"⚠️ 👉 🧑‍💻\",\"exercise\":\"\",\"exercise_plural\":\"\",\"inthissection\":\"\",\"code\":\"💻\",\"enginecap\":\"$t(text.code) {{engine}}\",\"oxfordcomma\":\"\"}}},\"eu\":{\"translation\":{\"button\":{\"runcode\":\"Kodea egikaritu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Laguntza\",\"hint_plural\":\"Laguntza\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Aurreko laguntza\",\"hintprev\":\"Hurrengo laguntza\",\"solution\":\"Ebazpena\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Arbelean kopiatu\",\"startover\":\"Berrabiarazi\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Jarraitu\",\"submitanswer\":\"Erantzuna bidali\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Aurreko atala\",\"nexttopic\":\"Hurrengo atala\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Berriro saiatu\"},\"text\":{\"startover\":\"Berrabiarazi\",\"areyousure\":\"Berriro hasi nahi duzu? (egindako lana galdu egingo da)\",\"youmustcomplete\":\"Aurrera egin baino lehen atal honetako\",\"exercise\":\"ariketa egin behar duzu.\",\"exercise_plural\":\"ariketak egin behar dituzu.\",\"inthissection\":\"\",\"code\":\"Kodea\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Galdetegia\",\"oxfordcomma\":\"\"}}},\"de\":{\"translation\":{\"button\":{\"runcode\":\"Code ausführen\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Tipp\",\"hint_plural\":\"Tipps\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Nächster Tipp\",\"hintprev\":\"Vorheriger Tipp\",\"solution\":\"Lösung\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"In die Zwischenablage kopieren\",\"startover\":\"Neustart\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Weiter\",\"submitanswer\":\"Antwort einreichen\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Vorheriges Kapitel\",\"nexttopic\":\"Nächstes Kapitel\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Nochmal versuchen\"},\"text\":{\"startover\":\"Neustart\",\"areyousure\":\"Bist du sicher, dass du neustarten willst? (der gesamte Lernfortschritt wird gelöscht)\",\"youmustcomplete\":\"Vervollstädinge\",\"exercise\":\"die Übung\",\"exercise_plural\":\"die Übungen\",\"inthissection\":\"in diesem Kapitel, bevor du fortfährst.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"Lücke\",\"blank_plural\":\"Lücken\",\"pleasereplaceblank\":\"Bitte ersetze {{blank}} mit gültigem Code.\",\"unparsable\":\"Dies scheint kein gültiger R Code zu sein. R kann deinen Text nicht in einen gültigen Befehl übersetzen. Du hast vielleicht vergessen, die Lücke zu füllen, einen Unterstrich zu entfernen, ein Komma zwischen Argumente zu setzen oder ein eröffnendes <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> oder <code>{<\\/code> mit einem zugehörigen <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> oder <code>}<\\/code> zu schließen.\\n\",\"and\":\"und\",\"or\":\"oder\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"ko\":{\"translation\":{\"button\":{\"runcode\":\"코드 실행\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"힌트\",\"hint_plural\":\"힌트들\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"다음 힌트\",\"hintprev\":\"이전 힌트\",\"solution\":\"솔루션\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"클립보드에 복사\",\"startover\":\"재학습\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"다음 학습으로\",\"submitanswer\":\"정답 제출\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"이전 토픽\",\"nexttopic\":\"다음 토픽\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"재시도\"},\"text\":{\"startover\":\"재학습\",\"areyousure\":\"다시 시작 하시겠습니까? (모든 예제의 진행 정보가 재설정됩니다)\",\"youmustcomplete\":\"당신은 완료해야 합니다\",\"exercise\":\"연습문제\",\"exercise_plural\":\"연습문제들\",\"inthissection\":\"이 섹션을 실행하기 전에\",\"code\":\"코드\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"퀴즈\",\"blank\":\"공백\",\"blank_plural\":\"공백들\",\"exercisecontainsblank\":\"이 연습문제에는 {{count}}개의 $t(text.blank)이 포함되어 있습니다.\",\"pleasereplaceblank\":\"{{blank}}를 유효한 코드로 바꾸십시오.\",\"unparsable\":\"이것은 유효한 R 코드가 아닐 수 있습니다. R은 텍스트를 완전한 명령으로 변환하는 방법을 결정할 수 없습니다. 당신은 공백이나 밑줄을 대체하여 채우기, 인수를 컴마로 구분하기, 또는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> , <code>{<\\/code>로 시작하는 구문을 닫는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>, <code>}<\\/code>을 잊었을 수도 있습니다.\\n\",\"and\":\"그리고\",\"or\":\"혹은\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}},\"zh\":{\"translation\":{\"button\":{\"runcode\":\"运行代码\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"提示\",\"hint_plural\":\"提示\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"下一个提示\",\"hintprev\":\"上一个提示\",\"solution\":\"答案\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"复制到剪切板\",\"startover\":\"重新开始\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"继续\",\"submitanswer\":\"提交答案\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"上一专题\",\"nexttopic\":\"下一专题\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"再试一次\"},\"text\":{\"startover\":\"重置\",\"areyousure\":\"你确定要重新开始吗? (所有当前进度将被重置)\",\"youmustcomplete\":\"你必须完成\",\"exercise\":\"练习\",\"exercise_plural\":\"练习\",\"inthissection\":\"在进行本节之前\",\"code\":\"代码\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"测试\",\"blank\":\"空\",\"blank_plural\":\"空\",\"exercisecontainsblank\":\"本练习包含{{count}}个$t(text.blank)\",\"pleasereplaceblank\":\"请在{{blank}}内填写恰当的代码\",\"unparsable\":\"这似乎不是有效的R代码。 R不知道如何将您的文本转换为完整的命令。 您是否忘了填空，忘了删除下划线，忘了在参数之间包含逗号，或者是忘了用<code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>,<code>}<\\/code>来封闭<code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code>。 or <code>{<\\/code>。\\n\",\"unparsablequotes\":\"<p>您的R代码中似乎含有特殊格式的引号，或者弯引号(<code>{{character}}<\\/code>) 在字符串前后，在R中字符串应该被直引号(<code>&quot;<\\/code> 或者 <code>'<\\/code>)包裹。<\\/p> {{code}} <p>别担心，该错误经常在复制粘贴包含格式的代码时遇到， 您可以尝试将该行中的代码替换为以下代码，也许还有其他地方需要修改。<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"and\":\"且\",\"or\":\"或\",\"listcomma\":\",\",\"oxfordcomma\":\",\"}}},\"pl\":{\"translation\":{\"button\":{\"runcode\":\"Uruchom kod\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Podpowiedź\",\"hint_plural\":\"Podpowiedzi\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Następna podpowiedź\",\"hintprev\":\"Poprzednia podpowiedź\",\"solution\":\"Rozwiązanie\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Kopiuj do schowka\",\"startover\":\"Zacznij od początku\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Kontynuuj\",\"submitanswer\":\"Wyślij\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Poprzednia sekcja\",\"nexttopic\":\"Następna sekcja\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Spróbuj ponownie\"},\"text\":{\"startover\":\"Zacznij od początku\",\"areyousure\":\"Czy na pewno chcesz zacząć od początku? (cały postęp w zadaniu zostanie utracony)\",\"youmustcomplete\":\"Musisz ukończyć\",\"exercise\":\"ćwiczenie\",\"exercise_plural\":\"ćwiczenia\",\"inthissection\":\"w tej sekcji przed kontynuowaniem\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"luka\",\"blank_plural\":\"luk(i)\",\"exercisecontainsblank\":\"To ćwiczenie zawiera {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Proszę uzupełnić {{blank}} prawidłowym kodem.\",\"unparsable\":\"Wygląda na to, że może to nie być prawidłowy kod R. R nie jest w stanie przetworzyć Twojego tekstu na polecenie. Mogłeś(-aś) zapomnieć wypełnić luki, usunąć podkreślnik, umieścić przecinka między argumentami, lub zamknąć znak <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> lub <code>{<\\/code> odpowiadającym <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> lub <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>Wygląda na to, że Twój kod zawiera szczególnie sformatowane cudzysłowy lub cudzysłowy typograficzne (<code>{{character}}<\\/code>) przy ciągach znaków, co sprawia, że kod jest niepoprawny. R wymaga cudzysłowów prostych (<code>&quot;<\\/code> albo <code>'<\\/code>).<\\/p> {{code}} <p>Nie martw się, to powszechne źródło błędów, gdy kopiuje się kod z innego programu, który sam formatuje teskt. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Spróbuj usunąć znak specjalny i wpisać do ponownie ręcznie.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"and\":\"i\",\"or\":\"lub\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}}}}<\/script>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["6.4.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.min.css","css/v4-shims.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fontawesome"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["5.5.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bit","bit64","bslib","cachem","checkmate","cli","commonmark","compiler","crayon","curl","datasets","dichromat","digest","dplyr","ellipsis","evaluate","farver","fastmap","fontawesome","forcats","generics","ggplot2","glue","graphics","grDevices","grid","gtable","highr","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","labeling","later","learnr","lifecycle","lubridate","magrittr","markdown","methods","mime","parallel","pillar","pkgconfig","promises","purrr","R6","RColorBrewer","Rcpp","readr","rlang","rmarkdown","rprojroot","rstudioapi","S7","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utils","vctrs","vroom","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.4.1","4.5.0.1","4.6.0-1","0.8.0","1.1.0","2.3.2","3.6.5","1.9.1","4.4.1","1.5.3","5.2.2","4.4.1","2.0-0.1","0.6.37","1.1.4","0.3.2","1.0.5","2.1.2","1.2.0","0.5.2","1.0.0","0.1.3","4.0.0","1.8.0","4.4.1","4.4.1","4.4.1","0.3.6","0.11","1.1.3","0.5.8.1","1.6.4","1.6.15","0.1.4","2.0.0","1.48","0.4.3","1.3.2","0.11.5","1.0.4","1.9.3","2.0.3","1.13","4.4.1","0.12","4.4.1","1.10.1","2.0.3","1.3.0","1.0.4","2.6.1","1.1-3","1.0.13","2.1.5","1.1.7","2.28","2.1.1","0.16.0","0.2.0","0.4.9","1.4.0","1.9.1","4.4.1","1.8.4","1.5.1","3.2.1","1.3.1","1.2.1","2.0.0","0.3.0","4.4.1","0.4.0","4.4.1","0.6.5","1.6.5","3.0.2","0.47","1.8-4","2.3.10"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+
+</article> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h1 class="title toc-ignore" style="display:none;">Unit 5 BIO144 Course
+Content</h1>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</main> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+<!-- Build Tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>

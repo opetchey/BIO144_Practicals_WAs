@@ -28,13 +28,648 @@ All homework is for your own practice and learning. It will not be marked or gra
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
 
+### Video walkthrough
+
+Here is a video walkthrough of multiple regression. The videos are a few years old now, so some methods, such as how Owen finds the location of the data file, and does the import, are obsolete. But the concepts and R code for the analysis are still valid.
+
+#### Video 1
+
+This first video introduces the question, the data, and does some exploratory data analysis.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/D8L5OUDfnu8?si=4R8i8GVmQ4252VFF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+```{r quiz-dplyr-select, echo=FALSE}
+learnr::question(
+  "What **dplyr** function was used to make a data set with **only the three variables we wanted**?",
+  
+  learnr::answer(
+    "select",
+    correct = TRUE
+  ),
+  learnr::answer("slice"),
+  learnr::answer("mutate"),
+  learnr::answer("variable"),
+  learnr::answer("filter"),
+  
+  correct = "Correct! The `select()` function is used to choose specific columns (variables) from a data frame.",
+  incorrect = "Think about which dplyr function is used to keep or drop **columns**, rather than rows or create new variables.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-dplyr-mutate-transform, echo=FALSE}
+learnr::question(
+  "Say we found that the body fat variable was rather non-normal, and it looked like log-transforming it might help. Which **dplyr** function would we use to add the transformed variable to the dataset?",
+  
+  learnr::answer(
+    "mutate",
+    correct = TRUE
+  ),
+  learnr::answer("filter"),
+  learnr::answer("variable"),
+  learnr::answer("select"),
+  learnr::answer("slice"),
+  
+  correct = "Correct! The `mutate()` function is used to create new variables or transform existing ones and add them to the dataset.",
+  incorrect = "Think about which dplyr function is used to create new columns in a data frame.",
+  allow_retry = TRUE
+)
+```
+
+#### Video 2
+
+This second video talks about degrees of freedom in multiple regression and describes the mathematical model for multiple regression.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3nbUwYTyrOM?si=75Rfha-aj9X_Nkdc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+```{r quiz-df-error-multiple-regression-example, echo=FALSE}
+learnr::question_numeric(
+  "If we have a dataset with **28 observations** and we plan to fit a **multiple regression model with four continuous explanatory variables**, how many **degrees of freedom for error** will we have?",
+  
+  learnr::answer(23, correct = TRUE),
+  
+  correct = "Correct! The degrees of freedom for error are 28 − (4 + 1) = 23. We subtract one degree of freedom for each explanatory variable and one for the intercept.",
+  incorrect = "Not quite. Remember: degrees of freedom for error = number of observations − number of estimated parameters (including the intercept).",
+  allow_retry = TRUE
+)
+```
+
+#### Video 3
+
+This third video shows how to fit a multiple regression model in R, check the model assumptions, and interpret the summary table.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/itpsDaAU75A?si=obxSZ9_cgkt2_0Y_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+```{r quiz-why-make-a-model, echo=FALSE}
+learnr::question(
+  "Why make a model?\n\nThinking about what we gained from making the model of the data, which of the following did we gain?",
+  
+  learnr::answer(
+    "We now have a quantitative method for predicting body fat from weight and abdomen measurements.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "We know two causes of body fat."
+  ),
+  learnr::answer(
+    "We found a surprise, that weight is negatively related with body fat."
+  ),
+  learnr::answer(
+    "We have a numerical value for how well the model explains the data.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! By fitting the model, we gained a quantitative predictive relationship and a numerical measure of how well the model explains the data (e.g. R-squared), but not causal knowledge.",
+  incorrect = "Think about what models provide: prediction and quantification of fit, but not proof of causation or guaranteed surprises.",
+  allow_retry = TRUE
+)
+```
+
+#### Video 4
+
+This fourth video walks through visualising the results of a multiple regression model, including conditional plots with confidence bands.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/M-WcUFIALE8?si=hlp-aOjS2l0IY0K1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+```{r quiz-new-data-function-expandgrid, echo=FALSE}
+learnr::question_text(
+  "When making new data for prediction, what was the name of the really useful function that helps us put multiple variables into a nice package (i.e. a data frame) that `predict()` will like?\n\n(Type the name of the function only, don't include the brackets.)",
+  
+  learnr::answer("expand.grid", correct = TRUE),
+  
+  correct = "Correct! `expand.grid()` is very useful for creating a data frame containing all combinations of predictor values for use with `predict()`.",
+  incorrect = "Think about the function that creates all combinations of values from multiple variables.",
+  allow_retry = TRUE
+)
+```
+
+#### Video 5
+
+This fifth video concerns reporting the results.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XkYBpzKnU2M?si=bGpcQPhODxvc5RKF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+```{r quiz-reporting-criticism, echo=FALSE}
+learnr::question(
+  "How to report results?\n\nIf we were reporting our results and wrote something like:\n\n\"We found a significant relationship between weight and body fat (p < 0.0001).\"\n\nWhy might people criticise this sentence?",
+  
+  learnr::answer(
+    "It focuses too much on statistical significance.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "It doesn't give the test statistic for the p-value."
+  ),
+  learnr::answer(
+    "It doesn't give the direction of the relationship.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "It doesn't give the strength (slope) of the relationship.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "They wouldn't, it’s perfect!"
+  ),
+  
+  correct = "Correct! The sentence focuses mainly on statistical significance and omits key information about the direction and strength of the relationship, which are essential for interpretation.",
+  incorrect = "Think about what information helps a reader understand *what actually happened* in the data, beyond just whether p < 0.05.",
+  allow_retry = TRUE
+)
+```
+
+#### Video 6
+
+The sixth video shows how we can assess if an extreme observation is having a big influence on our multiple regression results.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7X4WhD-5WCs?si=IQYdaNDhIbky4gS1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+## Practical part 1
+
+### 1. The question
+
+This practical exercise concerns a dataset about the composition of milk across primate species, and how this is related to some features of those species, such as body mass and brain size. This dataset and example comes from a very nice (though somewhat advanced) book Statistical Rethinking by Richard McElreath. From that book, page 135 "Milk is a huge investment, being much more expensive than gestation. Such an expensive resource is likely adjusted in subtle ways, depending upon the physiological and developmental details of each primate species."
+
+The question is whether variation in the energetic content of milk (calories per gram of milk, variable `kcal.per.g`) is related to brain size (percentage of brain mass that is neocortex, variable `neocortex.perc`), taking into account average female body mass (variable `mass`). This means we will do a multiple regression analysis, with:
+
+* Response variable: `kcal.per.g`
+* Explanatory variables: `neocortex.perc` and `mass`
+
+The dataset named `milk_rethinking.csv` is in the usual place.
+
+Before looking at the data, can you make some plausible hypotheses about how the energetic content of the milk (calories per gram of milk, variable `kcal.per.g`) and brain size (percentage of brain mass that is neocortex, variable `neocortex.perc`) might be related? Some suggest a positive relationship, but what might be the biological reason for this?
+
+```{r quiz-milk-hypothesis, echo=FALSE}
+learnr::question(
+  "Before looking at the data, which of the following is a **plausible hypothesis** about the relationship between milk energy contentand neocortex size  in primates, and the biological reasoning behind it?",
+  
+  learnr::answer(
+    "There may be a positive relationship, because species with larger neocortices have higher energetic demands during brain development, which could be supported by more energy-rich milk.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "There should be a negative relationship, because species with larger brains invest less energy in milk and more in gestation."
+  ),
+  learnr::answer(
+    "There should be no relationship, because milk composition is unrelated to offspring development."
+  ),
+  learnr::answer(
+    "There must be a perfect linear relationship, because all primate species follow the same developmental strategy."
+  ),
+  learnr::answer(
+    "Any relationship would imply that milk composition directly determines adult brain size."
+  ),
+  
+  correct = "Correct! A plausible hypothesis is that species with larger neocortices produce more energy-rich milk to support the high energetic costs of brain growth during early development.",
+  incorrect = "Think about the energetic demands of brain development and how maternal investment via milk might help meet those demands, without assuming direct causation or perfect relationships.",
+  allow_retry = TRUE
+)
+
+```
+
+
+```{r echo = FALSE, message=FALSE}
+library(tidyverse)
+# Read the data, from the github location directly
+milk_data <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/milk_rethinking.csv")
+```
+
+
+We will also take into account the average female body mass (variable `mass`), hence we will be using **multiple regression** to analyse the data. (The dataset contains other variables, but we're interested in only those three for the moment.)
+
+### 2. Explore the data
+
+Open a new script and:
+
+* Prepare your script (rm(list=ls()), load libraries).
+* Read the data into R. It is the milk_rethinking.csv dataset (get it from the usual place).
+* The data is already clean and tidy, so no wrangling or quality control is required.
+* Visualise the distributions of three variables we're currently interested in.
+* Visualise the data (just those three variables), with question in mind.
+
+Some questions to guide you through this...
+
+```{r quiz-milk-n-observations, echo=FALSE}
+learnr::question_numeric(
+  "How many observations (species) are in the dataset?",
+  
+  learnr::answer(17, correct = TRUE),
+  
+  correct = "Correct! The dataset contains data for 17 primate species.",
+  incorrect = "Not quite. Count the number of rows (species) in the dataset.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-milk-distributions, echo=FALSE}
+learnr::question(
+  "Considering your graphs of the distribution of each variable, which of the following statements would you say are appropriate?",
+  
+  learnr::answer(
+    "With only 17 values, it is quite difficult to say whether the variables are normally distributed.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "The `kcal.per.g` and `mass` variables seem a bit skewed.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "The `neocortex.perc` variable is very skewed."
+  ),
+  
+  correct = "Correct! With such a small sample size it is hard to judge normality, and both milk energy content and body mass appear somewhat skewed, while neocortex percentage does not appear extremely skewed.",
+  incorrect = "Look carefully at the histograms or density plots. Small sample sizes make distributional assessment difficult, and not all variables show strong skew.",
+  allow_retry = TRUE
+)
+```
+
+
+So, we now have an idea of the distribution of the three variables. Two of the variables seem a bit skewed and we might benefit from transforming them. Fortunately, the author of the dataset has already provided log10-transformed versions of `kcal.per.g` and `mass` in the dataset, named `log10_kcal.per.g` and `log10_mass`. Please look at the distributions of those transformed variables too, and confirm for yourself that they are less skewed.
+
+
+```{r eval = FALSE}
+## make a histogram of each of the three variables we're interested in
+ggplot(milk_data, aes(x = kcal.per.g)) +
+  geom_histogram(bins = 7)
+ggplot(milk_data, aes(x = neocortex.perc)) +
+  geom_histogram(bins = 7)
+ggplot(milk_data, aes(x = mass)) +
+  geom_histogram(bins = 7)
+pairs(milk_data[, c("kcal.per.g", "neocortex.perc", "mass")])
+
+ggplot(milk_data, aes(x = log10_kcal.per.g)) +
+  geom_histogram(bins = 7)
+ggplot(milk_data, aes(x = neocortex.perc)) +
+  geom_histogram(bins = 7)
+ggplot(milk_data, aes(x = log10_mass)) +
+  geom_histogram(bins = 7)
+pairs(milk_data[, c("log10_kcal.per.g", "neocortex.perc", "log10_mass")])
+
+
+```
+
+And from now on work with these variables:
+
+* Response variable: `log10_kcal.per.g`
+* Explanatory variables: `neocortex.perc` and `log10_mass`
+
+
+```{r quiz-milk-kcal-mass, echo=FALSE}
+learnr::question(
+  "Looking at a scatterplot, what kind of relationship do you see between **`log10_kcal.per.g`** and **`log10_mass`**?",
+  
+  learnr::answer("none", correct = TRUE),
+  learnr::answer("positive"),
+  learnr::answer("negative"),
+  
+  correct = "Correct! There is no obvious relationship between milk energy content and body mass.",
+  incorrect = "Look at the overall pattern rather than individual points. There does not appear to be a clear trend.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-milk-kcal-neocortex, echo=FALSE}
+learnr::question(
+  "Looking at a scatterplot, what kind of relationship do you see between **`log10_kcal.per.g`** and **`neocortex.perc`**?",
+  
+  learnr::answer("none", correct = TRUE),
+  learnr::answer("positive"),
+  learnr::answer("negative"),
+  
+  correct = "Correct! There is no clear relationship between milk energy content and neocortex percentage.",
+  incorrect = "Focus on the overall trend across species. With this small sample size, no clear association is apparent.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-milk-mass-neocortex, echo=FALSE}
+learnr::question(
+  "Looking at a scatterplot, what kind of relationship do you see between **`log10_mass`** and **`neocortex.perc`**?",
+  
+  learnr::answer("none"),
+  learnr::answer("positive", correct = TRUE),
+  learnr::answer("negative"),
+  
+  correct = "Correct! Species with larger body mass tend to have a higher percentage of neocortex, indicating a positive relationship.",
+  incorrect = "Look at whether values of neocortex percentage tend to increase or decrease as body mass increases.",
+  allow_retry = TRUE
+)
+```
+
+So, there seems to be no relationship between the response variable `log10_kcal.per.g` and either of the explanatory variables. So we might expect to find nothing of interest by doing the multiple regression model (i.e. no significant slopes and little explanatory power). And our question would be answered: there is no evidence that milk energy content is related to brain size, after accounting for body mass.
+
+**But, hold on!!!** These graphs do not show the relationships while accounting for the other explanatory variable. This is what multiple regression does for us. So we might still find something interesting when we fit the multiple regression model.
+
+```{r quiz-milk-collinearity, echo=FALSE}
+learnr::question(
+  "Before fitting a regression model with both explanatory variables (`log10_mass` and `neocortex.perc`), what else is already clear from the bivariate plots, and what potential problem could this cause?",
+  
+  learnr::answer(
+    "The response variable is normally distributed, so no problems are expected."
+  ),
+  learnr::answer(
+    "The explanatory variables appear to be correlated with each other, which could lead to collinearity and make coefficient estimates unstable.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "There are too few observations to fit any regression model."
+  ),
+  learnr::answer(
+    "The relationship must be causal because both variables are biological traits."
+  ),
+ 
+  
+  correct = "Correct! The bivariate plots suggest that `log10_mass` and `neocortex.perc` are related, indicating collinearity. This can inflate standard errors, make coefficient estimates unstable, and complicate interpretation.",
+  incorrect = "Look at the relationship between the explanatory variables themselves. When predictors are correlated, collinearity can cause problems for regression models.",
+  allow_retry = TRUE
+)
+```
+
+
+Before we fit the model, we need to know how many degrees of freedom for error we will have.
+
+```{r quiz-milk-df-error-multiple-regression, echo=FALSE}
+learnr::question_numeric(
+  "How many **degrees of freedom for error** will we have for a regression model that includes **both explanatory variables** (`mass` and `neocortex.perc`)?",
+  
+  learnr::answer(14, correct = TRUE),
+  
+  correct = "Correct! With 17 observations and two explanatory variables (plus an intercept), the degrees of freedom for error are 17 − 3 = 14.",
+  incorrect = "Not quite. Remember: degrees of freedom for error = number of observations − number of estimated parameters (including the intercept).",
+  allow_retry = TRUE
+)
+```
+
+
+### 3. Fit the multiple regression model
+
+Now fit the multiple regression model with `log10_kcal.per.g` as the response variable, and `neocortex.perc` and `log10_mass` as explanatory variables. Give the two explanatory variables separated with a plus.
+
+Make the model diagnostic graphs, and check if you think the assumptions of a linear model are met.
+
+```{r eval = FALSE}
+# Fit the multiple regression model
+model <- lm(log10_kcal.per.g ~ neocortex.perc + log10_mass, data = milk_data)
+library(ggfortify)
+autoplot(model, smooth.colour = NA)
+```
+
+
+```{r quiz-milk-residual-patterns, echo=FALSE}
+learnr::question(
+  "Looking at the residual plots for the regression model, do you see any clear issues with patterns in the residuals?",
+  
+  learnr::answer("no"),
+  learnr::answer("yes"),
+  learnr::answer("perhaps", correct = TRUE),
+  
+  correct = "Correct! With such a small sample size, it is difficult to be confident. There is no strong pattern, but we should remain cautious when assessing residual structure.",
+  incorrect = "Given the small number of observations, it is sensible to be cautious. There is no clear pattern, but uncertainty remains.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-milk-qqplot-ok, echo=FALSE}
+learnr::question(
+  "Do you think the QQ-plot of the residuals looks reasonably OK?",
+  
+  learnr::answer("perhaps", correct = TRUE),
+  learnr::answer("yes"),
+  learnr::answer("no"),
+  
+  correct = "Correct! With such a small sample size, the QQ-plot does not show strong deviations from normality, but there is enough uncertainty that we should be cautious rather than confident.",
+  incorrect = "Remember that with only 17 observations, QQ-plots are hard to interpret definitively. Caution is appropriate.",
+  allow_retry = TRUE
+)
+```
+
+Now look at the coefficients that have been estimated. Hint: (use the summary function).
+
+```{r eval = FALSE}
+summary(model)
+```
+
+```{r quiz-milk-slope-kcal-mass, echo=FALSE}
+learnr::question_numeric(
+  "What is the estimated slope for **`log10_mass`**?\n\n(Round your answer to **two significant figures**.)",
+  
+  learnr::answer(-0.14, correct = TRUE),
+  
+  correct = "Correct! The estimated slope is −0.14 (to two significant figures).",
+  incorrect = "Not quite. Look at the estimated coefficient for `mass` in the regression model and round to two significant figures.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-milk-slope-chance, echo=FALSE}
+learnr::question(
+  "From the regression summary table, how can you tell that the estimated slope for the relationship between **`kcal.per.g`** and **`mass`** is unlikely to have occurred purely by chance?",
+  
+  learnr::answer(
+    "Because the estimated slope is negative."
+  ),
+  learnr::answer(
+    "Because the p-value associated with the slope is small, indicating that such an extreme estimate would be unlikely if the true slope were zero.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Because the R-squared value is close to 1."
+  ),
+  learnr::answer(
+    "Because the sample size is small."
+  ),
+  learnr::answer(
+    "Because the intercept is statistically significant."
+  ),
+  
+  correct = "Correct! A small p-value for the slope indicates that observing such an extreme estimate would be unlikely if the true slope were zero, providing evidence against the null hypothesis.",
+  incorrect = "Focus on the information in the summary table that quantifies how compatible the estimated slope is with the null hypothesis that the true slope equals zero.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-milk-slope-kcal-neocortex, echo=FALSE}
+learnr::question_numeric(
+  "What is the estimated slope for **`neocortex.perc`**?\n\n(Round your answer to **two significant figures**.)",
+  
+  learnr::answer(0.018, correct = TRUE),
+  
+  correct = "Correct! The estimated slope is 0.018 (to two significant figures).",
+  incorrect = "Not quite. Look at the estimated coefficient for `neocortex.perc` in the regression summary table and round to two significant figures.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-milk-ci-neocortex-lower, echo=FALSE}
+learnr::question_numeric(
+  "Assuming a 95% confidence interval using a critical value of **1.96**, what is the **lower bound** of the 95% confidence interval for the slope of `neocortex.perc`?\n\n(Round your answer to **four decimal places**.)",
+  
+  learnr::answer(0.0083, correct = TRUE),
+  
+  correct = "Correct! The lower bound is 0.018356 − (1.96 × 0.005134) ≈ 0.0083.",
+  incorrect = "Not quite. Use the formula: estimate − 1.96 × standard error, and then round to four decimal places.",
+  allow_retry = TRUE
+)
+```
 
 
 
+```{r quiz-adjusted-vs-multiple-r2, echo=FALSE}
+learnr::question(
+  "Why is the **adjusted R-squared** smaller than the **multiple R-squared** in the regression model?",
+  
+  learnr::answer(
+    "Because adjusted R-squared corrects for the number of explanatory variables and penalises unnecessary model complexity.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Because adjusted R-squared ignores the intercept."
+  ),
+  learnr::answer(
+    "Because adjusted R-squared is only used for ANOVA models."
+  ),
+  learnr::answer(
+    "Because adjusted R-squared is always smaller when the sample size is small."
+  ),
+  learnr::answer(
+    "Because multiple R-squared only measures the correlation between variables."
+  ),
+  
+  correct = "Correct! Adjusted R-squared accounts for the number of explanatory variables in the model and penalises added predictors that do not substantially improve model fit.",
+  incorrect = "Think about why simply adding more explanatory variables will almost always increase R-squared, and why adjusted R-squared corrects for this.",
+  allow_retry = TRUE
+)
+```
 
-## Practical
+Note that the degrees of freedom for error is indeed 14, as we calculated before fitting the model.
 
-### Exercise 1 (of 1)
+### 4. Interpret the results
+
+That was a bit of a surprise eh! We would not have guessed these quite strong effects from the exploration of the data with the bivariate scatterplots. There was no evidence of these relationships.
+
+Before we consider how we could end up with patterns in the multiple regression output, but not be able to see them in the raw data, please make a graph that show the estimated relationship between `log10_kcal.per.g` and `log10_ mass` conditioned on `neocortex.perc`. Also make another graph that shows the estimated relationship between `log10_kcal.per.g` and `neocortex.perc` conditioned on `log10_mass`. For each graph, also add a 95% confidence band around the estimated relationship.
+
+(An example of how to do this is in the Course Book, section Chapter 6, Section *Question 5: How do we make predictions?*)
+
+Then write some sentences that would be appropriate for reporting the results. Remember to focus on the biology, not the statistics (though these you should report also).
+
+### 5. Unique contributions of each explanatory variable
+
+(This part is a bit harder perhaps, but is covered in the course book, Chapter 6, Section *Assessing the importance of an explanatory variables in the presence of collinearity*)
+
+Now you will assess the unique contribution of each explanatory variable to the model fit. To do this, fit two reduced models, each leaving out one of the explanatory variables. Then compare each reduced model to the full model using an F-test (ANOVA).
+
+```{r eval = FALSE}
+# Fit reduced models
+model_reduced1 <- lm(log10_kcal.per.g ~ neocortex.perc, data = milk_data)
+model_reduced2 <- lm(log10_kcal.per.g ~ log10_mass, data = milk_data)
+# Compare each reduced model to the full model
+anova(model_reduced1, model)
+anova(model_reduced2, model)
+```
+
+```{r quiz-milk-f-statistic-model-comparison, echo=FALSE}
+learnr::question_numeric(
+  "Two regression models are compared:\n\n- Model 1 contains `log10_mass`\n- Model 2 contains `log10_mass` and `neocortex_perc`\n\nWhat is the value of the **F-statistic** for comparing these two models?",
+  
+  learnr::answer(12.78, correct = TRUE),
+  
+  correct = "Correct! The F-statistic for comparing the two models is 12.78.",
+  incorrect = "Not quite. Look at the model comparison output (e.g. using anova(model1, model2)) and report the F-statistic.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-milk-partial-r2, echo=FALSE}
+learnr::question_numeric(
+  "Consider the two regression models in the previous question what is the value of the **partial R-squared** for `neocortex_perc`? (Round your answer to **two decimal places**.)",
+  
+  learnr::answer(0.48, correct = TRUE),
+  
+  correct = "Correct! The partial R² is (0.175811 − 0.091895) / 0.175811 ≈ 0.48.",
+  incorrect = "Not quite. Use the formula (RSS₁ − RSS₂) / RSS₁ and be careful to use the RSS values from the two models.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-milk-partial-r2-interpretation, echo=FALSE}
+learnr::question(
+  "In words, what does the **partial R-squared** value from the model comparison mean?",
+  
+  learnr::answer(
+    "It is the proportion of the total variation in the response explained by the full model."
+  ),
+  learnr::answer(
+    "It is the proportion of the remaining variation (after accounting for `log10_mass`) that is explained by adding `neocortex_perc` to the model.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "It is the probability that `neocortex_perc` has no effect."
+  ),
+  learnr::answer(
+    "It is the correlation between `log10_mass` and `neocortex_perc`."
+  ),
+  learnr::answer(
+    "It is the proportion of variation explained by `neocortex_perc` alone, ignoring all other variables."
+  ),
+  
+  correct = "Correct! The partial R-squared tells us how much of the variation that was *not* explained by `log10_mass` is explained by adding `neocortex_perc` to the model.",
+  incorrect = "Think about what changes between the two models: partial R-squared measures the improvement in fit when a new variable is added, relative to what remained unexplained before.",
+  allow_retry = TRUE
+)
+```
+
+
+## Practical part 2
+
+You're going to explore when and why we need to use adjusted r-squared.
+
+Go to the bottom of your script for analysing the milk composition data and make a new variable, say r1, and put in it 17 random numbers. Something like this:
+
+`r1 <- rnorm(17)`
+
+Now do a multiple regression that includes the `log10_mass` and `neocortex.perc` variable and the variable you just made (`r1`). Find and write down the r-squared and the adjusted r-squared of this model with three explanatory variables.
+
+Now make a table (on a piece of paper) with three columns: number of random explanatory variables, r-squared, and adjusted r-squared. Write in the first row 0 (i.e. no random variables) and the r-squared and adjusted r-squared of the model with no random variables (i.e. the model you made in the previous exercise). In the second row write 1 random variable, and the r-squared and the adjusted r-squared.
+
+Now make another random variable, called it `r2` for example, add it to the model, and fill in the next row of the table. Keep going, until you've added 10 random variables, and filled in the table.
+
+What does this tell you about r-squared (unadjusted)? What happens when we add variables, even random ones containing no relevant information, to the r-squared? What happens to the adjusted r-squared, on the other hand?
+
+I'm not going to give the answer here, as the pattern will be obvious, and when you see it, you will understand why we should use adjusted r-squared when doing multiple regression.
+
+```{r quiz-r2-random-variable-variability, echo=FALSE}
+learnr::question(
+  "Why does the **unadjusted R-squared** often increase when we add a completely random variable to a regression model, even though the variable is just noise?",
+  
+  learnr::answer(
+    "Because, by chance alone, a random variable will usually explain a small amount of variability in the response, and the model is free to use this chance pattern to improve fit.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Because random variables are usually strongly related to the response."
+  ),
+  learnr::answer(
+    "Because R-squared measures causation rather than association."
+  ),
+  learnr::answer(
+    "Because the model automatically ignores variables that are just noise."
+  ),
+  learnr::answer(
+    "Because adding a variable reduces the number of residuals."
+  ),
+  
+  correct = "Correct! Even a purely random variable can, by chance, align with some of the variability in the response, and unadjusted R-squared will reflect this small improvement in fit.",
+  incorrect = "Think about chance correlations: with finite data, random variables can still explain some variation simply by luck.",
+  allow_retry = TRUE
+)
+```
+
 
 
 
@@ -61,8 +696,42 @@ learnr::question(
 
 
 
-### Question 2 — Testing the ensemble effect in multiple regression
+```{r quiz-multiple-regression-df, echo=FALSE}
+learnr::question_numeric(
+  "You fit a multiple regression model using **42 observations** and **three continuous explanatory variables**.\n\nHow many **degrees of freedom for error** does the model have?",
+  
+  learnr::answer(38, correct = TRUE),
+  
+  correct = "Correct! Degrees of freedom for error = 42 − (3 explanatory variables + 1 intercept) = 38.",
+  incorrect = "Remember to subtract one degree of freedom for each explanatory variable **and** one for the intercept.",
+  allow_retry = TRUE
+)
+```
 
+
+```{r quiz-multiple-regression-interpretation, echo=FALSE}
+learnr::question(
+  "In a multiple regression model with two explanatory variables, how should the slope of one explanatory variable be interpreted?",
+  
+  learnr::answer(
+    "As the change in the response variable associated with a one-unit increase in that explanatory variable, holding the other explanatory variable constant.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "As the overall relationship between the response and that variable, ignoring the other variable."
+  ),
+  learnr::answer(
+    "As a causal effect of that variable on the response."
+  ),
+  learnr::answer(
+    "As the correlation between the explanatory variable and the response."
+  ),
+  
+  correct = "Correct! In multiple regression, each slope represents the relationship between that explanatory variable and the response, while holding the other explanatory variables constant.",
+  incorrect = "Remember that multiple regression estimates *partial* effects, not marginal correlations or causal effects.",
+  allow_retry = TRUE
+)
+```
 
 ```{r q2-ensemble-effect, echo=FALSE}
 learnr::question(
@@ -81,34 +750,6 @@ learnr::question(
 )
 ```
 
----
-
-### Question 3 — Interpreting a multiple regression output
-
-
-```{r q3-interpret-output, echo=FALSE}
-learnr::question(
-  "Consider the regression output shown.\n\nWhich of the following statements is true?",
-  
-  learnr::answer(
-    "People with a high blood pressure tend to have high concentrations of nicotine, because β₂ is negative.",
-    correct = TRUE
-  ),
-  learnr::answer("Females tend to have on average 1.2 kg higher life expectancy than males."),
-  learnr::answer("The ensemble of all covariates seems to be important, because the p-value of the F-test is very small."),
-  learnr::answer("The model is not fitted well, because R² is very low."),
-  learnr::answer("Smokers seem to have a lower life expectancy than non-smokers, because β₃ is negative."),
-  
-  correct = "Correct! The sign and interpretation of the coefficient indicate a negative association between nicotine concentration and blood pressure.",
-  incorrect = "Carefully match the signs and meanings of the coefficients to the variables they describe.",
-  allow_retry = TRUE
-)
-```
-
-
----
-
-### Question 4 — Formula syntax in multiple regression
 
 
 ```{r q4-formula-syntax, echo=FALSE}
@@ -129,8 +770,6 @@ learnr::question(
 )
 ```
 
-
-### Question 5 — R-squared vs adjusted R-squared
 
 
 ```{r q5-r-squared, echo=FALSE}
@@ -157,4 +796,165 @@ learnr::question(
 ```
 
 
+```{r quiz-milk-semi-partial-r2, echo=FALSE}
+learnr::question(
+  "Which of the following best describes the meaning of a **semi-partial R-squared** value for an explanatory variable in a multiple regression model?",
+  
+  learnr::answer(
+    "It is the proportion of the total variation in the response that is explained by the full model."
+  ),
+  learnr::answer(
+    "It is the proportion of the remaining variation in the response (after accounting for other predictors) that is explained by the variable of interest."
+  ),
+  learnr::answer(
+    "It is the proportion of the **total variation in the response** that is uniquely explained by the variable of interest, after accounting for the other predictors.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "It is the correlation between the explanatory variable and the response variable."
+  ),
+  learnr::answer(
+    "It is the probability that the variable has no effect on the response."
+  ),
+  
+  correct = "Correct! The semi-partial R-squared measures how much of the total variation in the response is uniquely explained by one explanatory variable, beyond what is explained by the other variables in the model.",
+  incorrect = "Be careful to distinguish between partial and semi-partial R-squared. Semi-partial R-squared refers to unique contribution to the total variation, not the remaining variation.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-multiple-regression-collinearity, echo=FALSE}
+learnr::question(
+  "Why can collinearity between explanatory variables be a problem in multiple regression?",
+  
+  learnr::answer(
+    "It can make coefficient estimates unstable and inflate standard errors.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "It automatically invalidates the regression model."
+  ),
+  learnr::answer(
+    "It causes R-squared to decrease."
+  ),
+  learnr::answer(
+    "It violates the assumption of normally distributed residuals."
+  ),
+  
+  correct = "Correct! When explanatory variables are correlated with each other, it becomes harder to separate their individual effects, leading to unstable estimates and larger standard errors.",
+  incorrect = "Collinearity mainly affects interpretability and uncertainty of coefficients, not whether the model can be fitted at all.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-confidence-vs-prediction-bands, echo=FALSE}
+learnr::question(
+  "After a linear regression model has been fitted, it is possible to plot **confidence bands** and **prediction bands**.\n\nWhich of the following statements is correct?",
+  
+  learnr::answer(
+    "The confidence band/range is wider, because it has to account for two sources of uncertainty, namely in the coefficients β₀ and β₁, and in the error term ε."
+  ),
+  learnr::answer(
+    "The prediction band/range is wider, because it has to account only for the uncertainty in the coefficients β₀ and β₁."
+  ),
+  learnr::answer(
+    "The confidence band/range is wider, because it has to account only for the uncertainty in the coefficients β₀ and β₁."
+  ),
+  learnr::answer(
+    "The prediction band/range is wider, because it has to account for two sources of uncertainty, namely in the coefficients β₀ and β₁, and in the error term ε.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! Prediction bands are wider because they account for uncertainty in the estimated regression line *and* the additional variability of individual observations around that line.",
+  incorrect = "Recall that confidence bands describe uncertainty in the *mean response*, while prediction bands must also include the variability of individual observations.",
+  allow_retry = TRUE
+)
+```
+
+
+
+And finally, here is a challenging question, mostly because the multiple regression model contains a combination of continuous and binary explanatory variables. See how you get on with this one. Ask a TA for help if you'd like some help!
+
+```{r quiz-multiple-regression-interpretation-hb, echo=FALSE}
+learnr::question("Here is a multiple regression output:<br><br>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Estimate</th>
+      <th>Std. Error</th>
+      <th>t value</th>
+      <th>Pr(&gt;|t|)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>(Intercept)</td>
+      <td>26.90469</td>
+      <td>2.59120</td>
+      <td>10.383</td>
+      <td>&lt;2e-16</td>
+    </tr>
+    <tr>
+      <td>blood_pressure</td>
+      <td>-0.11617</td>
+      <td>0.02114</td>
+      <td>-5.495</td>
+      <td>3.21e-07</td>
+    </tr>
+    <tr>
+      <td>smoking</td>
+      <td>-1.17452</td>
+      <td>0.41734</td>
+      <td>-2.814</td>
+      <td>0.00593</td>
+    </tr>
+    <tr>
+      <td>male</td>
+      <td>1.28202</td>
+      <td>0.40337</td>
+      <td>3.178</td>
+      <td>0.00199</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Residual standard error: 2 on 96 degrees of freedom<br>
+Multiple R-squared: 0.33 &nbsp;&nbsp; Adjusted R-squared: 0.3091<br>
+F-statistic: 15.76 on 3 and 96 DF, p-value: 2.066e-08<br><br>
+The response variable is **haemoglobin concentration (Hb, g/dL)**.  
+Explanatory variables are:
+<ul>
+  <li><code>blood_pressure</code> (continuous)</li>
+  <li><code>smoking</code> (binary: 1 = smoker, 0 = non-smoker)</li>
+  <li><code>male</code> (binary: 1 = male, 0 = female)</li>
+</ul>
+Which of the following statements are **true**?",
+  
+  learnr::answer(
+    "The ensemble of all covariates seems to be important, because the p-value of the F-test is very small.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "People with a high blood pressure seem to have lower Hb values, because the coefficient for blood_pressure is negative.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Females seem to have on average 1.28 g/dL higher Hb concentrations than males."
+  ),
+  learnr::answer(
+    "The model fit is bad, because the multiple R-squared is very low."
+  ),
+  learnr::answer(
+    "Smokers seem to have a lower Hb concentration than non-smokers, because the coefficient for smoking is negative.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! The overall F-test indicates the model is informative, higher blood pressure is associated with lower Hb, and smokers have lower Hb than non-smokers. The statement about females is incorrect because males (coded as 1) have higher Hb on average.",
+  incorrect = "Check how binary variables are coded and remember that R-squared values must be interpreted in context. Also pay attention to the sign and meaning of coefficients.",
+  allow_retry = TRUE
+)
+```
 

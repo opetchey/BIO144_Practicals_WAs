@@ -1,5 +1,5 @@
 ---
-title: "Unit 5 BIO144 Course Content"
+title: "Unit 7 BIO144 Course Content"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Introduction
 
-On this web page you will find the homework, practical exercises and weekly quiz for Unit 5 of BIO144.
+On this web page you will find the homework, practical exercises and weekly quiz for Unit 7 of BIO144.
 
 All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
 
@@ -30,16 +30,34 @@ All homework is for your own practice and learning. It will not be marked or gra
 
 ### Reading
 
+Remember, all this is optional, for your own learning and practice. You do not have to do any of this reading if you don't want to.
+
 * Two-way analysis of variance, example of cow growth and their diets -- Section 6.1 & 6.2 from Getting Started with R, Beckerman, Childs & Petchey.
-
 * One-way and two-way analysis of variance, example with plant biomass, fertilizer, and light, Chapter 6 of The New Statistics with R, Hector. (You'll see some use of the qplot function here; some people think this is a quick way of making ggplots. Prof. Petchey doesn't.)
+* Read about ANCOVA in section 6.3 of Getting Started with R, by Beckerman, Childs, and Petchey.
+* For an alternate perspective on ANCOVA, read chapter 7 of The New Statistics with R. This chapter includes Box 7.3 about something called orthogonality... which is a quite important difference between data coming from well designed experiments and data coming from elsewhere.
 
+### Videos about ANCOVA
+
+In this series of videos, Prof. Petchey explains ANCOVA, and shows how to do it in R. He does this by showing first regression, then ANOVA, then ANCOVA, all with one dataset. The videos were made a while back, so some details of the content does not fit perfectly with the current content and structure of the course. But the statistics don't change!
+
+The first video introduces the case study and dataset, and then performs simple linear regression.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/n3Lt0-yTbNk?si=QzwpWqo9kVgZplkO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+The second video performs a one-way ANOVA, including how to interpret the beta coefficients.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/On32bU7Kbjw?si=HuanaUJv85PFtiTy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+The third video concerns ANCOVA. Finally!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lEDcDxa6w8o?si=YfFoHp-kB0VUpCxG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### Don't forget dogs!
 
 A few weeks ago we played with a graph of cats. We should also not forget dogs! If you have some spare time, see if you can get the following code to run!
 
-```{r}
+```{r eval = FALSE}
 install.packages("devtools")
 devtools::install_github("melissanjohnson/pupR")
 library(pupR)
@@ -47,53 +65,1011 @@ pupR()
 ```
 
 
-## Practical
+## Practical part 1
 
-### Exercise 1 (of 1)
+In this exercise, you will work through two-way analysis of variance.
 
-Intertidal algae from Unit 6 of old olat
+The steps to follow are:
 
+0. Get introduced to and think about the biological question.
+1. Prepare a script, load the data, and make some basic checks on the dataset.
+2. Visualise to answer the question.
+3. Fit an appropriate model. treatments.
+4. Check the assumptions of the model.
+5. Interpret the model.
+6. Make a visualisation of the data, good for publication.
+7. Write a short reporting sentence describing your findings.
+8. Critique and reflection
 
-## Weekly Quiz
+### 0. The biological question
 
+The seashore is a lovely place, though in Zurich we're not best placed to often enjoy one. Fortunately we have the lake. But I digress. One of the great things about some seashores is the animal and plants that live there, especially in the intertidal, the area between low and high tide where environmental conditions vary enormously over short distances and short timescales. In the intertidal, interactions among organisms can be quite important. The study you're going to work on in this practical exercise is about herbivory by organisms such as limpets, and how this might vary across the intertidal, from low in the intertidal to higher up. The example comes from the book *The Analysis of Biological Data* by Whitlock and Schluter, and was originally made and published by [Harley, C. D. G. 2003. Ecology 84: 1477-1488](https://tinyurl.com/yvymcpsm).
 
+The question is: does the effect of herbivory on algal area depend on height in the intertidal?
 
-
----
-
-### Question 4 — Degrees of freedom in a two-way ANOVA (numeric)
-
-
-```{r ga6-q4-degrees-of-freedom, echo=FALSE}
-learnr::question_numeric(
-  "Imagine you have a **randomised fully-factorial experiment** assigning patients to two treatments.\n\nOne treatment has **five categories**, and another has **three categories**. In the model, both main effects and their interaction are included.\n\nHow many **degrees of freedom** are used by the treatment terms in the model?\n\n(Just give the number.)",
+```{r quiz-intertidal-biological-question, echo=FALSE}
+learnr::question(
+  "In statistical terms, what are we really asking?",
   
-  learnr::answer(8, correct = TRUE),
+  learnr::answer(
+    "Whether there is an interaction between height in the intertidal and herbivory.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Whether herbivores always reduce algal area."
+  ),
+  learnr::answer(
+    "Whether tidal height affects algal area."
+  ),
+  learnr::answer(
+    "Whether the mean algal area differs among plots."
+  ),
   
-  correct = "Correct! The degrees of freedom are (5 − 1) + (3 − 1) + (5 − 1)(3 − 1) = 4 + 2 + 8 = 14 — but the interaction df are counted separately in ANOVA tables. The treatment terms shown here sum to 8.",
-  incorrect = "Carefully count the degrees of freedom for each main effect and their interaction.",
+  correct = "Correct! Asking whether the effect of herbivory depends on tidal height is equivalent to asking whether there is an interaction between the two factors.",
+  incorrect = "Incorrect! Try again. The question is about if the effect of one factor (herbivory) depends on the level of another factor (tidal height).",
   allow_retry = TRUE
 )
 ```
 
 
 
-> **Teaching note:** this mirrors the assessment wording exactly; interpretation depends on which rows are included in the table.
+In the experiment, 32 plots were cleared of algae just below low tide, these plots were therefore always underwater. Another 32 plots were in the intertidal. A small amount of transplanted algae was glued in the middle of each plot. 16 randomly chosen plots below low tide were fenced, to exclude herbivores. The same was done for 16 plots in the intertidal. The remaining plots were accessible to herbivores. The area of algae remaining after a certain time was measured.
+
+
+
+```{r quiz-intertidal-factors, echo=FALSE}
+learnr::question(
+  "Which of the following are the **experimental factors/treatments** in this study?",
+  
+  learnr::answer(
+    "Height (below low tide vs middle of intertidal)",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Herbivore presence (minus vs plus)",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Amount of algae glued into each plot"
+  ),
+  learnr::answer(
+    "Distance between plots"
+  ),
+  
+  correct = "Correct! The experiment manipulates height and herbivore presence.",
+  incorrect = "Focus on which variables were deliberately manipulated by the experimenter.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-intertidal-response-explicit, echo=FALSE}
+learnr::question(
+  "What is the **response variable** in this experiment?",
+  
+  learnr::answer(
+    "Area of algae remaining after a certain time.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Tidal height."
+  ),
+  learnr::answer(
+    "Presence or absence of herbivores."
+  ),
+  learnr::answer(
+    "Number of plots in each treatment."
+  ),
+  
+  correct = "Correct! The response variable is the measured outcome: the area of algae remaining after a certain time.",
+  incorrect = "The response variable is what we measure as the outcome of the experimental manipulations.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-intertidal-expected-pattern, echo=FALSE}
+learnr::question(
+  "Suppose the effect of herbivory **does depend on tidal height**. Which of the following patterns would you expect to see in a graph?",
+  
+  learnr::answer(
+    "The difference between fenced and unfenced plots is larger at one tidal height than the other.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Fenced plots always have more algae, emphasising the same difference at both tidal heights."
+  ),
+  learnr::answer(
+    "All plots have similar algal area regardless of treatment."
+  ),
+  learnr::answer(
+    "Only tidal height matters, not herbivory."
+  ),
+  
+  correct = "Correct! An interaction means that the effect of herbivory changes depending on tidal height.",
+  incorrect = "Look for patterns where the size of the herbivory effect differs between tidal heights.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-intertidal-design-why-shuffled, echo=FALSE}
+learnr::question(
+  "Why is **“two-way fully factorial experiment”** the most appropriate term to describe the design of this study?",
+  
+  learnr::answer(
+    "Because the response variable is continuous."
+  ),
+  learnr::answer(
+    "Because the experiment includes exactly two treatments."
+  ),
+  learnr::answer(
+    "Because two factors are experimentally manipulated, and all combinations of their levels are represented.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Because the data were collected observationally."
+  ),
+  learnr::answer(
+    "Because the plots were measured only once."
+  ),
+  
+  correct = "Correct! The study manipulates two factors and includes all combinations of their levels, which is exactly what defines a two-way fully factorial experiment.",
+  incorrect = "Focus on how many factors are manipulated and whether all combinations of their levels are included.",
+  allow_retry = TRUE
+)
+```
+
+Another way to describe the design of the experiment is: a two-way fully factorial experiment with treatments height (low or high) and herbivory (minus or plus). There were 16 replicates per treatment combination (i.e., 16 plots low height with herbivores, 16 plots low height without herbivores, 16 plots high height with herbivores, and 16 plots high height without herbivores). Therefore, there were 64 plots in total.
+
+Now let's think about degrees of freedom in this design. There are 64 observations.
+
+```{r quiz-intertidal-number-of-betas, echo=FALSE}
+learnr::question_numeric(
+  "If we fit a model that includes **both main effects and their interaction term** for this experiment (tidal height × herbivore access), how many **beta coefficients (group means)** are estimated?",
+  
+  learnr::answer(4, correct = TRUE),
+  
+  correct = "Correct! With two factors each having two levels, a fully factorial design estimates one mean for each combination of factor levels, giving 2 × 2 = 4 means.",
+  incorrect = "Think in terms of factor combinations: how many unique treatment combinations are there?",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-intertidal-df-error, echo=FALSE}
+learnr::question_numeric(
+  "In this experiment there are **64 plots in total**, and we fit a model with **both main effects and their interaction** (a two-way fully factorial model with two levels per factor).\n\nHow many **degrees of freedom for error** does the model have?",
+  
+  learnr::answer(60, correct = TRUE),
+  
+  correct = "Correct! With 64 observations and 4 estimated group means (2 × 2 combinations), the degrees of freedom for error are 64 − 4 = 60.",
+  incorrect = "Remember: degrees of freedom for error = number of observations minus the number of estimated means (or parameters).",
+  allow_retry = TRUE
+)
+```
+
+Great, so we know how many degrees of freedom for error to expect. We can also make some expectations about what the ANOVA table will look like when we fit the model.
+
+
+```{r quiz-intertidal-anova-table-structure, echo=FALSE}
+learnr::question(
+  "If we analyse these data using a two-way ANOVA with **tidal height**, **herbivore access**, and their **interaction**, how will the ANOVA table appear?",
+  
+  
+  learnr::answer(
+    "It will contain a single row comparing fenced and unfenced plots."
+  ),
+  learnr::answer(
+    "It will contain only rows for the two main effects, but no interaction term."
+  ),
+  learnr::answer(
+    "It will contain rows for tidal height, herbivore access, their interaction, and residuals.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "It will contain one row for each of the four treatment combinations."
+  ),
+  learnr::answer(
+    "It will contain only an F-statistic and a p-value, without degrees of freedom."
+  ),
+  
+  correct = "Correct! A two-way ANOVA table includes separate rows for each main effect, their interaction, and the residual (error) term.",
+  incorrect = "Think about how ANOVA partitions variation: each main effect, the interaction, and the residual variation each get their own row.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-intertidal-df-model-terms, echo=FALSE}
+learnr::question_numeric(
+  "In this two-way fully factorial experiment, both factors (tidal height and herbivore access) have **two levels**, and the model includes **both main effects and their interaction**.\n\nHow many **degrees of freedom in total** are associated with the two main effects **and** the interaction term?",
+  
+  learnr::answer(3, correct = TRUE),
+  
+  correct = "Correct! Each main effect with two levels has 1 degree of freedom, and the interaction between two two-level factors also has 1 degree of freedom, giving 1 + 1 + 1 = 3.",
+  incorrect = "Not quite. Each two-level factor contributes 1 degree of freedom, and their interaction contributes 1 more.",
+  allow_retry = TRUE
+)
+```
+
+Awesome, we know what to expect from the ANOVA table when we fit the model.
+
+If you're a bit uncertain about this, sketch out the ANOVA table on a piece of paper, and fill in the degrees of freedom you expect to see. And ask a TA to check your sketch and thinking.
+
+
+
+### 1. Prepare a script, load the data, and make some basic checks on the dataset.
+
+
+
+You've done this before a few times now. Go for it! The dataset `intertidalalgae.csv` is in the usual place.
+
+
+```{r echo = FALSE, message = FALSE}
+library(tidyverse)
+intertidal <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/intertidalalgae.csv")
+## box and whisker with height on the x and the herbivore treatments as colour and offset on the x axis
+```
+
+
+```{r eval = FALSE, message = FALSE}
+ggplot(intertidal, aes(x = height, y = Area_cm2, color = herbivores)) +
+  geom_boxplot(position = position_dodge(width = 0.75)) +
+  labs(x = "Tidal height", y = "Algal area (cm2)", color = "Herbivore access") +
+  theme_classic()
+```
+
+The experimental design is known as "balanced" because there were equal number of replicates (16) per treatment combination. This is important to know, because in a balanced design, the statistical analysis is simpler and more robust.
+
+However, even when the *design* is balanced, the outcome data may not be perfectly balanced (e.g., due to missing data). Therefore, it is always important to check the data after loading it. Do a "group_by" (with both explanatory variables) and "summarise" to check the number of data points per treatment combination.
+
+```{r echo = FALSE, eval = FALSE}
+library(tidyverse)
+intertidal |> 
+  group_by(height, herbivores) |> 
+  summarise(n = n())
+```
+
+Also check that the two treatments do each indeed contain only two levels. Here is how to do this with the `distinct` function.
+
+```{r eval = FALSE, echo = TRUE}
+intertidal %>%
+  distinct(height)
+```
+
+And we need to check for NAs. A quick method is to again do a "group_by" and "summarise", this time make it on a version of the dataset with na.omit() applied. This function removes any rows with NAs in any column.
+
+```{r eval = FALSE}
+intertidal %>%
+  na.omit() %>%
+  group_by(height, herbivores) %>%
+  summarise(n = n())
+```
+
+Same result, so there are no NAs anywhere in the dataset. Note that if we had found fewer rows in the na.omit() version, we would need to investigate which rows and variables were missing data, and why. Depending on the situation, we might need to exclude some treatment combinations from the analysis if they had too few data points.
+
+Have a look at the distribution of the response variable `Area_cm2` in each of the four treatment combinations. Your friend here is `facet_grid`.
+
+```{r eval = FALSE}
+ggplot(intertidal, aes(x = Area_cm2)) +
+  geom_histogram(bins=7, fill = "lightblue", color = "black") +
+  facet_grid(height ~ herbivores) +
+  labs(x = "Algal area (cm2)", y = "Count")
+```
+
+```{r quiz-intertidal-low-values, echo=FALSE}
+learnr::question(
+  "Looking at the distributions of algal area for the different treatment combinations, which treatment combination shows **many very low values, close to zero or zero**, compared to the others?",
+  
+  learnr::answer(
+    "without herbivore, low height"
+  ),
+  learnr::answer(
+    "with herbivore, mid height"
+  ),
+  learnr::answer(
+    "with herbivore, low height",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "without herbivore, mid height"
+  ),
+  
+  correct = "Correct! When herbivores are present at low tidal height, algal area is often reduced to very low values, indicating strong herbivory effects in this zone.",
+  incorrect = "Compare the distributions carefully. Look for the treatment where values frequently cluster near zero.",
+  allow_retry = TRUE
+)
+```
+
+What do you think is going on here? Why might algal area be so low when herbivores are present at low tidal height? Discuss with your neighbour or a TA. And why might there be more algae in the other treatment combinations?
+
+Whitlock and Schluter (in their book) transform the `Area_cm2` variable by taking the square root. This might make sense so it becomes a linear measure, rather than a being a square. On the other hand, it doesn't really make the distributions much better!
+
+But in any case, go ahead and square root transform it. Use the square root for everything from now on. (Do make sure you do this, otherwise you could get wrong some of the following questions.)
+
+```{r echo = FALSE}
+intertidal <- intertidal |> 
+  mutate(Area_sqrt = sqrt(Area_cm2))
+```
+
+
+
+### 2. Visualise the answer to the question
+
+Now make a graph that will tell you the answer, about the effects of herbivores and height, and in particular if the effect of herbivores differs depending on height (i.e. is there an interaction?).
+
+Use ggplot (of course) and map height to the x axis, and herbivores to colour, and your transformed area variable to the y axis. The use either `geom_boxplot` or `geom_point` (or both). If you use `geom_point`, you might want to consider putting this inside the brackets `position=position_jitterdodge(jitter.width = 0.2)`
+
+`jitterdodge` sounds a bit funny eh! It does just what it says, jitter the points a bit, so they don't lie on top of each other, and dodges the treatments out of each other's way. Compare the graph to if this wasn't in the geom_point brackets.
+
+
+```{r}
+ggplot(intertidal, aes(x = height, y = Area_sqrt, color = herbivores)) +
+  geom_boxplot(position = position_dodge(width = 0.75)) +
+  geom_point(position = position_jitterdodge(jitter.width = 0.2,
+                                             dodge.width = 0.75), alpha = 0.6) +
+  labs(x = "Tidal height", y = "Sqrt Algal area (cm2)", color = "Herbivore access") 
+```
+
+
+Look at the graph, imagine a line connecting the means of the two herbivore treatments at low height, and another line connecting the means of the two herbivore treatments at mid height. Are these lines parallel, or are they not parallel?
+
+Look again. What is the effect of herbivores at low height? The answer is that there is a large effect of herbivores at low height, with much less algae when herbivores are present.
+
+Now, what is the effect of herbivores at mid height? The answer is that there no clear effect of herbivores at mid height, with similar amounts of algae whether herbivores are present or not.
+
+So we can pretty confidently say that the effect of herbivores depends on tidal height. This is an interaction. Given the strength of the pattern in the graph, we can be quite confident in our answer to the question, even without making and interpreting a statistical model.
+
+And in the ANOVA table, we expect that the interaction term will have a large F value, and a small p value (less than 0.05).
 
 ---
 
-** Need to create dataset ***
+Just for some practice, and less so for answering any biological question, calculate the mean and the standard deviation of each of the treatment combinations. Hint: use `group_by`, include both the explanatory variables, and then use `summarise`.
+
+```{r eval = FALSE}
+summ <- intertidal |> 
+  group_by(height, herbivores) |> 
+  summarise(mean = mean(Area_sqrt),
+            sd = sd(Area_sqrt))
+summ
+```
+
+
+
+```{r quiz-intertidal-mean-noherb-low, echo=FALSE}
+learnr::question_numeric(
+  "Rounded to **two decimal places**, what was the **mean square root algal area** for the **no herbivore, low height** treatment?",
+  
+  learnr::answer(32.91, correct = TRUE),
+  
+  correct = "Correct! The mean algal area for the no-herbivore, low-height treatment is 32.91.",
+  incorrect = "Not quite. Calculate the mean algal area for the no-herbivore, low-height group and round to two decimal places.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-intertidal-sd-withherb-midh, echo=FALSE}
+learnr::question_numeric(
+  "Rounded to **two decimal places**, what is the **standard deviation** of square root algal area for the **with herbivore, mid height** treatment?",
+  
+  learnr::answer(15.56, correct = TRUE),
+  
+  correct = "Correct! The standard deviation for the with-herbivore, mid-height treatment is 15.56.",
+  incorrect = "Not quite. Calculate the standard deviation for the with-herbivore, mid-height group and round to two decimal places.",
+  allow_retry = TRUE
+)
+```
+
+
+### 3. Fit an appropriate statistical model
+
+```{r quiz-linear-model-interaction-syntax, echo=FALSE}
+learnr::question(
+  "In R, there are two equivalent ways to specify a linear model with **two main effects** and their **interaction term**. Which of the following correctly describes these two methods?",
+  
+  learnr::answer(
+    "Using `y ~ x1 + x2` or `y ~ x1 * x2`."
+  ),
+  learnr::answer(
+    "Using `y ~ x1:x2` or `y ~ x1 + x2`."
+  ),
+  learnr::answer(
+    "Using `y ~ x1 + x2 + x1:x2` or `y ~ x1 * x2`.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Using `y ~ x1 * x2` or `y ~ x1:x2`."
+  ),
+  learnr::answer(
+    "Using `y ~ x1 + x2 + x2:x1:x2`."
+  ),
+  
+  correct = "Correct! The formula `x1 * x2` is shorthand for including both main effects and their interaction, and is equivalent to `x1 + x2 + x1:x2`.",
+  incorrect = "Recall that `*` expands to main effects plus the interaction, while `:` includes only the interaction term.",
+  allow_retry = TRUE
+)
+```
+
+Now fit the linear model with two main effect and the interaction term.
+
+```{r}
+mod1 <- lm(Area_sqrt ~ height * herbivores, data = intertidal)
+```
+
+### 4. Check the assumptions of model
+
+Make the four plots we use to check if the model assumptions are reasonably well met by the data and our model.
+
+```{r message=FALSE, warning=FALSE, eval = FALSE}
+library(ggfortify)
+autoplot(mod1, smooth.colour = NA)
+```
+
+Write a sentence describing your assessment of how well each of the five assumptions of a linear model are met. Check in with a TA for feedback on your assessment.
+
+### 5. Interpret the model
+
+Get the ANOVA table for the model.
+
+```{r eval = FALSE}
+anova(mod1)
+```
+
+The first thing to check, and this is really important, is the degrees of freedom for each of the terms in the ANOVA table. Do they match what you expected?
+
+```{r quiz-anova-df-unexpected-misspecified, echo=FALSE}
+learnr::question(
+  "Suppose the **degrees of freedom for the residuals** shown in the ANOVA table are **different from what you expected** based on the experimental design.\n\nWe have already checked that:\n- there are no missing values,\n- all treatment combinations have the expected number of observations,\n- and the data are balanced.\n\nGiven this, what is the **most likely explanation** for the unexpected residual degrees of freedom?",
+  
+  
+  learnr::answer(
+    "Some observations were missing from the dataset."
+  ),
+  learnr::answer(
+    "The residuals are not normally distributed."
+  ),
+  learnr::answer(
+    "R automatically adjusts degrees of freedom to improve model fit."
+  ),
+  learnr::answer(
+    "The response variable was transformed."
+  ),
+  learnr::answer(
+    "The model was mis-specified, for example by not including an interaction term that should have been included.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! If missing data, imbalance, and data handling issues have already been ruled out, then an unexpected number of residual degrees of freedom usually indicates that the model was mis-specified, for example by omitting an interaction term that should be included.",
+  incorrect = "Some of the explanations can sometimes affect degrees of freedom, but in this case they have already been checked and ruled out.",
+  allow_retry = TRUE
+)
+```
+
+We can also see that, as expected, the ANOVA table contains rows for both main effects and their interaction. And that each of these terms has 1 degree of freedom, as we expected. Everything is good.
+
+If we add up all the sums of squares, we get the total sum of squares. Here it is about 18'500. We can check this:
+
+```{r echo = TRUE}
+sum((intertidal$Area_sqrt - mean(intertidal$Area_sqrt))^2)
+```
+
+(*Took me ages to get the brackets in the correct place there!*)
+
+Use the total sum of squares to calculate the **UN**adjusted R squared for the model. 
+```{r eval = FALSE}
+summary(mod1)
+```
+
+
+```{r quiz-intertidal-adjusted-r2, echo=FALSE}
+learnr::question_numeric(
+  "How much of the variability of the response does the **model with interaction** explain?\n\nGive the **UNadjusted R-squared**, rounded to **two decimal places**.",
+  
+  learnr::answer(0.19, correct = TRUE),
+  
+  correct = "Correct! The unadjusted R-squared of the model with interaction is 0.19.",
+  incorrect = "Not quite. The unadjusted R-squared is calculated as the model sum of squares divided by the total sum of squares. Round your answer to two decimal places.",
+  allow_retry = TRUE
+)
+```
+
+
+Now look at the $F$ values and $p$ values. Do they match what you expected from looking at the graph?
+
+```{r quiz-interaction-main-effects-meaning, echo=FALSE}
+learnr::question(
+  "Given that the **interaction term is statistically significant**, what do the **main effects** (even the significant one) tell us?",
+  
+  
+  learnr::answer(
+    "They give the true causal effect of each factor on the response."
+  ),
+  learnr::answer(
+    "They can be interpreted as if the interaction were not present."
+  ),
+  learnr::answer(
+    "They describe the average effects across levels of the other factor, but must be interpreted with caution because the effect changes depending on the other factor.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "They are meaningless and should be ignored completely."
+  ),
+  learnr::answer(
+    "They indicate that the interaction term was unnecessary."
+  ),
+  
+  correct = "Correct! When an interaction is significant, main effects represent average effects across levels of the other factor. Because the effect of one factor depends on the other, main effects—even if statistically significant—must be interpreted cautiously.",
+  incorrect = "Remember that a significant interaction means the effect of one factor depends on the level of the other. Main effects are therefore averages and can be misleading if interpreted on their own.",
+  allow_retry = TRUE
+)
+```
+
+We can see there is a statistically significant effect of herbivores, but as we have an interaction, this must be interpreted with caution. The effect of herbivores depends on tidal height. Looking at the graph, there really is no effect of herbivores at mid intertidal range. So it is pretty meaningless to say there is an overall effect of herbivores, even when the model detects this.
+
+With such a clear pattern in the graph, and in the ANOVA table, we can be quite confident in saying that there is an interaction between tidal height and herbivory. And we can see what causes this in the data: a strong effect of herbivory at low tidal height, and no effect of herbivory at mid tidal height.
+
+In this situation, I (Owen) do not find it necessary to do post-hoc tests to find out which treatments differ from which others. The graph and the ANOVA table already tell us this quite clearly.
+
+---
+
+If, however, we wanted to know if algal area was significantly different between mid and low height in the absence of herbivores, then we could do a post-hoc test for this specific comparison. But, be really careful here... we have "mission creep" -- we specified a clear and important biological question at the start, and now we are moving on to another question. Reasons to avoid this include: increasing the risk of false positives, and the danger of "cherry picking" results that support a desired conclusion.
+
+Another really important reason to avoid this, or at least be very careful, is that we can end up not finishing our projects because we keep adding more and more questions! **This is one of the most important reasons for having a clear, well researched, and well justified research question at the start of a project.** Because the end of the project is then already clearly defined at the beginning of the project: **the project ends when the question is answered**. (Of course there will be follow on questions, but these go to the next project.)
+
+
+
+
+### 6. Make a visualisation of the data, good for publication
+
+Make a publication quality figure. Build it up step by step. Check each new feature or adjustment works before making another. Work towards a figure that meets the following criteria. The criteria are intentionally "high-level", so you will have to think about what they mean in practice. This also gives you freedom to be creative in how you meet the criteria.
+
+1. Is in a style that matches the intended publication (e.g., academic journal, or popular science magazine). (You choose the publication style.)
+2. Clearly and directly addresses the research question. 
+3. Is interpretable on its own.
+4. Shows the data honestly.
+5. Make uncertainty visible.
+6. Is visually clear and readable.
+7. Is reproducible.
+
+When you're done, or if you want feedback along the way, check in with a TA, or with a neighbour. See what wonderful figures they produced.
+
+(Only if you really really have nothing better to do, here is a fun challenge for you. Create a figure that would be suitable for inclusion in a cyberpunk-style science magazine (think neon lights, high contrast, futuristic vibes) while still being scientifically honest and interpretable. If you do this, and are happy to share, please email your figure to Owen so he can show it in a lecture! If you want to choose another style, please go ahead, and please also share to Owen!)
+
+
+### 7. Write reporting sentence(s).
+
+Write a few sentences reporting the results of your analysis. The sentences should include:
+
+1. A brief description of the analysis performed.
+2. A brief interpretation of the results in relation to the biological question.
+3. The key statistics.
+
+When you're done, check in with a TA and or neighbour for feedback on your reporting.
+
+```{r quiz-reporting-df-why-useful, echo=FALSE}
+learnr::question(
+  "Why is it important to include the **degrees of freedom for the treatment term and for error** when reporting the results of an analysis (e.g. in an ANOVA or regression)?",
+  
+  
+  learnr::answer(
+    "Because degrees of freedom are required to calculate the p-value."
+  ),
+  learnr::answer(
+    "So that readers can check that they have correctly understood the experimental design and the statistical analysis.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Because journals require degrees of freedom to be reported for formatting reasons."
+  ),
+  learnr::answer(
+    "Because degrees of freedom indicate whether the residuals are normally distributed."
+  ),
+  learnr::answer(
+    "Because degrees of freedom determine the size of the treatment effect."
+  ),
+  
+  correct = "Correct! Reporting degrees of freedom allows readers to check that they have understood the experimental design and statistics correctly. They can do this by calculating the expected error degrees of freedom from the methods and comparing these with the degrees of freedom reported alongside the test statistics.",
+  incorrect = "Think about how a careful reader can verify that the statistical analysis matches the experimental design described in the methods.",
+  allow_retry = TRUE
+)
+```
+
+### 8. Critique and reflection
+
+Reflect on your analysis and reporting, and your learning. What went well? What could be improved? Discuss with a neighbour or a TA.
+
+What could be done better in the experiment? Discuss with a neighbour or a TA.
+
+One place where we could have improved the study is to have made a hypothesis and prediction before doing the experiment. We may have thought the following:
+
+- **Hypothesis**: in the mid intertidal the herbivores are not active and perhaps even not present, due to the very variable environmental conditions (e.g., exposure to air, temperature fluctuations). Therefore, herbivory will have little effect on algal area at mid tidal height. Whereas in the low intertidal, herbivores are active and abundant, and will therefore strongly reduce algal area when present.
+- **Prediction**: we expect to find an interaction between tidal height and herbivory, with a strong effect of herbivory at low tidal height, and little or no effect of herbivory at mid tidal height.
+
+(**PLEASE NOTE**: in reality we **MUST NOT** make up the hypothesis and prediction after seeing the data! This is just an example of what could have been done before the experiment was performed.)
+
+
+## Practical part 2
+
+*I (Owen) suspect that you might not have so much time for this practical exercise. Don't worry if you don't get it done, or even don't have time to start it. Just make a note to check it out during one of the self-study weeks, or in the final week. You could even ask for a walkthrough during the final lecture of the course, which is reserved for things you want to go over.*
+
+In this practical part, you will work through an analysis of covariance. Please use this structure for your work on this exercise:
+
+0. Get introduced to and think about the biological question.
+1. Prepare a script, load the data, and make some basic checks on the dataset.
+2. Visualise to answer the question.
+3. Fit an appropriate model. treatments.
+4. Check the assumptions of the model.
+5. Interpret the model.
+6. Make a visualisation of the data, good for publication.
+7. Write a short reporting sentence describing your findings.
+8. Critique and reflection
+
+*In this practical part, there is less guidance for you, and fewer questions. This is intentional. As you experience more, you become more capable to do what you already experienced, and more able and confident to tackle new things. As you get the hang of these, we increase our expectations of you! This is how learning works. Of course, reach out for support at any point!*
+
+(The dataset in this exercise, and some text (itallic below) comes from the excellent book *Statistical Rethinking* by Richard McElreath.)
+
+"*Africa is special. The second largest continent, it is the most culturally and genetically diverse. Africa has about 3 billon fewer people than Asia, but it has just as many living languages. Africa is so genetically diverse that most of the genetic variation outside Africa is just a subset of the variation within Africa. Africa is also geographically special, in a puzzling way: Bad geography tends to be related to bad economies outside of Africa, but African economies seem immune to bad geography.*"
+
+In this exercise, you will look at and analyse some data about the last statement, that Africa is immune to bad geography, whereas the rest of the world is not.
+
+In the dataset `rugged.csv`, which you can find from the usual place, each row is a country, and there are three variables of interest to us:
+
+* `rugged` -- this is the Terrain Ruggedness Index, that quantified the topographic heterogeneity of the landscape. E.g., Netherlands = low, Switzerland = high.
+* `rgdppc_2000` -- this is real gross domestic product per capita in year 2000. In his book McElreath puts forward a good argument for why one can already expect such a variable to be exponentially distributed, such that we will need to log transform it. His argument is based on growth being a multiplicative process.
+* `cont_africa` -- this is a binary variable (0s and 1s) with 0 if a country is not in Africa and 1 if it is.
+
+Get the dataset, do all the preliminaries in R, including reading in the data.
+
+Then:
+
+* Look at the distribution of the `rgdppc_2000` variable -- and then create a log10 transformed version of it.
+
+* Create a new variable (name it `cont_africa1`) in which a row contains "Africa" if the country is in Africa, and "not Africa" if it isn't. We do this, as its easier and nicer to work with this information in the variable, rather than just 0 and 1s. (In general, in R, don't use codes for things that can be represented by words. Use the meaningful words. This is a good thing to do, because then tables and graphs have those words, rather than cryptic codes, and will be easier for you and others to interpret. Hint: use the function ifelse inside mutate.)
+
+```{r eval = TRUE, echo = FALSE, message=FALSE}
+library(tidyverse)
+countries <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/rugged.csv") |> 
+  select(rugged, rgdppc_2000, cont_africa)
+```
+
+
+```{r eval = FALSE}
+ggplot(countries, aes(x = rugged)) +
+  geom_histogram(bins=30, fill = "lightblue", color = "black") +
+  labs(x = "GDP per capita (2000)", y = "Count")
+```
+
+
+Good, now you're all set to work through the following questions...
+
+```{r quiz-countries-africa, echo=FALSE}
+learnr::question_numeric(
+  "How many countries in the dataset are in **Africa**?\n\n*Hint: use the `table()` function.*",
+  
+  learnr::answer(57, correct = TRUE),
+  
+  correct = "Correct! There are 57 countries from Africa in the dataset.",
+  incorrect = "Not quite. Try again. You could use `group_by` and `summarise`, with the Africa variable in the `group_by`, and then count the number of countries with something like `length(cont_africa1)` in the `summarise`.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-countries-not-africa, echo=FALSE}
+learnr::question_numeric(
+  "How many countries in the dataset are **not in Africa**?\n\n*Hint: subtract the number of African countries from the total number of countries.*",
+  
+  learnr::answer(177, correct = TRUE),
+  
+  correct = "Correct! There are 177 countries not in Africa in the dataset.",
+  incorrect = "Not quite. Take the total number of countries and subtract the number that are in Africa.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-rugged-distribution, echo=FALSE}
+learnr::question(
+  "What does the distribution of the variable **`rugged`**, which describes landscape ruggedness, look like?",
+  
+  learnr::answer(
+    "symmetric"
+  ),
+  learnr::answer(
+    "strongly bimodal"
+  ),
+  learnr::answer(
+    "really skewed",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! The `rugged` variable has many low values and relatively few high values, giving it a strongly right-skewed distribution.",
+  incorrect = "Look carefully at the histogram or density plot of `rugged`. Most values are small, with a long tail towards larger values.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-rugged-lowest-country, echo=FALSE}
+learnr::question_text(
+  "Which country has the **lowest ruggedness** (i.e. is the flattest country)?\n\n(Type the country name.)",
+  
+  learnr::answer("Tokelau", correct = TRUE),
+  
+  correct = "Correct! Tokelau has the lowest ruggedness in the dataset.",
+  incorrect = "Not quite. Identify the country corresponding to the minimum value of the `rugged` variable. You can do this with code, or by looking at the dataset using the `View` function.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-rugged-switzerland-rank, echo=FALSE}
+learnr::question_numeric(
+  "In the league table of landscape ruggedness, where does **Switzerland** rank?\n\n(1 = most rugged)",
+  
+  learnr::answer(10, correct = TRUE),
+  
+  correct = "Correct! Switzerland ranks 10th in terms of landscape ruggedness in the dataset.",
+  incorrect = "Not quite. Look at the ranked list of countries by ruggedness and find Switzerland’s position.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-gdp-na-total, echo=FALSE}
+learnr::question_numeric(
+  "How many **NA values** are there in the **`rgdppc_2000`** variable?",
+  
+  learnr::answer(64, correct = TRUE),
+  
+  correct = "Correct! There are 64 NA values in the `rgdppc_2000` variable.",
+  incorrect = "Not quite. Count the number of missing (NA) values in the `rgdppc_2000` variable.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-gdp-na-africa, echo=FALSE}
+learnr::question_numeric(
+  "How many of the **NA values in `rgdppc_2000`** correspond to countries in **Africa**?",
+  
+  learnr::answer(8, correct = TRUE),
+  
+  correct = "Correct! There are 8 African countries with missing GDP values.",
+  incorrect = "Not quite. Subset the data to African countries and count the NA values in `rgdppc_2000`.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-gdp-na-not-africa, echo=FALSE}
+learnr::question_numeric(
+  "How many of the **NA values in `rgdppc_2000`** correspond to countries **not in Africa**?",
+  
+  learnr::answer(56, correct = TRUE),
+  
+  correct = "Correct! There are 56 non-African countries with missing GDP values.",
+  incorrect = "Not quite. Subtract the African NA count from the total number of NA values. Or count directly.",
+  allow_retry = TRUE
+)
+```
+
+```{r eval = TRUE, echo = FALSE}
+countries <- countries |>
+  mutate(rgdppc_2000_log10 = log10(rgdppc_2000),
+         cont_africa1 = ifelse(cont_africa == 1, "Africa", "not Africa")) |> 
+  na.omit()
+  
+
+```
+
+Now make a version of the dataset with no observations with NAs in any of the three variables of interest. You can use the `na.omit()` function for this, after selecting the three variables of interest. You should have a dataset with 170 rows.
+
+```{r quiz-rugged-df-error, echo=FALSE}
+learnr::question_numeric(
+  "If we fit a model with:\n\n- `rugged` (a continuous explanatory variable)\n- `cont_africa1` (a categorical variable with **two levels**)\n\nHow many **degrees of freedom for error** would the model have?",
+  
+  learnr::answer(166, correct = TRUE),
+  
+  correct = "Correct! The model would estimate four parameters in total (and intercept and a slope for each of in africa and not in africa), so the degrees of freedom for error would be 170 − 4 = 166.",
+  incorrect = "Remember to subtract one degree of freedom for each estimated parameter. Think about how many regression lines are fit, and how many parameters that needs.",
+  allow_retry = TRUE
+)
+```
+
+Now make a log transformed version of the `rgdppc_2000` variable. Use log base 10.
+And plot a graph that will tell you the answer to the question... does the relationship between GDP and landscape ruggedness differ between countries in Africa and those not in Africa. Make a guess of if you think there is a statistically significant difference.
+
+```{r eval = TRUE, echo = FALSE}
+countries <- countries |>
+  mutate(rgdppc_2000_log10 = log10(rgdppc_2000))
+```
+
+
+```{r eval = FALSE}
+ggplot(countries, aes(x = rugged, y = rgdppc_2000_log10, color = cont_africa1)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Terrain Ruggedness Index", y = "Log10 GDP per capita (2000)", color = "Continent") 
+```
+
+Write one or two sentences about what you see in the graph. Is there a difference between Africa and not Africa? If so, what is the difference?
+
+Fit an appropriate model to test if there is a statistically significant difference in the relationship between GDP and ruggedness between Africa and not Africa.
+
+```{r eval = TRUE, echo = FALSE}
+mod2 <- lm(rgdppc_2000_log10 ~ rugged * cont_africa1, data = countries)
+```
+
+Check the assumptions of the model. Are they reasonably well met?
+
+```{r eval = FALSE}
+library(ggfortify)
+autoplot(mod2, smooth.colour = NA)
+```
+
+Interpret the model. Look at the ANOVA table. Check the degrees of freedom for each term. Do they match what you expected?
+
+What does the ANOVA table tell you about the relationship between GDP and ruggedness in Africa versus not Africa? Is there a statistically significant difference? Is Africa special in this respect?
+
+```{r eval = FALSE}
+anova(mod2)
+```
+
+Yes, we see that the interaction term is statistically significant, indicating that the relationship between GDP and ruggedness differs between African countries and those not in Africa.
+
+Now make a beautiful figure suitable for publication, that shows the relationship between GDP and ruggedness in Africa and not Africa. Make sure it meets the criteria we discussed earlier.
+
+Perhaps this is appropriate:
+
+```{r eval = TRUE, warning=FALSE}
+## new values to predict over
+new_data <- expand.grid(
+  rugged = seq(min(countries$rugged), max(countries$rugged), length.out = 100),
+  cont_africa1 = c("Africa", "not Africa")
+)
+predictions <- predict(mod2, newdata = new_data, interval = "confidence")
+new_data <- cbind(new_data, as.data.frame(predictions))
+ggplot() +
+  geom_point(data = countries, aes(x = rugged, y = rgdppc_2000_log10, color = cont_africa1), alpha = 0.6) +
+  geom_line(data = new_data, aes(x = rugged, y = fit, color = cont_africa1), size = 1) +
+  geom_ribbon(data = new_data, aes(x = rugged, ymin = lwr, ymax = upr, fill = cont_africa1), alpha = 0.2) +
+  labs(x = "Terrain Ruggedness Index", y = "Log10 GDP per capita (2000)", color = "Continent", fill = "Continent") +
+  theme(text = element_text(size = 14),
+        legend.position = "top")
+```
+
+Note that to be absolutely sure that the plotted model is the same as the one you fitted, you should use the `predict()` function to get predicted values from your model, and then plot these predicted values rather than using `geom_smooth()`.
+
+Write a sentence or two about the pattern and the statistical support.
+
+Critique and reflect.
+
+
+
+## Weekly Quiz
+
+```{r quiz-interaction-meaning, echo=FALSE}
+learnr::question(
+  "In a statistical model, what does a **significant interaction term** between two explanatory variables indicate?",
+  
+  learnr::answer(
+    "That both explanatory variables have statistically significant main effects."
+  ),
+  learnr::answer(
+    "That the effect of one explanatory variable on the response depends on the value of the other explanatory variable.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "That the response variable is non-normally distributed."
+  ),
+  learnr::answer(
+    "That the model explains most of the variability in the response."
+  ),
+  
+  correct = "Correct! A significant interaction means that the relationship between one explanatory variable and the response changes depending on the level or value of the other explanatory variable.",
+  incorrect = "Focus on how interaction terms describe *dependency of effects*, not just whether variables are important.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-multiple-regression-interaction, echo=FALSE}
+learnr::question(
+  "In a multiple regression model that includes an interaction between two continuous variables, how should the slope of one variable be interpreted?",
+  
+  learnr::answer(
+    "As the average effect of that variable across all values of the other variable."
+  ),
+  learnr::answer(
+    "As the effect of that variable when the other variable equals zero (or its reference value).",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "As the marginal correlation between the variable and the response."
+  ),
+  learnr::answer(
+    "As a causal effect that is independent of other variables in the model."
+  ),
+  
+  correct = "Correct! When an interaction is present, the slope of one variable is conditional on the value of the other variable, typically interpreted at zero or the reference value.",
+  incorrect = "With interactions, slopes are conditional, not global averages.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-ancova-interaction, echo=FALSE}
+learnr::question(
+  "In an ANCOVA model with a categorical factor and a continuous covariate, what does a **significant interaction between the factor and the covariate** indicate?",
+  
+  learnr::answer(
+    "That the covariate should be removed from the model."
+  ),
+  learnr::answer(
+    "That the relationship between the covariate and the response differs between groups.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "That the group means differ after adjusting for the covariate."
+  ),
+  learnr::answer(
+    "That the assumptions of ANCOVA have been violated."
+  ),
+  
+  correct = "Correct! A significant interaction in ANCOVA indicates that the slope of the covariate differs between groups, meaning the effect of the covariate is group-dependent.",
+  incorrect = "Think about how ANCOVA combines regression and group comparisons: interactions imply different regression lines for different groups.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-two-way-anova-interaction, echo=FALSE}
+learnr::question(
+  "In a two-way ANOVA with factors A and B, what does a **significant A:B interaction** imply?",
+  
+  learnr::answer(
+    "That factor A has a stronger main effect than factor B."
+  ),
+  learnr::answer(
+    "That the effect of factor A differs across the levels of factor B.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "That both factors must be removed from the model."
+  ),
+  learnr::answer(
+    "That the residual variance is too large for reliable inference."
+  ),
+  
+  correct = "Correct! In two-way ANOVA, a significant interaction means that the effect of one factor depends on the level of the other factor.",
+  incorrect = "Remember that interactions describe how factors modify each other’s effects, not their overall importance.",
+  allow_retry = TRUE
+)
+```
+
+```{r ga6-q4-degrees-of-freedom, echo=FALSE}
+learnr::question_numeric(
+  "Imagine you have a **randomised fully-factorial experiment** assigning patients to two treatments.\n\nOne treatment has **five categories**, and another has **three categories**. There are 10 patients in each treatment. In the model, both main effects and their interaction are included.\n\nHow many **degrees of freedom** are there for error",
+  
+  learnr::answer(135, correct = TRUE),
+  
+  correct = "Correct! There are 150 observations (3*5*10) and there are 15 treatment combinations. 150 - 15 = 135.",
+  incorrect = "This one is tricky! First calculate the total number of observations. Then the number of treatment combinations (= the number of means estimated in the model with interaction). Then one more step is needed...",
+  allow_retry = TRUE
+)
+```
+
+
 
 
 ```{r ga6-q5-model-choice, echo=FALSE}
 learnr::question(
-  "In three American cities, petrol (benzine) consumption of different car brands was investigated. The plot shows petrol consumption against car brand, separated by city.\n\nWhich model would be most appropriate to analyse these data?",
+  "In three American states, petrol (benzine) consumption of six different car brands was investigated. Which model would be most appropriate to analyse these data when we suspect that the effect of car brand on petrol consumption may differ between cities?",
   
   learnr::answer(
     "One-way ANOVA of \"benzine\" against \"State\"."
   ),
   learnr::answer(
-    "Two-way ANOVA of \"benzine\" against \"Auto\" and \"State\".",
+    "Two-way ANOVA of \"benzine\" against \"Auto\" and \"State\" without an interaction term.",
     correct = TRUE
   ),
   learnr::answer(
@@ -103,9 +1079,12 @@ learnr::question(
   learnr::answer(
     "One-way ANOVA of \"benzine\" against \"Auto\"."
   ),
+  learnr::answer(
+    "Two one-way ANOVAs one for \"benzine\" against \"Auto\" and one for \"benzine\" against \"State\"."
+  ),
   
-  correct = "Correct! Because both car brand and city influence petrol consumption, and the effects may differ between cities, a two-way ANOVA with interaction is appropriate.",
-  incorrect = "The plot suggests both main effects and potentially an interaction, so a more complex model is needed.",
+  correct = "Correct! We need to include the interaction term to account for the possibility that the effect of car brand on petrol consumption differs between cities.",
+  incorrect = "Try again. Remember that an interaction term is needed when the effect of one factor may depend on the level of another factor. And we should not run separate ANOVAs for each factor when we have multiple factors.",
   allow_retry = TRUE
 )
 ```
@@ -114,40 +1093,16 @@ learnr::question(
 
 ```{r ga6-q6-n-data-points, echo=FALSE}
 learnr::question_numeric(
-  "We continue to do the two-way ANOVA for the above problem.\n\nBased on the ANOVA table shown, how many **data points (measurements)** were available in total?\n\n(Hint: the answer is hidden in the degrees of freedom, but do not forget the intercept.)",
+  "We continue to do the two-way ANOVA for the above problem. We find that the error degrees of freedom is 75. How many data points were in the dataset?",
   
-  learnr::answer(40, correct = TRUE),
+  learnr::answer(90, correct = TRUE),
   
-  correct = "Correct! The total degrees of freedom sum to the number of data points minus one, which allows us to recover the sample size.",
-  incorrect = "Remember: total degrees of freedom = n − 1.",
+  correct = "Correct! The model will take into account 5 (car brands) * 3 (states) = 15 treatment combinations. Therefore, the total number of data points is 75 + 15 = 90.",
+  incorrect = "Get the total number of treatment combinations first, then add this to the error degrees of freedom to get the total number of data points.",
   allow_retry = TRUE
 )
 ```
 
-
-
-
-```{r ga6-q7-interaction-interpretation, echo=FALSE}
-learnr::question(
-  "Once more considering the ANOVA table below, please select all statements that are true.",
-  
-  learnr::answer(
-    "The dependency of fuel consumption (benzine) on car brand (Auto) is not the same in all the cities.",
-    correct = TRUE
-  ),
-  learnr::answer(
-    "The F-value in the table is obtained by dividing the mean square (Mean Sq) by the respective degrees of freedom (Df)."
-  ),
-  learnr::answer(
-    "If there is a significant interaction term, then interpretation of the p-values for \"Auto\" and \"State\" is dangerous.",
-    correct = TRUE
-  ),
-  
-  correct = "Correct! A significant interaction means that main effects should be interpreted with caution, as their effects depend on the levels of the other factor.",
-  incorrect = "Be careful when interpreting main effects in the presence of a significant interaction.",
-  allow_retry = TRUE
-)
-```
 
 
 
@@ -172,7 +1127,6 @@ learnr::question(
 ```
 
 
-```r
 ```{r ga6-q2-lm-function, echo=FALSE}
 learnr::question(
   "Which of these can you do with the `lm()` function in R?",

@@ -1,0 +1,72 @@
+---
+title: "Unit 8 BIO144 Course Content"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction
+
+On this web page you will find the homework, practical exercises and weekly quiz for Unit 8 of BIO144.
+
+All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
+
+
+## Homework
+
+All homework is for your own practice and learning. It will not be marked or graded.
+
+### Homework common to all weeks
+
+* Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
+
+* When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
+
+
+### Reading
+
+* Chapter 7 of *Getting Started with R*, by Beckerman, Childs, and Petchey. 
+* Chapter 8 of First Edition *The New Statistics in R* by Hector. This introduces the general concept of generalised linear models quite nicely. There is a section on the Box-Cox transformation which you might find interesting, but is not really an integral part of generalised linear models. (In the Second Edition, this is Chapter 15.)
+* Section 9.4 of Chapter 9 of First Edition *The New Statistics in R* by Hector. This offers a different perspective, and slightly more complex one than in GSwR, on analysing count data with a poisson GLM. (In this Second Edition, this is Chapter 16.)
+ 
+
+
+## Practical part 1
+
+In this exercise, you will work through two-way analysis of variance.
+
+The steps to follow are, as usual:
+
+0. Get introduced to and think about the biological question.
+1. Prepare a script, load the data, and make some basic checks on the dataset.
+2. Visualise to answer the question.
+3. Fit an appropriate model. treatments.
+4. Check the assumptions of the model.
+5. Interpret the model.
+6. Make a visualisation of the data, good for publication.
+7. Write a short reporting sentence describing your findings.
+8. Critique and reflection
+
+### 0. The biological question
+
+Abalone (marine snails) are endangered in some parts of the world. Knowing the age of an abalone is important for conservation efforts. The age of an abalone can be estimated by counting the number of rings on its shell, similar to counting tree rings. However, this requires killing the abalone. A non-lethal method to estimate age is to use measurements of the abalone's physical characteristics, such as shell length and shell diameter. We are interested in whether a suite of explanatory variables are associated with abalone age. And how much variation in age can be explained by these variables.
+
+### 1. Prepare a script, load the data, and make some basic checks on the dataset.
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+abalone_data <- read.csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/abalone_age.csv")
+```
+
+
+
+
+
+## Weekly Quiz
+
