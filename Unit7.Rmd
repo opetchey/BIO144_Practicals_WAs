@@ -78,7 +78,7 @@ The steps to follow are:
 4. Check the assumptions of the model.
 5. Interpret the model.
 6. Make a visualisation of the data, good for publication.
-7. Write a short reporting sentence describing your findings.
+7. Write a sentence describing your findings.
 8. Critique and reflection
 
 ### 0. The biological question

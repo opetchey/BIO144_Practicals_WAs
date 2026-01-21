@@ -45,28 +45,614 @@ The steps to follow are, as usual:
 0. Get introduced to and think about the biological question.
 1. Prepare a script, load the data, and make some basic checks on the dataset.
 2. Visualise to answer the question.
-3. Fit an appropriate model. treatments.
+3. Fit an appropriate model.
 4. Check the assumptions of the model.
 5. Interpret the model.
 6. Make a visualisation of the data, good for publication.
-7. Write a short reporting sentence describing your findings.
+7. Write a sentence describing your findings.
 8. Critique and reflection
 
 ### 0. The biological question
 
 Abalone (marine snails) are endangered in some parts of the world. Knowing the age of an abalone is important for conservation efforts. The age of an abalone can be estimated by counting the number of rings on its shell, similar to counting tree rings. However, this requires killing the abalone. A non-lethal method to estimate age is to use measurements of the abalone's physical characteristics, such as shell length and shell diameter. We are interested in whether a suite of explanatory variables are associated with abalone age. And how much variation in age can be explained by these variables.
 
+*This is a real dataset originally collected in Tasmania for fisheries research, made widely available via the UCI Machine Learning Repository. Although some variables are labelled as millimetres in the dataset documentation, the numerical values are clearly rescaled. We therefore treat these measurements as being on an arbitrary but consistent length scale, and avoid interpreting coefficients in literal physical units.*
+
+The dataset has in each row an individual abalone, and has the following variables:
+
+* `Rings`: Number of rings on the abalone shell (used to estimate age)
+* `Sex`: Sex, with three categories: 'M' (male), 'F' (female), and 'I' (infant, i.e., not yet sexually mature)
+* `Length_mm`: Length of the abalone shell (in mm)
+* `Diameter_mm`: Diameter of the abalone shell (in mm)
+* `Height_mm`: Height of the abalone shell (in mm)
+* `Whole_weight_g`: Whole weight of the abalone (in grams)
+* `Shuck_weight_g`: Weight of the abalone meat (in grams)
+* `Viscera_weight_g`: Weight of the abalone viscera (in grams)
+* `Shell_weight_g`: Weight of the abalone shell (in grams)
+
+Note that we should not use variables that can only be measured after killing the abalone (e.g., weights) to predict age, as we want a non-lethal method. Therefore, we will only use `Diameter_mm`, `Length_mm`, `Height_mm`, and `Whole_weight_g` as explanatory variables.
+
+The response variable is `Rings`, which is a count of the number of rings on the shell. Therefore we know already that we should not use a linear model to analyse this data, but rather a generalised linear model with a Poisson error distribution would be a good starting point.
+
 ### 1. Prepare a script, load the data, and make some basic checks on the dataset.
 
-```{r}
+As well as the usual preliminaries, please make a version of the dataset with only the variables we will use in the analysis:
+
+```{r echo = FALSE, message= FALSE, warning = FALSE}
 # Load necessary libraries
 library(tidyverse)
 abalone_data <- read.csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/abalone_age.csv")
 ```
 
+```{r}
+abalone_data <- abalone_data %>%
+  select(Rings, Length_mm, Diameter_mm, Height_mm, Whole_weight_g) |> 
+  na.omit()
+```
+
+```{r quiz-na-any-five-vars, echo=FALSE}
+learnr::question_numeric(
+  "How many observations have **NA values in at least one** of the five variables?",
+  
+  learnr::answer(0, correct = TRUE),
+  
+  correct = "Correct! There are no observations with missing values in any of the five variables.",
+  incorrect = "Not quite. Check for rows where at least one of the five variables is NA (e.g. using `is.na()` combined with logical operators).",
+  allow_retry = TRUE
+)
+```
+
+### 2. Visualise to answer the question.
+
+Make all possible pairwise scatterplots of the variables to look for obvious relationships.
+
+```{r echo=FALSE, message= FALSE, warning = FALSE, eval=FALSE}
+# Pairwise scatterplots
+pairs(abalone_data)
+```
+
+```{r quiz-abalone-associated-variables, echo=FALSE}
+learnr::question(
+  "Based on the pairwise scatterplots, which of the following **explanatory variables** look to be associated with the number of **Rings**?",
+  
+  learnr::answer(
+    "Height_mm",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Whole_weight_g",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Diameter_mm",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Length_mm",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! All four variables (Length, Diameter, Height, and Whole weight) show an association with the number of Rings in the exploratory plots.",
+  incorrect = "Look carefully at each plot. All four explanatory variables show a clear relationship with Rings, even if the strength or shape differs.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-abalone-why-multiple-associated, echo=FALSE}
+learnr::question(
+  "We saw that **all four explanatory variables** appear to be associated with the number of **Rings**. What is **at least one reason** why this might be the case?",
+  
+  
+  learnr::answer(
+    "Because the response variable is a count."
+  ),
+  learnr::answer(
+    "Because Poisson models always show strong associations."
+  ),
+  learnr::answer(
+    "Because the sample size is very small."
+  ),
+  learnr::answer(
+    "Because the response variable causes the explanatory variables."
+  ),
+  learnr::answer(
+    "Because all pairs of the explanatory variables look to be very strongly correlated with each other.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! The explanatory variables are all measures of abalone size and are very strongly correlated with each other. As a result, each one individually appears to be associated with Rings.",
+  incorrect = "Think about the relationships *among the explanatory variables themselves*. Strong correlations between predictors can make many variables appear associated with the response.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-abalone-collinearity-concern, echo=FALSE}
+learnr::question(
+  "We see that the explanatory variables are **strongly correlated with each other**. Why should this concern us when fitting a multiple regression or GLM?",
+  
+  
+  learnr::answer(
+    "Because correlated explanatory variables violate the assumption of normally distributed residuals."
+  ),
+  learnr::answer(
+    "Because correlated explanatory variables automatically make the model invalid."
+  ),
+  learnr::answer(
+    "Because strong correlations between explanatory variables can make coefficient estimates unstable and difficult to interpret (collinearity).",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Because correlation between explanatory variables means the response variable was measured incorrectly."
+  ),
+  learnr::answer(
+    "Because correlation between explanatory variables guarantees overfitting."
+  ),
+  
+  correct = "Correct! Strong correlations between explanatory variables (collinearity) can inflate standard errors, make coefficient estimates unstable, and make it hard to interpret the effect of individual variables.",
+  incorrect = "Think about how collinearity affects estimation and interpretation of coefficients, rather than model validity or assumptions about the response.",
+  allow_retry = TRUE
+)
+```
+
+Recall that back in multiple regression we learned about collinearity and that we could measure the potential importance with a variance inflation factor. VIFs are still useful in Poisson GLMs because they tell us whether predictors are strongly correlated with each other. High VIFs warn us that coefficient estimates may be unstable and hard to interpret, even if the model fits well.
+
+Nevertheless, we can see from the pairwise scatterplots that all four explanatory variables appear to be associated with Rings. Therefore, we will need to be very careful when interpreting the results of a multiple regression or GLM with all four explanatory variables included.
+
+Anyway, it looks like the answer to the biological question is likely to be 'yes': there are associations between abalone age (Rings) and the explanatory variables. But just how strong are these associations, and which variables are most important? And how useful for predicting age? Let's find out by fitting a Poisson GLM and inspecting it in detail.
+
+### 3. Fit an appropriate model.
+
+We will fit a Poisson GLM with Rings as the response variable and all four explanatory variables included. Make this model. Do not include any interaction terms.
+
+```{r  eval = TRUE, echo= FALSE}
+# Fit Poisson GLM
+ab_glm <- glm(Rings ~ Length_mm + Diameter_mm + Height_mm + Whole_weight_g,
+               data = abalone_data,
+               family = poisson)
+```
+
+### 4. Check the assumptions of the model.
+
+Make the four standard diagnostic plots for the Poisson GLM you have fitted.
+
+```{r echo=FALSE, message= FALSE, warning = FALSE, eval = FALSE}
+library(ggfortify)
+autoplot(ab_glm, smooth.colour = NA)
+```
+
+```{r quiz-abalone-diagnostics-most-concerning, echo=FALSE}
+learnr::question(
+  "Looking at the diagnostic plots for the Poisson GLM, what do you think is the **most concerning feature**?",
+  
+ 
+  learnr::answer(
+    "The fitted values appear to be evenly spaced."
+  ),
+  learnr::answer(
+    "The residuals are centred around zero."
+  ),
+  learnr::answer(
+    "There are too many observations for a Poisson model."
+  ),
+  learnr::answer(
+    "The QQ-plot shows that the larger residuals are considerably larger than would be expected given the model assumptions.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "The model includes too many explanatory variables."
+  ),
+  
+  correct = "Correct! The QQ-plot indicates that the largest residuals are much larger than expected, suggesting possible overdispersion or model misfit.",
+  incorrect = "Focus on how the observed residuals compare to what we would expect (i.e., the theoretical quantiles).",
+  allow_retry = TRUE
+)
+```
+
+So, we have a problem: the QQ-plot shows that the largest residuals are much larger than expected under the Poisson model. This suggests that the data may be overdispersed relative to the Poisson distribution, or that the model is not capturing all relevant structure in the data.
+
+```{r eval = FALSE}
+summary(ab_glm)
+```
+
+```{r quiz-abalone-overdispersion, echo=FALSE}
+learnr::question(
+  "How do you assess whether there is **overdispersion** in a Poisson GLM?",
+  
+  learnr::answer(
+    "By comparing the residual deviance to the residual degrees of freedom; if the ratio is much larger than 1, this indicates overdispersion. ",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "By checking whether the dispersion parameter reported by R is larger than 1."
+  ),
+  learnr::answer(
+    "By looking only at which coefficients are statistically significant."
+  ),
+  learnr::answer(
+    "By inspecting the AIC value."
+  ),
+  learnr::answer(
+    "By checking whether the response variable is a count."
+  ),
+  
+  correct = "Correct! A common diagnostic is to divide the residual deviance by the residual degrees of freedom. Values substantially greater than 1 suggest overdispersion.",
+  incorrect = "Think about how deviance is used in Poisson GLMs and how it relates to the degrees of freedom for error.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-abalone-overdispersion-value, echo=FALSE}
+learnr::question_numeric(
+  "To check for overdispersion in a Poisson GLM, we calculate the ratio of the **residual deviance** to the **residual degrees of freedom**.\n\nWhat is the value of this quantity for the model shown?",
+  
+  learnr::answer(0.52, correct = TRUE),
+  
+  correct = "Correct! The residual deviance (204.79) divided by the residual degrees of freedom (395) gives approximately 0.52.",
+  incorrect = "Not quite. Divide the residual deviance by the residual degrees of freedom and round to two decimal places.",
+  allow_retry = TRUE
+)
+```
+
+This is very interesting, since based on the qq plot we expected overdispersion, but the calculated ratio is less than 1, suggesting underdispersion. This discrepancy can occur because the qq plot is sensitive to extreme residuals, while the deviance ratio summarizes overall fit. It suggest that for some parts of the residual distribution, the model fits poorly (extreme residuals), while for other parts the model fits better than would be expected! Complicated. And this would need modelling of greater sophistication to resolve properly. Let us continue with the current model and see how well it performs.
+
+### 5. Interpret the model.
+
+Recall that we need to be very careful when interpreting the coefficients of this model, because the explanatory variables are strongly correlated with each other (collinearity).
+
+```{r eval = FALSE}
+summary(ab_glm)
+```
+
+```{r quiz-abalone-significant-predictors, echo=FALSE}
+learnr::question(
+  "In the Poisson GLM fitted to the abalone data, which of the four explanatory variables are **significantly associated** with the response variable **Rings**, after accounting for the others?",
+  
+  learnr::answer(
+    "Length_mm and Whole_weight_g"
+  ),
+  learnr::answer(
+    "Diameter_mm and Height_mm",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Length_mm only"
+  ),
+  learnr::answer(
+    "Whole_weight_g only"
+  ),
+  learnr::answer(
+    "All four explanatory variables"
+  ),
+  
+  correct = "Correct! Diameter_mm and Height_mm have p-values below 0.05, indicating significant associations with Rings, while Length_mm and Whole_weight_g do not.",
+  incorrect = "Check the p-values in the model output. Only Diameter_mm and Height_mm have p-values less than 0.05.",
+  allow_retry = TRUE
+)
+```
+
+Now make a model without the `Height_mm` and `Diameter_mm` variables, since these were the only significant predictors in the full model. Fit this reduced model and inspect the summary.
+
+```{r eval = TRUE, echo= FALSE}
+ab_glm2 <- glm(Rings ~ Length_mm + Whole_weight_g,
+               data = abalone_data,
+               family = poisson)
+#summary(ab_glm2)
+```
+
+You should see that `Length_mm` is now significant, while `Whole_weight_g` remains non-significant. This illustrates how collinearity can affect the significance of predictors in a multiple regression or GLM.
+
+What about if we make a model with only `Whole_weight_g` as the explanatory variable? Do this and inspect the summary.
+
+```{r eval = TRUE, echo= FALSE}
+ab_glm3 <- glm(Rings ~ Whole_weight_g,
+               data = abalone_data,
+               family = poisson)
+#summary(ab_glm3)
+```
+
+Wow! Now `Whole_weight_g` is highly significant. This again shows how collinearity can affect the interpretation of predictors. When considered alone, `Whole_weight_g` appears strongly associated with Rings, but when considered alongside the other correlated predictors, its significance disappears.
+
+This is a classic example of the challenges posed by collinearity in multiple regression and GLMs. It highlights the importance of careful model interpretation and consideration of predictor correlations.
+
+In summary, we have found some associations, but the strong collinearity among predictors makes it difficult to draw clear conclusions about the individual associations of each variable on abalone age (Rings).
+
+**How good is the model?**
+
+To assess the overall fit of the model, we can look at measures such as the deviance, AIC, and pseudo-R² values. However, interpreting these in the context of a Poisson GLM with collinear predictors can be challenging.
+
+Another method is to plot the predicted values against the observed values to visually assess the fit. Make this graph and the use linear regression to add a line of best fit. What do you expect the intercept and slope to be if the model is good? And what do you expect the r-squared to be if the model is good?
+
+```{r echo=FALSE, message= FALSE, warning = FALSE, eval = FALSE}
+# Predicted vs Observed plot
+predicted_values <- predict(ab_glm, type = "response")
+abalone_data <- abalone_data |> 
+  mutate(Predicted_Rings = predicted_values)
+ggplot(abalone_data, aes(x = Predicted_Rings, y = Rings)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue")
+```
+
+```{r eval = FALSE}
+pred_obs_model <- lm(Rings ~ Predicted_Rings, data = abalone_data)
+summary(pred_obs_model)
+```
+
+```{r quiz-observed-vs-predicted-line, echo=FALSE}
+learnr::question(
+  "When we regress the **observed values** against the **predicted values** from the model, are the **intercept and slope** different from what we would expect if the model were predicting well?",
+  
+ 
+  learnr::answer(
+    "Yes. The intercept is significantly different from 0, but the slope is not different from 1."
+  ),
+  learnr::answer(
+    "Yes. The slope is significantly different from 1, but the intercept is not different from 0."
+  ),
+  learnr::answer(
+    "Yes. Both the intercept and slope are significantly different from their expected values."
+  ),
+   learnr::answer(
+    "No. The intercept is not different from 0 and the slope is not different from 1, according to their 95% confidence intervals.",
+    correct = TRUE
+  ),
+  correct = "Correct! If a model predicts well, we expect an intercept of 0 and a slope of 1 when regressing observed values on predicted values. Here, the 95% confidence intervals include these values, so there is no evidence of a systematic bias in predictions.",
+  incorrect = "Think about what values of the intercept and slope would indicate perfect prediction, and how confidence intervals are used to assess whether estimates differ from those values.",
+  allow_retry = TRUE
+)
+```
 
 
+### 6. Make a visualisation of the data, good for publication.
+
+Since the aim is to predict abalone age (Rings) from the explanatory variables, a useful plot would be to show the relationship between the predicted Rings from the model and the observed Rings. We have already made this plot above. You could enhance it further by adding confidence intervals or prediction intervals around the regression line, and by improving the aesthetics for publication quality.
+
+If we wanted to visualise the effect of individual explanatory variables, we could create conditions plots to visualise the effects of each predictor while holding others constant.
+
+For example:
+
+```{r echo=TRUE, message= FALSE, warning = FALSE, eval = TRUE}
+new_data <- expand.grid(
+  Length_mm = seq(min(abalone_data$Length_mm), max(abalone_data$Length_mm), length.out = 100),
+  Diameter_mm = mean(abalone_data$Diameter_mm),
+  Height_mm = mean(abalone_data$Height_mm),
+  Whole_weight_g = mean(abalone_data$Whole_weight_g)
+)
+predictions <- predict(ab_glm, newdata = new_data, type = "response")
+new_data <- new_data |> 
+  mutate(Predicted_Rings = predictions)
+ggplot(new_data, aes(x = Length_mm, y = Predicted_Rings)) +
+  geom_line() +
+  labs(title = "Predicted Rings vs Length_mm\n(Full Model)",
+       x = "Length (mm)",
+       y = "Rings")
+```
+
+And we instantly see the unlikely result that as Length increases, predicted Rings decreases. This is a consequence of the collinearity among predictors, and shows how difficult it is to interpret individual predictor effects in the presence of strong collinearity.
+
+Let's make the same graph for the model with only `Length_mm` and `Diameter_g` as predictors:
+
+```{r echo=FALSE, message= FALSE, warning = FALSE}
+new_data2 <- expand.grid(
+  Length_mm = seq(min(abalone_data$Length_mm), max(abalone_data$Length_mm), length.out = 100),
+  Whole_weight_g = mean(abalone_data$Whole_weight_g)
+)
+predictions2 <- predict(ab_glm2, newdata = new_data2, type = "response")
+new_data2 <- new_data2 |> 
+  mutate(Predicted_Rings = predictions2)
+ggplot(new_data2, aes(x = Length_mm, y = Predicted_Rings)) +
+  geom_line() +
+  labs(title = "Predicted Rings vs Length_mm\n(Reduced Model)",
+       x = "Length (mm)",
+       y = "Rings")
+```
+
+And now we have a more sensible result: as Length increases, predicted Rings also increases.
+
+This shows just how dangerous collinearity can be for interpreting the effects of individual predictors in multiple regression and GLMs.
+
+### 7. Write reporting sentences.
+
+We could write something like this:
+
+*Based on the Poisson GLM analysis of the abalone dataset, we found that both Diameter_mm and Height_mm were significantly associated with the number of Rings, indicating that larger abalones tend to be older. However, due to strong collinearity among the explanatory variables, interpreting the individual effects of Length_mm and Whole_weight_g was challenging. The model's predictions aligned well with observed values, suggesting reasonable overall fit, but caution is warranted when interpreting individual predictor effects due to collinearity issues. In summary, we found that easily measurable physical characteristics of abalones can provide useful information about their age, but further investigation is needed to disentangle the effects of correlated predictors.*
+
+### 8. Critique and reflection
+
+We have strayed very much into a situation where we learned more about the challenges of collinearity in multiple regression and than we did about analysing count data. And much of what we learned about collinearity was already known and applies equally to linear and other models.
+
+## Practical part 2
+
+Let us again consider the abalone dataset, but simplify by only using one explanatory variable, `Length_mm`, to predict the response variable `Rings`. Then we can focus on something important: the meaning of the slope estimates in a Poisson GLM.
+
+First make a model with only `Length_mm` as the explanatory variable. Then look at the summary of this model using `summary()`.
+
+```{r eval = FALSE}
+ab_glm_length <- glm(Rings ~ Length_mm,
+               data = abalone_data,
+               family = poisson)
+summary(ab_glm_length)
+```
+
+```{r quiz-abalone-length-only-slope, echo=FALSE}
+learnr::question_numeric(
+  "What is the **slope estimate** for `Length_mm` in the Poisson GLM that includes **only length as an explanatory variable**? (Give the answer rounded to two decimal places.)",
+  
+  learnr::answer(1.53, correct = TRUE),
+  
+  correct = "Correct! The estimated slope for `Length_mm` in the length-only model is 1.53.",
+  incorrect = "Not quite. Look at the coefficient estimate for Length_mm in the model that includes only Length_mm as an explanatory variable.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-abalone-poisson-slope-interpretation, echo=FALSE}
+learnr::question(
+  "The slope estimate for `Length_mm` in the Poisson GLM is 1.53. Does this mean that **for each 1 mm increase in Length_mm, the expected number of Rings increases by 1.53**?",
+  
+  learnr::answer(
+    "No",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Yes"
+  ),
+ 
+  
+  correct = "Correct! It does not mean that.",
+  incorrect = "Try again!",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-abalone-why-not-additive, echo=FALSE}
+learnr::question(
+  "Why does a slope estimate of 1.53 in a Poisson GLM **not** mean that the expected number of Rings increases by 1.53 for each 1 mm increase in Length_mm?",
+  
+ 
+  learnr::answer(
+    "Because the response variable is measured with error."
+  ),
+  learnr::answer(
+    "Because the model includes an intercept."
+  ),
+  learnr::answer(
+    "Because Poisson GLMs use a log link function, so coefficients describe multiplicative (not additive) effects on the expected response.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Because the response variable is discrete rather than continuous."
+  ),
+  learnr::answer(
+    "Because the model was fitted using maximum likelihood."
+  ),
+  
+  correct = "Correct! In a Poisson GLM, the log link means that coefficients are on the log scale. A one-unit change in the explanatory variable multiplies the expected response by exp(coefficient), rather than adding a fixed amount.",
+  incorrect = "Think about the role of the link function in a Poisson GLM and how it connects the linear predictor to the expected value of the response.",
+  allow_retry = TRUE
+)
+```
+
+The next question is a bit tricky...
+
+```{r quiz-abalone-poisson-prediction, echo=FALSE}
+learnr::question_numeric(
+  "Assume that for a shell length of **0.5 mm** an abalone has on average **10 rings**.  
+The Poisson GLM slope for `Length_mm` is **1.53**.\n\nWhen the shell length increases to **1.5 mm**, how many rings are expected?\n\n(*Round your answer to one decimal place.*)",
+  
+  learnr::answer(46.1, correct = TRUE),
+  
+  correct = "Correct! An increase of 1 mm multiplies the expected number of rings by exp(1.53) ≈ 4.61. So the expected number of rings is 10 × 4.61 ≈ 46.1.",
+  incorrect = "Not quite. Remember that in a Poisson GLM with a log link, a 1-unit increase multiplies the expected response by exp(coefficient).",
+  allow_retry = TRUE
+)
+```
+
+In a Poisson GLM we use a log link, which means the model does not add a fixed number of rings for each increase in length. Instead, the coefficient tells us how the expected number of rings is multiplied. A slope of 1.53 means that increasing length by 1 mm multiplies the expected number of rings by \exp(1.53) \approx 4.6, not that it adds 1.53 rings. So if an abalone has 10 rings at 0.5 mm, increasing its length to 1.5 mm (an increase of 1 mm) gives an expected number of about 10 \times 4.6 = 46 rings, not 15.3.
 
 
 ## Weekly Quiz
 
+
+
+```{r quiz-q1-poisson-basics, echo=FALSE}
+learnr::question(
+  "Which of the following statements about Poisson regression are true? (One or more answers might be correct.)",
+  
+   learnr::answer("Poisson regression can be used to model binomial outcomes."),
+ learnr::answer("The link function in Poisson regression is typically the log link function.", correct = TRUE),
+  learnr::answer("The linear predictor in Poisson regression will always be ≥ 0."),
+  learnr::answer("Poisson regression is typically used to model binary (0/1) outcomes."),
+    learnr::answer("Poisson regression can be used to model count outcomes.", correct = TRUE),
+
+  correct = "Correct. Poisson regression is used for count data, with a log link. The linear predictor can take any real value.",
+  incorrect = "Review what Poisson regression is used for, and the role of the log link function.",
+  allow_retry = TRUE
+)
+```
+
+
+---
+
+
+
+```{r quiz-q2-poisson-coefs, echo=FALSE}
+learnr::question(
+  "You analyse data where your response variable is a counted number, and you fit a Poisson GLM with link function log. There are two covariates, x₁ and x₂, and the respective coefficients are β₁ = 0.5 and β₂ = −1.\n\nWhich of the following statements are true? (One or more answers might be correct.)",
+  
+  learnr::answer("When the covariate x₁ increases by 1 unit, the expected response will increase by 0.5."),
+  learnr::answer("When the covariate x₂ increases by 1 unit, the expected response will decrease by a factor exp(−1).", correct = TRUE),
+  learnr::answer("When the covariate x₁ increases by 1 unit, the expected response will increase by a factor exp(0.5).", correct = TRUE),
+  learnr::answer("Both β₁ and β₂ are important covariates in the model, because both slopes are not 0."),
+  learnr::answer("When the covariate x₂ increases by 1 unit, the expected response will decrease by −1."),
+  
+  correct = "Correct. In a Poisson GLM with a log link, coefficients act multiplicatively on the expected value via exp(β).",
+  incorrect = "Remember that coefficients in a Poisson GLM are on the log scale, not the response scale.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-q3-overdispersion, echo=FALSE}
+learnr::question(
+  "You have fitted a Poisson GLM and find a residual deviance of 112.4 on 55 degrees of freedom. What does that tell you, and what should you do? (One or more answers might be correct.)",
+  
+  learnr::answer("The data seem to be underdispersed, thus there is probably a non-independence in the response variable."),
+  learnr::answer("It seems the data are overdispersed, thus there are probably some important explanatory variables missing in the model.", correct = TRUE),
+  learnr::answer("A quasipoisson model should be used to analyse these data.", correct = TRUE),
+  
+  correct = "Correct. A residual deviance much larger than the degrees of freedom indicates overdispersion, suggesting model misspecification and motivating a quasi-Poisson approach.",
+  incorrect = "Compare residual deviance to degrees of freedom to assess dispersion.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-q4-prediction-scale, echo=FALSE}
+learnr::question(
+  "When using the `predict()` function to get predictions of a GLM, and you want the prediction on the scale of the raw data (not the scale of the linear predictor), which option should you include as an argument to `predict()`?",
+  
+  learnr::answer("type = \"link\""),
+  learnr::answer("scale = \"response\""),
+   learnr::answer("type = \"response\"", correct = TRUE),
+ 
+  learnr::answer("scale = \"link\""),
+  
+  correct = "Correct! Using type = \"response\" returns predictions on the scale of the response variable.",
+  incorrect = "Check the arguments of predict() for GLMs and how they control the scale of predictions.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-q5-model-fit, echo=FALSE}
+learnr::question(
+  "You have fitted a Poisson GLM and are happy with the model diagnostics, and the coefficients look biologically sensible. To present the results, you need the chi-squared test statistic for the overall model, and its p-value.\n\nWhat function can you use to get this?",
+  
+  learnr::answer("p.value"),
+  learnr::answer("anova", correct = TRUE),
+  learnr::answer("summary"),
+  learnr::answer("test.chisq"),
+  
+  correct = "Correct! The anova() function can be used to obtain the chi-squared test for the overall model.",
+  incorrect = "Think about how to compare a fitted model to a null model in a GLM framework.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-q6-link-function, echo=FALSE}
+learnr::question(
+  "Which of these best describes the link function in a GLM?",
+  
+  learnr::answer("It is the function that links the coefficients to each other."),
+  learnr::answer("It is the function used to transform individual explanatory variables."),
+  learnr::answer("It is the function used to transform the expected values of the response variable.", correct = TRUE),
+  learnr::answer("It is the function used to transform the observed values of the response variable."),
+  
+  correct = "Correct! The link function connects the expected value of the response to the linear predictor.",
+  incorrect = "Recall the formal definition of the link function in a GLM.",
+  allow_retry = TRUE
+)
+```
