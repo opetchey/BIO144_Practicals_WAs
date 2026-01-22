@@ -517,6 +517,57 @@ learnr::question(
 )
 ```
 
+```{r quiz-ga12-q1-fixed-effects, echo=FALSE}
+learnr::question(
+  "Which of the following are **fixed effects**?",
+  
+  learnr::answer("Patient", correct = FALSE),
+  learnr::answer("Tree", correct = FALSE),
+  learnr::answer("Amount of rain", correct = TRUE),
+  learnr::answer("Distance", correct = TRUE),
+  learnr::answer("Colour", correct = TRUE),
+  
+  correct = "Correct. Fixed effects are variables whose specific values are of interest and repeatable.",
+  incorrect = "Remember: fixed effects are repeatable quantities or categories of interest, not individual units.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-ga12-q2-random-effects, echo=FALSE}
+learnr::question(
+  "Which of these are **random effects**?",
+  
+  learnr::answer("Hospital", correct = TRUE),
+  learnr::answer("Nest", correct = TRUE),
+  learnr::answer("Laboratory", correct = TRUE),
+  learnr::answer("Observer", correct = TRUE),
+  learnr::answer("Drug concentration", correct = FALSE),
+  
+  correct = "Correct. These represent sources of random variation sampled from a larger population.",
+  incorrect = "Random effects represent sampled levels, not controlled treatment values.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-ga12-q3-why-multilevel, echo=FALSE}
+learnr::question(
+  "Why should we prefer a **multilevel (mixed-effects) model** rather than simply averaging across groups? (Multiple answers may be correct.)",
+  
+  learnr::answer("To avoid false confidence about our data.", correct = TRUE),
+  learnr::answer("Because multilevel models are easier to interpret and communicate.", correct = FALSE),
+  learnr::answer("Averaging requires an arbitrary decision about which type of average to use.", correct = TRUE),
+  learnr::answer("Because we retain variation that may indeed be of some interest.", correct = TRUE),
+  
+  correct = "Correct. Multilevel models retain meaningful variation and avoid overconfidence caused by averaging.",
+  incorrect = "Think about what information is lost when averaging across groups.",
+  allow_retry = TRUE
+)
+```
+
+
+
 
 
 ```{r quiz-what-next-nonlinear, echo=FALSE}

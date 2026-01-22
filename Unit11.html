@@ -362,9 +362,6 @@ notes.</p>
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
-<hr />
-<div id="section-conceptual-partial-pooling" class="section level3">
-<h3>2. Conceptual: partial pooling</h3>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="quiz-mm-partial-pooling" class="tutorial-question panel-body">
 <div id="quiz-mm-partial-pooling-answer_container" class="shiny-html-output"></div>
@@ -402,6 +399,30 @@ notes.</p>
 <div id="quiz-mm-df-answer_container" class="shiny-html-output"></div>
 <div id="quiz-mm-df-message_container" class="shiny-html-output"></div>
 <div id="quiz-mm-df-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ga12-q1-fixed-effects" class="tutorial-question panel-body">
+<div id="quiz-ga12-q1-fixed-effects-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ga12-q1-fixed-effects-message_container" class="shiny-html-output"></div>
+<div id="quiz-ga12-q1-fixed-effects-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ga12-q2-random-effects" class="tutorial-question panel-body">
+<div id="quiz-ga12-q2-random-effects-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ga12-q2-random-effects-message_container" class="shiny-html-output"></div>
+<div id="quiz-ga12-q2-random-effects-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ga12-q3-why-multilevel" class="tutorial-question panel-body">
+<div id="quiz-ga12-q3-why-multilevel-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ga12-q3-why-multilevel-message_container" class="shiny-html-output"></div>
+<div id="quiz-ga12-q3-why-multilevel-action_button_container" class="shiny-html-output"></div>
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
@@ -869,21 +890,120 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "quiz-ga12-q1-fixed-effects", 
+    question = structure("Which of the following are <strong>fixed effects<\u002fstrong>?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d0256fe", 
+        option = "Patient", value = "Patient", label = structure("Patient", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6f867ed", 
+        option = "Tree", value = "Tree", label = structure("Tree", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9681d99", 
+        option = "Amount of rain", value = "Amount of rain", 
+        label = structure("Amount of rain", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bc16c42", 
+        option = "Distance", value = "Distance", label = structure("Distance", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f8449bd", 
+        option = "Colour", value = "Colour", label = structure("Colour", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct. Fixed effects are variables whose specific values are of interest and repeatable.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Remember: fixed effects are repeatable quantities or categories of interest, not individual units.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ga12-q1-fixed-effects-answer", question = "quiz-ga12-q1-fixed-effects"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 140296382.934669, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "quiz-ga12-q2-random-effects", 
+    question = structure("Which of these are <strong>random effects<\u002fstrong>?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_3e34dce", 
+        option = "Hospital", value = "Hospital", label = structure("Hospital", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f6d09c3", 
+        option = "Nest", value = "Nest", label = structure("Nest", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_98fdf5f", 
+        option = "Laboratory", value = "Laboratory", label = structure("Laboratory", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c185d3c", 
+        option = "Observer", value = "Observer", label = structure("Observer", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_602ff89", 
+        option = "Drug concentration", value = "Drug concentration", 
+        label = structure("Drug concentration", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct. These represent sources of random variation sampled from a larger population.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Random effects represent sampled levels, not controlled treatment values.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ga12-q2-random-effects-answer", question = "quiz-ga12-q2-random-effects"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1842770647.14189, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "quiz-ga12-q3-why-multilevel", 
+    question = structure("Why should we prefer a <strong>multilevel (mixed-effects) model<\u002fstrong> rather than simply averaging across groups? (Multiple answers may be correct.)", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_b3b9e7b", 
+        option = "To avoid false confidence about our data.", 
+        value = "To avoid false confidence about our data.", 
+        label = structure("To avoid false confidence about our data.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f32d7de", 
+        option = "Because multilevel models are easier to interpret and communicate.", 
+        value = "Because multilevel models are easier to interpret and communicate.", 
+        label = structure("Because multilevel models are easier to interpret and communicate.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8824f3a", 
+        option = "Averaging requires an arbitrary decision about which type of average to use.", 
+        value = "Averaging requires an arbitrary decision about which type of average to use.", 
+        label = structure("Averaging requires an arbitrary decision about which type of average to use.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4f2e085", 
+        option = "Because we retain variation that may indeed be of some interest.", 
+        value = "Because we retain variation that may indeed be of some interest.", 
+        label = structure("Because we retain variation that may indeed be of some interest.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct. Multilevel models retain meaningful variation and avoid overconfidence caused by averaging.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about what information is lost when averaging across groups.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ga12-q3-why-multilevel-answer", question = "quiz-ga12-q3-why-multilevel"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 598051762.22151, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-what-next-nonlinear", 
     question = structure("If you suspect a smooth but non-linear relationship between an explanatory variable and a response, which approach introduced in this section would often be appropriate?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_d0256fe", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ce00f98", 
         option = "Breakpoint analysis.", value = "Breakpoint analysis.", 
         label = structure("Breakpoint analysis.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6f867ed", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7b1fb45", 
         option = "Non-parametric rank tests.", value = "Non-parametric rank tests.", 
         label = structure("Non-parametric rank tests.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9681d99", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2d9a7c2", 
         option = "Generalized Additive Models (GAMs).", value = "Generalized Additive Models (GAMs).", 
         label = structure("Generalized Additive Models (GAMs).", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bc16c42", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b48f478", 
         option = "Meta-analysis.", value = "Meta-analysis.", 
         label = structure("Meta-analysis.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -895,30 +1015,29 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-what-next-nonlinear-answer", question = "quiz-what-next-nonlinear"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1315129685.3876, options = list()), class = c("learnr_radio", 
+    seed = 453587229.788782, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-time-series-biological", 
     question = structure("A biologist measures the population size of a plankton species in a lake every week for five years, with the goal of understanding long-term trends and seasonal dynamics. Which type of analysis is most appropriate for these data?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_f112b80", 
+    "character")), answers = list(structure(list(id = "lnr_ans_e053710", 
         option = "A standard linear regression, because population size is a continuous variable.", 
         value = "A standard linear regression, because population size is a continuous variable.", 
         label = structure("A standard linear regression, because population size is a continuous variable.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_18199f6", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_fe58cec", 
         option = "A time series analysis, because measurements are ordered in time and successive observations are likely to be dependent.", 
         value = "A time series analysis, because measurements are ordered in time and successive observations are likely to be dependent.", 
         label = structure("A time series analysis, because measurements are ordered in time and successive observations are likely to be dependent.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3e34dce", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bfb2d9f", 
         option = "A two-sample t-test, comparing early and late years.", 
         value = "A two-sample t-test, comparing early and late years.", 
         label = structure("A two-sample t-test, comparing early and late years.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f6d09c3", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_880be81", 
         option = "A one-way ANOVA with week as a factor.", value = "A one-way ANOVA with week as a factor.", 
         label = structure("A one-way ANOVA with week as a factor.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -930,29 +1049,30 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-time-series-biological-answer", question = "quiz-time-series-biological"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1268950203.9091, options = list()), class = c("learnr_radio", 
+    seed = 102201625.452409, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-sem-biological", 
     question = structure("An ecologist is studying how nutrient availability affects plant growth. Nutrients influence leaf nitrogen content, which affects photosynthetic rate, which in turn affects total biomass. At the same time, nutrient availability may also have a direct effect on biomass. The ecologist wants to quantify both direct and indirect effects in a single analysis. Which type of analysis is most appropriate?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_d8ca40a", 
+    "character")), answers = list(structure(list(id = "lnr_ans_80fb5ca", 
         option = "Multiple linear regression, with biomass as the response.", 
         value = "Multiple linear regression, with biomass as the response.", 
         label = structure("Multiple linear regression, with biomass as the response.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b50314b", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6134f1", 
         option = "Structural Equation Modelling (SEM), because it allows modelling of multiple interconnected relationships and indirect effects.", 
         value = "Structural Equation Modelling (SEM), because it allows modelling of multiple interconnected relationships and indirect effects.", 
         label = structure("Structural Equation Modelling (SEM), because it allows modelling of multiple interconnected relationships and indirect effects.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d19c9be", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b0000de", 
         option = "A one-way ANOVA comparing nutrient treatments.", 
         value = "A one-way ANOVA comparing nutrient treatments.", 
         label = structure("A one-way ANOVA comparing nutrient treatments.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_dbace5b", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c33f56f", 
         option = "Time series analysis of biomass.", value = "Time series analysis of biomass.", 
         label = structure("Time series analysis of biomass.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -964,7 +1084,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-sem-biological-answer", question = "quiz-sem-biological"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1273371798.40704, options = list()), class = c("learnr_radio", 
+    seed = 922510229.570423, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 </p>
@@ -978,7 +1098,6 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83]}},"value":[{"type":"character","attributes":{},"value":["backports","base","boot","bslib","cachem","checkmate","cli","commonmark","compiler","datasets","dichromat","digest","dplyr","ellipsis","evaluate","farver","fastmap","fontawesome","forcats","generics","ggplot2","glue","graphics","grDevices","grid","gtable","highr","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","labeling","later","lattice","learnr","lifecycle","lme4","lubridate","magrittr","markdown","MASS","Matrix","methods","mime","minqa","nlme","nloptr","pillar","pkgconfig","promises","purrr","R6","RColorBrewer","Rcpp","readr","rlang","rmarkdown","rprojroot","rstudioapi","S7","sass","scales","shiny","splines","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.4.1","1.3-31","0.8.0","1.1.0","2.3.2","3.6.5","1.9.1","4.4.1","4.4.1","2.0-0.1","0.6.37","1.1.4","0.3.2","1.0.5","2.1.2","1.2.0","0.5.2","1.0.0","0.1.3","4.0.0","1.8.0","4.4.1","4.4.1","4.4.1","0.3.6","0.11","1.1.3","0.5.8.1","1.6.4","1.6.15","0.1.4","2.0.0","1.48","0.4.3","1.3.2","0.22-6","0.11.5","1.0.4","1.1-35.5","1.9.3","2.0.3","1.13","7.3-61","1.7-0","4.4.1","0.12","1.2.8","3.1-166","2.1.1","1.10.1","2.0.3","1.3.0","1.0.4","2.6.1","1.1-3","1.0.13","2.1.5","1.1.7","2.28","2.1.1","0.16.0","0.2.0","0.4.9","1.4.0","1.9.1","4.4.1","4.4.1","1.8.4","1.5.1","3.2.1","1.3.1","1.2.1","2.0.0","0.3.0","4.4.1","0.4.0","4.4.1","0.6.5","3.0.2","0.47","1.8-4","2.3.10"]}]}]}
 </script>
 <!--/html_preserve-->
-</div>
 </div>
 
 </article> <!-- topics -->
