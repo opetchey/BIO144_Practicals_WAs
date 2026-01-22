@@ -1,0 +1,42 @@
+---
+title: "Unit 12 BIO144 Course Content"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction
+
+On this web page you will find the homework, practical exercises and weekly quiz for Unit 12 of BIO144.
+
+All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
+
+
+## Homework
+
+All homework is for your own practice and learning. It will not be marked or graded.
+
+### Special for this week
+
+There is no new material this week. Use this week to catch up on any material you have not yet understood from previous weeks, and to practice R.
+
+* Review the material from the whole course! Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations.
+
+* When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. **You can also ask questions during the lectures.** -- this is important because there is the only thing we will look at in the lecture this week... things you ask us to look at again.
+
+
+## Practical
+
+There is no new practical exercise this week. Use this week to catch up on any practical exercises you have not yet completed from previous weeks, and to practice R.
+
+
+## Weekly Quiz
+
+There are no new quiz questions this week. Use this week to catch up on any weekly quizzes you have not yet completed from previous weeks.
+
+You can also spend the time looking at the mock exam. Or by asking an AI Assistant to create exam question for you to practice with.

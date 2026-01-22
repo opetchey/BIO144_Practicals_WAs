@@ -1,0 +1,407 @@
+---
+title: "Unit 11 BIO144 Course Content"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction
+
+On this web page you will find the homework, practical exercises and weekly quiz for Unit 11 of BIO144.
+
+All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
+
+
+## Homework
+
+All homework is for your own practice and learning. It will not be marked or graded.
+
+### Homework common to all weeks
+
+* Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
+
+* When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
+
+### Homework specific to this week
+
+There is a very nice and (relatively simple) walkthrough by [Dr Bodo Winter](https://bodowinter.com/index.html), a lecturer in cognitive linguistics at the University of Birmingham UK, of concepts underlying linear mixed effects models. It provides a (slightly) different perspective from those in Prof. Petchey's lecture. It also very clearly walks through an example in R. [Here is the tutorial.](https://web.archive.org/web/20170328211836/http://www.bodowinter.com/tutorial/bw_LME_tutorial2.pdf)
+
+For a somewhat more advanced treatment of LMMs and some of examples of implementing them in R, please have a look at Chapter 10 of The New Statistics with R by Hector.
+
+### The analytic world
+
+Here are a series of videos recorded some time ago by Prof. Petchey, showing a small part of the world of analytical methods. Its not really important that you watch all this now, but you might find it interesting. Perhaps skip to the end and watch the last one first, so you see the whole world and then decide what parts you want to explore further. (And during the final lecture of the course, you heard about even more of this world.)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/t2XUNhStJ1M?si=KeHDbL4gaMGfH5Br" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pCa9PctaEi0?si=VBIIA0qLHqqsatPm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wztQAz-12iY?si=JRNHtv3b_KyeClT2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/T4cGt8OZRgI?si=CTL5WflivzJgBH_q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HSUhJjRQDRo?si=jyF7XPGWLvNT05Jc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+
+## Practical part 1
+
+In the lecture and course book there were various examples and walkthroughts of linear mixed effects models (LMMs). In this practical you will experience a core feature of LMMs: the partial pooling of information across groups. This is one of the key features that distinguishes LMMs from standard linear models (LMs). It is important to understand this feature well, as it is central to the correct use and interpretation of LMMs.
+
+Partial pooling aross groups means that the estimates for each group are "shrunk" towards the overall mean. The amount of shrinkage depends on the amount of data available for each group and the variability within and between groups.
+
+Let us break this down into steps.
+
+First, simulate some data with a grouping structure. For example, you could simulate test scores for students in different classrooms, where each classroom has a different average score.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+## set seed for reproducibility
+set.seed(123)
+## number of classes
+n_classes <- 10
+## class effects
+class_average_score <- runif(n_classes, min = 75, max = 100)
+## number of students per class
+n_students_per_class <- sample(15:20, n_classes, replace = TRUE)
+## class features data frame
+class_features <- tibble(
+  class = paste0("class_", 1:n_classes),
+  n_students = n_students_per_class,
+  class_effect = class_average_score
+)
+## simulate student scores
+student_scores <- class_features |> 
+  rowwise() |> 
+  mutate(
+    scores = list(rnorm(n_students, mean = class_effect, sd = 5))
+  ) |> 
+  unnest(cols = c(scores)) |> 
+  select(class, score = scores) |> 
+  mutate(student_id = paste0("student_", row_number()))
+```
+
+Here is the data we have simulated:
+
+```{r}
+student_scores
+```
+
+Check the number of students per class:
+
+```{r}
+student_scores |>
+  group_by(class) |>
+  summarise(n_students = n())
+```
+
+Now over to you. Make a script, copy and paste the code above so you have the dataset.
+
+Then make a standard linear model with the intention to predict student scores based on class.
+
+```{r}
+## standard linear model
+lm_model <- lm(score ~ class, data = student_scores)
+```
+
+
+```{r quiz-lmm-lm-what-estimated, echo=FALSE}
+learnr::question(
+  "In the linear model `lm(score ~ class)`, what does the model estimate for each class?",
+  
+  learnr::answer(
+    "A separate mean score for each class, estimated independently of the other classes.",
+    correct = TRUE
+  ),
+  learnr::answer("A single mean score shared by all classes."),
+  learnr::answer("A random deviation around the overall mean."),
+  learnr::answer("A slope describing how score changes with class number."),
+  
+  correct = "Correct! Treating in a linear model estimates a separate mean for each class, without sharing information across classes.",
+  incorrect = "Think about how factors are handled in a standard linear model.",
+  allow_retry = TRUE
+)
+```
+
+Make a dataset that contains the means of each class from the linear model.
+
+```{r}
+new_data <- data.frame(class = unique(student_scores$class))
+new_data$predicted_lm <- predict(lm_model, newdata = new_data)
+new_data
+```
+
+And now just calculate the mean score in each class with dplyr:
+
+```{r}
+class_means <- student_scores |>
+  group_by(class) |>
+  summarise(mean_score = mean(score))
+class_means
+```
+
+You should see that the predicted means from the linear model and the calculated means are identical. The linear model is simply estimating the mean score for each class independently.
+
+This is exactly what we expect from a standard linear model. The standard linear model treats the class as a *fixed effect*, estimating a separate mean for each class without sharing information across classes.
+
+Now, let's fit a linear mixed effects model (LMM) to the same data, treating class as a random effect. This means that the model will estimate an overall mean score and allow each class to deviate from this mean.
+
+```{r message=FALSE, warning=FALSE}
+library(lme4)
+## linear mixed effects model
+lmm_model <- lmer(score ~ 1 + (1 | class), data = student_scores)
+```
+
+Now, make predictions from the LMM for each class
+
+```{r}
+new_data <- new_data |> 
+  mutate(predicted_lmm = predict(lmm_model, newdata = new_data, re.form = NULL))
+new_data
+```
+
+
+
+```{r quiz-lmm-lm-vs-lmm-predictions, echo=FALSE}
+learnr::question(
+  "When you compare the class-level predictions from the standard linear model (LM) and the linear mixed-effects model (LMM), what pattern do you typically observe?",
+  
+  learnr::answer(
+    "The predictions from the LMM are identical to those from the LM, because both models use the same data."
+  ),
+  learnr::answer(
+    "The lower LMM predictions tend to be slightly larger than the corresponding LM predictions, while the higher LMM predictions tend to be slightly smaller.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "The LMM predictions are always lower than the LM predictions for all classes."
+  ),
+  learnr::answer(
+    "The LMM predictions are more extreme than the LM predictions for all classes."
+  ),
+  
+  correct = "Correct! This pattern reflects partial pooling: extreme LM estimates are shrunk toward the overall mean in the LMM.",
+  incorrect = "Partial pooling tends to cause shrinkage... think about what that might mean about the distribution of the predictions.",
+  allow_retry = TRUE
+)
+```
+
+Partial pooling means that the estimates for each class are "shrunk" towards the overall mean. The amount of shrinkage depends on the amount of data available for each class and the variability within and between classes.
+
+Let's visualise this effect by plotting the predictions from both models against the calculated class means.
+
+```{r}
+library(ggplot2)
+ggplot(new_data, aes(x = class)) +
+  geom_point(aes(y = predicted_lm, color = "LM Predictions"), size = 3, alpha = 0.5) +
+  geom_point(aes(y = predicted_lmm, color = "LMM Predictions"), size = 3, alpha = 0.5) +
+  geom_hline(yintercept = mean(student_scores$score), linetype = "dashed", color = "black") +
+  labs(y = "Score", color = "Legend") +
+  theme_minimal() +
+  coord_flip()
+```
+
+```{r quiz-lmm-graph-interpretation, echo=FALSE}
+learnr::question(
+  "Looking at the graph showing class-level predictions from the linear model (LM) and the linear mixed-effects model (LMM), together with a horizontal line indicating the overall mean, what do you observe?",
+  
+  learnr::answer(
+    "The LM and LMM predictions are identical, and both lie exactly on the overall mean line."
+  ),
+  learnr::answer(
+    "The LMM predictions are more spread out than the LM predictions, moving further away from the overall mean."
+  ),
+  learnr::answer(
+    "The LM predictions are all closer to the overall mean than the LMM predictions."
+  ),
+  learnr::answer(
+    "The LMM predictions are closer to the overall mean than the LM predictions, with extreme class estimates pulled toward the mean.",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! This is the key visual signature of partial pooling: LMM predictions shrink extreme class estimates toward the overall mean.",
+  incorrect = "Focus on how the LMM predictions relate to both the LM predictions and the overall mean line.",
+  allow_retry = TRUE
+)
+```
+
+
+What do you think would happen if we simulate 1'000 classes instead of 10? Try it out if you like. You should see the same pattern, but more pronounced.
+
+```{r echo = FALSE, eval = TRUE}
+## set seed for reproducibility
+set.seed(123)
+## number of classes
+n_classes <- 1000
+## class effects
+class_average_score <- runif(n_classes, min = 75, max = 100)
+## number of students per class
+n_students_per_class <- sample(15:20, n_classes, replace = TRUE)
+## class features data frame
+class_features <- tibble(
+  class = paste0("class_", 1:n_classes),
+  n_students = n_students_per_class,
+  class_effect = class_average_score
+)
+## simulate student scores
+student_scores <- class_features |> 
+  rowwise() |> 
+  mutate(
+    scores = list(rnorm(n_students, mean = class_effect, sd = 5))
+  ) |> 
+  unnest(cols = c(scores)) |> 
+  select(class, score = scores) |> 
+  mutate(student_id = paste0("student_", row_number()))
+## standard linear model
+lm_model <- lm(score ~ class, data = student_scores)
+## linear mixed effects model
+lmm_model <- lmer(score ~ 1 + (1 | class), data = student_scores)
+## make new data for predictions
+new_data <- data.frame(class = unique(student_scores$class))
+new_data <- new_data |>
+  mutate(
+    predicted_lm = predict(lm_model, newdata = new_data),
+    predicted_lmm = predict(lmm_model, newdata = new_data, re.form = NULL)
+  )
+```
+
+
+```{r echo = FALSE, eval = TRUE}
+## plot predictions
+ggplot(new_data, aes(x = class)) +
+  geom_point(aes(y = predicted_lm, color = "LM Predictions"), size = 1, alpha = 0.5) +
+  geom_point(aes(y = predicted_lmm, color = "LMM Predictions"), size = 1, alpha = 0.5) +
+  geom_hline(yintercept = mean(student_scores$score), linetype = "dashed", color = "black") +
+  labs(y = "Score", color = "Legend") +
+  coord_flip() +
+  ## no tick labels on x axis
+  theme(
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  )
+```
+
+I love it!!! This is art that tells a story about data and models! Please make a t-shirt with this plot!!!
+
+And here are the distributions of the predictions from the two models:
+
+```{r echo = FALSE, eval = TRUE}
+## plot distributions of predictions
+ggplot(new_data) +
+  geom_density(aes(x = predicted_lm, color = "LM Predictions"), size = 1) +
+  geom_density(aes(x = predicted_lmm, color = "LMM Predictions"), size = 1) +
+  labs(x = "Predicted Score", color = "Legend") +
+  theme_minimal()
+```
+
+```{r quiz-lmm-density-interpretation, echo=FALSE}
+learnr::question(
+  "After looking at the density distributions of the class-level predictions from the linear model (LM) and the linear mixed-effects model (LMM), what is the most appropriate interpretation?",
+  
+  learnr::answer(
+    "The LMM predictions are more extreme than the LM predictions, indicating greater between-class variability."
+  ),
+  learnr::answer(
+    "The LM predictions are tightly clustered around the overall mean, while the LMM predictions are widely spread."
+  ),
+  learnr::answer(
+    "The LMM predictions show a narrower distribution than the LM predictions, reflecting shrinkage toward the overall mean.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Both models produce identical distributions of predicted values."
+  ),
+  
+  correct = "Correct! Partial pooling in the LMM pulls extreme class-level predictions toward the overall mean, resulting in a narrower distribution.",
+  incorrect = "Focus on how partial pooling affects the spread of predictions across classes.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-lmm-why-this-matters, echo=FALSE}
+learnr::question(
+  "Why does the difference between the LM and LMM predictions matter in practice?",
+  
+  learnr::answer(
+    "Because mixed-effects models always give higher R-squared values than linear models."
+  ),
+  learnr::answer(
+    "Because the LMM predictions are guaranteed to be unbiased for every individual class."
+  ),
+  learnr::answer(
+    "Because partial pooling reduces the influence of random noise in small groups, leading to more reliable estimates and predictions.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Because the LMM eliminates all between-class variability."
+  ),
+  
+  correct = "Correct! Partial pooling balances group-specific information with information from the whole dataset, reducing overfitting and improving reliability, especially for small groups.",
+  incorrect = "Think about the role of noise, uncertainty, and sample size in estimating group-level effects.",
+  allow_retry = TRUE
+)
+```
+
+Think about how the same might apply in a random slopes model, where each group has its own slope. The same principles of partial pooling apply, with group-level slope estimates being shrunk toward the overall slope.
+
+```{r quiz-lmm-random-slopes-contrast, echo=FALSE}
+learnr::question(
+  "Suppose we now fit a **random-slopes mixed-effects model**, allowing the relationship between an explanatory variable (e.g. study time) and the response (score) to vary among classes. How does this differ conceptually from estimating separate slopes for each class using a standard linear model (e.g. an ANCOVA-style interaction)?",
+  
+  learnr::answer(
+    "The mixed-effects model assumes that all classes have completely independent slopes, with no relationship among them."
+  ),
+  learnr::answer(
+    "The mixed-effects model estimates a single common slope and ignores class-level variation."
+  ),
+  learnr::answer(
+    "The mixed-effects model partially pools the class-specific slopes toward a common average slope, whereas the linear model estimates each class slope independently.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "The mixed-effects model forces all class-specific slopes to be identical."
+  ),
+  
+  correct = "Correct! In a random-slopes model, class-specific slopes are shrunk toward the overall slope, balancing within-class information with information from all classes.",
+  incorrect = "Think about how partial pooling applies to slopes in the same way it applies to intercepts.",
+  allow_retry = TRUE
+)
+```
+
+Should class be a random effect or a fixed effect? It depends on your research question and the context of your study. If you are interested in making inferences about the specific classes in your dataset, treating class as a fixed effect may be appropriate. However, if you want to generalize your findings to a larger population of classes, treating class as a random effect is often more suitable.
+
+Another way to think about this is how we are identifying (naming) the classes. If the names are arbitrary labels (e.g., class_1, class_2, etc.) that do not carry specific meaning, it is often more appropriate to treat class as a random effect. If instead of class names we had meaningful categories (e.g., different teaching methods), then treating that factor as a fixed effect would make more sense. Then it would be appropriate to make a mixed model with teaching method as a fixed effect and class (name) as a random effect.
+
+## Practical part 2
+
+The sleepstudy reaction time dataset is a particularly rich dataset to explore if you want to strengthen your understanding of linear mixed-effects models. Attempt this practical when you are feeling particularly motivated to understand LMMs better. And note that it is quite brief in description, but quite involved in terms of analysis :) You got this!
+
+Get the dataset into R with the following code:
+
+```{r}
+library(lme4)
+data(sleepstudy)
+```
+
+Start by plotting reaction time against days of sleep deprivation for each subject to see how individuals differ in both their baseline reaction times and their sensitivity to sleep loss.
+
+Next, fit a simple linear model that ignores subject identity and compare it to mixed-effects models that include subject as a random intercept, and then as both a random intercept and a random slope for days. As you do this, pay attention to how the estimated fixed effects change, how the residual variance is reduced, and how partial pooling affects individual-level intercepts and slopes.
+
+Also examine how the degrees of freedom and p-values differ between models, and reflect on why these change when the dependence among observations is correctly accounted for.
+
+Working through these steps will help you understand not only when linear mixed models are needed, but how their structure influences estimation, uncertainty, and statistical inference.
+
+
+## Practical part 3
+
+The second part of the lecture was about what types of statistical methods might be used for questions and datasets we did not encounter during the course. There is no practical exercise for this part, but please do read the relevant sections in the course book and lecture notes.
+
+## Weekly Quiz
+
+
+
