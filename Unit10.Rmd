@@ -1,0 +1,381 @@
+---
+title: "Unit 10 BIO144 Course Content"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction
+
+On this web page you will find the homework, practical exercises and weekly quiz for Unit 10 of BIO144.
+
+All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
+
+
+## Homework
+
+All homework is for your own practice and learning. It will not be marked or graded.
+
+### Homework common to all weeks
+
+* Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
+
+* When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
+
+## Videos for a different perspective
+
+Here is a video that covers the basics of PCA:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HMOI_lkzW08?si=Scw4q52bPiDLqHJO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+And here is a video about NMDS, mostly about how to implement it in R:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/h7OrVmT7Ja8?si=Q8lrQiDeTYCwAdxO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+## Practical part 1
+
+By the end of this practical you should be able to:
+
+- Explain *why* ordination methods are useful in biology
+- Run a Principal Component Analysis (PCA)
+- Interpret PCA scores and loadings
+- Understand the role of scaling
+- Avoid common misinterpretations of ordination plots
+
+
+
+### Biological case study: plant communities along an environmental gradient
+
+Imagine you are studying **plant communities along a moisture gradient**, ranging from dry grassland sites to wet meadow sites.
+
+At each site, you measure:
+- The abundance of several plant species
+- An environmental variable representing soil moisture
+
+Your goal is **not** to test a specific hypothesis, but to: *Explore multivariate structure in the community data.* This is a classic situation where **ordination** is useful. Specically, how does plant community composition change along the moisture gradient?
+
+### Step 1: Create a dataset
+
+For this practical, we will simulate data for 30 sites and 5 plant species. Copy the code into your script and use it to make a dataset.
+
+```{r message = FALSE, echo = TRUE}
+## Load necessary libraries
+library(tidyverse)
+
+## Set a random seed for reproducibility
+set.seed(123)
+
+## Number of sites
+n_sites <- 30
+
+## Number of species
+n_species <- 5
+
+## Simulate the soil moisture gradient, taking values from a uniform distribution
+soil_moisture <- runif(n_sites, min = 10, max = 1000)
+
+## make vector of average abundances for each species
+## draw values from a log-normal distribution
+abundance_intercepts <- rlnorm(n_species, meanlog = 3, sdlog = 0.5)
+
+## make a vector of effects of soil moisture on each species
+## draw values from a normal distribution with positive mean, so most species increase with moisture
+abundance_slopes <- rnorm(n_species, mean = 1, sd = 1)
+
+## Simulate the abundance of each species along the soil moisture gradient
+community <- matrix(NA, nrow = n_sites, ncol = n_species)
+for (i in 1:n_species) {
+    mu <- pmax(0.1, abundance_intercepts[i] +
+                 abundance_slopes[i] * soil_moisture)
+  community[, i] <- MASS::rnegbin(n_sites, mu = mu, theta = 2)
+}
+
+## Name the species and convert to data frame
+colnames(community) <- paste0("Species_", 1:n_species)
+community <- as.data.frame(community)
+
+## Add site IDs and soil moisture to the data frame
+community <- community |> 
+  mutate(Site = paste0("Site_", 1:n_sites),
+         Soil_Moisture = soil_moisture) 
+```
+
+
+And here is the created dataset.
+
+```{r}
+community
+```
+
+```{r ord_q1, echo = FALSE}
+learnr::question(
+  "Which best describes the species data in this dataset?",
+  answer("Multivariate response data", correct = TRUE),
+  answer("Single response with one predictor"),
+  answer("Time series data"),
+  answer("Binary outcome data"),
+  correct = "Yes, we have multiple species measured at each site — a multivariate response.",
+  incorrect = "No, this dataset contains multiple species measured at each site, and this is the response we're interested in.",
+  allow_retry = TRUE
+)
+```
+
+### Step 2: Visualize species abundances
+
+Before running PCA, it's useful to visualize the species abundances along the soil moisture gradient. And also to assess correlations among species.
+
+An elegant method for making an appropriate visualisation is first to gather the data into long format, and then plot it with ggplot2.
+
+```{r eval = FALSE, echo = TRUE}
+## Gather data into long format
+community_long <- community |> 
+  pivot_longer(cols = starts_with("Species_"), 
+               names_to = "Species", 
+               values_to = "Abundance")
+## Plot species abundances along soil moisture gradient
+ggplot(community_long, aes(x = Soil_Moisture, y = Abundance, color = Species)) +
+  geom_point() +
+  labs(y = "Species Abundance", title = "Species Abundances along Soil Moisture Gradient")
+```
+
+Here's a rather geeky R question for you:
+
+
+```{r ord_q2, echo = FALSE}
+learnr::question(
+  "Why is it generally better to use ggplot on the long-format version of the data, rather than creating separate plots or layers for each species?",
+  answer("Because the same code works for any number of species and any species names, without needing to change the code", correct = TRUE),
+  answer("Because long-format data always produces more accurate plots"),
+  answer("Because ggplot cannot plot wide-format data at all"),
+  answer("Because using multiple layers makes plots impossible to interpret"),
+  correct = "Correct. Long-format data allows ggplot to map species to aesthetics automatically, making the code flexible and scalable.",
+  incorrect = "Not quite. While long-format data is often more flexible for plotting, it's not about accuracy or impossibility of plotting wide-format data.",
+  allow_retry = TRUE
+  
+)
+```
+
+We can see that we simulated species with different responses to soil moisture.
+
+**Now, stop, and have a think about what you expect from the PCA. In particular, how much variance do you expect PC1 to explain? Why? This is really important to think about. Discuss with a neighbour or a TA if you are unsure. Write down what you think. (The question is essential how high dimensional is the data?**
+
+
+Also, we see that some species have high average abundances, while others are generally rare. This means that some species will have a much larger influence on PCA results than others, unless we do some kind of standardization or transformation.
+
+```{r ord_q3, echo = FALSE}
+learnr::question(
+  "How would standardising (scaling) the species variables affect the PCA in this practical?",
+  answer("It ensures that all species contribute equally regardless of their absolute abundances", correct = TRUE),
+  answer("It removes all correlations between species"),
+  answer("It makes PCA unnecessary"),
+  answer("It guarantees that PC1 will represent the moisture gradient"),
+  correct = "Correct. Standardisation gives each species unit variance, preventing high-abundance species from dominating the ordination.",
+  incorrect = "Not quite. Standardisation affects how variance is weighted, not correlations or ecological meaning.",
+  allow_retry = TRUE
+)
+```
+
+Let us standardise the species data before running PCA, so that all species contribute equally. Standardisation should include centering (make the mean = 0) and scaling (make the standard deviation = 1) of each variable. Try to make code for this yourself. If you get stuck, ask a neighbour or a TA for help, or look at the code in the Code snippets section of this web page.
+
+```{r echo = FALSE}
+## Standardise species data (mean = 0, sd = 1)
+community_scaled <- community |> 
+  select(starts_with("Species_")) |> 
+  scale() |> 
+  as.data.frame()
+## Add site IDs and soil moisture back to the data frame
+community_scaled <- community_scaled |> 
+  mutate(Site = community$Site,
+         Soil_Moisture = community$Soil_Moisture)
+```
+
+Check the scaling worked:
+
+```{r}
+community_scaled |> summarise(across(starts_with("Species_"),
+                                     list(mean = mean, sd = sd)))
+```
+
+The mean of each species is approximately 0, and the standard deviation is 1. So yes, it worked... at least for me :)
+
+### Step 2: Prepare data for PCA
+
+PCA requires numeric variables only and typically works on a species matrix. So make a new data frame with only the species data.
+
+```{r echo = FALSE}
+## Create species matrix for PCA
+species_matrix <- community_scaled |> 
+  select(starts_with("Species_")) |> 
+  as.matrix()
+```
+
+### Step 3: Run PCA
+
+Now we can run PCA using the `prcomp()` function.
+
+```{r pca_q4, echo = FALSE}
+learnr::question(
+  "Why is it reasonable to use `center = FALSE` and `scale. = FALSE` when calling `prcomp()` in this analysis?",
+  answer("Because the data have already been centred and scaled beforehand", correct = TRUE),
+  answer("Because centring and scaling are not important for PCA"),
+  answer("Because `prcomp()` always centres and scales the data automatically"),
+  answer("Because centring and scaling only matter for plotting"),
+  correct = "Correct. If the data have already been centred and scaled, repeating these steps inside `prcomp()` would be redundant.",
+  incorrect = "Not quite. Centring and scaling are important for PCA, but they do not need to be repeated if already done.",
+  allow_retry = TRUE
+)
+```
+
+```{r echo = TRUE}
+## Run PCA
+pca_result <- prcomp(species_matrix, center = FALSE, scale. = FALSE)
+```
+
+### Step 4: Examine PCA results
+
+You can examine the PCA results using the `summary()` function.
+
+```{r eval = FALSE}
+## Summarize PCA results
+summary(pca_result)
+```
+
+```{r quiz-pca-pc1-variation, echo=FALSE}
+learnr::question_numeric(
+  "How much **variation** is represented in the **first principal component (PC1)**?\n\nGive your answer as a **percentage**, rounded to **one decimal place**.",
+  
+  learnr::answer(47.3, correct = TRUE),
+  
+  correct = "Correct! The first principal component explains 47.3% of the total variation.",
+  incorrect = "Not quite. Check the proportion of variance explained by PC1 and convert it to a percentage, rounded to one decimal place.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-pca-why-pc1-so-much, echo=FALSE}
+learnr::question(
+  "Why is **so much variation** explained by the **first principal component (PC1)** alone?",
+  
+  learnr::answer(
+    "Because the original variables are all strongly correlated with each other and largely indicate the same single underlying feature (soil moisture).",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Because PCA always forces the first axis to explain most of the variation."
+  ),
+  learnr::answer(
+    "Because the data were standardised before running PCA."
+  ),
+  learnr::answer(
+    "Because the number of observations is much larger than the number of variables."
+  ),
+  learnr::answer(
+    "Because PCA removes noise from the data."
+  ),
+  
+  correct = "Correct! When variables are strongly correlated and measure a common underlying property (such as overall size), most of the variation lies along a single dominant axis, which PCA captures as PC1.",
+  incorrect = "Think about the relationships among the original variables and what they represent biologically.",
+  allow_retry = TRUE
+)
+```
+
+### Step 5: Visualize PCA results
+
+Create a biplot to visualize the PCA results.
+
+```{r eval = FALSE}
+ggplot() +
+  geom_point(aes(x = pca_result$x[,1], y = pca_result$x[,2],
+                 color = community_scaled$Soil_Moisture)) +
+  labs(x = "PC1", y = "PC2", color = "Soil Moisture") 
+```
+
+
+### Step 6: Interpret PCA results more
+
+The loadings indicate how each original variable contributes to each principal component.
+
+```{r eval = FALSE}
+## Get PCA loadings
+loadings <- pca_result$rotation
+loadings
+```
+
+```{r quiz-pca-negative-loadings, echo=FALSE}
+learnr::question(
+  "Which of the species have **negative loadings on the first principal component (PC1)**?",
+  
+  learnr::answer(
+    "Species 1 and Species 3",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "Species 1 only"
+  ),
+  learnr::answer(
+    "Species 2 and Species 3"
+  ),
+  learnr::answer(
+    "Species 2 only"
+  ),
+  learnr::answer(
+    "None of the species"
+  ),
+  
+  correct = "Correct! Species 1 and Species 3 have negative loadings on PC1, meaning they lie on the opposite side of the main size-related gradient captured by the first principal component.",
+  incorrect = "Check the sign of the PC1 loadings for each species. Look for those with values less than zero.",
+  allow_retry = TRUE
+)
+```
+
+Recall that we simulated the data, and specified the effects of soil moisture on each species. Now check whether the PCA loadings align with these effects. The effects are in the `abundance_slopes` vector created during data simulation.
+
+
+### Step 7: Linking ordination to soil moisture
+
+Based on your PCA results, what conclusions can you draw about the plant communities along the soil moisture gradient? Consider how species abundances change with moisture and how this is reflected in the PCA.
+
+### Summary
+
+In this practical exercise you used Principal Component Analysis to explore structure in a multivariate ecological dataset. The analysis showed how ordination can reduce complex species data to a small number of synthetic axes that capture dominant patterns of variation, making high-dimensional data easier to visualise and reason about. By working with loadings, you saw how sites are positioned in ordination space, and how these positions reflect similarities and differences in community composition. The practical also highlighted the importance of centring and scaling, and how choices made during data preparation can strongly influence the resulting ordination.
+
+It is important to be clear about what PCA does and does not provide. PCA is well suited for exploratory analysis and for generating ideas about possible ecological gradients or groupings, but it is not a hypothesis-testing tool and does not establish causal relationships. Apparent patterns in ordination space can be shaped by noise, preprocessing decisions, or a small number of dominant variables. Interpreting PCA axes as real ecological gradients without additional evidence is therefore risky. Ordination compresses information, which means that some variation is inevitably lost and small visual differences may not be meaningful. A thoughtful analyst treats ordination as a starting point rather than a conclusion, using it to guide further modelling and more explicit statistical analysis.
+
+
+
+
+## Practical part 2
+
+
+
+
+
+## Weekly Quiz
+
+
+
+## Code snippets
+
+Here are some code snippets that you may find useful for this unit.
+
+```{r}
+## Standardise species data (mean = 0, sd = 1)
+community_scaled <- community |> 
+  select(starts_with("Species_")) |> 
+  scale() |> 
+  as.data.frame()
+## Add site IDs and soil moisture back to the data frame
+community_scaled <- community_scaled |> 
+  mutate(Site = community$Site,
+         Soil_Moisture = community$Soil_Moisture)
+```
+
+
+
+
