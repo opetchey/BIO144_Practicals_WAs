@@ -150,6 +150,26 @@ is the tutorial.</a></p>
 of implementing them in R, please have a look at Chapter 10 of The New
 Statistics with R by Hector.</p>
 </div>
+<div id="section-the-analytic-world" class="section level3">
+<h3>The analytic world</h3>
+<p>Here are a series of videos recorded some time ago by Prof. Petchey,
+showing a small part of the world of analytical methods. Its not really
+important that you watch all this now, but you might find it
+interesting. Perhaps skip to the end and watch the last one first, so
+you see the whole world and then decide what parts you want to explore
+further. (And during the final lecture of the course, you heard about
+even more of this world.)</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/t2XUNhStJ1M?si=KeHDbL4gaMGfH5Br" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pCa9PctaEi0?si=VBIIA0qLHqqsatPm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wztQAz-12iY?si=JRNHtv3b_KyeClT2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/T4cGt8OZRgI?si=CTL5WflivzJgBH_q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HSUhJjRQDRo?si=jyF7XPGWLvNT05Jc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+</div>
 </div>
 <div id="section-practical-part-1" class="section level2">
 <h2>Practical part 1</h2>
@@ -253,11 +273,6 @@ pronounced.</p>
 Please make a t-shirt with this plot!!!</p>
 <p>And here are the distributions of the predictions from the two
 models:</p>
-<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
 <p><img src="Unit11_files/figure-html/unnamed-chunk-12-1.png" width="624" /></p>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="quiz-lmm-density-interpretation" class="tutorial-question panel-body">
@@ -304,6 +319,33 @@ and class (name) as a random effect.</p>
 </div>
 <div id="section-practical-part-2" class="section level2">
 <h2>Practical part 2</h2>
+<p>The sleepstudy reaction time dataset is a particularly rich dataset
+to explore if you want to strengthen your understanding of linear
+mixed-effects models. Attempt this practical when you are feeling
+particularly motivated to understand LMMs better. And note that it is
+quite brief in description, but quite involved in terms of analysis :)
+You got this!</p>
+<p>Get the dataset into R with the following code:</p>
+<pre class="r"><code>library(lme4)
+data(sleepstudy)</code></pre>
+<p>Start by plotting reaction time against days of sleep deprivation for
+each subject to see how individuals differ in both their baseline
+reaction times and their sensitivity to sleep loss.</p>
+<p>Next, fit a simple linear model that ignores subject identity and
+compare it to mixed-effects models that include subject as a random
+intercept, and then as both a random intercept and a random slope for
+days. As you do this, pay attention to how the estimated fixed effects
+change, how the residual variance is reduced, and how partial pooling
+affects individual-level intercepts and slopes.</p>
+<p>Also examine how the degrees of freedom and p-values differ between
+models, and reflect on why these change when the dependence among
+observations is correctly accounted for.</p>
+<p>Working through these steps will help you understand not only when
+linear mixed models are needed, but how their structure influences
+estimation, uncertainty, and statistical inference.</p>
+</div>
+<div id="section-practical-part-3" class="section level2">
+<h2>Practical part 3</h2>
 <p>The second part of the lecture was about what types of statistical
 methods might be used for questions and datasets we did not encounter
 during the course. There is no practical exercise for this part, but
@@ -312,6 +354,81 @@ notes.</p>
 </div>
 <div id="section-weekly-quiz" class="section level2">
 <h2>Weekly Quiz</h2>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-mm-why" class="tutorial-question panel-body">
+<div id="quiz-mm-why-answer_container" class="shiny-html-output"></div>
+<div id="quiz-mm-why-message_container" class="shiny-html-output"></div>
+<div id="quiz-mm-why-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<hr />
+<div id="section-conceptual-partial-pooling" class="section level3">
+<h3>2. Conceptual: partial pooling</h3>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-mm-partial-pooling" class="tutorial-question panel-body">
+<div id="quiz-mm-partial-pooling-answer_container" class="shiny-html-output"></div>
+<div id="quiz-mm-partial-pooling-message_container" class="shiny-html-output"></div>
+<div id="quiz-mm-partial-pooling-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-mm-shrinkage" class="tutorial-question panel-body">
+<div id="quiz-mm-shrinkage-answer_container" class="shiny-html-output"></div>
+<div id="quiz-mm-shrinkage-message_container" class="shiny-html-output"></div>
+<div id="quiz-mm-shrinkage-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-mm-random-intercept" class="tutorial-question panel-body">
+<div id="quiz-mm-random-intercept-answer_container" class="shiny-html-output"></div>
+<div id="quiz-mm-random-intercept-message_container" class="shiny-html-output"></div>
+<div id="quiz-mm-random-intercept-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-mm-random-slopes" class="tutorial-question panel-body">
+<div id="quiz-mm-random-slopes-answer_container" class="shiny-html-output"></div>
+<div id="quiz-mm-random-slopes-message_container" class="shiny-html-output"></div>
+<div id="quiz-mm-random-slopes-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-mm-df" class="tutorial-question panel-body">
+<div id="quiz-mm-df-answer_container" class="shiny-html-output"></div>
+<div id="quiz-mm-df-message_container" class="shiny-html-output"></div>
+<div id="quiz-mm-df-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-what-next-nonlinear" class="tutorial-question panel-body">
+<div id="quiz-what-next-nonlinear-answer_container" class="shiny-html-output"></div>
+<div id="quiz-what-next-nonlinear-message_container" class="shiny-html-output"></div>
+<div id="quiz-what-next-nonlinear-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-time-series-biological" class="tutorial-question panel-body">
+<div id="quiz-time-series-biological-answer_container" class="shiny-html-output"></div>
+<div id="quiz-time-series-biological-message_container" class="shiny-html-output"></div>
+<div id="quiz-time-series-biological-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-sem-biological" class="tutorial-question panel-body">
+<div id="quiz-sem-biological-answer_container" class="shiny-html-output"></div>
+<div id="quiz-sem-biological-message_container" class="shiny-html-output"></div>
+<div id="quiz-sem-biological-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
 <p>
 <script type="application/shiny-prerendered" data-context="server-start">
 library(learnr)
@@ -550,6 +667,306 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     seed = 1974659050.08048, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-mm-why", 
+    question = structure("What is the main reason for using a linear mixed-effects model instead of a standard linear model?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_6194fac", 
+        option = "To increase the number of explanatory variables.", 
+        value = "To increase the number of explanatory variables.", 
+        label = structure("To increase the number of explanatory variables.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1abe724", 
+        option = "To account for dependence among observations caused by grouping or repeated measurements.", 
+        value = "To account for dependence among observations caused by grouping or repeated measurements.", 
+        label = structure("To account for dependence among observations caused by grouping or repeated measurements.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ae3e1", 
+        option = "To guarantee smaller p-values.", value = "To guarantee smaller p-values.", 
+        label = structure("To guarantee smaller p-values.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_96d4f3d", 
+        option = "To remove all between-group variation.", value = "To remove all between-group variation.", 
+        label = structure("To remove all between-group variation.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Mixed models explicitly account for non-independence due to grouping or repeated measures.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about the assumptions of independence in linear models.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about the assumptions of independence in linear models.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-mm-why-answer", question = "quiz-mm-why"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1876277240.62629, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-mm-partial-pooling", 
+    question = structure("What does <em>partial pooling<\u002fem> mean in the context of mixed-effects models?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_28a60c0", 
+        option = "All groups are forced to have exactly the same mean.", 
+        value = "All groups are forced to have exactly the same mean.", 
+        label = structure("All groups are forced to have exactly the same mean.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7d12629", 
+        option = "Each group is analysed completely independently.", 
+        value = "Each group is analysed completely independently.", 
+        label = structure("Each group is analysed completely independently.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_31618e", 
+        option = "Group-level estimates are shrunk toward the overall mean, depending on data availability and variability.", 
+        value = "Group-level estimates are shrunk toward the overall mean, depending on data availability and variability.", 
+        label = structure("Group-level estimates are shrunk toward the overall mean, depending on data availability and variability.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a1d581", 
+        option = "Only the largest groups influence the model.", 
+        value = "Only the largest groups influence the model.", 
+        label = structure("Only the largest groups influence the model.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Partial pooling balances group-specific information with information from the whole dataset.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about how information is shared across groups.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about how information is shared across groups.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-mm-partial-pooling-answer", question = "quiz-mm-partial-pooling"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 715636036.666756, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-mm-shrinkage", 
+    question = structure("Which groups experience the strongest shrinkage in a mixed-effects model?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_45b952", 
+        option = "Groups with few observations.", value = "Groups with few observations.", 
+        label = structure("Groups with few observations.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8365fe0", 
+        option = "Groups with many observations.", value = "Groups with many observations.", 
+        label = structure("Groups with many observations.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_485e1ab", 
+        option = "Groups with extreme means.", value = "Groups with extreme means.", 
+        label = structure("Groups with extreme means.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8603225", 
+        option = "All groups equally.", value = "All groups equally.", 
+        label = structure("All groups equally.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Groups with little data provide weaker evidence and are therefore shrunk more toward the overall mean.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about how sample size affects certainty.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about how sample size affects certainty.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-mm-shrinkage-answer", question = "quiz-mm-shrinkage"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1712639400.70249, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-mm-random-intercept", 
+    question = structure("Which model formula specifies a <strong>random intercept for class<\u002fstrong> in <code>lme4<\u002fcode>?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_38bc9f", 
+        option = "score ~ class", value = "score ~ class", label = structure("score ~ class", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9b16e1c", 
+        option = "score ~ 1 + (1 | class)", value = "score ~ 1 + (1 | class)", 
+        label = structure("score ~ 1 + (1 | class)", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5b4737d", 
+        option = "score ~ (class | 1)", value = "score ~ (class | 1)", 
+        label = structure("score ~ (class | 1)", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_19a4b49", 
+        option = "score ~ class + error(class)", value = "score ~ class + error(class)", 
+        label = structure("score ~ class + error(class)", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! (1 | class) specifies a random intercept for class.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Look for the syntax that places class inside parentheses after |.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Look for the syntax that places class inside parentheses after |.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-mm-random-intercept-answer", question = "quiz-mm-random-intercept"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 769516089.141666, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-mm-random-slopes", 
+    question = structure("How does a random-slopes model differ from fitting separate slopes using an interaction in a linear model?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_43c307b", 
+        option = "Random slopes force all groups to have identical slopes.", 
+        value = "Random slopes force all groups to have identical slopes.", 
+        label = structure("Random slopes force all groups to have identical slopes.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1f34e11", 
+        option = "Random slopes partially pool group-specific slopes toward a common average slope.", 
+        value = "Random slopes partially pool group-specific slopes toward a common average slope.", 
+        label = structure("Random slopes partially pool group-specific slopes toward a common average slope.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_845debb", 
+        option = "Random slopes ignore group-level variation.", 
+        value = "Random slopes ignore group-level variation.", 
+        label = structure("Random slopes ignore group-level variation.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4b5d2cc", 
+        option = "There is no difference; they are mathematically identical.", 
+        value = "There is no difference; they are mathematically identical.", 
+        label = structure("There is no difference; they are mathematically identical.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Random slopes allow slopes to vary by group while sharing information across groups.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about partial pooling applied to slopes.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about partial pooling applied to slopes.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-mm-random-slopes-answer", question = "quiz-mm-random-slopes"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1278536456.90463, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-mm-df", question = structure("Why are degrees of freedom in mixed-effects models less straightforward than in standard linear models?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_ada498e", 
+    option = "Because mixed models always have infinite degrees of freedom.", 
+    value = "Because mixed models always have infinite degrees of freedom.", 
+    label = structure("Because mixed models always have infinite degrees of freedom.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fd235be", 
+    option = "Because variance components and partial pooling complicate how uncertainty is allocated.", 
+    value = "Because variance components and partial pooling complicate how uncertainty is allocated.", 
+    label = structure("Because variance components and partial pooling complicate how uncertainty is allocated.", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8e33201", 
+    option = "Because R does not compute them correctly.", value = "Because R does not compute them correctly.", 
+    label = structure("Because R does not compute them correctly.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c4b4839", 
+    option = "Because mixed models do not estimate parameters.", 
+    value = "Because mixed models do not estimate parameters.", 
+    label = structure("Because mixed models do not estimate parameters.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct! Random effects and variance components make the effective degrees of freedom more complex.", html = TRUE, class = c("html", 
+"character")), try_again = structure("Think about how uncertainty is shared across levels of the model.", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Think about how uncertainty is shared across levels of the model.", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "quiz-mm-df-answer", question = "quiz-mm-df"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1782106410.17014, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-what-next-nonlinear", 
+    question = structure("If you suspect a smooth but non-linear relationship between an explanatory variable and a response, which approach introduced in this section would often be appropriate?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d0256fe", 
+        option = "Breakpoint analysis.", value = "Breakpoint analysis.", 
+        label = structure("Breakpoint analysis.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6f867ed", 
+        option = "Non-parametric rank tests.", value = "Non-parametric rank tests.", 
+        label = structure("Non-parametric rank tests.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9681d99", 
+        option = "Generalized Additive Models (GAMs).", value = "Generalized Additive Models (GAMs).", 
+        label = structure("Generalized Additive Models (GAMs).", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bc16c42", 
+        option = "Meta-analysis.", value = "Meta-analysis.", 
+        label = structure("Meta-analysis.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! GAMs allow flexible, smooth non-linear relationships while remaining interpretable.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Focus on methods designed specifically for smooth non-linear effects.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Focus on methods designed specifically for smooth non-linear effects.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-what-next-nonlinear-answer", question = "quiz-what-next-nonlinear"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1315129685.3876, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-time-series-biological", 
+    question = structure("A biologist measures the population size of a plankton species in a lake every week for five years, with the goal of understanding long-term trends and seasonal dynamics. Which type of analysis is most appropriate for these data?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_f112b80", 
+        option = "A standard linear regression, because population size is a continuous variable.", 
+        value = "A standard linear regression, because population size is a continuous variable.", 
+        label = structure("A standard linear regression, because population size is a continuous variable.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_18199f6", 
+        option = "A time series analysis, because measurements are ordered in time and successive observations are likely to be dependent.", 
+        value = "A time series analysis, because measurements are ordered in time and successive observations are likely to be dependent.", 
+        label = structure("A time series analysis, because measurements are ordered in time and successive observations are likely to be dependent.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3e34dce", 
+        option = "A two-sample t-test, comparing early and late years.", 
+        value = "A two-sample t-test, comparing early and late years.", 
+        label = structure("A two-sample t-test, comparing early and late years.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f6d09c3", 
+        option = "A one-way ANOVA with week as a factor.", value = "A one-way ANOVA with week as a factor.", 
+        label = structure("A one-way ANOVA with week as a factor.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Repeated measurements over time are typically not independent, making time series analysis appropriate.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Focus on the fact that the same system is measured repeatedly over time.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Focus on the fact that the same system is measured repeatedly over time.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-time-series-biological-answer", question = "quiz-time-series-biological"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1268950203.9091, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-sem-biological", 
+    question = structure("An ecologist is studying how nutrient availability affects plant growth. Nutrients influence leaf nitrogen content, which affects photosynthetic rate, which in turn affects total biomass. At the same time, nutrient availability may also have a direct effect on biomass. The ecologist wants to quantify both direct and indirect effects in a single analysis. Which type of analysis is most appropriate?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d8ca40a", 
+        option = "Multiple linear regression, with biomass as the response.", 
+        value = "Multiple linear regression, with biomass as the response.", 
+        label = structure("Multiple linear regression, with biomass as the response.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b50314b", 
+        option = "Structural Equation Modelling (SEM), because it allows modelling of multiple interconnected relationships and indirect effects.", 
+        value = "Structural Equation Modelling (SEM), because it allows modelling of multiple interconnected relationships and indirect effects.", 
+        label = structure("Structural Equation Modelling (SEM), because it allows modelling of multiple interconnected relationships and indirect effects.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d19c9be", 
+        option = "A one-way ANOVA comparing nutrient treatments.", 
+        value = "A one-way ANOVA comparing nutrient treatments.", 
+        label = structure("A one-way ANOVA comparing nutrient treatments.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_dbace5b", 
+        option = "Time series analysis of biomass.", value = "Time series analysis of biomass.", 
+        label = structure("Time series analysis of biomass.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! SEM is designed for analysing systems of variables with both direct and indirect relationships, and where variables can be both predictors and responses.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about methods that can represent causal pathways and indirect effects explicitly.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about methods that can represent causal pathways and indirect effects explicitly.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-sem-biological-answer", question = "quiz-sem-biological"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1273371798.40704, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
 </p>
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="dependencies">
@@ -558,9 +975,10 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84]}},"value":[{"type":"character","attributes":{},"value":["backports","base","boot","bslib","cachem","checkmate","cli","commonmark","compiler","crayon","datasets","dichromat","digest","dplyr","ellipsis","evaluate","farver","fastmap","fontawesome","forcats","generics","ggplot2","glue","graphics","grDevices","grid","gtable","highr","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","labeling","later","lattice","learnr","lifecycle","lme4","lubridate","magrittr","markdown","MASS","Matrix","methods","mime","minqa","nlme","nloptr","pillar","pkgconfig","promises","purrr","R6","RColorBrewer","Rcpp","readr","rlang","rmarkdown","rprojroot","rstudioapi","S7","sass","scales","shiny","splines","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.4.1","1.3-31","0.8.0","1.1.0","2.3.2","3.6.5","1.9.1","4.4.1","1.5.3","4.4.1","2.0-0.1","0.6.37","1.1.4","0.3.2","1.0.5","2.1.2","1.2.0","0.5.2","1.0.0","0.1.3","4.0.0","1.8.0","4.4.1","4.4.1","4.4.1","0.3.6","0.11","1.1.3","0.5.8.1","1.6.4","1.6.15","0.1.4","2.0.0","1.48","0.4.3","1.3.2","0.22-6","0.11.5","1.0.4","1.1-35.5","1.9.3","2.0.3","1.13","7.3-61","1.7-0","4.4.1","0.12","1.2.8","3.1-166","2.1.1","1.10.1","2.0.3","1.3.0","1.0.4","2.6.1","1.1-3","1.0.13","2.1.5","1.1.7","2.28","2.1.1","0.16.0","0.2.0","0.4.9","1.4.0","1.9.1","4.4.1","4.4.1","1.8.4","1.5.1","3.2.1","1.3.1","1.2.1","2.0.0","0.3.0","4.4.1","0.4.0","4.4.1","0.6.5","3.0.2","0.47","1.8-4","2.3.10"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83]}},"value":[{"type":"character","attributes":{},"value":["backports","base","boot","bslib","cachem","checkmate","cli","commonmark","compiler","datasets","dichromat","digest","dplyr","ellipsis","evaluate","farver","fastmap","fontawesome","forcats","generics","ggplot2","glue","graphics","grDevices","grid","gtable","highr","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","labeling","later","lattice","learnr","lifecycle","lme4","lubridate","magrittr","markdown","MASS","Matrix","methods","mime","minqa","nlme","nloptr","pillar","pkgconfig","promises","purrr","R6","RColorBrewer","Rcpp","readr","rlang","rmarkdown","rprojroot","rstudioapi","S7","sass","scales","shiny","splines","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.4.1","1.3-31","0.8.0","1.1.0","2.3.2","3.6.5","1.9.1","4.4.1","4.4.1","2.0-0.1","0.6.37","1.1.4","0.3.2","1.0.5","2.1.2","1.2.0","0.5.2","1.0.0","0.1.3","4.0.0","1.8.0","4.4.1","4.4.1","4.4.1","0.3.6","0.11","1.1.3","0.5.8.1","1.6.4","1.6.15","0.1.4","2.0.0","1.48","0.4.3","1.3.2","0.22-6","0.11.5","1.0.4","1.1-35.5","1.9.3","2.0.3","1.13","7.3-61","1.7-0","4.4.1","0.12","1.2.8","3.1-166","2.1.1","1.10.1","2.0.3","1.3.0","1.0.4","2.6.1","1.1-3","1.0.13","2.1.5","1.1.7","2.28","2.1.1","0.16.0","0.2.0","0.4.9","1.4.0","1.9.1","4.4.1","4.4.1","1.8.4","1.5.1","3.2.1","1.3.1","1.2.1","2.0.0","0.3.0","4.4.1","0.4.0","4.4.1","0.6.5","3.0.2","0.47","1.8-4","2.3.10"]}]}]}
 </script>
 <!--/html_preserve-->
+</div>
 </div>
 
 </article> <!-- topics -->

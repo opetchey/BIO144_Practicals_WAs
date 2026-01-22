@@ -290,7 +290,7 @@ I love it!!! This is art that tells a story about data and models! Please make a
 
 And here are the distributions of the predictions from the two models:
 
-```{r echo = FALSE, eval = TRUE}
+```{r echo = FALSE, eval = TRUE, message=FALSE, warning=FALSE}
 ## plot distributions of predictions
 ggplot(new_data) +
   geom_density(aes(x = predicted_lm, color = "LM Predictions"), size = 1) +
@@ -383,7 +383,7 @@ The sleepstudy reaction time dataset is a particularly rich dataset to explore i
 
 Get the dataset into R with the following code:
 
-```{r}
+```{r echo=TRUE, eval = FALSE}
 library(lme4)
 data(sleepstudy)
 ```
@@ -403,5 +403,173 @@ The second part of the lecture was about what types of statistical methods might
 
 ## Weekly Quiz
 
+```{r quiz-mm-why, echo=FALSE}
+learnr::question(
+  "What is the main reason for using a linear mixed-effects model instead of a standard linear model?",
+  
+  learnr::answer("To increase the number of explanatory variables."),
+  learnr::answer(
+    "To account for dependence among observations caused by grouping or repeated measurements.",
+    correct = TRUE
+  ),
+  learnr::answer("To guarantee smaller p-values."),
+  learnr::answer("To remove all between-group variation."),
+  
+  correct = "Correct! Mixed models explicitly account for non-independence due to grouping or repeated measures.",
+  incorrect = "Think about the assumptions of independence in linear models.",
+  allow_retry = TRUE
+)
+```
 
+
+```{r quiz-mm-partial-pooling, echo=FALSE}
+learnr::question(
+  "What does *partial pooling* mean in the context of mixed-effects models?",
+  
+  learnr::answer("All groups are forced to have exactly the same mean."),
+  learnr::answer("Each group is analysed completely independently."),
+  learnr::answer(
+    "Group-level estimates are shrunk toward the overall mean, depending on data availability and variability.",
+    correct = TRUE
+  ),
+  learnr::answer("Only the largest groups influence the model."),
+  
+  correct = "Correct! Partial pooling balances group-specific information with information from the whole dataset.",
+  incorrect = "Think about how information is shared across groups.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-mm-shrinkage, echo=FALSE}
+learnr::question(
+  "Which groups experience the strongest shrinkage in a mixed-effects model?",
+  
+  learnr::answer(
+    "Groups with few observations.",
+    correct = TRUE
+  ),
+  learnr::answer("Groups with many observations."),
+  learnr::answer("Groups with extreme means."),
+  learnr::answer("All groups equally."),
+  
+  correct = "Correct! Groups with little data provide weaker evidence and are therefore shrunk more toward the overall mean.",
+  incorrect = "Think about how sample size affects certainty.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-mm-random-intercept, echo=FALSE}
+learnr::question(
+  "Which model formula specifies a **random intercept for class** in `lme4`?",
+  
+  learnr::answer("score ~ class"),
+  learnr::answer(
+    "score ~ 1 + (1 | class)",
+    correct = TRUE
+  ),
+  learnr::answer("score ~ (class | 1)"),
+  learnr::answer("score ~ class + error(class)"),
+  
+  correct = "Correct! (1 | class) specifies a random intercept for class.",
+  incorrect = "Look for the syntax that places class inside parentheses after |.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-mm-random-slopes, echo=FALSE}
+learnr::question(
+  "How does a random-slopes model differ from fitting separate slopes using an interaction in a linear model?",
+  
+  learnr::answer("Random slopes force all groups to have identical slopes."),
+  learnr::answer(
+    "Random slopes partially pool group-specific slopes toward a common average slope.",
+    correct = TRUE
+  ),
+  learnr::answer("Random slopes ignore group-level variation."),
+  learnr::answer("There is no difference; they are mathematically identical."),
+  
+  correct = "Correct! Random slopes allow slopes to vary by group while sharing information across groups.",
+  incorrect = "Think about partial pooling applied to slopes.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-mm-df, echo=FALSE}
+learnr::question(
+  "Why are degrees of freedom in mixed-effects models less straightforward than in standard linear models?",
+  
+  learnr::answer("Because mixed models always have infinite degrees of freedom."),
+  learnr::answer(
+    "Because variance components and partial pooling complicate how uncertainty is allocated.",
+    correct = TRUE
+  ),
+  learnr::answer("Because R does not compute them correctly."),
+  learnr::answer("Because mixed models do not estimate parameters."),
+  
+  correct = "Correct! Random effects and variance components make the effective degrees of freedom more complex.",
+  incorrect = "Think about how uncertainty is shared across levels of the model.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-what-next-nonlinear, echo=FALSE}
+learnr::question(
+  "If you suspect a smooth but non-linear relationship between an explanatory variable and a response, which approach introduced in this section would often be appropriate?",
+  
+  learnr::answer("Breakpoint analysis."),
+  learnr::answer("Non-parametric rank tests."),
+  learnr::answer(
+    "Generalized Additive Models (GAMs).",
+    correct = TRUE
+  ),
+  learnr::answer("Meta-analysis."),
+  
+  correct = "Correct! GAMs allow flexible, smooth non-linear relationships while remaining interpretable.",
+  incorrect = "Focus on methods designed specifically for smooth non-linear effects.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-time-series-biological, echo=FALSE}
+learnr::question(
+  "A biologist measures the population size of a plankton species in a lake every week for five years, with the goal of understanding long-term trends and seasonal dynamics. Which type of analysis is most appropriate for these data?",
+  
+  learnr::answer("A standard linear regression, because population size is a continuous variable."),
+  learnr::answer(
+    "A time series analysis, because measurements are ordered in time and successive observations are likely to be dependent.",
+    correct = TRUE
+  ),
+  learnr::answer("A two-sample t-test, comparing early and late years."),
+  learnr::answer("A one-way ANOVA with week as a factor."),
+  
+  correct = "Correct! Repeated measurements over time are typically not independent, making time series analysis appropriate.",
+  incorrect = "Focus on the fact that the same system is measured repeatedly over time.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-sem-biological, echo=FALSE}
+learnr::question(
+  "An ecologist is studying how nutrient availability affects plant growth. Nutrients influence leaf nitrogen content, which affects photosynthetic rate, which in turn affects total biomass. At the same time, nutrient availability may also have a direct effect on biomass. The ecologist wants to quantify both direct and indirect effects in a single analysis. Which type of analysis is most appropriate?",
+  
+  learnr::answer("Multiple linear regression, with biomass as the response."),
+  learnr::answer(
+    "Structural Equation Modelling (SEM), because it allows modelling of multiple interconnected relationships and indirect effects.",
+    correct = TRUE
+  ),
+  learnr::answer("A one-way ANOVA comparing nutrient treatments."),
+  learnr::answer("Time series analysis of biomass."),
+  
+  correct = "Correct! SEM is designed for analysing systems of variables with both direct and indirect relationships, and where variables can be both predictors and responses.",
+  incorrect = "Think about methods that can represent causal pathways and indirect effects explicitly.",
+  allow_retry = TRUE
+)
+```
 
