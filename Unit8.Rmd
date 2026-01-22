@@ -38,7 +38,7 @@ All homework is for your own practice and learning. It will not be marked or gra
 
 ## Practical part 1
 
-In this exercise, you will work through two-way analysis of variance.
+In this exercise, you will work through an generalised linear model analysis of a real dataset on abalone age.
 
 The steps to follow are, as usual:
 

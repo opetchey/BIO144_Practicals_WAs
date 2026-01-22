@@ -1,0 +1,352 @@
+---
+title: "Unit 9 BIO144 Course Content"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction
+
+On this web page you will find the homework, practical exercises and weekly quiz for Unit 9 of BIO144.
+
+All other information for the course is on the OLAT course webpages, and web pages linked to from there: [OLAT BIO144 Info. Hub](https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740)
+
+
+## Homework
+
+All homework is for your own practice and learning. It will not be marked or graded.
+
+### Homework common to all weeks
+
+* Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
+
+* When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
+
+
+### Video walkthrough; insect death!
+
+Please remember that you'll get much more out the videos if you work through the example in R, either during or after watching.
+
+Please note that these videos were made some time ago, so for example the method used to import the data is a little different to what we use now. However, the statistical concepts and R code for analysis are still relevant.
+
+The first video introduces the biological question and the data. It also fits a linear model and checks the assumptions of the model, showing how badly things can go wrong if you don't check the assumptions!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PXCgb1zGK8s?si=KzfZIbPGXR0j6_32" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+The second video explains and fits a much more appropriate model for the data: a generalized linear model with a binomial error distribution and a logit link function. We see that the conclusion is very different to that from the linear model!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1JPsFGxdenQ?si=ZNcnymehjx65F_Gm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+The third video shows how to check for overdispersion in a binomial model, and how to make a nice visualisation of the results.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xl8XOdXXNiM?si=3TCIapMMy9rJPyll" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+
+
+## Practical part 1
+
+In this exercise, you will work through a binary (yes/no) type of data analysis. There is much less guidance than in previous exercises, so you will need to think about the steps to take yourself. Of course, you can always ask for help from a teaching assistant (TA) during the practical session. If you find the exercise rather overwhelming, try to focus on just one step at a time. Do not look at the whole exercise at once, but rather break it down into manageable pieces.
+
+The steps to follow are, as usual:
+
+0. Get introduced to and think about the biological question.
+1. Prepare a script, load the data, and make some basic checks on the dataset.
+2. Visualise to answer the question.
+3. Fit an appropriate model.
+4. Check the assumptions of the model.
+5. Interpret the model.
+6. Make a visualisation of the data, good for publication.
+7. Write a sentence describing your findings.
+8. Critique and reflection
+
+### 1. Biological question
+
+A common use of binomial models is to explain species habitat requirements. One looks to see which of a set of environmental variables explains the presence / absence of a species in a particular location.
+
+Your challenge is to provide explanations of the presence / absence of the White Tailed Ptarmigan, a coastal alpine bird. I.e., we wish to test hypotheses about explanations.
+
+**Something new and cool** For this exercise, you will work with a real dataset that you wil get from an online data repository! The name of the data file is **`presabs_both_IndYears_allvars_final.csv`**. This datafile and a few others are available at [this web page on the Dryad data repository](https://datadryad.org/dataset/doi:10.5061/dryad.c2378)
+
+The same web page contains a `README.txt` file that explains the meaning of each of the variables in the dataset. This is very important, otherwise you will not be able to interpret your results!
+
+```{r eval = FALSE}
+library(tidyverse)
+ptarm <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/presabs_both_IndYears_allvars_final.csv")
+```
+
+Remember to go through all the workflow steps.
+
+Here are some specific tasks:
+
+- Make a list of the environmental factors in the dataset.
+- Look on Wikipedia or elsewhere for natural history information about the White Tailed Ptarmigan, and based on this make hypotheses about which of the environmental variables in the dataset will be related to presence / absence, and the direction (positive or negative) of the relationship. (Do not look at the data in this step!)
+- Make graphs of how presence absence varies with individual environmental factors (this would be in the initial exploration of the data, before any modelling). This should give a clue about if your hypotheses are supported by the data.
+- Develop an understanding of correlations among environmental factors. Make sure you are clear about why this is important, particularly in terms of shared explanatory power.
+- Test your hypotheses about explanations of the presence / absence, using a binomial GLM.
+- Show some of the modelled relationships between presence/absence and environmental variables, e.g. by using model predictions to show the estimated effect of one environmental variable while all others are held constant.
+- Write a sentence or two about the results that would clearly communicate your findings to other biologists.
+ 
+I suggest you put all this together into a little report that you can be proud of :) Show it to a teaching assistant to see what you did well, and to be encouraged about what you can do even better.
+
+
+
+## Practical part 2
+
+The biological challenge here is to predict death based on information derived from echocardiograms. Note that when the aim is to predict, we are not so much interested in understanding the underlying biological processes, but rather in getting the best possible predictions. We don't look at prediction so much in BIO144, so here is a chance for you to experience it, just a little.
+
+As with the previous exercise, you need to get the data from an online repository. This time it is the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/38/echocardiogram). The web page contains the data, and the metadata, that is, a description of variables in the data, and other features.
+
+The dataset does not have a *header row* with the names of the variables. (The *header row* of a dataset is not part of the data itself; it just gives names to the columns of the data.) You can get these from the names file. Best is to in R add the header row after importing the data.
+
+Note that the response variable to use is `alive_at_1`, and not `survival` or `still_alive`.
+
+There are lots of "?" in the dataset. You will need to do something about that; best to replace them with NA during the import process with read_csv. 
+
+Remember to go through all the workflow steps.
+
+Here are some specific tasks:
+
+- Make a list of the echocardiogram features in the dataset.
+- Look on Wikipedia or elsewhere for information about echocardiograms and hearts, and based on this make hypotheses about which of the features in the dataset will be related to death within one year, and the direction (positive or negative) of the relationship.
+- Make graphs of how death varies with individual echocardiogram features (this would be in the initial exploration of the data, before any modelling). This should give a clue about if your hypotheses are supported by the data.
+- Develop and understanding of correlations among echocardiogram features.
+- Develop an appropriate model of death within 1 year, using whatever methods you see fit to find useful explanatory variables.
+- Show some of the model predictions, e.g. by using model predictions to show the estimated effect of one echocardiogram feature while all others are held constant.
+- Write a sentence or two about the results that would clearly communicate your findings to other biologists.
+ 
+
+### Final thoughts on prediction
+
+Prediction is a very big topic in statistics and machine learning. One reason is that prediction is very widely used in many fields, including medicine, finance, marketing, ecology, image recognition, and many others. This means that there is a lot of money to be made by developing better prediction methods! And there is also a lot of social good to be done by using prediction to improve healthcare, environmental management, and so on.
+
+Another reason is that prediction can be very challenging, especially when the data is complex or high-dimensional. This makes it an interesting and active area of research.
+
+One thing to keep in mind is that when the aim is prediction, it is very important to assess how good the predictions are on new data that was not used to fit the model. This is often done by splitting the data into a training set and a test set. The model is fitted to the training set, and then predictions are made for the test set, which are then compared to the actual observed values in the test set.
+
+The reason for doing this is that we could make a very complex model that fits the training data very well, but does not generalise well to new data. This is called overfitting. By assessing the predictions on a test set, we can get a better idea of how well the model will perform on new data. One way of doing this is termed *cross-validation*, where the data is split into several parts, and the model is fitted to some parts and tested on the remaining parts, in a rotating fashion.
+
+There are many methods that can be used for prediction, and many ways to assess how good the predictions are. If you are interested in learning more about prediction, there are many online resources, and also university courses on this topic.
+
+
+## Weekly Quiz
+
+```{r quiz-binomial-what-questions, echo=FALSE}
+learnr::question(
+  "Which of the following research questions is **most appropriately analysed** using a binary or binomial GLM?",
+  
+  learnr::answer("How many individuals are observed in each treatment group?"),
+  learnr::answer("What is the average value of a continuous response variable?"),
+  learnr::answer("What is the probability that an individual survives as a function of temperature?", correct = TRUE),
+  learnr::answer("How variable is a continuous trait across individuals?"),
+  
+  correct = "Correct. Binary GLMs are used to model probabilities of binary outcomes (e.g. survival vs death).",
+  incorrect = "Binary GLMs model probabilities, not counts or continuous responses.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-binomial-response, echo=FALSE}
+learnr::question(
+  "In a binary GLM, what is the **response variable**?",
+  
+  learnr::answer("A continuous variable with normal errors"),
+  learnr::answer("A categorical variable with more than two levels"),
+  learnr::answer("A variable taking values 0 and 1", correct = TRUE),
+  learnr::answer("A count of the number of times something happened."),
+  
+  correct = "Correct. The response in a binary GLM takes values 0/1 (e.g. failure/success).",
+  incorrect = "Binary GLMs model binary outcomes, not continuous or multi-category responses.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-logit-link, echo=FALSE}
+learnr::question(
+  "What does the **logit link function** do in a binary GLM?",
+  
+  learnr::answer("It transforms probabilities into values on the real line", correct = TRUE),
+  learnr::answer("It transforms the response variable into a count"),
+  learnr::answer("It forces probabilities to be normally distributed"),
+  learnr::answer("It removes the need for a residual error term"),
+  
+  correct = "Correct. The logit link maps probabilities (0–1) to the real line, allowing linear modelling.",
+  incorrect = "Think about how probabilities are linked to the linear predictor.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-binomial-coef-interpretation, echo=FALSE}
+learnr::question(
+  "In a logistic regression, what does a **positive slope coefficient** indicate?",
+  
+  learnr::answer("The response variable increases linearly"),
+  learnr::answer("The odds of the outcome increase as the predictor increases", correct = TRUE),
+  learnr::answer("The probability increases by a constant amount"),
+  learnr::answer("The predictor has no effect"),
+  
+  correct = "Correct. A positive coefficient means the odds of success increase with the predictor.",
+  incorrect = "Remember: coefficients operate on the log-odds scale.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-odds-ratio, echo=FALSE}
+learnr::question_numeric(
+  "A logistic regression slope is **0.7**. What is the corresponding **odds ratio**?\n\n(Round to two decimal places.)",
+  
+  learnr::answer(round(exp(0.7), 2), correct = TRUE),
+  
+  correct = "Correct! The odds ratio is exp(0.7) ≈ 2.01.",
+  incorrect = "Take the exponential of the coefficient to get the odds ratio.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-prob-from-logodds, echo=FALSE}
+learnr::question_numeric(
+  "If the linear predictor (log-odds) is **0**, what is the corresponding **probability of success**?",
+  
+  learnr::answer(0.5, correct = TRUE),
+  
+  correct = "Correct! A log-odds of 0 corresponds to a probability of 0.5.",
+  incorrect = "Use the inverse-logit: exp(η)/(1+exp(η)).",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-predicted-probability, echo=FALSE}
+learnr::question_numeric(
+  "A fitted logistic model gives a linear predictor value of **1.51**.\n\nWhat is the predicted probability of success?\n(Round to two decimal places.)",
+  
+  learnr::answer(0.82, correct = TRUE),
+  
+  correct = "Correct! The predicted probability is about 0.82.",
+  incorrect = "Convert from log-odds using the inverse-logit function.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-odds-vs-probability, echo=FALSE}
+learnr::question(
+  "Which statement best describes the **difference between odds and probability**?",
+  
+  learnr::answer("They are the same quantity, just written differently"),
+  learnr::answer("Odds can exceed 1, probabilities cannot", correct = TRUE),
+  learnr::answer("Probabilities can exceed 1, odds cannot"),
+  learnr::answer("Odds are only used in linear models"),
+  
+  correct = "Correct. Probabilities are bounded between 0 and 1, whereas odds are not.",
+  incorrect = "Recall the definitions of odds and probability.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-binomial-vs-binary, echo=FALSE}
+learnr::question(
+  "What is the key difference between **binary** and **binomial** data in GLMs?",
+  
+  learnr::answer("Binary data are continuous, binomial data are discrete"),
+  learnr::answer("Binary data record single trials, binomial data record successes out of multiple trials", correct = TRUE),
+  learnr::answer("Binomial models cannot use a logit link"),
+  learnr::answer("Binary models require larger sample sizes"),
+  
+  correct = "Correct. Binary data are 0/1 outcomes, while binomial data count successes out of n trials.",
+  incorrect = "Think about how many trials each observation represents.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-binomial-implementation-glm, echo=FALSE}
+learnr::question(
+  "Which line of R code correctly fits a **binary logistic regression model** with response variable `survived` (0/1) and explanatory variable `temperature`?",
+  
+  learnr::answer(
+    "glm(survived ~ temperature, data = mydata)"
+  ),
+  learnr::answer(
+    "lm(survived ~ temperature, data = mydata)"
+  ),
+  learnr::answer(
+    "glm(survived ~ temperature, family = binomial, data = mydata)",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "glm(temperature ~ survived, family = binomial, data = mydata)"
+  ),
+  
+  correct = "Correct! A binary GLM is fitted using glm() with family = binomial. survived is the response, so is on the right hand side of the ~.",
+  incorrect = "Check both the model function and the family argument.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-binomial-predict-probabilities, echo=FALSE}
+learnr::question(
+  "After fitting a binary GLM called `my_model`, how do you obtain **predicted probabilities** (not log-odds) for new data stored in `newdata`?",
+  
+  learnr::answer(
+    "predict(my_model, newdata = newdata)"
+  ),
+  learnr::answer(
+    "predict(my_model, newdata = newdata, type = \"link\")"
+  ),
+  learnr::answer(
+    "fitted(my_model)"
+  ),
+  learnr::answer(
+    "predict(my_model, newdata = newdata, type = \"response\")",
+    correct = TRUE
+  ),
+  
+  correct = "Correct! Using type = \"response\" returns predictions on the probability scale.",
+  incorrect = "Remember that the default prediction scale is the linear predictor (log-odds).",
+  allow_retry = TRUE
+)
+```
+
+
+
+
+```{r quiz-binomial-exp-coef, echo=FALSE}
+learnr::question(
+  "You have fitted a logistic regression model in R and obtained the coefficient table using `summary(my_model)`.\n\nWhich R command would you use to convert the **slope coefficients into odds ratios**?",
+  
+  learnr::answer(
+    "log(coef(my_model))"
+  ),
+  learnr::answer(
+    "coef(summary(my_model))"
+  ),
+  learnr::answer(
+    "exp(coef(my_model))",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "predict(my_model, type = \"response\")"
+  ),
+  
+  correct = "Correct! Taking exp() of the coefficients converts log-odds into odds ratios.",
+  incorrect = "Think about how odds ratios are obtained from log-odds.",
+  allow_retry = TRUE
+)
+```
+
+
+
