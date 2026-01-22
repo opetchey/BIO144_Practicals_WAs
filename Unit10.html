@@ -391,14 +391,167 @@ guide further modelling and more explicit statistical analysis.</p>
 </div>
 <div id="section-practical-part-2" class="section level2">
 <h2>Practical part 2</h2>
+<p>Case study: Diet and the human gut microbiome. The human gut
+microbiome plays a crucial role in digestion, metabolism, and health.
+Diet is known to be one of the strongest drivers of gut microbiome
+composition, influencing which microbial taxa thrive in the gut.</p>
+<p>In this practical exercise, we investigate whether diet type is
+associated with differences in gut microbiome community composition.</p>
+<p>Study design:</p>
+<ul>
+<li>Stool samples were collected from 60 adult individuals</li>
+<li>Individuals followed one of three long-term diets: Omnivorous,
+Vegetarian, Vegan</li>
+<li>DNA was extracted from each sample and analysed using shotgun
+metagenomic sequencing.</li>
+<li>Sequencing reads were assigned to microbial taxa, producing relative
+abundance estimates for a set of bacterial taxa.</li>
+</ul>
+<p>Biological question: Does gut microbiome composition differ among
+individuals with different diets?</p>
+<p>To address this, we will use ordination (NMDS) based on community
+dissimilarity.</p>
+<p>Structure of the dataset:</p>
+<ul>
+<li>Each row = one individual</li>
+<li>Each column = relative abundance of a microbial taxon</li>
+<li>Values represent relative abundance (proportions summing to ~1)</li>
+<li>Additional metadata columns: SampleID, and Diet</li>
+</ul>
+<p>This structure is typical of microbiome data used in ordination
+analyses.</p>
+<p>Over to you! .. Make a script, make it beautiful, get the dataset
+(<code>microbiome_data.csv</code>), load it into R.</p>
+<p>The first step in the analysis is to calculate pairwise
+dissimilarities among samples based on their community composition. Use
+Bray–Curtis dissimilarity, which is well suited for relative abundance
+data. Use the <code>vegdist</code> function from the <code>vegan</code>
+package.</p>
+<p>Then make a Non-metric Multidimensional Scaling (NMDS) ordination
+based on the Bray–Curtis dissimilarity matrix. Use the
+<code>metaMDS</code> function from the <code>vegan</code> package.
+Choose appropriate parameters, based on information in the course
+book.</p>
+<p>What is the stress value of the NMDS solution? Is it acceptable?
+Recall that stress &lt; 0.1 is considered a good fit, while stress &gt;
+0.2 indicates a poor fit.</p>
+<p>Look at the stresplot to assess the NMDS fit. What is the linear fit,
+r-squared value? Is it acceptable? I (Owen) found less than 0.7 with
+<code>k = 3</code>, which is not great, but OK for ecological data. I
+increased to <code>k = 10</code> and got r-squared = 0.86, which is very
+good. So the data seems to need a high-dimensional solution to get a
+good fit.</p>
+<p>Finally, visualize the NMDS results, colouring points by diet group
+to see if there are differences in community composition among
+diets.</p>
+<p>Write a few sentences about the patterns you see in the NMDS plot. Do
+different diet groups cluster separately? What does this suggest about
+the influence of diet on gut microbiome composition? What else can you
+see?</p>
+<div id="section-heads-up" class="section level3">
+<h3>Heads up</h3>
+<p>Analysis of genomic data, including metagenomics, proteomics, and
+transcriptomics, is a rapidly evolving field. New methods and best
+practices are continually being developed. The approach outlined here is
+a basic introduction to ordination of microbiome data, but more advanced
+techniques exist that may provide deeper insights. As you progress in
+your studies, consider exploring additional methods such as phylogenetic
+ordination, machine learning approaches, and network analysis to further
+investigate complex biological datasets. One place to start is the
+phyloseq R package, which provides tools for microbiome data analysis
+incorporating phylogenetic information. <a
+href="https://joey711.github.io/phyloseq/"
+class="uri">https://joey711.github.io/phyloseq/</a></p>
+</div>
 </div>
 <div id="section-weekly-quiz" class="section level2">
 <h2>Weekly Quiz</h2>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ordination-pca-purpose" class="tutorial-question panel-body">
+<div id="quiz-ordination-pca-purpose-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-pca-purpose-message_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-pca-purpose-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ordination-pca-r" class="tutorial-question panel-body">
+<div id="quiz-ordination-pca-r-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-pca-r-message_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-pca-r-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ordination-pca-scaling" class="tutorial-question panel-body">
+<div id="quiz-ordination-pca-scaling-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-pca-scaling-message_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-pca-scaling-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ordination-nmds-concept" class="tutorial-question panel-body">
+<div id="quiz-ordination-nmds-concept-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-nmds-concept-message_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-nmds-concept-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ordination-nmds-stress" class="tutorial-question panel-body">
+<div id="quiz-ordination-nmds-stress-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-nmds-stress-message_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-nmds-stress-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ordination-nmds-r" class="tutorial-question panel-body">
+<div id="quiz-ordination-nmds-r-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-nmds-r-message_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-nmds-r-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ordination-nmds-axes" class="tutorial-question panel-body">
+<div id="quiz-ordination-nmds-axes-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-nmds-axes-message_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-nmds-axes-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ordination-pca-vs-nmds" class="tutorial-question panel-body">
+<div id="quiz-ordination-pca-vs-nmds-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-pca-vs-nmds-message_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-pca-vs-nmds-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="quiz-ordination-gotcha-interpretation" class="tutorial-question panel-body">
+<div id="quiz-ordination-gotcha-interpretation-answer_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-gotcha-interpretation-message_container" class="shiny-html-output"></div>
+<div id="quiz-ordination-gotcha-interpretation-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
 </div>
 <div id="section-code-snippets" class="section level2">
 <h2>Code snippets</h2>
 <p>Here are some code snippets that you may find useful for this
 unit.</p>
+<pre class="r"><code>## Standardise species data (mean = 0, sd = 1)
+community_scaled &lt;- community |&gt; 
+  select(starts_with(&quot;Species_&quot;)) |&gt; 
+  scale() |&gt; 
+  as.data.frame()
+## Add site IDs and soil moisture back to the data frame
+community_scaled &lt;- community_scaled |&gt; 
+  mutate(Site = community$Site,
+         Soil_Moisture = community$Soil_Moisture)</code></pre>
 <p>
 <script type="application/shiny-prerendered" data-context="server-start">
 library(learnr)
@@ -650,6 +803,306 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     seed = 1031063671.01987, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-ordination-pca-purpose", 
+    question = structure("What is the main goal of Principal Component Analysis (PCA)?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ce6643d", 
+        option = "To cluster observations into discrete groups.", 
+        value = "To cluster observations into discrete groups.", 
+        label = structure("To cluster observations into discrete groups.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_21216d1", 
+        option = "To test for differences among groups using a statistical test.", 
+        value = "To test for differences among groups using a statistical test.", 
+        label = structure("To test for differences among groups using a statistical test.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9fe2b46", 
+        option = "To reduce the dimensionality of multivariate data while retaining as much variation as possible.", 
+        value = "To reduce the dimensionality of multivariate data while retaining as much variation as possible.", 
+        label = structure("To reduce the dimensionality of multivariate data while retaining as much variation as possible.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ba4ea83", 
+        option = "To maximise distances among observations.", 
+        value = "To maximise distances among observations.", 
+        label = structure("To maximise distances among observations.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! PCA reduces dimensionality by finding axes that explain the maximum variance.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about variance and dimensionality reduction.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about variance and dimensionality reduction.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ordination-pca-purpose-answer", question = "quiz-ordination-pca-purpose"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 642361269.200877, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-ordination-pca-r", 
+    question = structure("Which R function is most commonly used to perform PCA on a numeric data matrix?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_3e8afc5", 
+        option = "metaMDS()", value = "metaMDS()", label = structure("metaMDS()", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_918db8d", 
+        option = "prcomp()", value = "prcomp()", label = structure("prcomp()", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_236d891", 
+        option = "lm()", value = "lm()", label = structure("lm()", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8a4e3ab", 
+        option = "dist()", value = "dist()", label = structure("dist()", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! prcomp() is the standard function for PCA in R.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Look for the base R function designed for PCA.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Look for the base R function designed for PCA.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ordination-pca-r-answer", question = "quiz-ordination-pca-r"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 298305862.36109, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-ordination-pca-scaling", 
+    question = structure("Why is it often important to scale variables before performing PCA?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ea26f8e", 
+        option = "Because PCA only works on scaled data.", value = "Because PCA only works on scaled data.", 
+        label = structure("Because PCA only works on scaled data.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_10d8d07", 
+        option = "Because scaling increases the number of principal components.", 
+        value = "Because scaling increases the number of principal components.", 
+        label = structure("Because scaling increases the number of principal components.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_35c26ed", 
+        option = "Because variables measured on larger scales would otherwise dominate the analysis.", 
+        value = "Because variables measured on larger scales would otherwise dominate the analysis.", 
+        label = structure("Because variables measured on larger scales would otherwise dominate the analysis.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7590ce6", 
+        option = "Because PCA assumes normally distributed variables.", 
+        value = "Because PCA assumes normally distributed variables.", 
+        label = structure("Because PCA assumes normally distributed variables.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Without scaling, variables with large variances can dominate the principal components.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about the effect of measurement units on variance.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about the effect of measurement units on variance.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ordination-pca-scaling-answer", question = "quiz-ordination-pca-scaling"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1717336478.2003, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-ordination-nmds-concept", 
+    question = structure("What aspect of the data does Non-metric Multidimensional Scaling (NMDS) aim to preserve?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_228f1fc", 
+        option = "Exact Euclidean distances between observations.", 
+        value = "Exact Euclidean distances between observations.", 
+        label = structure("Exact Euclidean distances between observations.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1fb522a", 
+        option = "The rank order of dissimilarities among observations.", 
+        value = "The rank order of dissimilarities among observations.", 
+        label = structure("The rank order of dissimilarities among observations.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c4237d5", 
+        option = "The variance–covariance structure of the variables.", 
+        value = "The variance–covariance structure of the variables.", 
+        label = structure("The variance–covariance structure of the variables.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1c1bf51", 
+        option = "Linear relationships among variables.", value = "Linear relationships among variables.", 
+        label = structure("Linear relationships among variables.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! NMDS focuses on preserving the rank order of dissimilarities.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("NMDS is non-metric — think about ranks, not exact distances.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("NMDS is non-metric — think about ranks, not exact distances.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ordination-nmds-concept-answer", question = "quiz-ordination-nmds-concept"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 169589312.421029, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-ordination-nmds-stress", 
+    question = structure("An NMDS solution has a stress value of 0.12. How would you interpret this?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d04c91e", 
+        option = "The ordination provides a good representation of the data.", 
+        value = "The ordination provides a good representation of the data.", 
+        label = structure("The ordination provides a good representation of the data.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1c9795d", 
+        option = "The ordination is unreliable and should not be used.", 
+        value = "The ordination is unreliable and should not be used.", 
+        label = structure("The ordination is unreliable and should not be used.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5340836", 
+        option = "The data are normally distributed.", value = "The data are normally distributed.", 
+        label = structure("The data are normally distributed.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1c5571f", 
+        option = "The distances are perfectly preserved.", value = "The distances are perfectly preserved.", 
+        label = structure("The distances are perfectly preserved.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Stress values below about 0.2 are generally considered acceptable in ecology.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Recall the common rules of thumb for NMDS stress values.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Recall the common rules of thumb for NMDS stress values.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ordination-nmds-stress-answer", question = "quiz-ordination-nmds-stress"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 177298527.417439, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-ordination-nmds-r", 
+    question = structure("Which R function from the vegan package is typically used to perform NMDS?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_3e9c2f3", 
+        option = "prcomp()", value = "prcomp()", label = structure("prcomp()", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_257c037", 
+        option = "cmdscale()", value = "cmdscale()", label = structure("cmdscale()", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f909a69", 
+        option = "metaMDS()", value = "metaMDS()", label = structure("metaMDS()", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_74261a2", 
+        option = "vegdist()", value = "vegdist()", label = structure("vegdist()", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! metaMDS() is the standard function for NMDS in vegan.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Look for the function that combines distance calculation and ordination.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Look for the function that combines distance calculation and ordination.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ordination-nmds-r-answer", question = "quiz-ordination-nmds-r"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 795630268.129506, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-ordination-nmds-axes", 
+    question = structure("Which statement about NMDS axes is correct?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_4da6b7f", 
+        option = "The axes have arbitrary orientation and scale, and should not be interpreted like PCA axes.", 
+        value = "The axes have arbitrary orientation and scale, and should not be interpreted like PCA axes.", 
+        label = structure("The axes have arbitrary orientation and scale, and should not be interpreted like PCA axes.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_91ad2f5", 
+        option = "The first axis always explains the most variation.", 
+        value = "The first axis always explains the most variation.", 
+        label = structure("The first axis always explains the most variation.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ba89c25", 
+        option = "The axes correspond to original variables.", 
+        value = "The axes correspond to original variables.", 
+        label = structure("The axes correspond to original variables.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1980d2c", 
+        option = "Axis labels represent percentages of variance explained.", 
+        value = "Axis labels represent percentages of variance explained.", 
+        label = structure("Axis labels represent percentages of variance explained.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! NMDS axes are arbitrary and do not have direct interpretive meaning.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Think about how NMDS differs fundamentally from PCA.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about how NMDS differs fundamentally from PCA.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ordination-nmds-axes-answer", question = "quiz-ordination-nmds-axes"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 26316604.9877454, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-ordination-pca-vs-nmds", 
+    question = structure("Which situation would most strongly favour using NMDS rather than PCA?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_a437967", 
+        option = "When variables are measured in the same units.", 
+        value = "When variables are measured in the same units.", 
+        label = structure("When variables are measured in the same units.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_94d8cdb", 
+        option = "When the data are non-linear, non-normal, and based on ecological dissimilarities.", 
+        value = "When the data are non-linear, non-normal, and based on ecological dissimilarities.", 
+        label = structure("When the data are non-linear, non-normal, and based on ecological dissimilarities.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2b9d4d3", 
+        option = "When the goal is hypothesis testing.", value = "When the goal is hypothesis testing.", 
+        label = structure("When the goal is hypothesis testing.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_88e5f81", 
+        option = "When the covariance matrix is well behaved.", 
+        value = "When the covariance matrix is well behaved.", 
+        label = structure("When the covariance matrix is well behaved.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! NMDS is well suited to non-linear, non-normal ecological community data.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Consider the assumptions underlying PCA.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Consider the assumptions underlying PCA.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ordination-pca-vs-nmds-answer", question = "quiz-ordination-pca-vs-nmds"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1393464513.85112, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-ordination-gotcha-interpretation", 
+    question = structure("Which is the most appropriate way to interpret patterns seen in an ordination plot?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_28a1a48", 
+        option = "Exact distances between points represent precise differences.", 
+        value = "Exact distances between points represent precise differences.", 
+        label = structure("Exact distances between points represent precise differences.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3bc65ce", 
+        option = "Broad patterns and group separation are informative, but fine-scale distances should be interpreted cautiously.", 
+        value = "Broad patterns and group separation are informative, but fine-scale distances should be interpreted cautiously.", 
+        label = structure("Broad patterns and group separation are informative, but fine-scale distances should be interpreted cautiously.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2dd6d8f", 
+        option = "Ordination plots provide causal explanations.", 
+        value = "Ordination plots provide causal explanations.", 
+        label = structure("Ordination plots provide causal explanations.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f3ed635", 
+        option = "The axes indicate specific biological mechanisms.", 
+        value = "The axes indicate specific biological mechanisms.", 
+        label = structure("The axes indicate specific biological mechanisms.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct! Ordination is exploratory and best used to identify broad patterns.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Ordination is not designed for precise or causal interpretation.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Ordination is not designed for precise or causal interpretation.", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "quiz-ordination-gotcha-interpretation-answer", 
+        question = "quiz-ordination-gotcha-interpretation"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 935200782.564513, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
 </p>
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="dependencies">
@@ -658,7 +1111,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","checkmate","cli","commonmark","compiler","datasets","dichromat","digest","dplyr","ellipsis","evaluate","farver","fastmap","fontawesome","forcats","generics","ggplot2","glue","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","MASS","methods","mime","pillar","pkgconfig","promises","purrr","R6","RColorBrewer","Rcpp","readr","rlang","rmarkdown","rprojroot","rstudioapi","S7","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.4.1","0.8.0","1.1.0","2.3.2","3.6.5","1.9.1","4.4.1","4.4.1","2.0-0.1","0.6.37","1.1.4","0.3.2","1.0.5","2.1.2","1.2.0","0.5.2","1.0.0","0.1.3","4.0.0","1.8.0","4.4.1","4.4.1","4.4.1","0.3.6","1.1.3","0.5.8.1","1.6.4","1.6.15","0.1.4","2.0.0","1.48","1.3.2","0.11.5","1.0.4","1.9.3","2.0.3","1.13","7.3-61","4.4.1","0.12","1.10.1","2.0.3","1.3.0","1.0.4","2.6.1","1.1-3","1.0.13","2.1.5","1.1.7","2.28","2.1.1","0.16.0","0.2.0","0.4.9","1.4.0","1.9.1","4.4.1","1.8.4","1.5.1","3.2.1","1.3.1","1.2.1","2.0.0","0.3.0","4.4.1","0.4.0","4.4.1","0.6.5","3.0.2","0.47","1.8-4","2.3.10"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bit","bit64","bslib","cachem","checkmate","cli","cluster","commonmark","compiler","crayon","curl","datasets","dichromat","digest","dplyr","ellipsis","evaluate","farver","fastmap","fontawesome","forcats","generics","ggplot2","glue","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","lattice","learnr","lifecycle","lubridate","magrittr","markdown","MASS","Matrix","methods","mgcv","mime","nlme","parallel","permute","pillar","pkgconfig","promises","purrr","R6","RColorBrewer","Rcpp","readr","rlang","rmarkdown","rprojroot","rstudioapi","S7","sass","scales","shiny","splines","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utils","vctrs","vegan","vroom","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.4.1","4.5.0.1","4.6.0-1","0.8.0","1.1.0","2.3.2","3.6.5","2.1.6","1.9.1","4.4.1","1.5.3","5.2.2","4.4.1","2.0-0.1","0.6.37","1.1.4","0.3.2","1.0.5","2.1.2","1.2.0","0.5.2","1.0.0","0.1.3","4.0.0","1.8.0","4.4.1","4.4.1","4.4.1","0.3.6","1.1.3","0.5.8.1","1.6.4","1.6.15","0.1.4","2.0.0","1.48","1.3.2","0.22-6","0.11.5","1.0.4","1.9.3","2.0.3","1.13","7.3-61","1.7-0","4.4.1","1.9-1","0.12","3.1-166","4.4.1","0.9-7","1.10.1","2.0.3","1.3.0","1.0.4","2.6.1","1.1-3","1.0.13","2.1.5","1.1.7","2.28","2.1.1","0.16.0","0.2.0","0.4.9","1.4.0","1.9.1","4.4.1","4.4.1","1.8.4","1.5.1","3.2.1","1.3.1","1.2.1","2.0.0","0.3.0","4.4.1","0.4.0","4.4.1","0.6.5","2.6-8","1.6.5","3.0.2","0.47","1.8-4","2.3.10"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>

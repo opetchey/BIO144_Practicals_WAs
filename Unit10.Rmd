@@ -352,19 +352,308 @@ It is important to be clear about what PCA does and does not provide. PCA is wel
 
 ## Practical part 2
 
+Case study: Diet and the human gut microbiome. The human gut microbiome plays a crucial role in digestion, metabolism, and health. Diet is known to be one of the strongest drivers of gut microbiome composition, influencing which microbial taxa thrive in the gut.
 
+In this practical exercise, we investigate whether diet type is associated with differences in gut microbiome community composition.
 
+Study design:
+
+* Stool samples were collected from 60 adult individuals
+* Individuals followed one of three long-term diets: Omnivorous, Vegetarian, Vegan
+* DNA was extracted from each sample and analysed using shotgun metagenomic sequencing.
+* Sequencing reads were assigned to microbial taxa, producing relative abundance estimates for a set of bacterial taxa.
+
+Biological question: Does gut microbiome composition differ among individuals with different diets?
+
+To address this, we will use ordination (NMDS) based on community dissimilarity.
+
+Structure of the dataset:
+
+* Each row = one individual
+* Each column = relative abundance of a microbial taxon
+* Values represent relative abundance (proportions summing to ~1)
+* Additional metadata columns: SampleID, and Diet
+
+This structure is typical of microbiome data used in ordination analyses.
+
+Over to you! .. Make a script, make it beautiful, get the dataset (`microbiome_data.csv`), load it into R.
+
+```{r eval = FALSE}
+# Set seed for reproducibility
+set.seed(144)
+
+# Number of samples
+n_samples <- 60
+
+# Diet groups
+diet <- factor(rep(c("Omnivore", "Vegetarian", "Vegan"), each = 20))
+
+# Number of microbial taxa
+n_taxa <- 200
+
+# Base community composition (shared taxa)
+base_abundance <- rgamma(n_taxa, shape = 2, scale = 1)
+
+# Diet-specific effects
+diet_effects <- list(
+  Omnivore    = rlnorm(n_taxa, meanlog = 0, sdlog = 0.1),
+  Vegetarian  = rlnorm(n_taxa, meanlog = 0.2, sdlog = 0.1),
+  Vegan       = rlnorm(n_taxa, meanlog = 0.4, sdlog = 0.1)
+)
+
+# Generate abundance matrix
+abundance_matrix <- matrix(NA, nrow = n_samples, ncol = n_taxa)
+
+for (i in 1:n_samples) {
+  group <- diet[i]
+  lambda <- base_abundance * diet_effects[[as.character(group)]]
+  abundance_matrix[i, ] <- rgamma(n_taxa, shape = lambda, scale = 1)
+}
+
+# Convert to relative abundances
+abundance_matrix <- abundance_matrix / rowSums(abundance_matrix)
+
+# Add column names
+colnames(abundance_matrix) <- paste0("OTU_", 1:n_taxa)
+
+# Create final dataset
+microbiome_data <- data.frame(
+  SampleID = paste0("S", 1:n_samples),
+  Diet = diet,
+  abundance_matrix
+)
+write_csv(microbiome_data, "~/Desktop/microbiome_data.csv")
+```
+
+```{r echo = FALSE, message = FALSE}
+biom <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/microbiome_data.csv")
+```
+
+The first step in the analysis is to calculate pairwise dissimilarities among samples based on their community composition. Use Bray–Curtis dissimilarity, which is well suited for relative abundance data. Use the `vegdist` function from the `vegan` package.
+
+```{r echo = FALSE, message = FALSE}
+library(vegan)
+D <- vegdist(biom |> select(starts_with("OTU_")), method = "bray")
+```
+
+Then make a Non-metric Multidimensional Scaling (NMDS) ordination based on the Bray–Curtis dissimilarity matrix. Use the `metaMDS` function from the `vegan` package. Choose appropriate parameters, based on information in the course book.
+
+```{r echo = FALSE, message = FALSE, eval = FALSE}
+set.seed(144)
+nmds_result <- metaMDS(D, k = 10, trymax = 100)
+```
+
+What is the stress value of the NMDS solution? Is it acceptable? Recall that stress < 0.1 is considered a good fit, while stress > 0.2 indicates a poor fit.
+
+Look at the stresplot to assess the NMDS fit. What is the linear fit, r-squared value? Is it acceptable? I (Owen) found less than 0.7 with `k = 3`, which is not great, but OK for ecological data. I increased to `k = 10` and got r-squared = 0.86, which is very good. So the data seems to need a high-dimensional solution to get a good fit.
+
+```{r eval = FALSE}
+# Procrustes plot to visualize NMDS fit
+stressplot(nmds_result)
+```
+
+Finally, visualize the NMDS results, colouring points by diet group to see if there are differences in community composition among diets.
+
+```{r eval = FALSE}
+# Extract NMDS scores
+# Create a data frame with NMDS scores and diet information
+nmds_scores <- as.data.frame(nmds_result$points)
+nmds_scores$Diet <- biom$Diet
+# Plot NMDS results
+ggplot(nmds_scores, aes(x = MDS1, y = MDS2, color = Diet)) +
+  geom_point(size = 3) +
+  labs(title = "NMDS of Gut Microbiome Composition by Diet",
+       x = "NMDS1", y = "NMDS2")
+```
+
+Write a few sentences about the patterns you see in the NMDS plot. Do different diet groups cluster separately? What does this suggest about the influence of diet on gut microbiome composition? What else can you see?
+
+### Heads up
+
+Analysis of genomic data, including metagenomics, proteomics, and transcriptomics, is a rapidly evolving field. New methods and best practices are continually being developed. The approach outlined here is a basic introduction to ordination of microbiome data, but more advanced techniques exist that may provide deeper insights. As you progress in your studies, consider exploring additional methods such as phylogenetic ordination, machine learning approaches, and network analysis to further investigate complex biological datasets. One place to start is the phyloseq R package, which provides tools for microbiome data analysis incorporating phylogenetic information. https://joey711.github.io/phyloseq/
 
 
 ## Weekly Quiz
 
+
+```{r quiz-ordination-pca-purpose, echo=FALSE}
+learnr::question(
+  "What is the main goal of Principal Component Analysis (PCA)?",
+  
+  learnr::answer("To cluster observations into discrete groups."),
+  learnr::answer("To test for differences among groups using a statistical test."),
+  learnr::answer(
+    "To reduce the dimensionality of multivariate data while retaining as much variation as possible.",
+    correct = TRUE
+  ),
+  learnr::answer("To maximise distances among observations."),
+  
+  correct = "Correct! PCA reduces dimensionality by finding axes that explain the maximum variance.",
+  incorrect = "Think about variance and dimensionality reduction.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-ordination-pca-r, echo=FALSE}
+learnr::question(
+  "Which R function is most commonly used to perform PCA on a numeric data matrix?",
+  
+  learnr::answer("metaMDS()"),
+  learnr::answer(
+    "prcomp()",
+    correct = TRUE
+  ),
+  learnr::answer("lm()"),
+  learnr::answer("dist()"),
+  
+  correct = "Correct! prcomp() is the standard function for PCA in R.",
+  incorrect = "Look for the base R function designed for PCA.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-ordination-pca-scaling, echo=FALSE}
+learnr::question(
+  "Why is it often important to scale variables before performing PCA?",
+  
+  learnr::answer("Because PCA only works on scaled data."),
+  learnr::answer("Because scaling increases the number of principal components."),
+  learnr::answer(
+    "Because variables measured on larger scales would otherwise dominate the analysis.",
+    correct = TRUE
+  ),
+  learnr::answer("Because PCA assumes normally distributed variables."),
+  
+  correct = "Correct! Without scaling, variables with large variances can dominate the principal components.",
+  incorrect = "Think about the effect of measurement units on variance.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-ordination-nmds-concept, echo=FALSE}
+learnr::question(
+  "What aspect of the data does Non-metric Multidimensional Scaling (NMDS) aim to preserve?",
+  
+  learnr::answer("Exact Euclidean distances between observations."),
+  learnr::answer(
+    "The rank order of dissimilarities among observations.",
+    correct = TRUE
+  ),
+  learnr::answer("The variance–covariance structure of the variables."),
+  learnr::answer("Linear relationships among variables."),
+  
+  correct = "Correct! NMDS focuses on preserving the rank order of dissimilarities.",
+  incorrect = "NMDS is non-metric — think about ranks, not exact distances.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-ordination-nmds-stress, echo=FALSE}
+learnr::question(
+  "An NMDS solution has a stress value of 0.12. How would you interpret this?",
+  
+  learnr::answer(
+    "The ordination provides a good representation of the data.",
+    correct = TRUE
+  ),
+  learnr::answer("The ordination is unreliable and should not be used."),
+  learnr::answer("The data are normally distributed."),
+  learnr::answer("The distances are perfectly preserved."),
+  
+  correct = "Correct! Stress values below about 0.2 are generally considered acceptable in ecology.",
+  incorrect = "Recall the common rules of thumb for NMDS stress values.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-ordination-nmds-r, echo=FALSE}
+learnr::question(
+  "Which R function from the vegan package is typically used to perform NMDS?",
+  
+  learnr::answer("prcomp()"),
+  learnr::answer("cmdscale()"),
+  learnr::answer(
+    "metaMDS()",
+    correct = TRUE
+  ),
+  learnr::answer("vegdist()"),
+  
+  correct = "Correct! metaMDS() is the standard function for NMDS in vegan.",
+  incorrect = "Look for the function that combines distance calculation and ordination.",
+  allow_retry = TRUE
+)
+```
+
+
+
+```{r quiz-ordination-nmds-axes, echo=FALSE}
+learnr::question(
+  "Which statement about NMDS axes is correct?",
+  
+  learnr::answer(
+    "The axes have arbitrary orientation and scale, and should not be interpreted like PCA axes.",
+    correct = TRUE
+  ),
+  learnr::answer("The first axis always explains the most variation."),
+  learnr::answer("The axes correspond to original variables."),
+  learnr::answer("Axis labels represent percentages of variance explained."),
+  
+  correct = "Correct! NMDS axes are arbitrary and do not have direct interpretive meaning.",
+  incorrect = "Think about how NMDS differs fundamentally from PCA.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-ordination-pca-vs-nmds, echo=FALSE}
+learnr::question(
+  "Which situation would most strongly favour using NMDS rather than PCA?",
+  
+  learnr::answer("When variables are measured in the same units."),
+  learnr::answer(
+    "When the data are non-linear, non-normal, and based on ecological dissimilarities.",
+    correct = TRUE
+  ),
+  learnr::answer("When the goal is hypothesis testing."),
+  learnr::answer("When the covariance matrix is well behaved."),
+  
+  correct = "Correct! NMDS is well suited to non-linear, non-normal ecological community data.",
+  incorrect = "Consider the assumptions underlying PCA.",
+  allow_retry = TRUE
+)
+```
+
+
+```{r quiz-ordination-gotcha-interpretation, echo=FALSE}
+learnr::question(
+  "Which is the most appropriate way to interpret patterns seen in an ordination plot?",
+  
+  learnr::answer("Exact distances between points represent precise differences."),
+  learnr::answer(
+    "Broad patterns and group separation are informative, but fine-scale distances should be interpreted cautiously.",
+    correct = TRUE
+  ),
+  learnr::answer("Ordination plots provide causal explanations."),
+  learnr::answer("The axes indicate specific biological mechanisms."),
+  
+  correct = "Correct! Ordination is exploratory and best used to identify broad patterns.",
+  incorrect = "Ordination is not designed for precise or causal interpretation.",
+  allow_retry = TRUE
+)
+```
 
 
 ## Code snippets
 
 Here are some code snippets that you may find useful for this unit.
 
-```{r}
+```{r echo = TRUE}
 ## Standardise species data (mean = 0, sd = 1)
 community_scaled <- community |> 
   select(starts_with("Species_")) |> 
