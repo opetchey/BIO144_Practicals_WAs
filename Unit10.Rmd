@@ -150,10 +150,10 @@ Here's a rather geeky R question for you:
 ```{r ord_q2, echo = FALSE}
 learnr::question(
   "Why is it generally better to use ggplot on the long-format version of the data, rather than creating separate plots or layers for each species?",
-  answer("Because the same code works for any number of species and any species names, without needing to change the code", correct = TRUE),
   answer("Because long-format data always produces more accurate plots"),
   answer("Because ggplot cannot plot wide-format data at all"),
-  answer("Because using multiple layers makes plots impossible to interpret"),
+ answer("Because the same code works for any number of species and any species names, without needing to change the code", correct = TRUE),
+   answer("Because using multiple layers makes plots impossible to interpret"),
   correct = "Correct. Long-format data allows ggplot to map species to aesthetics automatically, making the code flexible and scalable.",
   incorrect = "Not quite. While long-format data is often more flexible for plotting, it's not about accuracy or impossibility of plotting wide-format data.",
   allow_retry = TRUE
@@ -222,9 +222,9 @@ Now we can run PCA using the `prcomp()` function.
 ```{r pca_q4, echo = FALSE}
 learnr::question(
   "Why is it reasonable to use `center = FALSE` and `scale. = FALSE` when calling `prcomp()` in this analysis?",
-  answer("Because the data have already been centred and scaled beforehand", correct = TRUE),
   answer("Because centring and scaling are not important for PCA"),
-  answer("Because `prcomp()` always centres and scales the data automatically"),
+   answer("Because the data have already been centred and scaled beforehand", correct = TRUE),
+ answer("Because `prcomp()` always centres and scales the data automatically"),
   answer("Because centring and scaling only matter for plotting"),
   correct = "Correct. If the data have already been centred and scaled, repeating these steps inside `prcomp()` would be redundant.",
   incorrect = "Not quite. Centring and scaling are important for PCA, but they do not need to be repeated if already done.",
@@ -262,16 +262,17 @@ learnr::question_numeric(
 learnr::question(
   "Why is **so much variation** explained by the **first principal component (PC1)** alone?",
   
-  learnr::answer(
-    "Because the original variables are all strongly correlated with each other and largely indicate the same single underlying feature (soil moisture).",
-    correct = TRUE
-  ),
-  learnr::answer(
+   learnr::answer(
     "Because PCA always forces the first axis to explain most of the variation."
   ),
   learnr::answer(
     "Because the data were standardised before running PCA."
   ),
+   learnr::answer(
+    "Because the original variables are all strongly correlated with each other and largely indicate the same single underlying feature (soil moisture).",
+    correct = TRUE
+  ),
+
   learnr::answer(
     "Because the number of observations is much larger than the number of variables."
   ),
@@ -578,11 +579,12 @@ learnr::question(
   
   learnr::answer("prcomp()"),
   learnr::answer("cmdscale()"),
+  learnr::answer("vegdist()"),
   learnr::answer(
     "metaMDS()",
     correct = TRUE
   ),
-  learnr::answer("vegdist()"),
+
   
   correct = "Correct! metaMDS() is the standard function for NMDS in vegan.",
   incorrect = "Look for the function that combines distance calculation and ordination.",
@@ -635,13 +637,13 @@ learnr::question(
   "Which is the most appropriate way to interpret patterns seen in an ordination plot?",
   
   learnr::answer("Exact distances between points represent precise differences."),
-  learnr::answer(
+  learnr::answer("Ordination plots provide causal explanations."),
+  learnr::answer("The axes indicate specific biological mechanisms."),
+    learnr::answer(
     "Broad patterns and group separation are informative, but fine-scale distances should be interpreted cautiously.",
     correct = TRUE
   ),
-  learnr::answer("Ordination plots provide causal explanations."),
-  learnr::answer("The axes indicate specific biological mechanisms."),
-  
+
   correct = "Correct! Ordination is exploratory and best used to identify broad patterns.",
   incorrect = "Ordination is not designed for precise or causal interpretation.",
   allow_retry = TRUE

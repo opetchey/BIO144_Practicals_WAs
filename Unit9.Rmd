@@ -69,7 +69,7 @@ The steps to follow are, as usual:
 
 A common use of binomial models is to explain species habitat requirements. One looks to see which of a set of environmental variables explains the presence / absence of a species in a particular location.
 
-Your challenge is to provide explanations of the presence / absence of the White Tailed Ptarmigan, a coastal alpine bird. I.e., we wish to test hypotheses about explanations.
+Your challenge is to provide explanations of the presence / absence of the **White Tailed Ptarmigan**, an alpine bird. I.e., we wish to test hypotheses about explanations.
 
 **Something new and cool** For this exercise, you will work with a real dataset that you wil get from an online data repository! The name of the data file is **`presabs_both_IndYears_allvars_final.csv`**. This datafile and a few others are available at [this web page on the Dryad data repository](https://datadryad.org/dataset/doi:10.5061/dryad.c2378)
 
@@ -329,14 +329,14 @@ learnr::question(
   "You have fitted a logistic regression model in R and obtained the coefficient table using `summary(my_model)`.\n\nWhich R command would you use to convert the **slope coefficients into odds ratios**?",
   
   learnr::answer(
+    "exp(coef(my_model))",
+    correct = TRUE
+  ),
+  learnr::answer(
     "log(coef(my_model))"
   ),
   learnr::answer(
     "coef(summary(my_model))"
-  ),
-  learnr::answer(
-    "exp(coef(my_model))",
-    correct = TRUE
   ),
   learnr::answer(
     "predict(my_model, type = \"response\")"

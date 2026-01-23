@@ -122,8 +122,8 @@ learnr::question(
   learnr::answer("A random deviation around the overall mean."),
   learnr::answer("A slope describing how score changes with class number."),
   
-  correct = "Correct! Treating in a linear model estimates a separate mean for each class, without sharing information across classes.",
-  incorrect = "Think about how factors are handled in a standard linear model.",
+  correct = "Correct! A linear model estimates a separate mean for each class, without sharing information across classes.",
+  incorrect = "Think about what is estimated in a linear model... and they are estimated.",
   allow_retry = TRUE
 )
 ```
@@ -332,15 +332,16 @@ learnr::question(
   ),
   learnr::answer(
     "Because the LMM predictions are guaranteed to be unbiased for every individual class."
+  ),  
+  learnr::answer(
+    "Because the LMM eliminates all between-class variability."
   ),
+ 
   learnr::answer(
     "Because partial pooling reduces the influence of random noise in small groups, leading to more reliable estimates and predictions.",
     correct = TRUE
   ),
-  learnr::answer(
-    "Because the LMM eliminates all between-class variability."
-  ),
-  
+ 
   correct = "Correct! Partial pooling balances group-specific information with information from the whole dataset, reducing overfitting and improving reliability, especially for small groups.",
   incorrect = "Think about the role of noise, uncertainty, and sample size in estimating group-level effects.",
   allow_retry = TRUE
@@ -352,18 +353,18 @@ Think about how the same might apply in a random slopes model, where each group 
 ```{r quiz-lmm-random-slopes-contrast, echo=FALSE}
 learnr::question(
   "Suppose we now fit a **random-slopes mixed-effects model**, allowing the relationship between an explanatory variable (e.g. study time) and the response (score) to vary among classes. How does this differ conceptually from estimating separate slopes for each class using a standard linear model (e.g. an ANCOVA-style interaction)?",
-  
+    learnr::answer(
+    "The mixed-effects model partially pools the class-specific slopes toward a common average slope, whereas the linear model estimates each class slope independently.",
+    correct = TRUE
+  ),
+ 
   learnr::answer(
     "The mixed-effects model assumes that all classes have completely independent slopes, with no relationship among them."
   ),
   learnr::answer(
     "The mixed-effects model estimates a single common slope and ignores class-level variation."
   ),
-  learnr::answer(
-    "The mixed-effects model partially pools the class-specific slopes toward a common average slope, whereas the linear model estimates each class slope independently.",
-    correct = TRUE
-  ),
-  learnr::answer(
+ learnr::answer(
     "The mixed-effects model forces all class-specific slopes to be identical."
   ),
   
@@ -485,13 +486,13 @@ learnr::question(
   "How does a random-slopes model differ from fitting separate slopes using an interaction in a linear model?",
   
   learnr::answer("Random slopes force all groups to have identical slopes."),
-  learnr::answer(
+  learnr::answer("Random slopes ignore group-level variation."),
+  learnr::answer("There is no difference; they are mathematically identical."),
+   learnr::answer(
     "Random slopes partially pool group-specific slopes toward a common average slope.",
     correct = TRUE
   ),
-  learnr::answer("Random slopes ignore group-level variation."),
-  learnr::answer("There is no difference; they are mathematically identical."),
-  
+ 
   correct = "Correct! Random slopes allow slopes to vary by group while sharing information across groups.",
   incorrect = "Think about partial pooling applied to slopes.",
   allow_retry = TRUE
@@ -611,11 +612,11 @@ learnr::question(
   "An ecologist is studying how nutrient availability affects plant growth. Nutrients influence leaf nitrogen content, which affects photosynthetic rate, which in turn affects total biomass. At the same time, nutrient availability may also have a direct effect on biomass. The ecologist wants to quantify both direct and indirect effects in a single analysis. Which type of analysis is most appropriate?",
   
   learnr::answer("Multiple linear regression, with biomass as the response."),
+  learnr::answer("A one-way ANOVA comparing nutrient treatments."),
   learnr::answer(
     "Structural Equation Modelling (SEM), because it allows modelling of multiple interconnected relationships and indirect effects.",
     correct = TRUE
   ),
-  learnr::answer("A one-way ANOVA comparing nutrient treatments."),
   learnr::answer("Time series analysis of biomass."),
   
   correct = "Correct! SEM is designed for analysing systems of variables with both direct and indirect relationships, and where variables can be both predictors and responses.",

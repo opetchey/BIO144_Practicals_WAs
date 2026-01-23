@@ -92,11 +92,12 @@ question(
 learnr::question(
   "Which function in the dplyr package would you use to get particular rows of your data frame (e.g. rows 1 through 10)?",
   
-  learnr::answer("slice", correct = TRUE),
   learnr::answer("select"),
   learnr::answer("filter"),
   learnr::answer("arrange"),
   learnr::answer("mutate"),
+  learnr::answer("slice", correct = TRUE),
+
   
   correct = "Correct! slice() is used to select rows by their position in the data frame.",
   incorrect = "slice() selects rows by position. select() works on columns, filter() selects rows based on conditions, arrange() reorders rows, and mutate() creates or transforms columns.",
@@ -124,9 +125,9 @@ learnr::question(
 learnr::question(
   "Which function in the dplyr package would you use to sort the rows of your data frame into a particular order?",
   
-  learnr::answer("arrange", correct = TRUE),
   learnr::answer("mutate"),
   learnr::answer("select"),
+  learnr::answer("arrange", correct = TRUE),
   learnr::answer("filter"),
   learnr::answer("slice"),
   
@@ -184,9 +185,9 @@ learnr::question(
 learnr::question(
   "You use the ggplot function to set up the basic features of your graph, like which variable in your data frame goes on the x-axis, which on the y-axis, and perhaps a variable that you want the points coloured according to.\n\nWhat is the name of the function that you use within the ggplot function (i.e. it is an argument to the ggplot function) with which you define these basic features?",
   
-  learnr::answer("aes", correct = TRUE),
   learnr::answer("geom_point"),
   learnr::answer("theme"),
+  learnr::answer("aes", correct = TRUE),
   learnr::answer("labs"),
   
   correct = "Correct! aes() (short for aesthetics) is used inside ggplot() to map variables to visual properties such as x, y, and colour.",
@@ -307,8 +308,6 @@ learnr::question_numeric(
   "However you find easiest, find the bmi of the individual with the highest value of bodyfat and type it in below.",
   
   answer(37.62, correct = TRUE),
-  
-  
   
   correct = "Correct! The bmi of the individual with the highest bodyfat value is 37.62.",
   incorrect = "Not quite. Find the row with the highest bodyfat value and then look up the corresponding bmi.",

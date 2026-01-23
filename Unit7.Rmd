@@ -125,16 +125,17 @@ learnr::question(
     "Height (below low tide vs middle of intertidal)",
     correct = TRUE
   ),
-  learnr::answer(
-    "Herbivore presence (minus vs plus)",
-    correct = TRUE
-  ),
-  learnr::answer(
+ learnr::answer(
     "Amount of algae glued into each plot"
   ),
   learnr::answer(
     "Distance between plots"
   ),
+ learnr::answer(
+    "Herbivore presence (minus vs plus)",
+    correct = TRUE
+  ),
+ 
   
   correct = "Correct! The experiment manipulates height and herbivore presence.",
   incorrect = "Focus on which variables were deliberately manipulated by the experimenter.",
@@ -174,15 +175,16 @@ learnr::question(
   "Suppose the effect of herbivory **does depend on tidal height**. Which of the following patterns would you expect to see in a graph?",
   
   learnr::answer(
-    "The difference between fenced and unfenced plots is larger at one tidal height than the other.",
-    correct = TRUE
-  ),
-  learnr::answer(
     "Fenced plots always have more algae, emphasising the same difference at both tidal heights."
   ),
   learnr::answer(
     "All plots have similar algal area regardless of treatment."
   ),
+  learnr::answer(
+    "The difference between fenced and unfenced plots is larger at one tidal height than the other.",
+    correct = TRUE
+  ),
+ 
   learnr::answer(
     "Only tidal height matters, not herbivory."
   ),
@@ -468,16 +470,16 @@ learnr::question(
   "In R, there are two equivalent ways to specify a linear model with **two main effects** and their **interaction term**. Which of the following correctly describes these two methods?",
   
   learnr::answer(
+    "Using `y ~ x1 + x2 + x1:x2` or `y ~ x1 * x2`.",
+    correct = TRUE
+  ),
+   learnr::answer(
     "Using `y ~ x1 + x2` or `y ~ x1 * x2`."
   ),
   learnr::answer(
     "Using `y ~ x1:x2` or `y ~ x1 + x2`."
   ),
-  learnr::answer(
-    "Using `y ~ x1 + x2 + x1:x2` or `y ~ x1 * x2`.",
-    correct = TRUE
-  ),
-  learnr::answer(
+ learnr::answer(
     "Using `y ~ x1 * x2` or `y ~ x1:x2`."
   ),
   learnr::answer(
@@ -588,11 +590,12 @@ learnr::question(
     "They can be interpreted as if the interaction were not present."
   ),
   learnr::answer(
+    "They are meaningless and should be ignored completely."
+  ),
+ 
+  learnr::answer(
     "They describe the average effects across levels of the other factor, but must be interpreted with caution because the effect changes depending on the other factor.",
     correct = TRUE
-  ),
-  learnr::answer(
-    "They are meaningless and should be ignored completely."
   ),
   learnr::answer(
     "They indicate that the interaction term was unnecessary."
@@ -950,13 +953,13 @@ learnr::question(
   "In a statistical model, what does a **significant interaction term** between two explanatory variables indicate?",
   
   learnr::answer(
-    "That both explanatory variables have statistically significant main effects."
-  ),
-  learnr::answer(
     "That the effect of one explanatory variable on the response depends on the value of the other explanatory variable.",
     correct = TRUE
   ),
-  learnr::answer(
+   learnr::answer(
+    "That both explanatory variables have statistically significant main effects."
+  ),
+ learnr::answer(
     "That the response variable is non-normally distributed."
   ),
   learnr::answer(
@@ -1003,16 +1006,17 @@ learnr::question(
   learnr::answer(
     "That the covariate should be removed from the model."
   ),
-  learnr::answer(
-    "That the relationship between the covariate and the response differs between groups.",
-    correct = TRUE
-  ),
-  learnr::answer(
+ learnr::answer(
     "That the group means differ after adjusting for the covariate."
   ),
   learnr::answer(
     "That the assumptions of ANCOVA have been violated."
   ),
+ learnr::answer(
+    "That the relationship between the covariate and the response differs between groups.",
+    correct = TRUE
+  ),
+ 
   
   correct = "Correct! A significant interaction in ANCOVA indicates that the slope of the covariate differs between groups, meaning the effect of the covariate is group-dependent.",
   incorrect = "Think about how ANCOVA combines regression and group comparisons: interactions imply different regression lines for different groups.",

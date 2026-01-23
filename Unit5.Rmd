@@ -169,7 +169,7 @@ learnr::question_numeric(
 Safest now is to create a version of the dataset without the missing values for the response variable. Please do this now.
 
 
-Before we move on, let't think about **degrees of freedom**.
+Before we move on, let's think about **degrees of freedom**.
 
 In one-way ANOVA, there are two types of degrees of freedom to consider. One is associated with the treatment groups, and the other with the residuals (within groups). So when we eventually report our ANOVA results, we will need to know both. We will then be able to write something like: "Blood pressure was reduced by ... (one-way ANOVA F(???1???, ???2???) = 5.67, p < 0.01)." Where ???1??? is the degrees of freedom associated with the treatment groups, and ???2??? is the degrees of freedom associated with the residuals.
 
@@ -719,10 +719,6 @@ The reference group is <b>control</b>.<br><br>
 Which of the following best describes the <b>effect size</b> of <code>treatmentC</code> relative to <code>control</code>?",
   
   learnr::answer(
-    "treatmentC is associated with an average reduction of about 5.5 units in the response variable compared with the control group.",
-    correct = TRUE
-  ),
-  learnr::answer(
     "treatmentC explains 5.48% of the total variance in the response variable."
   ),
   learnr::answer(
@@ -734,6 +730,11 @@ Which of the following best describes the <b>effect size</b> of <code>treatmentC
   learnr::answer(
     "treatmentC has the smallest p-value, so it is the most important treatment."
   ),
+  learnr::answer(
+    "treatmentC is associated with an average reduction of about 5.5 units in the response variable compared with the control group.",
+    correct = TRUE
+  ),
+ 
   
   correct = "Correct! The coefficient for treatmentC indicates that, on average, the response variable is about 5.5 units lower than in the control group.",
   incorrect = "Effect size refers to the estimated difference relative to the reference group, not to p-values or variance explained.",

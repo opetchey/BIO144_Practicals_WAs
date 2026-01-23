@@ -176,8 +176,8 @@ In the final exam there may be more complex types of questions. Here is an examp
 ```{r weekly-quiz-1, echo=FALSE}
 question(
     "The workflow\n\nIn the workflow we use for data analysis, which order should the following come in?\n\nA. Visualisation.\nB. Statistical test.\nC. Defining the question.\nD. Data tidying and cleaning.\nE. Checking assumptions.\nF. Data collection.\n\n(Choose the best ordering.)",
-    answer("C, F, D, A, E, B", correct = TRUE),
     answer("A, C, F, E, B, D"),
+    answer("C, F, D, A, E, B", correct = TRUE),
     answer("F, D, A, E, B, C"),
     answer("C, F, D, A, B, E"),
     correct = "Correct!",
@@ -221,8 +221,8 @@ Sometimes a weekly quiz question might even need you to look up something new, o
 ```{r weekly-quiz-5, echo=FALSE}
 question(
     "When to use a t-test\n\nWhich of the following situations is most appropriate for using a t-test?",
-    answer("Comparing the means of two groups", correct = TRUE),
     answer("Comparing the means of more than two groups"),
+    answer("Comparing the means of two groups", correct = TRUE),
     answer("Testing for a relationship between two continuous variables"),
     answer("Measuring the slope of a regression line"),
     correct = "Correct!",

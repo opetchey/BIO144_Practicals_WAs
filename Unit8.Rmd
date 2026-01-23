@@ -293,7 +293,11 @@ learnr::question_numeric(
 )
 ```
 
-This is very interesting, since based on the qq plot we expected overdispersion, but the calculated ratio is less than 1, suggesting underdispersion. This discrepancy can occur because the qq plot is sensitive to extreme residuals, while the deviance ratio summarizes overall fit. It suggest that for some parts of the residual distribution, the model fits poorly (extreme residuals), while for other parts the model fits better than would be expected! Complicated. And this would need modelling of greater sophistication to resolve properly. Let us continue with the current model and see how well it performs.
+This is very interesting, since based on the qq plot we expected overdispersion, but the calculated ratio is less than 1, suggesting underdispersion. **This is a very important learning opportunity for us!** We found something that probably means we have a misconception, and this can be very revealing to resolve.
+
+This discrepancy can occur because the qq-plot is sensitive to, and shows us, extreme residuals, while the deviance ratio summarizes overall fit. The discrepancy therefore suggest that for some parts of the residual distribution, the model fits poorly (extreme residuals, overdispersion), while for other parts the model fits better than would be expected (underdispersion)! Cool! So the two methods concern different features of the residuals.
+
+Addressing this issue in the model / data combination would need modelling of greater sophistication to resolve. Let us continue with the current model and see how well it performs.
 
 ### 5. Interpret the model.
 
@@ -507,7 +511,11 @@ learnr::question(
 ```{r quiz-abalone-why-not-additive, echo=FALSE}
 learnr::question(
   "Why does a slope estimate of 1.53 in a Poisson GLM **not** mean that the expected number of Rings increases by 1.53 for each 1 mm increase in Length_mm?",
-  
+    learnr::answer(
+    "Because Poisson GLMs use a log link function, so coefficients describe multiplicative (not additive) effects on the expected response.",
+    correct = TRUE
+  ),
+ 
  
   learnr::answer(
     "Because the response variable is measured with error."
@@ -515,11 +523,7 @@ learnr::question(
   learnr::answer(
     "Because the model includes an intercept."
   ),
-  learnr::answer(
-    "Because Poisson GLMs use a log link function, so coefficients describe multiplicative (not additive) effects on the expected response.",
-    correct = TRUE
-  ),
-  learnr::answer(
+ learnr::answer(
     "Because the response variable is discrete rather than continuous."
   ),
   learnr::answer(
@@ -598,9 +602,9 @@ learnr::question(
   "You have fitted a Poisson GLM and find a residual deviance of 112.4 on 55 degrees of freedom. What does that tell you, and what should you do? (One or more answers might be correct.)",
   
   learnr::answer("The data seem to be underdispersed, thus there is probably a non-independence in the response variable."),
-  learnr::answer("It seems the data are overdispersed, thus there are probably some important explanatory variables missing in the model.", correct = TRUE),
-  learnr::answer("A quasipoisson model should be used to analyse these data.", correct = TRUE),
-  
+   learnr::answer("A quasipoisson model should be used to analyse these data.", correct = TRUE),
+   learnr::answer("It seems the data are overdispersed, thus there are probably some important explanatory variables missing in the model.", correct = TRUE),
+
   correct = "Correct. A residual deviance much larger than the degrees of freedom indicates overdispersion, suggesting model misspecification and motivating a quasi-Poisson approach.",
   incorrect = "Compare residual deviance to degrees of freedom to assess dispersion.",
   allow_retry = TRUE
@@ -630,8 +634,8 @@ learnr::question(
 learnr::question(
   "You have fitted a Poisson GLM and are happy with the model diagnostics, and the coefficients look biologically sensible. To present the results, you need the chi-squared test statistic for the overall model, and its p-value.\n\nWhat function can you use to get this?",
   
-  learnr::answer("p.value"),
-  learnr::answer("anova", correct = TRUE),
+ learnr::answer("anova", correct = TRUE),
+   learnr::answer("p.value"),
   learnr::answer("summary"),
   learnr::answer("test.chisq"),
   

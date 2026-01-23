@@ -282,9 +282,9 @@ Finally, we need to check the assumptions of the regression model, to see if the
 learnr::question(
   "What R function do you use to get the residuals of a fitted model?",
   
-  learnr::answer("residuals", correct = TRUE),
   learnr::answer("errors"),
   learnr::answer("fitted"),
+  learnr::answer("residuals", correct = TRUE),
   learnr::answer("summary"),
   
   correct = "Correct! The residuals() function extracts the residuals from a fitted model.",
@@ -553,7 +553,6 @@ learnr::question_numeric(
 ## Weekly Quiz
 
 
-### Question 1 — What to do *before* fitting a linear model
 
 
 ```{r q1-preliminaries, echo=FALSE}
@@ -578,9 +577,6 @@ learnr::question(
 
 
 
-### Question 2 — Degrees of freedom (numeric)
-
-
 ```{r q2-df-numeric, echo=FALSE}
 learnr::question_numeric(
   "Imagine we have a dataset on weight and blood pressure for **48 people**.\n\nIf we fit a simple linear regression to test for a relationship between these two variables, how many **degrees of freedom for error** will the regression model have?",
@@ -594,9 +590,6 @@ learnr::question_numeric(
 ```
 
 
----
-
-### Question 3 — What does a histogram of residuals tell us?
 
 
 ```{r q3-residual-histogram, echo=FALSE}
@@ -616,9 +609,6 @@ learnr::question(
 
 
 
-### Question 4 — Response vs explanatory variable in `lm()`
-
-
 ```{r q4-lm-order, echo=FALSE}
 learnr::question(
   "In R, we often fit a linear regression model using code like:\n\n`lm(variable1 ~ variable2, data = my_data)`\n\nWhat should `variable1` and `variable2` represent?",
@@ -635,9 +625,6 @@ learnr::question(
 
 
 
-### Question 5 — Least squares distances
-
-
 ```{r q5-least-squares, echo=FALSE}
 learnr::question(
   "When the parameters of a simple linear regression model are estimated, which distances are minimised by the **least squares** algorithm?",
@@ -651,10 +638,6 @@ learnr::question(
 )
 ```
 
-
----
-
-### Question 6 — Assumptions of simple linear regression
 
 
 ```{r q6-assumptions, echo=FALSE}
@@ -673,9 +656,6 @@ learnr::question(
 ```
 
 
----
-
-### Question 7 — Checking assumptions after fitting a model
 
 
 ```{r q7-diagnostics, echo=FALSE}
@@ -696,8 +676,6 @@ learnr::question(
 
 
 
-### Question 8 — Diagnostic plots in `ggfortify`
-
 
 ```{r q8-ggfortify, echo=FALSE}
 learnr::question(
@@ -714,9 +692,6 @@ learnr::question(
 )
 ```
 
----
-
-### Question 9 — Scale–location plot
 
 
 ```{r q9-scale-location, echo=FALSE}

@@ -61,13 +61,14 @@ learnr::question(
 learnr::question(
   "Say we found that the body fat variable was rather non-normal, and it looked like log-transforming it might help. Which **dplyr** function would we use to add the transformed variable to the dataset?",
   
-  learnr::answer(
+ learnr::answer("filter"),
+  learnr::answer("variable"),
+  learnr::answer("select"),
+ learnr::answer(
     "mutate",
     correct = TRUE
   ),
-  learnr::answer("filter"),
-  learnr::answer("variable"),
-  learnr::answer("select"),
+ 
   learnr::answer("slice"),
   
   correct = "Correct! The `mutate()` function is used to create new variables or transform existing ones and add them to the dataset.",
@@ -206,10 +207,6 @@ learnr::question(
   "Before looking at the data, which of the following is a **plausible hypothesis** about the relationship between milk energy contentand neocortex size  in primates, and the biological reasoning behind it?",
   
   learnr::answer(
-    "There may be a positive relationship, because species with larger neocortices have higher energetic demands during brain development, which could be supported by more energy-rich milk.",
-    correct = TRUE
-  ),
-  learnr::answer(
     "There should be a negative relationship, because species with larger brains invest less energy in milk and more in gestation."
   ),
   learnr::answer(
@@ -221,6 +218,11 @@ learnr::question(
   learnr::answer(
     "Any relationship would imply that milk composition directly determines adult brain size."
   ),
+  learnr::answer(
+    "There may be a positive relationship, because species with larger neocortices have higher energetic demands during brain development, which could be supported by more energy-rich milk.",
+    correct = TRUE
+  ),
+ 
   
   correct = "Correct! A plausible hypothesis is that species with larger neocortices produce more energy-rich milk to support the high energetic costs of brain growth during early development.",
   incorrect = "Think about the energetic demands of brain development and how maternal investment via milk might help meet those demands, without assuming direct causation or perfect relationships.",
@@ -321,9 +323,9 @@ And from now on work with these variables:
 learnr::question(
   "Looking at a scatterplot, what kind of relationship do you see between **`log10_kcal.per.g`** and **`log10_mass`**?",
   
-  learnr::answer("none", correct = TRUE),
   learnr::answer("positive"),
-  learnr::answer("negative"),
+ learnr::answer("none", correct = TRUE),
+   learnr::answer("negative"),
   
   correct = "Correct! There is no obvious relationship between milk energy content and body mass.",
   incorrect = "Look at the overall pattern rather than individual points. There does not appear to be a clear trend.",
@@ -335,10 +337,10 @@ learnr::question(
 learnr::question(
   "Looking at a scatterplot, what kind of relationship do you see between **`log10_kcal.per.g`** and **`neocortex.perc`**?",
   
-  learnr::answer("none", correct = TRUE),
   learnr::answer("positive"),
   learnr::answer("negative"),
-  
+    learnr::answer("none", correct = TRUE),
+
   correct = "Correct! There is no clear relationship between milk energy content and neocortex percentage.",
   incorrect = "Focus on the overall trend across species. With this small sample size, no clear association is apparent.",
   allow_retry = TRUE
