@@ -102,7 +102,7 @@ The variables are:
 
 *	id: A unique identifier for each participant.
 * treatment: The treatment group the participant was assigned to: Placebo, DrugA_Low, DrugA_High, StandardCare
-* sex: Biological sex of the participant (F or M).
+* sex: Biological sex (assigned at birth) of the participant (F or M).
 *	age_years: Age of the participant in years.
 * baseline_sbp: Baseline systolic blood pressure (mmHg), measured before treatment.
 * followup_sbp: Systolic blood pressure (mmHg) measured after 8 weeks of treatment.

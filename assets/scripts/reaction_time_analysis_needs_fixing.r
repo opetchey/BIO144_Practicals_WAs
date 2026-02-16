@@ -60,7 +60,7 @@ View(all_RTs)
 ## (they should be in this case, but checking is a good habit.)
 ## Timestamp should be a character
 ## ID should be a character
-## Gender should be a character
+## Sex at birth should be a character
 ## Handed should be character
 ## The remaining variables should be numeric (<dbl>)
 str(all_RTs)
@@ -68,7 +68,7 @@ str(all_RTs)
 
 #######################################################
 ## We need to add an identifier variable for each participant
-all_RTs <- all_RTs |> 
+all_RTs <- all_RTs |>
   mutate(ID = paste0("ID-", row_number))
 
 
@@ -80,7 +80,7 @@ RTs_long <- all_RTs %>%
                values_to = "RT_value")
 
 #######################################################
-## Find the number of observations of each gender
+## Find the number of observations of each sex at birth
 all_RTs %>%
   group_by(sex_at_birth) %>%
   summarise(number = n())
@@ -100,7 +100,7 @@ RTs <- RTs_long %>%
 ggplot(data=RTs, aes(x=???)) +
   geom_histogram()
 
-## Now make a figure containing two histograms histograms (i.e. two "facets"), one for each gender
+## Now make a figure containing two histograms histograms (i.e. two "facets"), one for each sex at birth
 ggplot(data=RTs, aes(x=???)) +
   geom_histogram() +
   facet_grid(~ ???)
