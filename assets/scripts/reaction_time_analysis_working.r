@@ -143,7 +143,7 @@ my_ttest <- t.test(mean_RT ~ Sex_at_birth,
                    data=RTs_filtered,
                    var.equal=TRUE)
 ## look at the result of the t-test
-t.test
+my_ttest
 #######################################################
 
 
