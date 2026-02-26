@@ -384,6 +384,9 @@ learnr::question(
 )
 ```
 
+(If you'd like to see how this can be done programmatically, have a look at this section of the Course Book: [Finding observations with extreme values.](https://opetchey.github.io/BIO144_Course_Book/2.1-R-and-RStudio.html#finding-observations-with-extreme-values).)
+
+
 Make a copy of the data that doesn't include the individuals in the correct answer to the previous question.
 
 
