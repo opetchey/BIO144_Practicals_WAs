@@ -12,9 +12,9 @@
 
 <meta name="progressive" content="false" />
 <meta name="allow-skip" content="false" />
-<meta name="learnr-version-prerender" content="0.11.5" />
+<meta name="learnr-version-prerender" content="0.11.6" />
 
-<title>Week 3 BIO144 Course Content</title>
+<title>Unit 3 BIO144 Course Content</title>
 
 <!-- header-includes START -->
 <!-- HEAD_CONTENT -->
@@ -112,7 +112,7 @@ if (window.hljs) {
 <div id="section-introduction" class="section level2">
 <h2>Introduction</h2>
 <p>On this web page you will find the homework, practical exercises and
-weekly quiz for Week 3 of BIO144.</p>
+weekly quiz for Unit 3 of BIO144.</p>
 <p>All other information for the course is on the OLAT course webpages,
 and web pages linked to from there: <a
 href="https://lms.uzh.ch/auth/RepositoryEntry/17827987490/CourseNode/112943793799740">OLAT
@@ -120,12 +120,28 @@ BIO144 Info. Hub</a></p>
 </div>
 <div id="section-homework" class="section level2">
 <h2>Homework</h2>
+<p>All homework is for your own practice and learning. It will not be
+marked or graded.</p>
+<div id="section-homework-common-to-all-weeks" class="section level3">
+<h3>Homework common to all weeks:**</h3>
+<ul>
+<li><p>Review the material from the lecture(s) this week. Make sure you
+understand the concepts and ideas presented. Ensure you can follow any
+mathematical or statistical explanations. Ensure you can do the R that
+is needed for the week’s learning objectives.</p></li>
+<li><p>When you find things you don’t understand or have trouble doing
+(e.g., in R), make a note of these. You can then ask a teaching
+assistant (TA) for help during the practical session, and you can ask on
+the Discussion Forum on OLAT. You can also ask questions during the
+lectures.</p></li>
+</ul>
+</div>
 <div id="section-reading" class="section level3">
 <h3>Reading</h3>
 <p>This homework aims to help you learn how to do linear regression in
 R. The various steps involved are below.</p>
 <ul>
-<li>Being sure of the question and data. *</li>
+<li>Being sure of the question and data.</li>
 <li>Preparing your script (e.g., introductory comments, load libraries,
 etc).</li>
 <li>Read the data into R.</li>
@@ -148,12 +164,18 @@ practical class.</p>
 <div id="section-video-walkthrough" class="section level3">
 <h3>Video walkthrough</h3>
 <p>You can, if you wish, watch and hear Prof. Petchey going through the
-analysis of the plant growth experiment in the two videos below.
-**Please note, however, that in these videos are quite old now and
-contain some older methods, such as an old method for making graphs.
-Please use the method in the book sections. More specifically, here is
-the code to use in place of the code in the videos, by line number of
-the code in the video:</p>
+analysis of the plant growth experiment in the two videos below. A few
+things to note, however:</p>
+<ul>
+<li><p>The second video includes a little bit of interpretation of the
+regression model, which we will cover in Unit 4. You can ignore that
+part for now.</p></li>
+<li><p>These videos are quite old now and contain some older methods,
+such as an old method for making graphs. Please use the method in the
+course book sections. More specifically, here is the code to use in
+place of the code in the videos, by line number of the code in the
+video:</p></li>
+</ul>
 <p>Preliminaries: the videos do not load the packages ggplot2 and
 ggfortify. You must do this: library(ggplot2) and
 library(ggfortify).</p>
@@ -173,12 +195,45 @@ graph, in case you need a hand.)</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jFfFvP3sqo8?si=Spu7GYQOJdwyUBxs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
 </iframe>
 <p>The <a
-href="https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/Plant_growth_rate_script.r">full
+href="https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/Plant_growth_rate_script.R">full
 R script of this walkthrough is here</a>, though note that some comments
 have been added and hence the line numbers do not match those above.
-Note that there are four videos in this series. You will have a chance
-to see the other two videos in Week 4, when we cover interpretation of
-regression models.</p>
+Note that there are four videos in this series. You will have the chance
+to watch the final video in the next unit.</p>
+</div>
+<div id="section-fun-with-regression" class="section level3">
+<h3>Fun with regression</h3>
+<p>Some things to try, if you feel the need… <a
+href="https://gallery.shinyapps.io/simple_regression/">Here’s an
+interactive tool</a> that challenges you to find the best intercept and
+slope to fit a straight line through some data. This is you doing the
+regression modelling! Have a play with this.</p>
+<p>Here is another interactive tool. <a
+href="https://paternogbc.shinyapps.io/SS_regression/">This one lets you
+make some data, and then shows what linear regression makes of this
+data</a>, in terms of sums of squares, residuals, and estimates of
+coefficients. * If you make some data with no relationship (i.e. slope =
+0), which sum of squares is small and which large, and why?
+Approximately what percentage of variance in the data is explained by
+the regression? * If you make some data with a strong relationship
+(i.e. slope = 2) and little variation (i.e. standard deviation close to
+zero), which sum of squares is small and which large, and why?
+Approximately what percentage of variance in the data is explained by
+the regression?</p>
+</div>
+<div id="section-but-i-like-cats" class="section level3">
+<h3>But I like cats!</h3>
+<p>Some light relief from all this statistics… see if you can get this
+code to run:</p>
+<pre class="r"><code>install.packages(&quot;devtools&quot;)
+library(devtools)
+install_github(&quot;Gibbsdavidl/CatterPlots&quot;)
+library(CatterPlots)
+meow &lt;- multicat(xs=runif(21), ys=rnorm(21),
+                 cat=c(1,2,3,4,5,6,7,8,9,10),
+                 catcolor=list(c(1,1,1,1)),
+                 canvas=c(-0.1,1.1, -0.1, 1.1),
+                 xlab=&quot;some cats&quot;, ylab=&quot;other cats&quot;, main=&quot;Random Cats&quot;)</code></pre>
 </div>
 </div>
 <div id="section-practical-part-1" class="section level2">
@@ -215,7 +270,7 @@ variables of interest.</p>
 <p>Regression preliminaries include at least three steps, the first of
 which involves us looking at the graph we just made, of health care
 spending on the x-axis and child mortality on the y-axis:</p>
-<p><img src="Unit3_files/figure-html/unnamed-chunk-1-1.png" width="624" /></p>
+<p><img src="Unit3_files/figure-html/unnamed-chunk-2-1.png" width="624" /></p>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="quiz-linear-regression-problem" class="tutorial-question panel-body">
 <div id="quiz-linear-regression-problem-answer_container" class="shiny-html-output"></div>
@@ -337,7 +392,7 @@ diagnostic plots as above (histogram of residuals, and residuals vs
 fitted values). You should see a very non-normal distribution of
 residuals, and a clear pattern in the residuals vs fitted values plot.
 And a very non-linear QQ-plot of residuals too!</p>
-<p><img src="Unit3_files/figure-html/unnamed-chunk-2-1.png" width="624" /></p>
+<p><img src="Unit3_files/figure-html/unnamed-chunk-3-1.png" width="624" /></p>
 <p><strong>Potential sources of non-independence</strong> Recall that an
 assumption of linear regression is that the data points are independent.
 That is, the value of one data point does not influence the value of
@@ -440,22 +495,22 @@ not all showing the qqplot of normally distributed residuals.</p>
 <p>And here is a quiz for you…</p>
 <hr />
 <p><strong>QQ-Plot 1</strong></p>
-<p><img src="Unit3_files/figure-html/unnamed-chunk-3-1.png" width="624" /></p>
-<hr />
-<p><strong>QQ-Plot 2</strong></p>
 <p><img src="Unit3_files/figure-html/unnamed-chunk-4-1.png" width="624" /></p>
 <hr />
-<p><strong>QQ-Plot 3</strong></p>
+<p><strong>QQ-Plot 2</strong></p>
 <p><img src="Unit3_files/figure-html/unnamed-chunk-5-1.png" width="624" /></p>
 <hr />
-<p><strong>QQ-Plot 4</strong></p>
+<p><strong>QQ-Plot 3</strong></p>
 <p><img src="Unit3_files/figure-html/unnamed-chunk-6-1.png" width="624" /></p>
 <hr />
-<p><strong>QQ-Plot 5</strong></p>
+<p><strong>QQ-Plot 4</strong></p>
 <p><img src="Unit3_files/figure-html/unnamed-chunk-7-1.png" width="624" /></p>
 <hr />
-<p><strong>QQ-Plot 6</strong></p>
+<p><strong>QQ-Plot 5</strong></p>
 <p><img src="Unit3_files/figure-html/unnamed-chunk-8-1.png" width="624" /></p>
+<hr />
+<p><strong>QQ-Plot 6</strong></p>
+<p><img src="Unit3_files/figure-html/unnamed-chunk-9-1.png" width="624" /></p>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="quiz-qqplot-uniform" class="tutorial-question panel-body">
 <div id="quiz-qqplot-uniform-answer_container" class="shiny-html-output"></div>
@@ -491,9 +546,6 @@ not all showing the qqplot of normally distributed residuals.</p>
 </div>
 <div id="section-weekly-quiz" class="section level2">
 <h2>Weekly Quiz</h2>
-<div id="section-question-1-what-to-do-before-fitting-a-linear-model"
-class="section level3">
-<h3>Question 1 — What to do <em>before</em> fitting a linear model</h3>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="q1-preliminaries" class="tutorial-question panel-body">
 <div id="q1-preliminaries-answer_container" class="shiny-html-output"></div>
@@ -502,10 +554,6 @@ class="section level3">
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
-</div>
-<div id="section-question-2-degrees-of-freedom-numeric"
-class="section level3">
-<h3>Question 2 — Degrees of freedom (numeric)</h3>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="q2-df-numeric" class="tutorial-question panel-body">
 <div id="q2-df-numeric-answer_container" class="shiny-html-output"></div>
@@ -514,11 +562,6 @@ class="section level3">
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
-<hr />
-</div>
-<div id="section-question-3-what-does-a-histogram-of-residuals-tell-us"
-class="section level3">
-<h3>Question 3 — What does a histogram of residuals tell us?</h3>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="q3-residual-histogram" class="tutorial-question panel-body">
 <div id="q3-residual-histogram-answer_container" class="shiny-html-output"></div>
@@ -527,11 +570,6 @@ class="section level3">
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
-</div>
-<div id="section-question-4-response-vs-explanatory-variable-in-lm"
-class="section level3">
-<h3>Question 4 — Response vs explanatory variable in
-<code>lm()</code></h3>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="q4-lm-order" class="tutorial-question panel-body">
 <div id="q4-lm-order-answer_container" class="shiny-html-output"></div>
@@ -540,10 +578,6 @@ class="section level3">
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
-</div>
-<div id="section-question-5-least-squares-distances"
-class="section level3">
-<h3>Question 5 — Least squares distances</h3>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="q5-least-squares" class="tutorial-question panel-body">
 <div id="q5-least-squares-answer_container" class="shiny-html-output"></div>
@@ -552,11 +586,6 @@ class="section level3">
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
-<hr />
-</div>
-<div id="section-question-6-assumptions-of-simple-linear-regression"
-class="section level3">
-<h3>Question 6 — Assumptions of simple linear regression</h3>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="q6-assumptions" class="tutorial-question panel-body">
 <div id="q6-assumptions-answer_container" class="shiny-html-output"></div>
@@ -565,11 +594,6 @@ class="section level3">
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
-<hr />
-</div>
-<div id="section-question-7-checking-assumptions-after-fitting-a-model"
-class="section level3">
-<h3>Question 7 — Checking assumptions after fitting a model</h3>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="q7-diagnostics" class="tutorial-question panel-body">
 <div id="q7-diagnostics-answer_container" class="shiny-html-output"></div>
@@ -578,10 +602,6 @@ class="section level3">
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
-</div>
-<div id="section-question-8-diagnostic-plots-in-ggfortify"
-class="section level3">
-<h3>Question 8 — Diagnostic plots in <code>ggfortify</code></h3>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="q8-ggfortify" class="tutorial-question panel-body">
 <div id="q8-ggfortify-answer_container" class="shiny-html-output"></div>
@@ -590,10 +610,6 @@ class="section level3">
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
-<hr />
-</div>
-<div id="section-question-9-scalelocation-plot" class="section level3">
-<h3>Question 9 — Scale–location plot</h3>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="q9-scale-location" class="tutorial-question panel-body">
 <div id="q9-scale-location-answer_container" class="shiny-html-output"></div>
@@ -631,7 +647,7 @@ session$onSessionEnded(function() {
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-number-of-countries-available", 
     question = structure("<p>How many countries (rows = number of data points) are available for the question at hand?<\u002fp>\n<p>Hint: the answer is not 178.<\u002fp>\n<p>(Do not include the life expectancy variable in the dataset.)<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_b806423", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d108e49", 
         option = "186", value = 186, label = structure("186", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -642,7 +658,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-number-of-countries-available-answer", 
         question = "quiz-number-of-countries-available"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1781335988.1705, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 551969742.742969, 
     options = list(min = NA, max = NA, step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
 "tutorial_question")), session = session)
 </script>
@@ -651,16 +667,16 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-linear-regression-problem", 
     question = structure("<p>Stop! Looking at this graph, it should be very clear that we have at least one problem to deal with before we proceed with linear regression.<\u002fp>\n<p>Which of these best describes the biggest problem? (This is not a trick question.)<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_e73d4d", 
+    "character")), answers = list(structure(list(id = "lnr_ans_aab4c40", 
         option = "There are too many data points.", value = "There are too many data points.", 
         label = structure("There are too many data points.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6fbcec8", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_76b2b38", 
         option = "The relationship does not seem to be linear.", 
         value = "The relationship does not seem to be linear.", 
         label = structure("The relationship does not seem to be linear.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_548ab1e", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3d0c596", 
         option = "Many of the data points lie on top of each other, obscuring the general pattern in the data.", 
         value = "Many of the data points lie on top of each other, obscuring the general pattern in the data.", 
         label = structure("Many of the data points lie on top of each other, obscuring the general pattern in the data.", html = TRUE, class = c("html", 
@@ -673,25 +689,25 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-linear-regression-problem-answer", question = "quiz-linear-regression-problem"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1070109923.50169, options = list()), class = c("learnr_radio", 
+    seed = 803525124.625829, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-transformation-right-skew", 
     question = structure("<p>Let’s attempt to fix the problem by transforming the data. Knowing which transformation to make, and which axis to transform, needs a bit of experience.<\u002fp>\n<p>If you look at the distribution of each variable, you will see that both have many small values and a few large ones (i.e. they are right / positively skewed, with a long right tail).<\u002fp>\n<p>Which transformation tends to spread out the small values and compress the large ones, and therefore can make a right-skewed distribution more nearly normal?<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_6dbd4cc", 
+    "character")), answers = list(structure(list(id = "lnr_ans_59f4076", 
         option = "inversion", value = "inversion", label = structure("inversion", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_83d2ef4", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1f587f2", 
         option = "sine transformation", value = "sine transformation", 
         label = structure("sine transformation", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c6abddf", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_95d903c", 
         option = "log transformation", value = "log transformation", 
         label = structure("log transformation", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4459900", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d59b5ef", 
         option = "square root transformation", value = "square root transformation", 
         label = structure("square root transformation", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -703,7 +719,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-transformation-right-skew-answer", question = "quiz-transformation-right-skew"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 48068954.4776161, options = list()), class = c("learnr_radio", 
+    seed = 1328831836.88121, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -711,14 +727,14 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-log-transform-linear", 
     question = structure("<p>Now apply the appropriate transformation from the previous question to the data (both variables) and make a new graph of those transformed variables.<\u002fp>\n<p>Does the relationship now look more linear?<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_2015b52", 
+    "character")), answers = list(structure(list(id = "lnr_ans_bcaa608", 
         option = "No", value = "No", label = structure("No", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4903393", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c0e78bb", 
         option = "Nothing changed", value = "Nothing changed", 
         label = structure("Nothing changed", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_dfa2918", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cd68fed", 
         option = "Yes", value = "Yes", label = structure("Yes", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -729,23 +745,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-log-transform-linear-answer", question = "quiz-log-transform-linear"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 822206901.11713, options = list()), class = c("learnr_radio", 
+    seed = 1239548596.92279, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-log10-interpretation", 
     question = structure("<p>It is often useful to use a log10 transformation rather than the natural log, because the axis values are easier to relate back to the raw data.<\u002fp>\n<p>When we make a graph of log10-transformed variables, we might see values like 0.5, 1, 1.5, 2.0, etc on the axes.<\u002fp>\n<p>What value of the raw variable does a log10-transformed value of 2.0 correspond to?<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_7d0577", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ae5c19e", 
         option = "100.0", value = "100.0", label = structure("100.0", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_55edefa", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c7407a0", 
         option = "10.0", value = "10.0", label = structure("10.0", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_950bcfa", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e4a1503", 
         option = "1000.0", value = "1000.0", label = structure("1000.0", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5b0f260", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e2d8648", 
         option = "2.0", value = "2.0", label = structure("2.0", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -756,7 +772,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-log10-interpretation-answer", question = "quiz-log10-interpretation"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 702184046.67302, options = list()), class = c("learnr_radio", 
+    seed = 1566687491.77045, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -764,7 +780,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-guess-intercept-log10", 
     question = structure("<p>The second regression preliminary: It is worth making a guess of the intercept and slope of our regression before letting R loose!<\u002fp>\n<p>To guess the intercept, it is useful to have a version of the graph in which the x-axis reaches zero. You can make this happen by adding to your ggplot:<\u002fp>\n<ul>\n<li>xlim(0, 5)<\u002fli>\n<\u002ful>\n<p>It is also useful to have the y-axis go far enough to include the guessed intercept:<\u002fp>\n<ul>\n<li>ylim(0, 4)<\u002fli>\n<\u002ful>\n<p>With this graph, put a pen (or something straight) on your screen where you think the best-fit regression line will be. Then look where your pen cuts the y-axis. This value is your guessed intercept (on the log-transformed scale — do not back-transform to the raw scale).<\u002fp>\n<p>What is your guess?<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_3df57e2", 
+    "character")), answers = list(structure(list(id = "lnr_ans_48f72cc", 
         option = "3.25", value = 3.25, label = structure("3.25", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -775,15 +791,15 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-guess-intercept-log10-answer", question = "quiz-guess-intercept-log10"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1936896194.09806, options = list(min = NA, max = NA, 
-        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+    seed = 431214496.2992, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 0.5)), class = c("learnr_numeric", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-guess-slope-log10", 
     question = structure("<p>We can also make a guess of the slope (β₁). Recall that the slope is the change in y divided by the change in x.<\u002fp>\n<p>Looking at the log10–log10 plot, what number is the slope close to?<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_783af4", 
+    "character")), answers = list(structure(list(id = "lnr_ans_f222452", 
         option = "-0.76", value = -0.76, label = structure("-0.76", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -794,8 +810,8 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-guess-slope-log10-answer", question = "quiz-guess-slope-log10"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1736130834.69155, options = list(min = NA, max = NA, 
-        step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
+    seed = 1879927304.62459, options = list(min = NA, max = NA, 
+        step = NA, tolerance = 0.3)), class = c("learnr_numeric", 
 "tutorial_question")), session = session)
 </script>
 
@@ -803,7 +819,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-degrees-of-freedom-regression", 
     question = structure("<p>The third regression preliminary, and a very worthwhile preliminary of any analysis, is to figure out the degrees of freedom for error you expect.<\u002fp>\n<p>One way to think about degrees of freedom for error is as how much freedom the data have, given the model. A model with more coefficients (parameters) leaves the data with less freedom.<\u002fp>\n<p>To quantify this, we count the number of data points and subtract the number of coefficients in the model.<\u002fp>\n<p>So, how many degrees of freedom for error will there be in our regression of the healthcare spending data?<\u002fp>\n<p>Hints:<\u002fp>\n<ul>\n<li>How many data points (i.e. countries) do we have?<\u002fli>\n<li>How many coefficients / parameters do we estimate in a simple linear regression?<\u002fli>\n<li>Subtract the answer to the second question from the answer to the first.<\u002fli>\n<\u002ful>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_3f05c94", 
+    "character")), answers = list(structure(list(id = "lnr_ans_32b39d7", 
         option = "184", value = 184, label = structure("184", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -814,7 +830,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-degrees-of-freedom-regression-answer", 
         question = "quiz-degrees-of-freedom-regression"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1731806584.69356, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 309762529.355756, 
     options = list(min = NA, max = NA, step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
 "tutorial_question")), session = session)
 </script>
@@ -822,16 +838,16 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-lm-meaning", 
     question = structure("In the line of code shown above, what does <code>lm<\u002fcode> stand for?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_bab1cd0", 
+    "character")), answers = list(structure(list(id = "lnr_ans_e2a89c6", 
         option = "linear model", value = "linear model", label = structure("linear model", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_709205f", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8e17f54", 
         option = "least mean", value = "least mean", label = structure("least mean", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_fde54ef", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_45de21f", 
         option = "log model", value = "log model", label = structure("log model", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_32cc652", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_445bb43", 
         option = "local mean", value = "local mean", label = structure("local mean", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -842,7 +858,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-lm-meaning-answer", question = "quiz-lm-meaning"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1436666897.331, options = list()), class = c("learnr_radio", 
+    seed = 909210948.076616, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -850,19 +866,19 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-lm-formula-components", 
     question = structure("<p><code>my_model &lt;- lm(??1?? ~ ??2??, data = ??3??)<\u002fcode><\u002fp>\n<p>Match what should go in place of ??X?? in the information we give to the lm() function.<\u002fp>\n<p>A. The dataframe (data set) in which the variables reside.\nB. The response variable.\nC. The explanatory variable.<\u002fp>\n<p>Which option correctly matches ??1??, ??2??, and ??3???<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_d37bd18", 
+    "character")), answers = list(structure(list(id = "lnr_ans_91f1801", 
         option = "??1?? = B, ??2?? = C, ??3?? = A", value = "??1?? = B, ??2?? = C, ??3?? = A", 
         label = structure("??1?? = B, ??2?? = C, ??3?? = A", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a8ea25d", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_db80abd", 
         option = "??1?? = C, ??2?? = B, ??3?? = A", value = "??1?? = C, ??2?? = B, ??3?? = A", 
         label = structure("??1?? = C, ??2?? = B, ??3?? = A", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_de165a3", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b654f76", 
         option = "??1?? = A, ??2?? = B, ??3?? = C", value = "??1?? = A, ??2?? = B, ??3?? = C", 
         label = structure("??1?? = A, ??2?? = B, ??3?? = C", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8557ec", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1708923", 
         option = "??1?? = B, ??2?? = A, ??3?? = C", value = "??1?? = B, ??2?? = A, ??3?? = C", 
         label = structure("??1?? = B, ??2?? = A, ??3?? = C", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -874,23 +890,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-lm-formula-components-answer", question = "quiz-lm-formula-components"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 486860398.773288, options = list()), class = c("learnr_radio", 
+    seed = 102791237.952134, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-get-residuals", 
     question = structure("What R function do you use to get the residuals of a fitted model?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_6f87a10", 
-        option = "residuals", value = "residuals", label = structure("residuals", html = TRUE, class = c("html", 
-        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_548951b", 
+    "character")), answers = list(structure(list(id = "lnr_ans_356a7f9", 
         option = "errors", value = "errors", label = structure("errors", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3abbf11", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_47e073a", 
         option = "fitted", value = "fitted", label = structure("fitted", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_41d75ef", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7717e3f", 
+        option = "residuals", value = "residuals", label = structure("residuals", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_95931dc", 
         option = "summary", value = "summary", label = structure("summary", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -901,7 +917,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-get-residuals-answer", question = "quiz-get-residuals"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1105712825.48511, options = list()), class = c("learnr_radio", 
+    seed = 1533705834.78581, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -909,16 +925,16 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-get-fitted-values", 
     question = structure("What R function do you use to get the fitted values from a fitted model?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_871f17e", 
+    "character")), answers = list(structure(list(id = "lnr_ans_5f67078", 
         option = "fitted", value = "fitted", label = structure("fitted", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f00d6ce", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4424422", 
         option = "residuals", value = "residuals", label = structure("residuals", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4533e17", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_720a3d", 
         option = "predict", value = "predict", label = structure("predict", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c1079bd", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5c6039e", 
         option = "summary", value = "summary", label = structure("summary", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -929,21 +945,21 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-get-fitted-values-answer", question = "quiz-get-fitted-values"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1903002183.11385, options = list()), class = c("learnr_radio", 
+    seed = 1868006783.63014, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-residuals-normality", 
     question = structure("<p>Make a histogram of the residuals.<\u002fp>\n<p>Do you think we can safely assume that the residuals are normally distributed?<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_e9780db", 
+    "character")), answers = list(structure(list(id = "lnr_ans_8bbb0b2", 
         option = "I don't really know", value = "I don't really know", 
         label = structure("I don’t really know", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c3bbf1b", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7c8b502", 
         option = "No", value = "No", label = structure("No", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_705728e", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_72c9318", 
         option = "Yes", value = "Yes", label = structure("Yes", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -954,7 +970,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-residuals-normality-answer", question = "quiz-residuals-normality"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 882601751.089007, options = list()), class = c("learnr_radio", 
+    seed = 183188249.414696, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -962,13 +978,13 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz-residuals-vs-fitted", 
     question = structure("<p>Make a graph of the residuals (on the y-axis) against the fitted values (on the x-axis).<\u002fp>\n<p>Do you think there is a pattern in how the residuals are related to the fitted values?<\u002fp>\n<p>For example, if the data followed a curve, we might conclude that the relationship is not well described by a linear model.<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_4f3c4e2", 
+    "character")), answers = list(structure(list(id = "lnr_ans_f8cfb6d", 
         option = "Yes", value = "Yes", label = structure("Yes", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b1cc34b", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e46f67f", 
         option = "No", value = "No", label = structure("No", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3e8f600", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7c438b4", 
         option = "I don't really know", value = "I don't really know", 
         label = structure("I don’t really know", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -980,14 +996,14 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-residuals-vs-fitted-answer", question = "quiz-residuals-vs-fitted"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1337333653.37726, options = list()), class = c("learnr_radio", 
+    seed = 1566916039.27035, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-qqplot-uniform", 
     question = structure("<p>Which numbered QQ-plot most likely indicates uniformly distributed data?<\u002fp>\n<p>(Just type a single number. For example, if you think the answer is QQ-plot 1, just type 1.)<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_dcfef87", 
+    "character")), answers = list(structure(list(id = "lnr_ans_e0f6287", 
         option = "6", value = 6, label = structure("6", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -998,7 +1014,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-qqplot-uniform-answer", question = "quiz-qqplot-uniform"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1429182884.83448, options = list(min = NA, max = NA, 
+    seed = 884197806.588263, options = list(min = NA, max = NA, 
         step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
 "tutorial_question")), session = session)
 </script>
@@ -1007,7 +1023,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-qqplot-left-skewed", 
     question = structure("Which numbered QQ-plot most likely indicates left-skewed data?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_30a2206", 
+    "character")), answers = list(structure(list(id = "lnr_ans_8e805f4", 
         option = "3", value = 3, label = structure("3", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1018,7 +1034,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-qqplot-left-skewed-answer", question = "quiz-qqplot-left-skewed"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 140299295.934668, options = list(min = NA, max = NA, 
+    seed = 1579261153.7646, options = list(min = NA, max = NA, 
         step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
 "tutorial_question")), session = session)
 </script>
@@ -1026,10 +1042,10 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-qqplot-poisson-binom", 
     question = structure("Which numbered QQ-plot most likely indicates Poisson- or binomially-distributed data?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_82e7edf", 
+    "character")), answers = list(structure(list(id = "lnr_ans_bc819fd", 
         option = "2", value = 2, label = structure("2", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_912238f", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b4ce170", 
         option = "1", value = 1, label = structure("1", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1040,7 +1056,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-qqplot-poisson-binom-answer", question = "quiz-qqplot-poisson-binom"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1653074857.73023, options = list(min = NA, max = NA, 
+    seed = 1296449069.89629, options = list(min = NA, max = NA, 
         step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
 "tutorial_question")), session = session)
 </script>
@@ -1049,7 +1065,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "quiz-qqplot-right-skewed", 
     question = structure("Which numbered QQ-plot most likely indicates right-skewed data?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_3d7ae18", 
+    "character")), answers = list(structure(list(id = "lnr_ans_6e03c14", 
         option = "4", value = 4, label = structure("4", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1060,7 +1076,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "quiz-qqplot-right-skewed-answer", question = "quiz-qqplot-right-skewed"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 495470160.769279, options = list(min = NA, max = NA, 
+    seed = 1970884692.08224, options = list(min = NA, max = NA, 
         step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
 "tutorial_question")), session = session)
 </script>
@@ -1068,39 +1084,39 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "q1-preliminaries", 
     question = structure("Before we fit a linear regression model, which of the following are good things to do?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_c8c9844", 
+    "character")), answers = list(structure(list(id = "lnr_ans_87ffc37", 
         option = "Make a guess of the slope and intercept.", 
         value = "Make a guess of the slope and intercept.", label = structure("Make a guess of the slope and intercept.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_92e3959", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ab5f411", 
         option = "Decide whether the slope is statistically significant.", 
         value = "Decide whether the slope is statistically significant.", 
         label = structure("Decide whether the slope is statistically significant.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_80b731e", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_34bdf99", 
         option = "Make an assessment of whether we think the relationship is linear.", 
         value = "Make an assessment of whether we think the relationship is linear.", 
         label = structure("Make an assessment of whether we think the relationship is linear.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_32aa6f8", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4539457", 
         option = "Check whether the residuals seem normally distributed.", 
         value = "Check whether the residuals seem normally distributed.", 
         label = structure("Check whether the residuals seem normally distributed.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_56ad6c4", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_459953d", 
         option = "Be clear about the question we are trying to answer.", 
         value = "Be clear about the question we are trying to answer.", 
         label = structure("Be clear about the question we are trying to answer.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_76098b2", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_11f637e", 
         option = "Calculate the p-value.", value = "Calculate the p-value.", 
         label = structure("Calculate the p-value.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8bb60d8", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_229e9d2", 
         option = "Visualise the data.", value = "Visualise the data.", 
         label = structure("Visualise the data.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cf9e12", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2b4ad26", 
         option = "Figure out the degrees of freedom for error.", 
         value = "Figure out the degrees of freedom for error.", 
         label = structure("Figure out the degrees of freedom for error.", html = TRUE, class = c("html", 
@@ -1109,11 +1125,11 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", lab
     "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
     "character"))), messages = list(correct = structure("Correct! Before fitting a model, it is important to understand the question, visualise the data, think about linearity, and work out basic quantities like degrees of freedom. Calculating p-values comes later.", html = TRUE, class = c("html", 
     "character")), try_again = structure("Incorrect. Be sure to select every correct answer.", html = TRUE, class = c("html", 
-    "character")), incorrect = structure("Think about what can (and cannot) be done before the model is fitted. P-values and residual checks require a fitted model.", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Think about what can (and cannot) be done before the model is fitted. P-values and residual checks require a fitted model, for example.", html = TRUE, class = c("html", 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "q1-preliminaries-answer", question = "q1-preliminaries"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1734323634.69239, options = list()), class = c("learnr_checkbox", 
+    seed = 1624237397.24366, options = list()), class = c("learnr_checkbox", 
 "tutorial_question")), session = session)
 </script>
 
@@ -1121,7 +1137,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", lab
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", label = "q2-df-numeric", 
     question = structure("<p>Imagine we have a dataset on weight and blood pressure for <strong>48 people<\u002fstrong>.<\u002fp>\n<p>If we fit a simple linear regression to test for a relationship between these two variables, how many <strong>degrees of freedom for error<\u002fstrong> will the regression model have?<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_ec78915", 
+    "character")), answers = list(structure(list(id = "lnr_ans_aee3d60", 
         option = "46", value = 46, label = structure("46", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1132,7 +1148,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "q2-df-numeric-answer", question = "q2-df-numeric"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 140022677.434797, options = list(min = NA, max = NA, 
+    seed = 1518716085.79279, options = list(min = NA, max = NA, 
         step = NA, tolerance = 1.5e-08)), class = c("learnr_numeric", 
 "tutorial_question")), session = session)
 </script>
@@ -1140,15 +1156,15 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_numeric", labe
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q3-residual-histogram", 
     question = structure("Looking at the distribution of model residuals (e.g. using a histogram) is particularly useful for checking which assumption of linear regression?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_22f4a84", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ad76aab", 
         option = "Normally distributed residuals.", value = "Normally distributed residuals.", 
         label = structure("Normally distributed residuals.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_599c2f7", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3bc4d7c", 
         option = "Independently distributed residuals.", value = "Independently distributed residuals.", 
         label = structure("Independently distributed residuals.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5d9c531", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b2d3d5e", 
         option = "Equality (homogeneity) of variances.", value = "Equality (homogeneity) of variances.", 
         label = structure("Equality (homogeneity) of variances.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1160,7 +1176,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "q3-residual-histogram-answer", question = "q3-residual-histogram"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 819888649.61821, options = list()), class = c("learnr_radio", 
+    seed = 904183203.078957, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -1168,17 +1184,17 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q4-lm-order", 
     question = structure("<p>In R, we often fit a linear regression model using code like:<\u002fp>\n<p><code>lm(variable1 ~ variable2, data = my_data)<\u002fcode><\u002fp>\n<p>What should <code>variable1<\u002fcode> and <code>variable2<\u002fcode> represent?<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_c69a5e8", 
+    "character")), answers = list(structure(list(id = "lnr_ans_4c4879c", 
         option = "It does not matter; the result will be the same.", 
         value = "It does not matter; the result will be the same.", 
         label = structure("It does not matter; the result will be the same.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_59a577a", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_59970c8", 
         option = "variable1 should be the explanatory variable, variable2 the response variable.", 
         value = "variable1 should be the explanatory variable, variable2 the response variable.", 
         label = structure("variable1 should be the explanatory variable, variable2 the response variable.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9c29017", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5476421", 
         option = "variable1 should be the response variable, variable2 the explanatory variable.", 
         value = "variable1 should be the response variable, variable2 the explanatory variable.", 
         label = structure("variable1 should be the response variable, variable2 the explanatory variable.", html = TRUE, class = c("html", 
@@ -1191,30 +1207,30 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "q4-lm-order-answer", question = "q4-lm-order"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1045661726.01308, options = list()), class = c("learnr_radio", 
+    seed = 1471502369.31478, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q5-least-squares", 
     question = structure("When the parameters of a simple linear regression model are estimated, which distances are minimised by the <strong>least squares<\u002fstrong> algorithm?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_61fe2f", 
+    "character")), answers = list(structure(list(id = "lnr_ans_de3524", 
         option = "Horizontal distances.", value = "Horizontal distances.", 
         label = structure("Horizontal distances.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9abf930", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d5067ca", 
         option = "Vertical distances.", value = "Vertical distances.", 
         label = structure("Vertical distances.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
     "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
     "character"))), messages = list(correct = structure("Correct! Least squares minimises the sum of squared <strong>vertical<\u002fstrong> distances between observations and the fitted line.", html = TRUE, class = c("html", 
-    "character")), try_again = structure("In linear regression, distances are measured vertically (in the response variable), not horizontally.", html = TRUE, class = c("html", 
-    "character")), incorrect = structure("In linear regression, distances are measured vertically (in the response variable), not horizontally.", html = TRUE, class = c("html", 
+    "character")), try_again = structure("In linear regression, it is unexplained variation in the response (y) variable that is minimised. Think about what direction this is on a graph of y (vertical axis) against x (horizontal axis).", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("In linear regression, it is unexplained variation in the response (y) variable that is minimised. Think about what direction this is on a graph of y (vertical axis) against x (horizontal axis).", html = TRUE, class = c("html", 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "q5-least-squares-answer", question = "q5-least-squares"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 423864521.802623, options = list()), class = c("learnr_radio", 
+    seed = 659606253.192847, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -1222,25 +1238,21 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "q6-assumptions", 
     question = structure("Which of the following are assumptions of a simple linear regression model?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_83d9ae2", 
+    "character")), answers = list(structure(list(id = "lnr_ans_4ea5073", 
         option = "The response variable must be normally distributed.", 
         value = "The response variable must be normally distributed.", 
         label = structure("The response variable must be normally distributed.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_efd88e5", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ab6e839", 
         option = "The errors must be normally distributed.", 
         value = "The errors must be normally distributed.", label = structure("The errors must be normally distributed.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d402bec", 
-        option = "The response variable is continuous.", value = "The response variable is continuous.", 
-        label = structure("The response variable is continuous.", html = TRUE, class = c("html", 
-        "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6f30d61", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_464da5b", 
         option = "The covariate must be normally distributed.", 
         value = "The covariate must be normally distributed.", 
         label = structure("The covariate must be normally distributed.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7827966", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cdb56e4", 
         option = "The relationship between x and y is linear.", 
         value = "The relationship between x and y is linear.", 
         label = structure("The relationship between x and y is linear.", html = TRUE, class = c("html", 
@@ -1253,34 +1265,34 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", lab
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "q6-assumptions-answer", question = "q6-assumptions"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 512781790.261217, options = list()), class = c("learnr_checkbox", 
+    seed = 170240061.420726, options = list()), class = c("learnr_checkbox", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "q7-diagnostics", 
     question = structure("After fitting a linear regression model, how can you visually check whether the modelling assumptions seem reasonable?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_4dc4754", 
+    "character")), answers = list(structure(list(id = "lnr_ans_eda7432", 
         option = "By plotting a diagram of the residuals against the fitted values.", 
         value = "By plotting a diagram of the residuals against the fitted values.", 
         label = structure("By plotting a diagram of the residuals against the fitted values.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ffdf9ac", 
-        option = "By plotting the data before fitting the model.", 
-        value = "By plotting the data before fitting the model.", 
-        label = structure("By plotting the data before fitting the model.", html = TRUE, class = c("html", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5211e8f", 
+        option = "By examining the distribution of the response variable.", 
+        value = "By examining the distribution of the response variable.", 
+        label = structure("By examining the distribution of the response variable.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9dbae5e", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2be78b0", 
         option = "By testing whether the slope coefficient is 0.", 
         value = "By testing whether the slope coefficient is 0.", 
         label = structure("By testing whether the slope coefficient is 0.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bfc1959", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a8515d2", 
         option = "By looking at the raw data files without plotting.", 
         value = "By looking at the raw data files without plotting.", 
         label = structure("By looking at the raw data files without plotting.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ad23294", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6c3b00b", 
         option = "By plotting a histogram of the residuals.", 
         value = "By plotting a histogram of the residuals.", 
         label = structure("By plotting a histogram of the residuals.", html = TRUE, class = c("html", 
@@ -1293,7 +1305,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", lab
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "q7-diagnostics-answer", question = "q7-diagnostics"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 943590922.060606, options = list()), class = c("learnr_checkbox", 
+    seed = 704489865.171946, options = list()), class = c("learnr_checkbox", 
 "tutorial_question")), session = session)
 </script>
 
@@ -1301,16 +1313,16 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", lab
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q8-ggfortify", 
     question = structure("<p>In R, we can produce diagnostic regression plots using a function from the <strong>ggfortify<\u002fstrong> package.<\u002fp>\n<p>What is the name of this function?<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_c76243a", 
+    "character")), answers = list(structure(list(id = "lnr_ans_e9dbbf2", 
         option = "autoplot", value = "autoplot", label = structure("autoplot", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bf95a41", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_72362", 
         option = "ggplot", value = "ggplot", label = structure("ggplot", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a819d85", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ad6861", 
         option = "fortify", value = "fortify", label = structure("fortify", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_595067", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1bcd367", 
         option = "diagnose", value = "diagnose", label = structure("diagnose", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1321,32 +1333,29 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "q8-ggfortify-answer", question = "q8-ggfortify"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1156250366.96158, options = list()), class = c("learnr_radio", 
+    seed = 966490442.549943, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q9-scale-location", 
-    question = structure("<p>The figure shown is a <strong>scale–location plot<\u002fstrong> from a linear regression.<\u002fp>\n<p>What assumption of linear regression is it primarily used to assess?<\u002fp>\n", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_f482ed4", 
-        option = "Var(εᵢ) is constant.", value = "Var(εᵢ) is constant.", 
-        label = structure("Var(εᵢ) is constant.", html = TRUE, class = c("html", 
+    question = structure("What assumption of linear regression is a <strong>scale–location plot<\u002fstrong> primarily used to assess?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_6c84ce0", 
+        option = "Constancy, or lack of constancy, or Var(εᵢ).", 
+        value = "Constancy, or lack of constancy, or Var(εᵢ).", 
+        label = structure("Constancy, or lack of constancy, or Var(εᵢ).", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_140c40c", 
-        option = "Var(εᵢ) is not constant.", value = "Var(εᵢ) is not constant.", 
-        label = structure("Var(εᵢ) is not constant.", html = TRUE, class = c("html", 
-        "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6152b99", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e5e5eb4", 
         option = "β₁ = 0.", value = "β₁ = 0.", label = structure("β₁ = 0.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a7f74", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ab7bc88", 
         option = "β₁ ≠ 0.", value = "β₁ ≠ 0.", label = structure("β₁ ≠ 0.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_11368ef", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ff82050", 
         option = "The errors are normally distributed.", value = "The errors are normally distributed.", 
         label = structure("The errors are normally distributed.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5dcb56f", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_416df9b", 
         option = "The errors are independent.", value = "The errors are independent.", 
         label = structure("The errors are independent.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1358,21 +1367,20 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "q9-scale-location-answer", question = "q9-scale-location"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1909400754.61087, options = list()), class = c("learnr_radio", 
+    seed = 933963762.065089, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 </p>
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="dependencies">
-{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.28"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"character","attributes":{},"value":["<style>h1 {font-size: 34px;}\n       h1.title {font-size: 38px;}\n       h2 {font-size: 30px;}\n       h3 {font-size: 24px;}\n       h4 {font-size: 18px;}\n       h5 {font-size: 16px;}\n       h6 {font-size: 12px;}\n       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}\n       pre:not([class]) { background-color: white }<\/style>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["i18n"]},{"type":"character","attributes":{},"value":["21.6.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/i18n"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["i18next.min.js","tutorial-i18n-init.js"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["<script id=\"i18n-cstm-trns\" type=\"application/json\">{\"language\":\"en\",\"resources\":{\"en\":{\"translation\":{\"button\":{\"runcode\":\"Run Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hints\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Next Hint\",\"hintprev\":\"Previous Hint\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copy to Clipboard\",\"startover\":\"Start Over\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continue\",\"submitanswer\":\"Submit Answer\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Previous Topic\",\"nexttopic\":\"Next Topic\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Try Again\"},\"text\":{\"startover\":\"Start Over\",\"areyousure\":\"Are you sure you want to start over? (all exercise progress will be reset)\",\"youmustcomplete\":\"You must complete the\",\"exercise\":\"exercise\",\"exercise_plural\":\"exercises\",\"inthissection\":\"in this section before continuing.\",\"code\":\"Code\",\"enginecap\":\"{{engine}} $t(text.code)\",\"quiz\":\"Quiz\",\"blank\":\"blank\",\"blank_plural\":\"blanks\",\"exercisecontainsblank\":\"This exercise contains {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Please replace {{blank}} with valid code.\",\"unparsable\":\"It looks like this might not be valid R code. R cannot determine how to turn your text into a complete command. You may have forgotten to fill in a blank, to remove an underscore, to include a comma between arguments, or to close an opening <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> or <code>{<\\/code> with a matching <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> or <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>It looks like your R code contains specially formatted quotation marks or &quot;curly&quot; quotes (<code>{{character}}<\\/code>) around character strings, making your code invalid. R requires character values to be contained in straight quotation marks (<code>&quot;<\\/code> or <code>'<\\/code>).<\\/p> {{code}} <p>Don't worry, this is a common source of errors when you copy code from another app that applies its own formatting to text. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. Try deleting the special character from your code and retyping it manually.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"and\":\"and\",\"or\":\"or\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"fr\":{\"translation\":{\"button\":{\"runcode\":\"Lancer le Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Indication\",\"hint_plural\":\"Indications\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Indication Suivante\",\"hintprev\":\"Indication Précédente\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copier dans le Presse-papier\",\"startover\":\"Recommencer\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuer\",\"submitanswer\":\"Soumettre\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Chapitre Précédent\",\"nexttopic\":\"Chapitre Suivant\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Réessayer\"},\"text\":{\"startover\":\"Recommencer\",\"areyousure\":\"Êtes-vous certains de vouloir recommencer? (La progression sera remise à zéro)\",\"youmustcomplete\":\"Vous devez d'abord compléter\",\"exercise\":\"l'exercice\",\"exercise_plural\":\"des exercices\",\"inthissection\":\"de cette section avec de continuer.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"et\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"es\":{\"translation\":{\"button\":{\"runcode\":\"Ejecutar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Pista\",\"hint_plural\":\"Pistas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Siguiente pista\",\"hintprev\":\"Pista anterior\",\"solution\":\"Solución\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar al portapapeles\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar respuesta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tema anterior\",\"nexttopic\":\"Tema siguiente\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Volver a intentar\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"¿De verdad quieres empezar de nuevo? (todo el progreso del ejercicio se perderá)\",\"youmustcomplete\":\"Debes completar\",\"exercise\":\"el ejercicio\",\"exercise_plural\":\"los ejercicios\",\"inthissection\":\"en esta sección antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Cuestionario\",\"and\":\"y\",\"or\":\"o\",\"oxfordcomma\":\"\"}}},\"pt\":{\"translation\":{\"button\":{\"runcode\":\"Executar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Dica\",\"hint_plural\":\"Dicas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Próxima dica\",\"hintprev\":\"Dica anterior\",\"solution\":\"Solução\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar para a área de transferência\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar resposta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tópico anterior\",\"nexttopic\":\"Próximo tópico\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tentar novamente\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"Tem certeza que deseja começar novamente? (todo o progresso feito será perdido)\",\"youmustcomplete\":\"Você deve completar\",\"exercise\":\"o exercício\",\"exercise_plural\":\"os exercícios\",\"inthissection\":\"nesta seção antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"e\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"tr\":{\"translation\":{\"button\":{\"runcode\":\"Çalıştırma Kodu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Ipucu\",\"hint_plural\":\"İpuçları\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Sonraki İpucu\",\"hintprev\":\"Önceki İpucu\",\"solution\":\"Çözüm\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Pano'ya Kopyala\",\"startover\":\"Baştan Başlamak\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Devam et\",\"submitanswer\":\"Cevabı onayla\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Önceki Konu\",\"nexttopic\":\"Sonraki Konu\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tekrar Deneyin\"},\"text\":{\"startover\":\"Baştan Başlamak\",\"areyousure\":\"Baştan başlamak istediğinizden emin misiniz? (tüm egzersiz ilerlemesi kaybolacak)\",\"youmustcomplete\":\"Tamamlamalısın\",\"exercise\":\"egzersiz\",\"exercise_plural\":\"egzersizler\",\"inthissection\":\"devam etmeden önce bu bölümde\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Sınav\",\"oxfordcomma\":\"\"}}},\"emo\":{\"translation\":{\"button\":{\"runcode\":\"🏃\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"💡\",\"hint_plural\":\"$t(button.hint)\",\"hinttitle\":\"$t(button.hint)\",\"solution\":\"🎯\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"📋\",\"startover\":\"⏮\",\"startovertitle\":\"Start Over\",\"continue\":\"✅\",\"submitanswer\":\"🆗\",\"submitanswertitle\":\"Submit Answer\",\"previoustopic\":\"⬅\",\"nexttopic\":\"➡\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"🔁\"},\"text\":{\"startover\":\"⏮\",\"areyousure\":\"🤔\",\"youmustcomplete\":\"⚠️ 👉 🧑‍💻\",\"exercise\":\"\",\"exercise_plural\":\"\",\"inthissection\":\"\",\"code\":\"💻\",\"enginecap\":\"$t(text.code) {{engine}}\",\"oxfordcomma\":\"\"}}},\"eu\":{\"translation\":{\"button\":{\"runcode\":\"Kodea egikaritu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Laguntza\",\"hint_plural\":\"Laguntza\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Aurreko laguntza\",\"hintprev\":\"Hurrengo laguntza\",\"solution\":\"Ebazpena\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Arbelean kopiatu\",\"startover\":\"Berrabiarazi\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Jarraitu\",\"submitanswer\":\"Erantzuna bidali\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Aurreko atala\",\"nexttopic\":\"Hurrengo atala\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Berriro saiatu\"},\"text\":{\"startover\":\"Berrabiarazi\",\"areyousure\":\"Berriro hasi nahi duzu? (egindako lana galdu egingo da)\",\"youmustcomplete\":\"Aurrera egin baino lehen atal honetako\",\"exercise\":\"ariketa egin behar duzu.\",\"exercise_plural\":\"ariketak egin behar dituzu.\",\"inthissection\":\"\",\"code\":\"Kodea\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Galdetegia\",\"oxfordcomma\":\"\"}}},\"de\":{\"translation\":{\"button\":{\"runcode\":\"Code ausführen\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Tipp\",\"hint_plural\":\"Tipps\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Nächster Tipp\",\"hintprev\":\"Vorheriger Tipp\",\"solution\":\"Lösung\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"In die Zwischenablage kopieren\",\"startover\":\"Neustart\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Weiter\",\"submitanswer\":\"Antwort einreichen\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Vorheriges Kapitel\",\"nexttopic\":\"Nächstes Kapitel\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Nochmal versuchen\"},\"text\":{\"startover\":\"Neustart\",\"areyousure\":\"Bist du sicher, dass du neustarten willst? (der gesamte Lernfortschritt wird gelöscht)\",\"youmustcomplete\":\"Vervollstädinge\",\"exercise\":\"die Übung\",\"exercise_plural\":\"die Übungen\",\"inthissection\":\"in diesem Kapitel, bevor du fortfährst.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"Lücke\",\"blank_plural\":\"Lücken\",\"pleasereplaceblank\":\"Bitte ersetze {{blank}} mit gültigem Code.\",\"unparsable\":\"Dies scheint kein gültiger R Code zu sein. R kann deinen Text nicht in einen gültigen Befehl übersetzen. Du hast vielleicht vergessen, die Lücke zu füllen, einen Unterstrich zu entfernen, ein Komma zwischen Argumente zu setzen oder ein eröffnendes <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> oder <code>{<\\/code> mit einem zugehörigen <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> oder <code>}<\\/code> zu schließen.\\n\",\"and\":\"und\",\"or\":\"oder\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"ko\":{\"translation\":{\"button\":{\"runcode\":\"코드 실행\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"힌트\",\"hint_plural\":\"힌트들\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"다음 힌트\",\"hintprev\":\"이전 힌트\",\"solution\":\"솔루션\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"클립보드에 복사\",\"startover\":\"재학습\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"다음 학습으로\",\"submitanswer\":\"정답 제출\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"이전 토픽\",\"nexttopic\":\"다음 토픽\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"재시도\"},\"text\":{\"startover\":\"재학습\",\"areyousure\":\"다시 시작 하시겠습니까? (모든 예제의 진행 정보가 재설정됩니다)\",\"youmustcomplete\":\"당신은 완료해야 합니다\",\"exercise\":\"연습문제\",\"exercise_plural\":\"연습문제들\",\"inthissection\":\"이 섹션을 실행하기 전에\",\"code\":\"코드\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"퀴즈\",\"blank\":\"공백\",\"blank_plural\":\"공백들\",\"exercisecontainsblank\":\"이 연습문제에는 {{count}}개의 $t(text.blank)이 포함되어 있습니다.\",\"pleasereplaceblank\":\"{{blank}}를 유효한 코드로 바꾸십시오.\",\"unparsable\":\"이것은 유효한 R 코드가 아닐 수 있습니다. R은 텍스트를 완전한 명령으로 변환하는 방법을 결정할 수 없습니다. 당신은 공백이나 밑줄을 대체하여 채우기, 인수를 컴마로 구분하기, 또는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> , <code>{<\\/code>로 시작하는 구문을 닫는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>, <code>}<\\/code>을 잊었을 수도 있습니다.\\n\",\"and\":\"그리고\",\"or\":\"혹은\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}},\"zh\":{\"translation\":{\"button\":{\"runcode\":\"运行代码\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"提示\",\"hint_plural\":\"提示\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"下一个提示\",\"hintprev\":\"上一个提示\",\"solution\":\"答案\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"复制到剪切板\",\"startover\":\"重新开始\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"继续\",\"submitanswer\":\"提交答案\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"上一专题\",\"nexttopic\":\"下一专题\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"再试一次\"},\"text\":{\"startover\":\"重置\",\"areyousure\":\"你确定要重新开始吗? (所有当前进度将被重置)\",\"youmustcomplete\":\"你必须完成\",\"exercise\":\"练习\",\"exercise_plural\":\"练习\",\"inthissection\":\"在进行本节之前\",\"code\":\"代码\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"测试\",\"blank\":\"空\",\"blank_plural\":\"空\",\"exercisecontainsblank\":\"本练习包含{{count}}个$t(text.blank)\",\"pleasereplaceblank\":\"请在{{blank}}内填写恰当的代码\",\"unparsable\":\"这似乎不是有效的R代码。 R不知道如何将您的文本转换为完整的命令。 您是否忘了填空，忘了删除下划线，忘了在参数之间包含逗号，或者是忘了用<code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>,<code>}<\\/code>来封闭<code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code>。 or <code>{<\\/code>。\\n\",\"unparsablequotes\":\"<p>您的R代码中似乎含有特殊格式的引号，或者弯引号(<code>{{character}}<\\/code>) 在字符串前后，在R中字符串应该被直引号(<code>&quot;<\\/code> 或者 <code>'<\\/code>)包裹。<\\/p> {{code}} <p>别担心，该错误经常在复制粘贴包含格式的代码时遇到， 您可以尝试将该行中的代码替换为以下代码，也许还有其他地方需要修改。<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"and\":\"且\",\"or\":\"或\",\"listcomma\":\",\",\"oxfordcomma\":\",\"}}},\"pl\":{\"translation\":{\"button\":{\"runcode\":\"Uruchom kod\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Podpowiedź\",\"hint_plural\":\"Podpowiedzi\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Następna podpowiedź\",\"hintprev\":\"Poprzednia podpowiedź\",\"solution\":\"Rozwiązanie\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Kopiuj do schowka\",\"startover\":\"Zacznij od początku\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Kontynuuj\",\"submitanswer\":\"Wyślij\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Poprzednia sekcja\",\"nexttopic\":\"Następna sekcja\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Spróbuj ponownie\"},\"text\":{\"startover\":\"Zacznij od początku\",\"areyousure\":\"Czy na pewno chcesz zacząć od początku? (cały postęp w zadaniu zostanie utracony)\",\"youmustcomplete\":\"Musisz ukończyć\",\"exercise\":\"ćwiczenie\",\"exercise_plural\":\"ćwiczenia\",\"inthissection\":\"w tej sekcji przed kontynuowaniem\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"luka\",\"blank_plural\":\"luk(i)\",\"exercisecontainsblank\":\"To ćwiczenie zawiera {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Proszę uzupełnić {{blank}} prawidłowym kodem.\",\"unparsable\":\"Wygląda na to, że może to nie być prawidłowy kod R. R nie jest w stanie przetworzyć Twojego tekstu na polecenie. Mogłeś(-aś) zapomnieć wypełnić luki, usunąć podkreślnik, umieścić przecinka między argumentami, lub zamknąć znak <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> lub <code>{<\\/code> odpowiadającym <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> lub <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>Wygląda na to, że Twój kod zawiera szczególnie sformatowane cudzysłowy lub cudzysłowy typograficzne (<code>{{character}}<\\/code>) przy ciągach znaków, co sprawia, że kod jest niepoprawny. R wymaga cudzysłowów prostych (<code>&quot;<\\/code> albo <code>'<\\/code>).<\\/p> {{code}} <p>Nie martw się, to powszechne źródło błędów, gdy kopiuje się kod z innego programu, który sam formatuje teskt. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Spróbuj usunąć znak specjalny i wpisać do ponownie ręcznie.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"and\":\"i\",\"or\":\"lub\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}}}}<\/script>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.28"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["6.4.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.min.css","css/v4-shims.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fontawesome"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["5.5.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]}]}
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.29"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"character","attributes":{},"value":["<style>h1 {font-size: 34px;}\n       h1.title {font-size: 38px;}\n       h2 {font-size: 30px;}\n       h3 {font-size: 24px;}\n       h4 {font-size: 18px;}\n       h5 {font-size: 16px;}\n       h6 {font-size: 12px;}\n       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}\n       pre:not([class]) { background-color: white }<\/style>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["i18n"]},{"type":"character","attributes":{},"value":["21.6.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/i18n"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["i18next.min.js","tutorial-i18n-init.js"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["<script id=\"i18n-cstm-trns\" type=\"application/json\">{\"language\":\"en\",\"resources\":{\"en\":{\"translation\":{\"button\":{\"runcode\":\"Run Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hints\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Next Hint\",\"hintprev\":\"Previous Hint\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copy to Clipboard\",\"startover\":\"Start Over\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continue\",\"submitanswer\":\"Submit Answer\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Previous Topic\",\"nexttopic\":\"Next Topic\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Try Again\"},\"text\":{\"startover\":\"Start Over\",\"areyousure\":\"Are you sure you want to start over? (All exercise progress will be reset)\",\"youmustcomplete\":\"You must complete the\",\"exercise\":\"exercise\",\"exercise_plural\":\"exercises\",\"inthissection\":\"in this section before continuing.\",\"code\":\"Code\",\"enginecap\":\"{{engine}} $t(text.code)\",\"quiz\":\"Quiz\",\"blank\":\"blank\",\"blank_plural\":\"blanks\",\"exercisecontainsblank\":\"This exercise contains {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Please replace {{blank}} with valid code.\",\"unparsable\":\"It looks like this might not be valid R code. R cannot determine how to turn your text into a complete command. You may have forgotten to fill in a blank, to remove an underscore, to include a comma between arguments, or to close an opening <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> or <code>{<\\/code> with a matching <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> or <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>It looks like your R code contains specially formatted quotation marks or &quot;curly&quot; quotes (<code>{{character}}<\\/code>) around character strings, making your code invalid. R requires character values to be contained in straight quotation marks (<code>&quot;<\\/code> or <code>'<\\/code>).<\\/p> {{code}} <p>Don't worry, this is a common source of errors when you copy code from another app that applies its own formatting to text. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. Try deleting the special character from your code and retyping it manually.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"and\":\"and\",\"or\":\"or\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"fr\":{\"translation\":{\"button\":{\"runcode\":\"Lancer le Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Indication\",\"hint_plural\":\"Indications\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Indication Suivante\",\"hintprev\":\"Indication Précédente\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copier dans le Presse-papier\",\"startover\":\"Recommencer\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuer\",\"submitanswer\":\"Soumettre\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Chapitre Précédent\",\"nexttopic\":\"Chapitre Suivant\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Réessayer\"},\"text\":{\"startover\":\"Recommencer\",\"areyousure\":\"Êtes-vous certains de vouloir recommencer? (La progression sera remise à zéro)\",\"youmustcomplete\":\"Vous devez d'abord compléter\",\"exercise\":\"l'exercice\",\"exercise_plural\":\"des exercices\",\"inthissection\":\"de cette section avec de continuer.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"et\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"es\":{\"translation\":{\"button\":{\"runcode\":\"Ejecutar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Pista\",\"hint_plural\":\"Pistas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Siguiente pista\",\"hintprev\":\"Pista anterior\",\"solution\":\"Solución\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar al portapapeles\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar respuesta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tema anterior\",\"nexttopic\":\"Tema siguiente\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Volver a intentar\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"¿De verdad quieres empezar de nuevo? (todo el progreso del ejercicio se perderá)\",\"youmustcomplete\":\"Debes completar\",\"exercise\":\"el ejercicio\",\"exercise_plural\":\"los ejercicios\",\"inthissection\":\"en esta sección antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Cuestionario\",\"and\":\"y\",\"or\":\"o\",\"oxfordcomma\":\"\"}}},\"pt\":{\"translation\":{\"button\":{\"runcode\":\"Executar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Dica\",\"hint_plural\":\"Dicas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Próxima dica\",\"hintprev\":\"Dica anterior\",\"solution\":\"Solução\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar para a área de transferência\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar resposta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tópico anterior\",\"nexttopic\":\"Próximo tópico\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tentar novamente\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"Tem certeza que deseja começar novamente? (todo o progresso feito será perdido)\",\"youmustcomplete\":\"Você deve completar\",\"exercise\":\"o exercício\",\"exercise_plural\":\"os exercícios\",\"inthissection\":\"nesta seção antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"e\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"tr\":{\"translation\":{\"button\":{\"runcode\":\"Çalıştırma Kodu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Ipucu\",\"hint_plural\":\"İpuçları\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Sonraki İpucu\",\"hintprev\":\"Önceki İpucu\",\"solution\":\"Çözüm\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Pano'ya Kopyala\",\"startover\":\"Baştan Başlamak\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Devam et\",\"submitanswer\":\"Cevabı onayla\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Önceki Konu\",\"nexttopic\":\"Sonraki Konu\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tekrar Deneyin\"},\"text\":{\"startover\":\"Baştan Başlamak\",\"areyousure\":\"Baştan başlamak istediğinizden emin misiniz? (tüm egzersiz ilerlemesi kaybolacak)\",\"youmustcomplete\":\"Tamamlamalısın\",\"exercise\":\"egzersiz\",\"exercise_plural\":\"egzersizler\",\"inthissection\":\"devam etmeden önce bu bölümde\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Sınav\",\"oxfordcomma\":\"\"}}},\"emo\":{\"translation\":{\"button\":{\"runcode\":\"🏃\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"💡\",\"hint_plural\":\"$t(button.hint)\",\"hinttitle\":\"$t(button.hint)\",\"solution\":\"🎯\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"📋\",\"startover\":\"⏮\",\"startovertitle\":\"Start Over\",\"continue\":\"✅\",\"submitanswer\":\"🆗\",\"submitanswertitle\":\"Submit Answer\",\"previoustopic\":\"⬅\",\"nexttopic\":\"➡\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"🔁\"},\"text\":{\"startover\":\"⏮\",\"areyousure\":\"🤔\",\"youmustcomplete\":\"⚠️ 👉 🧑‍💻\",\"exercise\":\"\",\"exercise_plural\":\"\",\"inthissection\":\"\",\"code\":\"💻\",\"enginecap\":\"$t(text.code) {{engine}}\",\"oxfordcomma\":\"\"}}},\"eu\":{\"translation\":{\"button\":{\"runcode\":\"Kodea egikaritu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Laguntza\",\"hint_plural\":\"Laguntza\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Aurreko laguntza\",\"hintprev\":\"Hurrengo laguntza\",\"solution\":\"Ebazpena\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Arbelean kopiatu\",\"startover\":\"Berrabiarazi\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Jarraitu\",\"submitanswer\":\"Erantzuna bidali\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Aurreko atala\",\"nexttopic\":\"Hurrengo atala\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Berriro saiatu\"},\"text\":{\"startover\":\"Berrabiarazi\",\"areyousure\":\"Berriro hasi nahi duzu? (egindako lana galdu egingo da)\",\"youmustcomplete\":\"Aurrera egin baino lehen atal honetako\",\"exercise\":\"ariketa egin behar duzu.\",\"exercise_plural\":\"ariketak egin behar dituzu.\",\"inthissection\":\"\",\"code\":\"Kodea\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Galdetegia\",\"oxfordcomma\":\"\"}}},\"de\":{\"translation\":{\"button\":{\"runcode\":\"Code ausführen\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Tipp\",\"hint_plural\":\"Tipps\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Nächster Tipp\",\"hintprev\":\"Vorheriger Tipp\",\"solution\":\"Lösung\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"In die Zwischenablage kopieren\",\"startover\":\"Neustart\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Weiter\",\"submitanswer\":\"Antwort einreichen\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Vorheriges Kapitel\",\"nexttopic\":\"Nächstes Kapitel\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Nochmal versuchen\"},\"text\":{\"startover\":\"Neustart\",\"areyousure\":\"Bist du sicher, dass du neustarten willst? (der gesamte Lernfortschritt wird gelöscht)\",\"youmustcomplete\":\"Vervollstädinge\",\"exercise\":\"die Übung\",\"exercise_plural\":\"die Übungen\",\"inthissection\":\"in diesem Kapitel, bevor du fortfährst.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"Lücke\",\"blank_plural\":\"Lücken\",\"pleasereplaceblank\":\"Bitte ersetze {{blank}} mit gültigem Code.\",\"unparsable\":\"Dies scheint kein gültiger R Code zu sein. R kann deinen Text nicht in einen gültigen Befehl übersetzen. Du hast vielleicht vergessen, die Lücke zu füllen, einen Unterstrich zu entfernen, ein Komma zwischen Argumente zu setzen oder ein eröffnendes <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> oder <code>{<\\/code> mit einem zugehörigen <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> oder <code>}<\\/code> zu schließen.\\n\",\"and\":\"und\",\"or\":\"oder\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"ko\":{\"translation\":{\"button\":{\"runcode\":\"코드 실행\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"힌트\",\"hint_plural\":\"힌트들\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"다음 힌트\",\"hintprev\":\"이전 힌트\",\"solution\":\"솔루션\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"클립보드에 복사\",\"startover\":\"재학습\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"다음 학습으로\",\"submitanswer\":\"정답 제출\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"이전 토픽\",\"nexttopic\":\"다음 토픽\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"재시도\"},\"text\":{\"startover\":\"재학습\",\"areyousure\":\"다시 시작 하시겠습니까? (모든 예제의 진행 정보가 재설정됩니다)\",\"youmustcomplete\":\"당신은 완료해야 합니다\",\"exercise\":\"연습문제\",\"exercise_plural\":\"연습문제들\",\"inthissection\":\"이 섹션을 실행하기 전에\",\"code\":\"코드\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"퀴즈\",\"blank\":\"공백\",\"blank_plural\":\"공백들\",\"exercisecontainsblank\":\"이 연습문제에는 {{count}}개의 $t(text.blank)이 포함되어 있습니다.\",\"pleasereplaceblank\":\"{{blank}}를 유효한 코드로 바꾸십시오.\",\"unparsable\":\"이것은 유효한 R 코드가 아닐 수 있습니다. R은 텍스트를 완전한 명령으로 변환하는 방법을 결정할 수 없습니다. 당신은 공백이나 밑줄을 대체하여 채우기, 인수를 컴마로 구분하기, 또는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> , <code>{<\\/code>로 시작하는 구문을 닫는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>, <code>}<\\/code>을 잊었을 수도 있습니다.\\n\",\"and\":\"그리고\",\"or\":\"혹은\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}},\"zh\":{\"translation\":{\"button\":{\"runcode\":\"运行代码\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"提示\",\"hint_plural\":\"提示\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"下一个提示\",\"hintprev\":\"上一个提示\",\"solution\":\"答案\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"复制到剪切板\",\"startover\":\"重新开始\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"继续\",\"submitanswer\":\"提交答案\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"上一专题\",\"nexttopic\":\"下一专题\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"再试一次\"},\"text\":{\"startover\":\"重置\",\"areyousure\":\"你确定要重新开始吗? (所有当前进度将被重置)\",\"youmustcomplete\":\"你必须完成\",\"exercise\":\"练习\",\"exercise_plural\":\"练习\",\"inthissection\":\"在进行本节之前\",\"code\":\"代码\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"测试\",\"blank\":\"空\",\"blank_plural\":\"空\",\"exercisecontainsblank\":\"本练习包含{{count}}个$t(text.blank)\",\"pleasereplaceblank\":\"请在{{blank}}内填写恰当的代码\",\"unparsable\":\"这似乎不是有效的R代码。 R不知道如何将您的文本转换为完整的命令。 您是否忘了填空，忘了删除下划线，忘了在参数之间包含逗号，或者是忘了用<code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>,<code>}<\\/code>来封闭<code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code>。 or <code>{<\\/code>。\\n\",\"unparsablequotes\":\"<p>您的R代码中似乎含有特殊格式的引号，或者弯引号(<code>{{character}}<\\/code>) 在字符串前后，在R中字符串应该被直引号(<code>&quot;<\\/code> 或者 <code>'<\\/code>)包裹。<\\/p> {{code}} <p>别担心，该错误经常在复制粘贴包含格式的代码时遇到， 您可以尝试将该行中的代码替换为以下代码，也许还有其他地方需要修改。<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"and\":\"且\",\"or\":\"或\",\"listcomma\":\",\",\"oxfordcomma\":\",\"}}},\"pl\":{\"translation\":{\"button\":{\"runcode\":\"Uruchom kod\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Podpowiedź\",\"hint_plural\":\"Podpowiedzi\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Następna podpowiedź\",\"hintprev\":\"Poprzednia podpowiedź\",\"solution\":\"Rozwiązanie\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Kopiuj do schowka\",\"startover\":\"Zacznij od początku\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Kontynuuj\",\"submitanswer\":\"Wyślij\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Poprzednia sekcja\",\"nexttopic\":\"Następna sekcja\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Spróbuj ponownie\"},\"text\":{\"startover\":\"Zacznij od początku\",\"areyousure\":\"Czy na pewno chcesz zacząć od początku? (cały postęp w zadaniu zostanie utracony)\",\"youmustcomplete\":\"Musisz ukończyć\",\"exercise\":\"ćwiczenie\",\"exercise_plural\":\"ćwiczenia\",\"inthissection\":\"w tej sekcji przed kontynuowaniem\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"luka\",\"blank_plural\":\"luk(i)\",\"exercisecontainsblank\":\"To ćwiczenie zawiera {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Proszę uzupełnić {{blank}} prawidłowym kodem.\",\"unparsable\":\"Wygląda na to, że może to nie być prawidłowy kod R. R nie jest w stanie przetworzyć Twojego tekstu na polecenie. Mogłeś(-aś) zapomnieć wypełnić luki, usunąć podkreślnik, umieścić przecinka między argumentami, lub zamknąć znak <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> lub <code>{<\\/code> odpowiadającym <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> lub <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>Wygląda na to, że Twój kod zawiera szczególnie sformatowane cudzysłowy lub cudzysłowy typograficzne (<code>{{character}}<\\/code>) przy ciągach znaków, co sprawia, że kod jest niepoprawny. R wymaga cudzysłowów prostych (<code>&quot;<\\/code> albo <code>'<\\/code>).<\\/p> {{code}} <p>Nie martw się, to powszechne źródło błędów, gdy kopiuje się kod z innego programu, który sam formatuje teskt. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Spróbuj usunąć znak specjalny i wpisać do ponownie ręcznie.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"and\":\"i\",\"or\":\"lub\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}},\"no\":{\"translation\":{\"button\":{\"runcode\":\"Kjør kode\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hint\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Neste hint\",\"hintprev\":\"Forrige hint\",\"solution\":\"Løsning\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Kopier til utklippstavle\",\"startover\":\"Start på nytt\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Fortsett\",\"submitanswer\":\"Send inn svar\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Forrige tema\",\"nexttopic\":\"Neste tema\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Prøv igjen\"},\"text\":{\"startover\":\"Start på nytt\",\"areyousure\":\"Er du sikker på at du vil starte på nytt? (All fremgang vil bli slettet)\",\"youmustcomplete\":\"Du må fullføre\",\"exercise\":\"oppgave\",\"exercise_plural\":\"oppgaver\",\"inthissection\":\"i denne seksjonen før du fortsetter.\",\"code\":\"kode\",\"enginecap\":\"{{engine}}-$t(text.code)\",\"quiz\":\"Quiz\",\"blank\":\"tomrom\",\"blank_plural\":\"tomrom\",\"exercisecontainsblank\":\"Denne oppgaven inneholder {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Erstatt {{blank}} med gyldig kode.\",\"unparsable\":\"Dette ser ikke ut til å være gyldig R-kode. Slik R ser det, utgjør ikke teksten en fullstendig kommando. Du kan ha glemt å fylle ut en luke, å fjerne en understrek, å inkludere et komma mellom argumenter, eller å lukke et åpnende <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> eller <code>{<\\/code> med et tilsvarende <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> eller <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>Det ser ut som om R-koden din inneholder spesielt formaterte anførselstegn eller &quot;krøllete&quot; anførselstegn (<code>{{character}}<\\/code>) rundt tekststrenger, noe som gjør koden din ugyldig. R krever at tekstverdier skal være inneholdt i rette anførselstegn (<code>&quot;<\\/code> eller <code>'<\\/code>).<\\/p> {{code}} <p>Dette er et vanlig problem når du kopierer kode fra et annet program som bruker sin egen formatering på tekst.  Du kan prøve å erstatte koden i den linjen med følgende. Kanskje er det også andre steder som må fikses.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>Det ser ut som om R-koden din inneholder et uventet spesialtegn (<code>{{character}}<\\/code>) som gjør koden din ugyldig.<\\/p> {{code}} <p>Noen ganger kan koden din inneholde et spesialtegn som ser ut som et vanlig tegn, spesielt hvis du kopierer og limer inn koden fra et annet program. Prøv å slette spesialtegnet fra koden din og skriv det inn på nytt for hånd.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>Det ser ut som om R-koden din inneholder et uventet spesialtegn (<code>{{character}}<\\/code>) som gjør koden din ugyldig.<\\/p> {{code}} <p>Noen ganger kan koden din inneholde et spesialtegn som ser ut som et vanlig tegn, spesielt hvis du kopierer og limer inn koden fra et annet program. Du kan prøve å erstatte koden i den linjen med følgende. Kanskje er det også andre steder som må fikses.<\\/p> {{suggestion}}\\n\",\"and\":\"og\",\"or\":\"eller\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}}}}<\/script>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.11.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["6.5.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.min.css","css/v4-shims.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fontawesome"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["5.5.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.11.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.6"]}]}]}
 </script>
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bit","bit64","bslib","cachem","checkmate","cli","commonmark","compiler","crayon","curl","datasets","dichromat","digest","dplyr","ellipsis","evaluate","farver","fastmap","fontawesome","generics","ggplot2","glue","graphics","grDevices","grid","gtable","highr","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","labeling","later","learnr","lifecycle","magrittr","markdown","methods","mime","parallel","patchwork","pillar","pkgconfig","promises","purrr","R6","RColorBrewer","Rcpp","readr","rlang","rmarkdown","rprojroot","rstudioapi","S7","sass","scales","shiny","stats","tibble","tidyr","tidyselect","tools","tzdb","utils","vctrs","vroom","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.4.1","4.5.0.1","4.6.0-1","0.8.0","1.1.0","2.3.2","3.6.4","1.9.1","4.4.1","1.5.3","5.2.2","4.4.1","2.0-0.1","0.6.37","1.1.4","0.3.2","0.24.0","2.1.2","1.2.0","0.5.2","0.1.3","4.0.0","1.8.0","4.4.1","4.4.1","4.4.1","0.3.6","0.11","1.1.3","0.5.8.1","1.6.4","1.6.15","0.1.4","1.8.8","1.48","0.4.3","1.3.2","0.11.5","1.0.4","2.0.3","1.13","4.4.1","0.12","4.4.1","1.2.0","1.10.1","2.0.3","1.3.0","1.0.4","2.6.1","1.1-3","1.0.13","2.1.5","1.1.5","2.28","2.0.4","0.16.0","0.2.0","0.4.9","1.4.0","1.9.1","4.4.1","3.2.1","1.3.1","1.2.1","4.4.1","0.4.0","4.4.1","0.6.5","1.6.5","3.0.2","0.47","1.8-4","2.3.10"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bit","bit64","bslib","cachem","checkmate","cli","commonmark","compiler","crayon","curl","datasets","digest","dplyr","evaluate","farver","fastmap","fontawesome","generics","ggplot2","glue","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","labeling","later","learnr","lifecycle","litedown","magrittr","markdown","methods","mime","otel","parallel","patchwork","pillar","pkgconfig","promises","purrr","R6","RColorBrewer","Rcpp","readr","rlang","rmarkdown","rprojroot","rstudioapi","sass","scales","shiny","stats","tibble","tidyr","tidyselect","tools","tzdb","utils","vctrs","vroom","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.5.0","4.6.0","4.6.0-1","0.9.0","1.1.0","2.3.3","3.6.5","2.0.0","4.5.0","1.5.3","6.3.0","4.5.0","0.6.37","1.1.4","1.0.3","2.1.2","1.2.0","0.5.3","0.1.4","3.5.2","1.8.0","4.5.0","4.5.0","4.5.0","0.3.6","1.1.3","0.5.8.1","1.6.4","1.6.16","0.1.4","2.0.0","1.50","0.4.3","1.4.4","0.11.6","1.0.4","0.8","2.0.3","2.0","4.5.0","0.13","0.2.0","4.5.0","1.3.2","1.10.2","2.0.3","1.5.0","1.0.4","2.6.1","1.1-3","1.0.14","2.1.5","1.1.6","2.29","2.0.4","0.17.1","0.4.10","1.4.0","1.11.1","4.5.0","3.2.1","1.3.1","1.2.1","4.5.0","0.5.0","4.5.0","0.6.5","1.6.5","3.0.2","0.54","1.8-4","2.3.10"]}]}]}
 </script>
 <!--/html_preserve-->
-</div>
 </div>
 
 </article> <!-- topics -->
@@ -1384,7 +1392,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 
 <!-- begin doc-metadata -->
 <div id="doc-metadata">
-<h1 class="title toc-ignore" style="display:none;">Week 3 BIO144 Course
+<h1 class="title toc-ignore" style="display:none;">Unit 3 BIO144 Course
 Content</h1>
 </div>
 <!-- end doc-metadata -->

@@ -1,0 +1,13 @@
+name: unit9
+title: Unit9
+username: opetch
+account: opetch
+server: rstudio.mnf.uzh.ch:3939
+hostUrl: https://rstudio.mnf.uzh.ch:3939/__api__
+appId: 11
+bundleId: 28
+url: https://rstudio.mnf.uzh.ch:3939/content/0385940d-cbc4-4c60-9bb7-fb54316459b4/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .gitattributes|.Rbuildignore|assets/datasets/financing_healthcare.csv|assets/datasets/systbp_drug_effect.csv|assets/scripts/Plant_growth_rate_script.R|assets/scripts/reaction_time_analysis_needs_fixing.r|assets/scripts/reaction_time_analysis_working.r|Unit1.html|Unit1.Rmd|Unit10.html|Unit10.Rmd|Unit11_files/figure-html/unnamed-chunk-11-1.png|Unit11_files/figure-html/unnamed-chunk-12-1.png|Unit11_files/figure-html/unnamed-chunk-9-1.png|Unit11.html|Unit11.Rmd|Unit12.Rmd|Unit2_files/figure-html/unnamed-chunk-1-1.png|Unit2.html|Unit2.Rmd|Unit3.html|Unit3.Rmd|Unit4_files/figure-html/untransformed-graph-1.png|Unit4.html|Unit4.Rmd|Unit5.html|Unit5.Rmd|Unit6.html|Unit6.Rmd|Unit7_files/figure-html/unnamed-chunk-12-1.png|Unit7_files/figure-html/unnamed-chunk-24-1.png|Unit7_files/figure-html/unnamed-chunk-9-1.png|Unit7.html|Unit7.Rmd|Unit8_files/figure-html/unnamed-chunk-13-1.png|Unit8_files/figure-html/unnamed-chunk-3-1.png|Unit8.html|Unit8.Rmd|Unit9.html|old|Unit3_files

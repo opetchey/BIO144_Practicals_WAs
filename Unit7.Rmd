@@ -567,9 +567,9 @@ summary(mod1)
 learnr::question_numeric(
   "How much of the variability of the response does the **model with interaction** explain?\n\nGive the **UNadjusted R-squared**, rounded to **two decimal places**.",
   
-  learnr::answer(0.19, correct = TRUE),
+  learnr::answer(0.23, correct = TRUE),
   
-  correct = "Correct! The unadjusted R-squared of the model with interaction is 0.19.",
+  correct = "Correct! The unadjusted R-squared of the model with interaction is 0.23.",
   incorrect = "Not quite. The unadjusted R-squared is calculated as the model sum of squares divided by the total sum of squares. Round your answer to two decimal places.",
   allow_retry = TRUE
 )
@@ -1067,7 +1067,7 @@ learnr::question_numeric(
 
 ```{r ga6-q5-model-choice, echo=FALSE}
 learnr::question(
-  "In three American states, petrol (benzine) consumption of six different car brands was investigated. Which model would be most appropriate to analyse these data when we suspect that the effect of car brand on petrol consumption may differ between cities?",
+  "In three American states, petrol (benzine) consumption of five different car brands was investigated. Which model would be most appropriate to analyse these data when we suspect that the effect of car brand on petrol consumption may differ between cities?",
   
   learnr::answer(
     "One-way ANOVA of \"benzine\" against \"State\"."

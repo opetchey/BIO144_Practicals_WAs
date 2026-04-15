@@ -48,11 +48,9 @@ So, if we get a large F value, and consequently a low p-value, we can reject the
 
 So when we look at the ANOVA table in R (or anywhere) this is what we're testing.
 
-If we look at the summary table, we get some of the pairwise comparisons among the categories, but not all of them. We can get them all if we want (this is called multiple post-hoc comparison), but its a bit of a minefield. Better to specify specific questions and the corresponding hypothesis to be tested at the start of a study than to look at every possible pairwise comparison, report the significant ones, and attempt to explain that pattern.
+If we look at the summary table, we get some of the pairwise comparisons among the categories, but not all of them. We can get them all if we want (this is called multiple post-hoc comparison). Even better is to specify specific questions and the corresponding hypothesis to be tested at the start of a study than to look at every possible pairwise comparison, report the significant ones, and attempt to explain that pattern.
 
 From Wikipedia "This [the F-test] is an example of an "omnibus" test, meaning that a single test is performed to detect any of several possible differences."
-
-(By the way, please be careful with Wikipedia, and more generally the internet. It feels a bit patronising to write this, but not everything there is correct/true.)
 
 Another perspective on the same... Actually, the F-value is a ratio of two variances... it is the explained variance / unexplained variance. The explained variance is the part of the total that is "explained" when one accounts for the means of the groups / categories. The unexplained is the part of the total that then remains unexplained. There are no differences between specific groups / categories in this calculation, so the F-test can't tell us (and was not designed to) tell us anything about differences between particular categories.
 
@@ -62,7 +60,7 @@ Another perspective on the same... Actually, the F-value is a ratio of two varia
 
 A few weeks ago we played with a graph of cats. We should also not forget dogs! If you have some spare time, see if you can get the following code to run!
 
-```{r eval = FALSE}
+```{r eval = FALSE, echo = TRUE}
 install.packages("devtools")
 devtools::install_github("melissanjohnson/pupR")
 library(pupR)
@@ -110,11 +108,11 @@ The variables are:
 
 Change in systolic blood pressure, calculated as:
 
-\text{followup\_sbp} - \text{baseline\_sbp}
+`followup_sbp` - `baseline_sbp`
 
 Negative values indicate a reduction in blood pressure.
 
-Some participants have missing follow-up measurements. You will need to decide how to handle these when performing your analysis.
+Some participants had missing follow-up measurements. You will need to decide how to handle these when performing your analysis.
 
 
 
@@ -349,7 +347,7 @@ learnr::question(
     "Impossible to guess without running the ANOVA."
   ),
   
-  correct = "Correct! The boxplot suggests clear differences between group means compared with the within-group variability, so we would expect a p-value well below 0.05.",
+  correct = "Correct! The boxplot suggests clear differences between group means. Put another way, the plot shows the within-group variability is low relative the between-group variability, so we would expect a p-value well below 0.05.",
   incorrect = "While we cannot know the exact p-value without running the analysis, exploratory plots often give a good indication of whether a statistically significant result is likely.",
   allow_retry = TRUE
 )
@@ -374,11 +372,11 @@ learnr::question(
   "Which of the following do you agree with?",
   
   learnr::answer(
-    "There normal qq plot does not show major deviations from normality of the residuals.",
+    "The normal qq plot does not show major deviations from normality of the residuals.",
     correct = TRUE
   ),
   learnr::answer(
-    "The residuals show a clear pattern in the residuals vs fitted plot, indicating non-linearity.",
+    "The residuals show a clear pattern in the residuals vs fitted plot (as would occur if there is a non-linear relationship between the response and explanatory variable).",
   ),
   learnr::answer(
     "The scale–location plot shows that the variance of the residuals is roughly constant across fitted values (i.e. homoscedasticity.",

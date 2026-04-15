@@ -541,17 +541,17 @@ The next question is a bit tricky...
 ```{r quiz-abalone-poisson-prediction, echo=FALSE}
 learnr::question_numeric(
   "Assume that for a shell length of **0.5 mm** an abalone has on average **10 rings**.  
-The Poisson GLM slope for `Length_mm` is **1.53**.\n\nWhen the shell length increases to **1.5 mm**, how many rings are expected?\n\n(*Round your answer to one decimal place.*)",
+The Poisson GLM slope for `Length_mm` is **1.532968**.\n\nWhen the shell length increases to **1.5 mm**, how many rings are expected?\n\n(*Round your answer to one decimal place. Be careful to make all calculations with accurate values, and only round the final answer.*)",
   
-  learnr::answer(46.1, correct = TRUE),
+  learnr::answer(46.3, correct = TRUE),
   
-  correct = "Correct! An increase of 1 mm multiplies the expected number of rings by exp(1.53) ≈ 4.61. So the expected number of rings is 10 × 4.61 ≈ 46.1.",
+  correct = "Correct! An increase of 1 mm multiplies the expected number of rings by exp(1.532968) ≈ 4.631904. So the expected number of rings is 10 × 4.631904 ≈ 46.3.",
   incorrect = "Not quite. Remember that in a Poisson GLM with a log link, a 1-unit increase multiplies the expected response by exp(coefficient).",
   allow_retry = TRUE
 )
 ```
 
-In a Poisson GLM we use a log link, which means the model does not add a fixed number of rings for each increase in length. Instead, the coefficient tells us how the expected number of rings is multiplied. A slope of 1.53 means that increasing length by 1 mm multiplies the expected number of rings by \exp(1.53) \approx 4.6, not that it adds 1.53 rings. So if an abalone has 10 rings at 0.5 mm, increasing its length to 1.5 mm (an increase of 1 mm) gives an expected number of about 10 \times 4.6 = 46 rings, not 15.3.
+In a Poisson GLM we use a log link, which means the model does not add a fixed number of rings for each increase in length. Instead, the coefficient tells us how the expected number of rings is multiplied. A slope of 1.532968 means that increasing length by 1 mm multiplies the expected number of rings by \exp(1.532968) \approx 4.631904, not that it adds 1.532968 rings. So if an abalone has 10 rings at 0.5 mm, increasing its length to 1.5 mm (an increase of 1 mm) gives an expected number of about 10 \times 4.63 = 46.3 rings, not 15.4.
 
 
 ## Weekly Quiz

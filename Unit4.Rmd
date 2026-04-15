@@ -54,7 +54,7 @@ Bring up your script from last week. It should already include:
 * Loading the dataset.
 * Some initial exploration of the dataset.
 * Some initial plots of the dataset.
-* Fitting a linear model to the dataset.
+* Fitting a linear model to the dataset (with log10 transformed variables)
 * Checking the assumptions of the linear model.
 
 Now that we have checked the assumptions of the linear model, we can interpret the results of the model. We need to look at a few things:
@@ -183,14 +183,14 @@ learnr::question(
 
 ```{r quiz-reporting-pattern-loglog, echo=FALSE}
 learnr::question(
-  "Which of these should we include in a statement about the pattern?\n\nOn a log–log scale, there was a ??1?? and ??2?? relationship between child mortality and health care spending, with approximately ??3?? unit of difference in log health care spent corresponding to ??4?? unit change in log child mortality.\n\nA. -1\nB. 1\nC. negative\nD. linear\nE. positive\nF. non-linear",
+  "Which of these should we include in a statement about the pattern?\n\nOn a log–log scale, there was a ??1?? and ??2?? relationship between child mortality and health care spending, with approximately ??3?? unit of difference in log health care spent corresponding to ??4?? unit change in log child mortality.\n\nA. -0.76\nB. 1\nC. negative\nD. linear\nE. positive\nF. non-linear",
   
   learnr::answer("??1?? = D, ??2?? = B; ??3?? = C; ??4?? = A"),
   learnr::answer("??1?? = D, ??2?? = C; ??3?? = B; ??4?? = A", correct = TRUE),
   learnr::answer("??1?? = B, ??2?? = A; ??3?? = C; ??4?? = D"),
   learnr::answer("??1?? = A, ??2?? = B; ??3?? = C; ??4?? = D"),
   
-  correct = "Correct! On the log–log scale the relationship is linear and negative, with about a 1-unit increase in log health care spending corresponding to a −1-unit change in log child mortality.",
+  correct = "Correct! On the log–log scale the relationship is linear and negative, with about a 1-unit increase in log health care spending corresponding to a −0.76-unit change in log child mortality.",
   incorrect = "Think about both the *form* (linear vs non-linear) and the *direction* (positive vs negative), and then how to describe the size of the change in log–log terms.",
   allow_retry = TRUE
 )
@@ -216,7 +216,7 @@ learnr::question(
 
 So this would be our sentence reporting the results:
 
-*On a log-log scale, there was a negative and linear relationships between child mortality and health care spending, with approximately 1 unit of difference in log health care spend corresponding to -1 unit change in log child mortality (linear regression, 184 degrees of freedom for error, t = 24.1, p < 0.0001).*
+*On a log-log scale, there was a negative and linear relationships between child mortality and health care spending, with approximately 1 unit of difference in log health care spend corresponding to -0.76 unit change in log child mortality (linear regression, 184 degrees of freedom for error, t = 24.1, p < 0.0001).*
 
 ### Reporting graphically
 
@@ -448,7 +448,7 @@ learnr::question(
 
 ```{r q-calc-r-squared-ss, echo=FALSE}
 learnr::question_numeric(
-  "Suppose that for a simple linear regression you are given the following information:\n\n- Total sum of squares (SST) = 500\n- Residual sum of squares (SSR, i.e. sum of squared residuals) = 120\n\n (Give your answer as a decimal with two decimal places.)",
+  "Suppose that for a simple linear regression you are given the following information:\n\n- Total sum of squares (SST) = 500\n- Residual sum of squares (SSR, i.e. sum of squared residuals) = 120\n\n What is the R²? (Give your answer as a decimal with two decimal places.)",
   
   learnr::answer(0.76, correct = TRUE),
   
@@ -508,7 +508,7 @@ learnr::question(
     correct = FALSE
   ),
   learnr::answer(
-    "The probability of observing a slope estimate at least as extreme as the one obtained, **if the true slope were zero**.",
+    "The probability of observing a slope estimate at least as extreme as the one obtained, if the true slope were zero.",
     correct = TRUE
   ),
   learnr::answer(

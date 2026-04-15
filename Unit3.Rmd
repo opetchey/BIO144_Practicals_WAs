@@ -71,7 +71,9 @@ Line 32-36. This is the old way to make a nice looking graph for communication. 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jFfFvP3sqo8?si=Spu7GYQOJdwyUBxs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-The [full R script of this walkthrough is here](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/Plant_growth_rate_script.r), though note that some comments have been added and hence the line numbers do not match those above. Note that there are four videos in this series. You will have the chance to watch the final video in the next unit. 
+The [full R script of this walkthrough is here](
+https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/Plant_growth_rate_script.R), 
+though note that some comments have been added and hence the line numbers do not match those above. Note that there are four videos in this series. You will have the chance to watch the final video in the next unit. 
 
 
 ### Fun with regression
@@ -86,7 +88,7 @@ Here is another interactive tool. [This one lets you make some data, and then sh
 
 Some light relief from all this statistics... see if you can get this code to run:
 
-```{r eval = FALSE}}
+```{r eval = FALSE, echo = TRUE}
 install.packages("devtools")
 library(devtools)
 install_github("Gibbsdavidl/CatterPlots")
@@ -137,11 +139,22 @@ fh_data <- suppressMessages(readr::read_csv("https://raw.githubusercontent.com/o
 fh_2013 <- fh_data |>
   dplyr::filter(year == 2013) |>
   dplyr::select(country, health_exp_total, child_mort) |>
-  tidyr::drop_na()
+  tidyr::drop_na() |> 
+  dplyr::mutate(log_health_exp_total = log10(health_exp_total),
+         log_child_mort = log10(child_mort))
 library(ggplot2)
 ggplot(data = fh_2013, aes(x = health_exp_total, y = child_mort)) +
   geom_point() +
   labs(x = "Health care spending (total, per capita, USD)", y = "Child mortality (per 1000 live births)")
+
+#ggplot(data = fh_2013, aes(x = log_health_exp_total, y = log_child_mort)) +
+#  geom_point() +
+#  labs(x = "Health care spending (total, per capita, USD)", y = "Child mortality (per 1000 live births)") +
+#  xlim(0, 5) +
+#  ylim(0, 4) +
+#  geom_smooth(method = "lm")
+
+
 ```
 
 
@@ -176,7 +189,7 @@ learnr::question(
 
 ```{r quiz-log-transform-linear, echo=FALSE}
 learnr::question(
-  "Now apply the appropriate transformation from the previous question to the data (both variables) and make a new graph of those transformed variables.\n\nDoes the relationship now look more linear?",
+  "Now apply the appropriate transformation (use log to base 10) from the previous question to the data (both variables) and make a new graph of those transformed variables.\n\nDoes the relationship now look more linear?",
   
   learnr::answer("No"),
   learnr::answer("Nothing changed"),
@@ -211,7 +224,7 @@ learnr::question_numeric(
   
   correct = "Correct! A reasonable visual guess for the intercept on the log-transformed scale is about 3.25.",
   incorrect = "Not quite. Use the plot with xlim(0, 5) and ylim(0, 4), place a straight edge where you think the best-fit line lies, and read off where it crosses the y-axis.",
-  allow_retry = TRUE
+  allow_retry = TRUE, tolerance = 0.75
 )
 ```
 
@@ -223,7 +236,7 @@ learnr::question_numeric(
   
   correct = "Correct! A reasonable visual estimate for the slope is about −0.76.",
   incorrect = "Not quite. Use two well-separated points along your imagined best-fit line, estimate the change in y divided by the change in x, and remember the slope is negative.",
-  allow_retry = TRUE
+  allow_retry = TRUE, tolerance = 0.3
 )
 ```
 
