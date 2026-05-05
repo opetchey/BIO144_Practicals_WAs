@@ -1,0 +1,504 @@
+---
+title: "Unit 9 Practical 1: Example Solution"
+subtitle: "White-tailed Ptarmigan presence/absence and binomial GLMs"
+author: "Example solution prepared by Codex (OpenAI)"
+format:
+  html:
+    toc: true
+    embed-resources: true
+    code-fold: false
+execute:
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(tidyverse)
+library(broom)
+library(knitr)
+
+theme_set(theme_bw(base_size = 12))
+```
+
+## Note from Owen Petchey
+
+Please note that this report may include methods and approaches that are not part of the Data Analysis in Biology (BIO144) course. This is partly because Codex was not constrained to use only methods covered in the course. It is also worth remembering that the Unit 9 practicals include some work, especially around prediction, that is somewhat outside the main explanatory focus of BIO144.
+
+## Additional note from Owen Petchey
+
+This report was produced by Codex running GPT-5.5 with medium reasoning effort. Codex had access to the practical description and instructions. The prompt for this report was:
+
+> Make a sample solution to practical 1 of unit 9. Write the sample solution in quarto, including free text and R chunks. Provide example answers to all elements of the practical. Repeat the practical questions in the example solution. Render to HTML. Give yourself credit.
+
+When evaluating how well Codex has done, please keep two things in mind. First, reliable criticism requires subject knowledge: for example, judging this report requires understanding binary responses, binomial GLMs, model checking, and biological interpretation. A report can look fluent without being correct, so expert human judgement remains essential.
+
+Second, Codex was given the question and the instructions. Creating the question, setting the learning goals, and deciding what counts as an appropriate answer were human work, and critical work. Codex can draft code, prose, plots, and explanations quickly, but the educational framing and quality judgement come from the interaction between human and machine.
+
+## Practical question
+
+> Your challenge is to provide explanations of the presence / absence of the **White Tailed Ptarmigan**, an alpine bird. I.e., we wish to test hypotheses about explanations.
+
+This example solution treats the practical as a short ecological data-analysis report. The response variable is whether a White-tailed Ptarmigan was present (`pres = 1`) or absent/pseudo-absent (`pres = 0`) at a location. Because the response is binary, the main model is a binomial GLM with a logit link, also known as logistic regression.
+
+The dataset comes from the Dryad repository linked in the practical:
+
+<https://datadryad.org/dataset/doi:10.5061/dryad.c2378>
+
+The variable descriptions below use the Dryad file metadata for `presabs_both_IndYears_allvars_final.csv`.
+
+## 1. Prepare a script, load the data, and make some basic checks on the dataset
+
+### Practical question
+
+> Prepare a script, load the data, and make some basic checks on the dataset.
+
+```{r load-data}
+ptarm <- read_csv("../assets/datasets/presabs_both_IndYears_allvars_final.csv")
+
+glimpse(ptarm)
+```
+
+```{r basic-checks}
+dim(ptarm)
+colSums(is.na(ptarm))
+table(ptarm$pres)
+table(ptarm$BEC, ptarm$pres)
+```
+
+There are `r nrow(ptarm)` rows and `r ncol(ptarm)` columns. There are `r sum(ptarm$pres == 1)` presences and `r sum(ptarm$pres == 0)` pseudo-absences, so the dataset is not evenly balanced but has enough records in both response classes for a first logistic regression analysis.
+
+The `datatype` column is missing for pseudo-absences because pseudo-absences did not come from a public observation or field survey. I will not use `datatype` as an explanatory variable, because it is part of how the response data were assembled rather than an environmental explanation of ptarmigan habitat.
+
+## 2. Make a list of the environmental factors in the dataset
+
+### Practical question
+
+> Make a list of the environmental factors in the dataset.
+
+The environmental variables are:
+
+```{r variable-table}
+variable_descriptions <- tibble::tribble(
+  ~Variable, ~Description,
+  "BEC", "Biogeoclimatic zone: MH = Mountain Hemlock, AT = Alpine Tundra, CWH = Coastal Western Hemlock",
+  "Elevation", "Elevation in meters",
+  "Aspect", "Aspect reclassified according to solar incidence; lower values are north-facing/cooler and higher values are south-facing/warmer",
+  "Slope", "Slope in degrees",
+  "CTI", "Compound Topographic Index, related to slope and upstream contributing area",
+  "Rugg9", "Vector Ruggedness Measure in a 9-cell neighbourhood",
+  "Tave_sm", "Mean summer temperature in degrees C",
+  "MSP", "Mean summer precipitation from May to September in mm",
+  "PAS", "Precipitation as snow from August in the previous year to July of the current year in mm"
+)
+
+kable(variable_descriptions)
+```
+
+I do not treat `FNETID`, `Year`, `datatype`, `BCAlbX`, or `BCAlbY` as environmental factors for this exercise. `Year` and spatial coordinates might be useful in a more advanced analysis, but the practical asks for environmental explanations, so I focus on the habitat and climate variables.
+
+## 3. Natural history and hypotheses
+
+### Practical question
+
+> Look on Wikipedia or elsewhere for natural history information about the White Tailed Ptarmigan, and based on this make hypotheses about which of the environmental variables in the dataset will be related to presence / absence, and the direction (positive or negative) of the relationship. (Do not look at the data in this step!)
+
+White-tailed Ptarmigan are alpine birds. They are associated with high-elevation open habitats, cold conditions, rocky terrain, and snow-dominated mountain environments. Based on that natural history, my hypotheses are:
+
+```{r hypotheses-table}
+hypotheses <- tibble::tribble(
+  ~Variable, ~Hypothesis,
+  "BEC", "Presence should be highest in Alpine Tundra (AT), lower in Mountain Hemlock (MH), and lowest in Coastal Western Hemlock (CWH).",
+  "Elevation", "Positive relationship: higher elevations should have higher probability of presence.",
+  "Tave_sm", "Negative relationship: cooler summer temperatures should be more suitable.",
+  "PAS", "Positive relationship: more precipitation as snow should be associated with alpine habitat.",
+  "MSP", "Weak or uncertain positive relationship: precipitation might indicate wetter mountain climates, but it may also be correlated with snow and location.",
+  "Rugg9", "Positive relationship: more rugged terrain may provide suitable alpine microhabitats.",
+  "Slope", "Weak relationship: moderate slopes may be useful, but very steep slopes may be less suitable.",
+  "Aspect", "Negative relationship: cooler, lower-solar-incidence aspects may retain snow longer and may be more suitable.",
+  "CTI", "Uncertain relationship: wetter topographic positions could affect vegetation, but the direction is not obvious."
+)
+
+kable(hypotheses)
+```
+
+## 4. Visualise presence/absence against individual environmental factors
+
+### Practical question
+
+> Make graphs of how presence absence varies with individual environmental factors (this would be in the initial exploration of the data, before any modelling). This should give a clue about if your hypotheses are supported by the data.
+
+First I check the categorical biogeoclimatic zone.
+
+```{r bec-summary}
+bec_summary <- ptarm |>
+  group_by(BEC) |>
+  summarise(
+    n = n(),
+    presences = sum(pres == 1),
+    proportion_present = mean(pres),
+    .groups = "drop"
+  )
+
+kable(bec_summary, digits = 3)
+```
+
+```{r bec-plot, fig.width=6, fig.height=4}
+ggplot(bec_summary, aes(x = BEC, y = proportion_present)) +
+  geom_col(fill = "grey35") +
+  geom_text(aes(label = paste0("n = ", n)), vjust = -0.4, size = 3.5) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(
+    x = "Biogeoclimatic zone",
+    y = "Proportion of records with presence",
+    title = "Ptarmigan presence is highest in Alpine Tundra"
+  )
+```
+
+Now I look at the continuous environmental variables. For binary data, jittered points show the raw 0/1 observations and a smooth logistic curve shows the univariate trend.
+
+```{r continuous-plots, fig.width=9, fig.height=8}
+env_vars <- c("Elevation", "Aspect", "Slope", "CTI", "Rugg9", "Tave_sm", "MSP", "PAS")
+
+ptarm_long <- ptarm |>
+  select(pres, all_of(env_vars)) |>
+  pivot_longer(-pres, names_to = "variable", values_to = "value")
+
+ggplot(ptarm_long, aes(x = value, y = pres)) +
+  geom_jitter(height = 0.04, width = 0, alpha = 0.25, size = 1) +
+  geom_smooth(method = "glm", method.args = list(family = binomial), se = TRUE) +
+  facet_wrap(~ variable, scales = "free_x", ncol = 2) +
+  labs(
+    x = "Environmental variable value",
+    y = "Presence (0/1)",
+    title = "Univariate relationships between environment and ptarmigan presence"
+  )
+```
+
+The initial graphs support several natural-history hypotheses. Presence is much more common in Alpine Tundra than Mountain Hemlock or Coastal Western Hemlock. Presence also tends to increase with elevation and precipitation as snow, and decrease with summer temperature. Aspect appears to have a negative relationship, meaning records with lower solar incidence are more likely to be presences. Some other variables, such as CTI and slope, show weaker patterns.
+
+## 5. Develop an understanding of correlations among environmental factors
+
+### Practical question
+
+> Develop an understanding of correlations among environmental factors. Make sure you are clear about why this is important, particularly in terms of shared explanatory power.
+
+Correlations matter because environmental variables often describe overlapping ecological gradients. For example, high-elevation sites are often colder and may receive more snow. If elevation and summer temperature are strongly correlated, a model may have difficulty separating their individual effects.
+
+```{r correlations}
+cor_mat <- ptarm |>
+  select(all_of(env_vars)) |>
+  cor(use = "pairwise.complete.obs")
+
+kable(round(cor_mat, 2))
+```
+
+```{r correlation-plot, fig.width=7, fig.height=6}
+cor_long <- as.data.frame(as.table(cor_mat)) |>
+  as_tibble() |>
+  rename(var1 = Var1, var2 = Var2, correlation = Freq)
+
+ggplot(cor_long, aes(x = var1, y = var2, fill = correlation)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(correlation, 2)), size = 3) +
+  scale_fill_gradient2(limits = c(-1, 1), low = "#2166ac", mid = "white", high = "#b2182b") +
+  labs(x = NULL, y = NULL, fill = "Correlation", title = "Correlations among continuous environmental variables") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+The strongest correlations are:
+
+```{r strong-correlations}
+strong_correlations <- cor_long |>
+  filter(as.character(var1) < as.character(var2)) |>
+  mutate(abs_correlation = abs(correlation)) |>
+  arrange(desc(abs_correlation)) |>
+  slice_head(n = 8)
+
+kable(strong_correlations, digits = 2)
+```
+
+The strongest pattern is the negative correlation between elevation and summer temperature. This means that if the model includes both variables, their coefficients should be interpreted carefully: a temperature effect is estimated after accounting for elevation, and an elevation effect is estimated after accounting for temperature.
+
+## 6. Test hypotheses using a binomial GLM
+
+### Practical question
+
+> Test your hypotheses about explanations of the presence / absence, using a binomial GLM.
+
+Before fitting the model, I standardise the continuous variables. This makes coefficients easier to compare because each slope is measured per one standard deviation change in the explanatory variable.
+
+```{r standardise-and-model}
+ptarm_model <- ptarm |>
+  mutate(
+    BEC = factor(BEC),
+    z_Elevation = as.numeric(scale(Elevation)),
+    z_Aspect = as.numeric(scale(Aspect)),
+    z_Slope = as.numeric(scale(Slope)),
+    z_CTI = as.numeric(scale(CTI)),
+    z_Rugg9 = as.numeric(scale(Rugg9)),
+    z_Tave_sm = as.numeric(scale(Tave_sm)),
+    z_MSP = as.numeric(scale(MSP)),
+    z_PAS = as.numeric(scale(PAS))
+  )
+
+ptarm_glm <- glm(
+  pres ~ BEC + z_Elevation + z_Aspect + z_Slope + z_CTI + z_Rugg9 + z_Tave_sm + z_MSP + z_PAS,
+  data = ptarm_model,
+  family = binomial
+)
+
+summary(ptarm_glm)
+```
+
+```{r model-table}
+model_summary <- tidy(ptarm_glm, conf.int = TRUE, exponentiate = TRUE) |>
+  mutate(across(where(is.numeric), \(x) round(x, 3)))
+
+kable(
+  model_summary,
+  caption = "Model coefficients shown as odds ratios. Values above 1 increase odds of presence; values below 1 decrease odds."
+)
+```
+
+In this fitted model:
+
+- Alpine Tundra is the reference level for `BEC`. Mountain Hemlock has much lower odds of presence than Alpine Tundra.
+- Higher elevation is strongly associated with higher odds of ptarmigan presence.
+- Higher aspect values, representing higher solar incidence, are associated with lower odds of presence.
+- Steeper slopes are associated with lower odds of presence after accounting for other variables.
+- Summer temperature is not clearly supported after elevation and other variables are included. This is probably because it shares substantial explanatory power with elevation.
+- Snow and summer precipitation have positive fitted effects, but in this model their confidence intervals include weaker or uncertain effects.
+
+## 7. Check assumptions of the model
+
+### Practical question
+
+> Check the assumptions of the model.
+
+For a binomial GLM, important checks include whether the response is binary, whether fitted probabilities are sensible, whether there is strong overdispersion, whether residuals show obvious patterns, and whether influential points dominate the model.
+
+The response is binary:
+
+```{r response-check}
+table(ptarm_model$pres)
+```
+
+Check overdispersion:
+
+```{r overdispersion}
+overdispersion_ratio <- sum(residuals(ptarm_glm, type = "pearson")^2) / df.residual(ptarm_glm)
+overdispersion_ratio
+```
+
+The overdispersion ratio is `r round(overdispersion_ratio, 2)`, which is close to 1. This does not suggest serious overdispersion.
+
+Check residual patterns against fitted values:
+
+```{r residual-plot, fig.width=6, fig.height=4}
+augment(ptarm_glm, type.predict = "response", type.residuals = "pearson") |>
+  ggplot(aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.35) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_smooth(se = FALSE) +
+  labs(
+    x = "Fitted probability of presence",
+    y = "Pearson residual",
+    title = "Residuals against fitted probabilities"
+  )
+```
+
+Check influential observations:
+
+```{r influence-plot, fig.width=6, fig.height=4}
+augment(ptarm_glm) |>
+  mutate(row = row_number()) |>
+  ggplot(aes(x = row, y = .cooksd)) +
+  geom_col(width = 1, fill = "grey40") +
+  labs(
+    x = "Observation number",
+    y = "Cook's distance",
+    title = "Influence check"
+  )
+```
+
+There are no obvious model-breaking problems in these simple checks. However, this is still a simple teaching model. A more advanced ecological analysis would also consider spatial autocorrelation, the pseudo-absence sampling design, possible nonlinear relationships, interactions, and the fact that some records may not be independent.
+
+## 8. Interpret the model
+
+### Practical question
+
+> Interpret the model.
+
+The model suggests that the strongest environmental explanations of ptarmigan presence are habitat zone, elevation, aspect, and slope. In ecological terms, presence is most likely in Alpine Tundra, at high elevation, on cooler aspects, and on less steep slopes after accounting for the other variables.
+
+The very strong univariate relationship with summer temperature becomes weak in the multivariable model. This does not mean temperature is unimportant biologically. It means that in this dataset, summer temperature is strongly correlated with elevation, so the model has difficulty assigning the shared pattern uniquely to one of those two predictors.
+
+Here is a compact comparison of model fit:
+
+```{r model-fit}
+null_glm <- glm(pres ~ 1, data = ptarm_model, family = binomial)
+
+tibble(
+  model = c("Null model", "Environmental model"),
+  AIC = c(AIC(null_glm), AIC(ptarm_glm)),
+  residual_deviance = c(deviance(null_glm), deviance(ptarm_glm))
+) |>
+  mutate(across(where(is.numeric), round, 1)) |>
+  kable()
+```
+
+The environmental model has much lower AIC and residual deviance than the null model, so the environmental variables explain a large amount of variation in presence/absence.
+
+As a simple classification summary, using 0.5 as a probability threshold:
+
+```{r classification-summary}
+ptarm_model <- ptarm_model |>
+  mutate(predicted_probability = predict(ptarm_glm, type = "response"))
+
+classification_table <- table(
+  predicted_present = ptarm_model$predicted_probability > 0.5,
+  observed_presence = ptarm_model$pres
+)
+
+classification_table
+mean((ptarm_model$predicted_probability > 0.5) == ptarm_model$pres)
+```
+
+This is not a full predictive validation, because the model is evaluated on the same data used to fit it. Still, it shows that the fitted probabilities separate presences and pseudo-absences reasonably well.
+
+## 9. Show modelled relationships using predictions
+
+### Practical question
+
+> Show some of the modelled relationships between presence/absence and environmental variables, e.g. by using model predictions to show the estimated effect of one environmental variable while all others are held constant.
+
+The following code creates predictions for elevation while holding continuous variables at their mean and setting `BEC` to each biogeoclimatic zone. Because the model uses standardised variables, the helper function below converts raw values into the same standardised scale used in the model.
+
+```{r prediction-helper}
+z_value <- function(x, variable) {
+  (x - mean(ptarm[[variable]], na.rm = TRUE)) / sd(ptarm[[variable]], na.rm = TRUE)
+}
+
+elevation_grid <- expand_grid(
+  Elevation = seq(min(ptarm$Elevation), max(ptarm$Elevation), length.out = 150),
+  BEC = levels(ptarm_model$BEC)
+) |>
+  mutate(
+    z_Elevation = z_value(Elevation, "Elevation"),
+    z_Aspect = 0,
+    z_Slope = 0,
+    z_CTI = 0,
+    z_Rugg9 = 0,
+    z_Tave_sm = 0,
+    z_MSP = 0,
+    z_PAS = 0
+  )
+
+elevation_grid$predicted_probability <- predict(ptarm_glm, newdata = elevation_grid, type = "response")
+```
+
+```{r elevation-prediction-plot, fig.width=7, fig.height=4.5}
+ggplot(elevation_grid, aes(x = Elevation, y = predicted_probability, colour = BEC)) +
+  geom_line(linewidth = 1) +
+  labs(
+    x = "Elevation (m)",
+    y = "Predicted probability of presence",
+    colour = "BEC",
+    title = "Modelled effect of elevation",
+    subtitle = "Other continuous variables held at their mean"
+  )
+```
+
+This plot shows the modelled increase in probability of presence with elevation. It also shows that, at the same elevation and with other variables held constant, Alpine Tundra is predicted to be more suitable than Mountain Hemlock. The Coastal Western Hemlock prediction should be interpreted cautiously because there are very few presences in that zone.
+
+Here is a second prediction plot for aspect:
+
+```{r aspect-prediction, fig.width=7, fig.height=4.5}
+aspect_grid <- expand_grid(
+  Aspect = seq(min(ptarm$Aspect), max(ptarm$Aspect), length.out = 150),
+  BEC = "AT"
+) |>
+  mutate(
+    z_Elevation = 0,
+    z_Aspect = z_value(Aspect, "Aspect"),
+    z_Slope = 0,
+    z_CTI = 0,
+    z_Rugg9 = 0,
+    z_Tave_sm = 0,
+    z_MSP = 0,
+    z_PAS = 0
+  )
+
+aspect_grid$predicted_probability <- predict(ptarm_glm, newdata = aspect_grid, type = "response")
+
+ggplot(aspect_grid, aes(x = Aspect, y = predicted_probability)) +
+  geom_line(linewidth = 1, colour = "grey25") +
+  labs(
+    x = "Aspect index",
+    y = "Predicted probability of presence",
+    title = "Modelled effect of aspect in Alpine Tundra",
+    subtitle = "Other continuous variables held at their mean"
+  )
+```
+
+Higher aspect values correspond to higher solar incidence, so the model predicts lower presence probability on warmer aspects.
+
+## 10. Publication-style visualisation
+
+### Practical question
+
+> Make a visualisation of the data, good for publication.
+
+For a simple publication-style figure, I would show the fitted elevation relationship and the raw data. The raw data are jittered vertically because presence/absence values are only 0 or 1.
+
+```{r publication-figure, fig.width=7, fig.height=5}
+at_elevation_grid <- elevation_grid |>
+  filter(BEC == "AT")
+
+ptarm |>
+  filter(BEC == "AT") |>
+  ggplot(aes(x = Elevation, y = pres)) +
+  geom_jitter(height = 0.04, width = 0, alpha = 0.25, size = 1.5) +
+  geom_line(
+    data = at_elevation_grid,
+    aes(x = Elevation, y = predicted_probability),
+    inherit.aes = FALSE,
+    linewidth = 1.2
+  ) +
+  labs(
+    x = "Elevation (m)",
+    y = "Probability of White-tailed Ptarmigan presence",
+    title = "Ptarmigan presence increases with elevation in Alpine Tundra"
+  ) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title.position = "plot"
+  )
+```
+
+This figure is intentionally simple: it shows the raw binary observations and the modelled probability curve for the main hypothesised gradient.
+
+## 11. Write a sentence or two about the results
+
+### Practical question
+
+> Write a sentence or two about the results that would clearly communicate your findings to other biologists.
+
+White-tailed Ptarmigan presence in this dataset was most strongly associated with alpine habitat: presences were much more common in Alpine Tundra than in forested biogeoclimatic zones, and the probability of presence increased strongly with elevation. After accounting for other environmental variables, ptarmigan presence was also higher on lower-solar-incidence aspects and lower on steeper slopes, while the apparent effect of summer temperature was difficult to separate from elevation because the two variables were strongly correlated.
+
+## 12. Critique and reflection
+
+### Practical question
+
+> Critique and reflection.
+
+This analysis is a useful first pass, but I would not treat it as a final species distribution model. Important limitations include:
+
+- The absences are pseudo-absences, not confirmed true absences.
+- Spatial autocorrelation is likely, because nearby sites may be environmentally similar and may not be independent.
+- The model assumes linear effects on the log-odds scale, but ecological responses to elevation, temperature, or snow may be nonlinear.
+- Several environmental variables are strongly correlated, especially elevation and summer temperature, which makes individual coefficients harder to interpret.
+- `CWH` has very few presences, so predictions for that zone are uncertain.
+- A predictive analysis should test model performance on held-out data or with cross-validation.
+
+Despite these caveats, the model supports the core biological expectation that White-tailed Ptarmigan presence is associated with high-elevation alpine habitat.

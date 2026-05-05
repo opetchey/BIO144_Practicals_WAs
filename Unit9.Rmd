@@ -30,7 +30,7 @@ All homework is for your own practice and learning. It will not be marked or gra
 
 ### Video walkthrough; insect death!
 
-Please remember that you'll get much more out the videos if you work through the example in R, either during or after watching.
+Please remember that you'll get much more out of the videos if you work through the example in R, either during or after watching.
 
 Please note that these videos were made some time ago, so for example the method used to import the data is a little different to what we use now. However, the statistical concepts and R code for analysis are still relevant.
 
@@ -71,7 +71,7 @@ A common use of binomial models is to explain species habitat requirements. One 
 
 Your challenge is to provide explanations of the presence / absence of the **White Tailed Ptarmigan**, an alpine bird. I.e., we wish to test hypotheses about explanations.
 
-**Something new and cool** For this exercise, you will work with a real dataset that you wil get from an online data repository! The name of the data file is **`presabs_both_IndYears_allvars_final.csv`**. This datafile and a few others are available at [this web page on the Dryad data repository](https://datadryad.org/dataset/doi:10.5061/dryad.c2378)
+**Something new and cool** For this exercise, you will work with a real dataset that you will get from an online data repository! The name of the data file is **`presabs_both_IndYears_allvars_final.csv`**. This datafile and a few others are available at [this web page on the Dryad data repository](https://datadryad.org/dataset/doi:10.5061/dryad.c2378)
 
 The same web page contains a `README.txt` file that explains the meaning of each of the variables in the dataset. This is very important, otherwise you will not be able to interpret your results!
 
@@ -102,7 +102,7 @@ The biological challenge here is to predict death based on information derived f
 
 As with the previous exercise, you need to get the data from an online repository. This time it is the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/38/echocardiogram). The web page contains the data, and the metadata, that is, a description of variables in the data, and other features.
 
-The dataset does not have a *header row* with the names of the variables. (The *header row* of a dataset is not part of the data itself; it just gives names to the columns of the data.) You can get these from the names file. Best is to in R add the header row after importing the data.
+The dataset does not have a *header row* with the names of the variables. (The *header row* of a dataset is not part of the data itself; it just gives names to the columns of the data.) You can get these from the names file. It is best to add the header row in R after importing the data.
 
 Note that the response variable to use is `alive_at_1`, and not `survival` or `still_alive`.
 
@@ -115,7 +115,7 @@ Here are some specific tasks:
 - Make a list of the echocardiogram features in the dataset.
 - Look on Wikipedia or elsewhere for information about echocardiograms and hearts, and based on this make hypotheses about which of the features in the dataset will be related to death within one year, and the direction (positive or negative) of the relationship.
 - Make graphs of how death varies with individual echocardiogram features (this would be in the initial exploration of the data, before any modelling). This should give a clue about if your hypotheses are supported by the data.
-- Develop and understanding of correlations among echocardiogram features.
+- Develop an understanding of correlations among echocardiogram features.
 - Develop an appropriate model of death within 1 year, using whatever methods you see fit to find useful explanatory variables.
 - Show some of the model predictions, e.g. by using model predictions to show the estimated effect of one echocardiogram feature while all others are held constant.
 - Write a sentence or two about the results that would clearly communicate your findings to other biologists.
@@ -289,7 +289,7 @@ learnr::question(
     "glm(temperature ~ survived, family = binomial, data = mydata)"
   ),
   
-  correct = "Correct! A binary GLM is fitted using glm() with family = binomial. survived is the response, so is on the right hand side of the ~.",
+  correct = "Correct! A binary GLM is fitted using glm() with family = binomial. survived is the response, so it is on the left hand side of the ~.",
   incorrect = "Check both the model function and the family argument.",
   allow_retry = TRUE
 )
@@ -347,6 +347,5 @@ learnr::question(
   allow_retry = TRUE
 )
 ```
-
 
 

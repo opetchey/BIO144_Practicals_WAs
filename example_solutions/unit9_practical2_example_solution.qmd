@@ -1,0 +1,516 @@
+---
+title: "Unit 9 Practical 2: Example Solution"
+subtitle: "Predicting one-year outcome from echocardiogram features"
+author: "Example solution prepared by Codex (OpenAI)"
+format:
+  html:
+    toc: true
+    embed-resources: true
+    code-fold: false
+execute:
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(tidyverse)
+library(broom)
+library(knitr)
+
+theme_set(theme_bw(base_size = 12))
+```
+
+## Note from Owen Petchey
+
+Please note that this report includes some methods and approaches, such as AIC-based model selection, that are not part of the Data Analysis in Biology (BIO144) course. This is partly because Codex was not constrained to use only methods covered in the course, and partly because this particular problem is about building a predictive model rather than explaining a biological process. Prediction is therefore somewhat outside the main scope of BIO144.
+
+## Additional note from Owen Petchey
+
+This report was produced by Codex running GPT-5.5 with medium reasoning effort. Codex had access to the practical description and instructions. The prompt for this report was:
+
+> Please do this also for practical 2 in unit 9
+
+This followed an earlier prompt asking Codex to make a sample solution to Practical 1 of Unit 9, to write the sample solution in Quarto, to include free text and R chunks, to provide example answers to all elements of the practical, to repeat the practical questions in the example solution, to render to HTML, and to give itself credit.
+
+When evaluating how well Codex has done, please keep two things in mind. First, reliable criticism requires subject knowledge: for example, judging this report requires understanding binary responses, binomial GLMs, prediction, model checking, and the difference between prediction and explanation. A report can look fluent without being correct, so expert human judgement remains essential.
+
+Second, Codex was given the question and the instructions. Creating the question, setting the learning goals, and deciding what counts as an appropriate answer were human work, and critical work. Codex can draft code, prose, plots, and explanations quickly, but the educational framing and quality judgement come from the interaction between human and machine.
+
+## Practical question
+
+> The biological challenge here is to predict death based on information derived from echocardiograms. Note that when the aim is to predict, we are not so much interested in understanding the underlying biological processes, but rather in getting the best possible predictions.
+
+This example solution analyses the UCI echocardiogram dataset. The practical says to use `alive_at_1`, not `survival` or `still_alive`, as the response variable. For easier interpretation of "death within one year", I create:
+
+```{r response-definition, eval=FALSE}
+death_within_1 = 1 - alive_at_1
+```
+
+So in this solution:
+
+- `alive_at_1 = 1` means the patient was alive at one year.
+- `alive_at_1 = 0` means the patient was not recorded as alive at one year.
+- `death_within_1 = 1` is the modelled event.
+
+This is a teaching analysis, not a clinical prediction tool.
+
+## 1. Prepare a script, load the data, and make some basic checks
+
+### Practical question
+
+> As with the previous exercise, you need to get the data from an online repository. This time it is the UCI Machine Learning Repository. The dataset does not have a header row with the names of the variables. You can get these from the names file. Best is to add the header row after importing the data. Note that the response variable to use is `alive_at_1`, and not `survival` or `still_alive`. There are lots of "?" in the dataset. You will need to do something about that; best to replace them with NA during the import process with read_csv.
+
+The local data file has no header row, so I supply column names from the metadata file. I also tell `read_csv()` that `"?"` should be treated as missing data.
+
+```{r load-data}
+echo_names <- c(
+  "survival",
+  "still_alive",
+  "age_at_heart_attack",
+  "pericardial_effusion",
+  "fractional_shortening",
+  "epss",
+  "lvdd",
+  "wall_motion_score",
+  "wall_motion_index",
+  "mult",
+  "name",
+  "group",
+  "alive_at_1"
+)
+
+echo_raw <- read_csv(
+  "../assets/datasets/echocardiogram.data",
+  col_names = echo_names,
+  na = c("?", "")
+) |>
+  mutate(
+    across(
+      -c(name, group),
+      as.numeric
+    )
+  )
+
+glimpse(echo_raw)
+```
+
+```{r basic-checks}
+dim(echo_raw)
+colSums(is.na(echo_raw))
+table(echo_raw$alive_at_1, useNA = "ifany")
+```
+
+There is one visibly invalid row after import, with `alive_at_1 = 2`, even though `alive_at_1` should be binary. I remove rows where the response is missing or invalid, then create the death outcome.
+
+```{r clean-response}
+echo_response <- echo_raw |>
+  filter(alive_at_1 %in% c(0, 1)) |>
+  mutate(
+    death_within_1 = 1 - alive_at_1,
+    pericardial_effusion = factor(pericardial_effusion, levels = c(0, 1), labels = c("No", "Yes"))
+  )
+
+table(echo_response$alive_at_1)
+table(echo_response$death_within_1)
+```
+
+Of the rows with known valid `alive_at_1`, `r sum(echo_response$alive_at_1 == 1)` patients were recorded as alive at one year and `r sum(echo_response$alive_at_1 == 0)` were not recorded as alive at one year.
+
+## 2. Make a list of the echocardiogram features
+
+### Practical question
+
+> Make a list of the echocardiogram features in the dataset.
+
+The echocardiogram or patient features that could be used as predictors are:
+
+```{r feature-table}
+feature_descriptions <- tibble::tribble(
+  ~Variable, ~Description,
+  "age_at_heart_attack", "Age in years when the heart attack occurred",
+  "pericardial_effusion", "Whether there was fluid around the heart: 0 = no, 1 = yes",
+  "fractional_shortening", "A measure of heart contractility; lower values are increasingly abnormal",
+  "epss", "E-point septal separation; larger values are increasingly abnormal",
+  "lvdd", "Left ventricular end-diastolic dimension; larger hearts tend to be less healthy",
+  "wall_motion_score", "Score describing movement of left-ventricle wall segments",
+  "wall_motion_index", "Wall-motion score divided by number of segments seen; metadata recommend this instead of wall-motion score"
+)
+
+kable(feature_descriptions)
+```
+
+I will not use `survival`, `still_alive`, `name`, `group`, or `mult`. The practical specifically says not to use `survival` or `still_alive` as the response; they would also leak outcome information into the prediction problem. The metadata says `group` is meaningless, `name` is an anonymised label, and `mult` can be ignored. I also use `wall_motion_index` instead of `wall_motion_score`, as recommended by the metadata.
+
+## 3. Natural history and hypotheses
+
+### Practical question
+
+> Look on Wikipedia or elsewhere for information about echocardiograms and hearts, and based on this make hypotheses about which of the features in the dataset will be related to death within one year, and the direction (positive or negative) of the relationship.
+
+Based on general heart physiology and the dataset metadata, I would expect death within one year to be more likely when measurements indicate poorer heart function.
+
+```{r hypotheses}
+hypotheses <- tibble::tribble(
+  ~Variable, ~Hypothesis,
+  "age_at_heart_attack", "Older patients may have higher risk of death within one year.",
+  "pericardial_effusion", "Fluid around the heart may indicate more severe illness, so death risk may be higher when effusion is present.",
+  "fractional_shortening", "Lower fractional shortening indicates poorer contraction, so death risk may decrease as fractional shortening increases.",
+  "epss", "Higher EPSS is increasingly abnormal, so death risk may increase with EPSS.",
+  "lvdd", "Larger left ventricular dimension may indicate a sicker heart, so death risk may increase with LVDD.",
+  "wall_motion_index", "Higher wall-motion index indicates more abnormal wall movement, so death risk may increase with this index."
+)
+
+kable(hypotheses)
+```
+
+## 4. Graph death against individual echocardiogram features
+
+### Practical question
+
+> Make graphs of how death varies with individual echocardiogram features (this would be in the initial exploration of the data, before any modelling). This should give a clue about if your hypotheses are supported by the data.
+
+First I check the binary pericardial-effusion variable.
+
+```{r effusion-summary}
+effusion_summary <- echo_response |>
+  group_by(pericardial_effusion) |>
+  summarise(
+    n = n(),
+    deaths = sum(death_within_1 == 1),
+    proportion_death = mean(death_within_1),
+    .groups = "drop"
+  )
+
+kable(effusion_summary, digits = 3)
+```
+
+```{r effusion-plot, fig.width=6, fig.height=4}
+ggplot(effusion_summary, aes(x = pericardial_effusion, y = proportion_death)) +
+  geom_col(fill = "grey35") +
+  geom_text(aes(label = paste0("n = ", n)), vjust = -0.4) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(
+    x = "Pericardial effusion",
+    y = "Proportion with death outcome",
+    title = "Death outcome by pericardial effusion"
+  )
+```
+
+Now I graph the continuous features. The points are jittered vertically because the response is binary.
+
+```{r feature-plots, fig.width=9, fig.height=8}
+continuous_features <- c(
+  "age_at_heart_attack",
+  "fractional_shortening",
+  "epss",
+  "lvdd",
+  "wall_motion_index"
+)
+
+echo_long <- echo_response |>
+  select(death_within_1, all_of(continuous_features)) |>
+  pivot_longer(-death_within_1, names_to = "variable", values_to = "value") |>
+  filter(!is.na(value))
+
+ggplot(echo_long, aes(x = value, y = death_within_1)) +
+  geom_jitter(height = 0.04, width = 0, alpha = 0.45, size = 1.5) +
+  geom_smooth(method = "glm", method.args = list(family = binomial), se = TRUE) +
+  facet_wrap(~ variable, scales = "free_x", ncol = 2) +
+  labs(
+    x = "Feature value",
+    y = "Death outcome (0/1)",
+    title = "Univariate relationships between features and the death outcome"
+  )
+```
+
+The visual patterns are not all what I hypothesised. This is a useful reminder that this dataset is small, has missing values, and has a response variable derived from follow-up status. The clearest plotted patterns are with age and wall-motion index, though their directions are surprising if interpreted literally as causal effects.
+
+## 5. Develop an understanding of correlations among echocardiogram features
+
+### Practical question
+
+> Develop an understanding of correlations among echocardiogram features.
+
+Correlations are important because several echocardiogram features measure related aspects of heart function. If predictors are correlated, they may share explanatory or predictive information, and individual coefficients may change when other predictors are included.
+
+```{r feature-correlations}
+cor_mat <- echo_response |>
+  select(all_of(continuous_features)) |>
+  cor(use = "pairwise.complete.obs")
+
+kable(round(cor_mat, 2))
+```
+
+```{r correlation-plot, fig.width=7, fig.height=6}
+cor_long <- as.data.frame(as.table(cor_mat)) |>
+  as_tibble() |>
+  rename(var1 = Var1, var2 = Var2, correlation = Freq)
+
+ggplot(cor_long, aes(x = var1, y = var2, fill = correlation)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(correlation, 2)), size = 3) +
+  scale_fill_gradient2(limits = c(-1, 1), low = "#2166ac", mid = "white", high = "#b2182b") +
+  labs(x = NULL, y = NULL, fill = "Correlation", title = "Correlations among continuous features") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+The correlations are mostly modest. This is helpful because it means the selected predictors are less likely to be almost exact substitutes for one another.
+
+## 6. Develop an appropriate model of death within one year
+
+### Practical question
+
+> Develop an appropriate model of death within 1 year, using whatever methods you see fit to find useful explanatory variables.
+
+For a simple example solution, I use complete cases for the selected predictors. More advanced approaches could impute missing values, but complete-case analysis is easier to explain in BIO144.
+
+```{r complete-cases}
+model_features <- c(
+  "age_at_heart_attack",
+  "pericardial_effusion",
+  "fractional_shortening",
+  "epss",
+  "lvdd",
+  "wall_motion_index"
+)
+
+echo_model <- echo_response |>
+  select(death_within_1, all_of(model_features)) |>
+  drop_na()
+
+dim(echo_model)
+table(echo_model$death_within_1)
+```
+
+I start with a full binomial GLM. I standardise the continuous variables so the coefficients are on comparable scales.
+
+```{r full-model}
+echo_model <- echo_model |>
+  mutate(
+    z_age_at_heart_attack = as.numeric(scale(age_at_heart_attack)),
+    z_fractional_shortening = as.numeric(scale(fractional_shortening)),
+    z_epss = as.numeric(scale(epss)),
+    z_lvdd = as.numeric(scale(lvdd)),
+    z_wall_motion_index = as.numeric(scale(wall_motion_index))
+  )
+
+full_glm <- glm(
+  death_within_1 ~ z_age_at_heart_attack + pericardial_effusion +
+    z_fractional_shortening + z_epss + z_lvdd + z_wall_motion_index,
+  data = echo_model,
+  family = binomial
+)
+
+summary(full_glm)
+```
+
+For a simple variable-selection step, I use AIC-based stepwise selection. This is not the only possible method, and it is unstable in small datasets, but it gives a clear example of searching for a simpler predictive model.
+
+```{r selected-model}
+selected_glm <- step(full_glm, trace = 0)
+summary(selected_glm)
+```
+
+```{r selected-model-table}
+tidy(selected_glm, conf.int = TRUE, exponentiate = TRUE) |>
+  mutate(across(where(is.numeric), function(x) round(x, 3))) |>
+  kable(
+    caption = "Selected model coefficients shown as odds ratios for the death outcome."
+  )
+```
+
+The selected model keeps age at heart attack and wall-motion index. In this dataset, both fitted coefficients are negative for the death outcome, which is opposite to my biological expectation. I would not over-interpret that direction biologically. It may reflect the small sample size, missing data, the derived response variable, or quirks in how the original follow-up data were collected.
+
+For prediction, the more important question is whether the model separates the two outcome classes.
+
+## 7. Check assumptions of the model
+
+### Practical question
+
+> Remember to go through all the workflow steps.
+
+For a binomial GLM, I check that the response is binary, that overdispersion is not extreme, that residuals do not show a strong pattern, and that no single observation dominates the analysis.
+
+```{r assumption-response}
+table(echo_model$death_within_1)
+```
+
+```{r assumption-overdispersion}
+overdispersion_ratio <- sum(residuals(selected_glm, type = "pearson")^2) / df.residual(selected_glm)
+overdispersion_ratio
+```
+
+The overdispersion ratio is `r round(overdispersion_ratio, 2)`, close to 1, so there is no obvious overdispersion problem.
+
+```{r assumption-residuals, fig.width=6, fig.height=4}
+augment(selected_glm, type.predict = "response", type.residuals = "pearson") |>
+  ggplot(aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.6) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_smooth(se = FALSE) +
+  labs(
+    x = "Fitted probability of death outcome",
+    y = "Pearson residual",
+    title = "Residuals against fitted probabilities"
+  )
+```
+
+```{r assumption-influence, fig.width=6, fig.height=4}
+augment(selected_glm) |>
+  mutate(row = row_number()) |>
+  ggplot(aes(x = row, y = .cooksd)) +
+  geom_col(width = 1, fill = "grey40") +
+  labs(
+    x = "Observation number",
+    y = "Cook's distance",
+    title = "Influence check"
+  )
+```
+
+There is no obvious diagnostic failure, but the main limitation is sample size: only `r nrow(echo_model)` complete cases are used.
+
+## 8. Test predictive performance on held-out data
+
+### Practical question
+
+> One thing to keep in mind is that when the aim is prediction, it is very important to assess how good the predictions are on new data that was not used to fit the model. This is often done by splitting the data into a training set and a test set.
+
+Here I do one simple 70/30 train/test split. Because the dataset is very small, the exact result depends on the random split, so this should be treated as a demonstration rather than a definitive estimate.
+
+```{r train-test}
+set.seed(144)
+
+train_rows <- sample(seq_len(nrow(echo_model)), size = floor(0.7 * nrow(echo_model)))
+train_dat <- echo_model[train_rows, ]
+test_dat <- echo_model[-train_rows, ]
+
+prediction_glm <- glm(
+  death_within_1 ~ age_at_heart_attack + wall_motion_index,
+  data = train_dat,
+  family = binomial
+)
+
+test_dat <- test_dat |>
+  mutate(predicted_probability = predict(prediction_glm, newdata = test_dat, type = "response"))
+
+confusion_table <- table(
+  predicted_death = test_dat$predicted_probability > 0.5,
+  observed_death = test_dat$death_within_1
+)
+
+confusion_table
+mean((test_dat$predicted_probability > 0.5) == test_dat$death_within_1)
+mean(test_dat$death_within_1 == 1)
+```
+
+In this split, the model accuracy is slightly better than simply predicting the majority class in the test set. This is modest performance, which is a realistic outcome for a small, old, incomplete medical dataset.
+
+## 9. Show model predictions
+
+### Practical question
+
+> Show some of the model predictions, e.g. by using model predictions to show the estimated effect of one echocardiogram feature while all others are held constant.
+
+The selected model uses standardised variables, so I create prediction grids on the standardised scale while labelling the x-axes using the original units.
+
+```{r prediction-grids}
+z_value <- function(x, variable) {
+  (x - mean(echo_model[[variable]], na.rm = TRUE)) / sd(echo_model[[variable]], na.rm = TRUE)
+}
+
+age_grid <- tibble(
+  age_at_heart_attack = seq(
+    min(echo_model$age_at_heart_attack),
+    max(echo_model$age_at_heart_attack),
+    length.out = 150
+  ),
+  z_age_at_heart_attack = z_value(age_at_heart_attack, "age_at_heart_attack"),
+  z_wall_motion_index = 0
+)
+
+age_grid$predicted_probability <- predict(selected_glm, newdata = age_grid, type = "response")
+
+wall_grid <- tibble(
+  wall_motion_index = seq(
+    min(echo_model$wall_motion_index),
+    max(echo_model$wall_motion_index),
+    length.out = 150
+  ),
+  z_age_at_heart_attack = 0,
+  z_wall_motion_index = z_value(wall_motion_index, "wall_motion_index")
+)
+
+wall_grid$predicted_probability <- predict(selected_glm, newdata = wall_grid, type = "response")
+```
+
+```{r age-prediction-plot, fig.width=7, fig.height=4.5}
+ggplot(age_grid, aes(x = age_at_heart_attack, y = predicted_probability)) +
+  geom_line(linewidth = 1.1, colour = "grey25") +
+  labs(
+    x = "Age at heart attack",
+    y = "Predicted probability of death outcome",
+    title = "Modelled relationship with age",
+    subtitle = "Wall-motion index held at its mean"
+  )
+```
+
+```{r wall-prediction-plot, fig.width=7, fig.height=4.5}
+ggplot(wall_grid, aes(x = wall_motion_index, y = predicted_probability)) +
+  geom_line(linewidth = 1.1, colour = "grey25") +
+  labs(
+    x = "Wall-motion index",
+    y = "Predicted probability of death outcome",
+    title = "Modelled relationship with wall-motion index",
+    subtitle = "Age held at its mean"
+  )
+```
+
+These prediction plots show the fitted model, not necessarily causal biological effects. The directions are surprising, so I would present them cautiously.
+
+## 10. Publication-style visualisation
+
+### Practical question
+
+> Write a sentence or two about the results that would clearly communicate your findings to other biologists.
+
+Before the written summary, I would make a compact plot of the fitted probabilities from the selected model.
+
+```{r publication-plot, fig.width=7, fig.height=5}
+echo_model |>
+  mutate(predicted_probability = predict(selected_glm, type = "response")) |>
+  ggplot(aes(x = predicted_probability, y = factor(death_within_1))) +
+  geom_jitter(height = 0.08, width = 0, alpha = 0.7, size = 2) +
+  labs(
+    x = "Predicted probability of death outcome",
+    y = "Observed death outcome",
+    title = "Selected model separates many, but not all, patient outcomes"
+  )
+```
+
+This figure shows that many patients with the death outcome receive higher predicted probabilities, but there is also overlap. The overlap is important: a simple model from these data is not accurate enough for high-stakes clinical decision-making.
+
+## 11. Write a sentence or two about the results
+
+### Practical question
+
+> Write a sentence or two about the results that would clearly communicate your findings to other biologists.
+
+In this small echocardiogram dataset, an AIC-selected binomial GLM retained age at heart attack and wall-motion index as predictors of the one-year death outcome, and it achieved modest held-out predictive accuracy in a simple train/test split. However, the fitted coefficient directions were biologically surprising, so I would describe this as a limited predictive exercise rather than strong evidence about the biological causes of post-heart-attack mortality.
+
+## 12. Critique and reflection
+
+### Practical question
+
+> Critique and reflection.
+
+The main limitations are:
+
+- The dataset is very small, especially after removing missing responses and incomplete predictor rows.
+- The response variable is derived and has many missing values.
+- A row in the raw file appears malformed and has to be removed during cleaning.
+- Complete-case analysis discards data and may introduce bias if missingness is not random.
+- Stepwise model selection is unstable in small datasets.
+- A single train/test split is noisy; repeated cross-validation would be better.
+- Prediction accuracy is not high enough for any clinical use.
+
+The most important lesson is methodological: for prediction, fitting a model is not enough. We also need to test how well predictions work on data that were not used to fit the model.
