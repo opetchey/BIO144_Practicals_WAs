@@ -410,7 +410,7 @@ learnr::question(
 
 Since the aim is to predict abalone age (Rings) from the explanatory variables, a useful plot would be to show the relationship between the predicted Rings from the model and the observed Rings. We have already made this plot above. You could enhance it further by adding confidence intervals or prediction intervals around the regression line, and by improving the aesthetics for publication quality.
 
-If we wanted to visualise the effect of individual explanatory variables, we could create conditions plots to visualise the effects of each predictor while holding others constant.
+If we wanted to visualise the effect of individual explanatory variables, we could create conditional plots to visualise the effects of each predictor while holding others constant.
 
 For example:
 
