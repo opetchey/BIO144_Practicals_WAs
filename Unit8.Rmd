@@ -37,6 +37,290 @@ All homework is for your own practice and learning. It will not be marked or gra
 
 
 ## Practical part 1
+<!-- LO: LO8.1.1, LO8.1.2, LO8.1.4, LO8.1.5, LO8.1.6, LO8.1.7, LO8.1.8, LO8.1.9, LO8.1.10, LO8.1.11, LO8.1.12, LO8.1.13 -->
+
+In this exercise you will work through a complete analysis of count data with a Poisson GLM, following the GLM checklist in the course book (Chapters 8 and 9).
+
+### The biological question
+
+Sheep ticks (*Ixodes ricinus*) are blood-feeding parasites that transmit diseases such as louping-ill virus to red grouse (*Lagopus lagopus scoticus*), a game bird of the Scottish moorlands. Ticks need warm, humid conditions, so we might expect fewer ticks at higher altitude. Researchers counted the ticks on the heads of red grouse chicks at sites at different altitudes, in three years (1995 to 1997).
+
+**Question: how does the number of ticks on a chick change with altitude, taking into account differences between years?**
+
+*These are real data, from Elston et al. (2001) Parasitology 122: 563–569. They are also available in R as `grouseticks` in the `lme4` package.*
+
+The dataset `grouse_ticks.csv` has one row per chick, and these variables:
+
+* `chick_id`: identifier of the chick.
+* `brood`: identifier of the brood (chicks from the same nest).
+* `location`: identifier of the location.
+* `year`: year of sampling (1995, 1996 or 1997).
+* `altitude_m`: altitude of the location (metres above sea level).
+* `ticks`: number of ticks counted on the chick's head.
+
+### 1. Prepare a script, load the data, and make some basic checks
+
+```{r eval = FALSE, echo = TRUE}
+library(tidyverse)
+grouse_ticks <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/grouse_ticks.csv")
+grouse_ticks <- grouse_ticks |>
+  mutate(year = factor(year))
+```
+
+Note that we make `year` a factor: we want to estimate a separate mean for each year, not a linear trend across three years.
+
+```{r LO-ticks-n, echo=FALSE}
+# LO: LO2.1.5
+learnr::question_numeric(
+  "How many chicks are in the dataset?",
+  learnr::answer(403, correct = TRUE),
+  correct = "Correct! 403 chicks.",
+  incorrect = "Count the rows of the dataset, e.g. with nrow().",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-ticks-why-not-lm, echo=FALSE}
+# LO: LO8.1.1, LO8.1.2
+learnr::question(
+  "Make a histogram of the number of ticks. Why is a linear model with normally distributed errors likely to be a poor choice for these data?",
+  learnr::answer("The response is a count: whole numbers that cannot be negative.", correct = TRUE),
+  learnr::answer("The distribution is strongly right-skewed, with many zeros and a few chicks with very many ticks.", correct = TRUE),
+  learnr::answer("For counts, the variance usually increases with the mean, which violates the assumption of constant variance.", correct = TRUE),
+  learnr::answer("A linear model cannot include a categorical variable such as year."),
+  correct = "Correct! These are the classic reasons to use a Poisson GLM (or one of its relatives) for count data.",
+  incorrect = "Think about the type of response variable, and the assumptions of a linear model.",
+  allow_retry = TRUE
+)
+```
+
+### 2. Visualise
+
+Make a graph of the number of ticks against altitude, with a different colour (or facet) for each year. You may find it helpful to also make a version with a log scale on the y-axis (e.g. `scale_y_log10()` on `ticks + 1`).
+
+### 3. Plan and fit the model
+
+We will fit a Poisson GLM with altitude and year as explanatory variables (no interaction).
+
+```{r LO-ticks-df, echo=FALSE}
+# LO: LO8.1.10, LO12.1.5
+learnr::question_numeric(
+  "How many residual degrees of freedom do you expect for a model with `altitude_m` (continuous) and `year` (3 levels)?",
+  learnr::answer(399, correct = TRUE),
+  correct = "Correct! 403 observations − 4 parameters (intercept, one slope, and two year differences) = 399.",
+  incorrect = "Count the parameters: the intercept, one for altitude, and k − 1 for a factor with k levels.",
+  allow_retry = TRUE
+)
+```
+
+```{r eval = FALSE, echo = TRUE}
+m_ticks_poisson <- glm(ticks ~ altitude_m + year, family = poisson, data = grouse_ticks)
+summary(m_ticks_poisson)
+```
+
+### 4. Check the model (GLM checklist)
+
+Work through the GLM checklist from the course book. Make the diagnostic plots (`plot(m_ticks_poisson)` or `autoplot()` from `ggfortify`), and calculate the dispersion:
+
+```{r eval = FALSE, echo = TRUE}
+deviance(m_ticks_poisson) / df.residual(m_ticks_poisson)
+```
+
+```{r LO-ticks-dispersion, echo=FALSE}
+# LO: LO8.1.11
+learnr::question_numeric(
+  "What is the ratio of the residual deviance to the residual degrees of freedom?\n\n(Round to two decimal places.)",
+  learnr::answer(8.63, correct = TRUE),
+  correct = "Correct! 3443.8 / 399 ≈ 8.63. This is far above 1 (and above the rule-of-thumb 1.5–2): the data are strongly overdispersed.",
+  incorrect = "Divide the residual deviance by the residual degrees of freedom (both are at the bottom of the summary output).",
+  allow_retry = TRUE,
+  tolerance = 0.01
+)
+```
+
+```{r LO-ticks-overdispersion-consequence, echo=FALSE}
+# LO: LO8.1.11
+learnr::question(
+  "What is the main consequence of ignoring this overdispersion, and what is a pragmatic fix?",
+  learnr::answer("Standard errors are too small and p-values too small (too many false positives). Fit a quasi-Poisson model, which estimates the dispersion and inflates the standard errors accordingly.", correct = TRUE),
+  learnr::answer("The coefficient estimates are biased. Use a linear model instead."),
+  learnr::answer("Nothing important: overdispersion only affects the intercept."),
+  learnr::answer("Standard errors are too large. Remove the chicks with the most ticks."),
+  correct = "Correct! The quasi-Poisson model gives the same coefficient estimates as the Poisson model, but standard errors multiplied by the square root of the estimated dispersion. (A negative binomial model is another option.)",
+  incorrect = "Overdispersion means more variation than the Poisson distribution assumes. What does that do to our uncertainty?",
+  allow_retry = TRUE
+)
+```
+
+Before we fix it, check two other items on the checklist.
+
+**Zeros.** Compare the number of chicks with no ticks with the number the Poisson model expects:
+
+```{r eval = FALSE, echo = TRUE}
+sum(grouse_ticks$ticks == 0)
+sum(dpois(0, lambda = fitted(m_ticks_poisson)))
+```
+
+```{r LO-ticks-zeros, echo=FALSE}
+# LO: LO8.1.12
+learnr::question(
+  "There are 126 chicks with no ticks, but the Poisson model expects only about 63. What does this suggest?",
+  learnr::answer("There are more zeros than a Poisson model predicts (possible zero inflation), which is one reason for the overdispersion. Fully dealing with it would need models beyond the Poisson GLM (e.g. zero-inflated or negative binomial models).", correct = TRUE),
+  learnr::answer("The Poisson model fits the zeros well."),
+  learnr::answer("We should delete the chicks with zero ticks."),
+  correct = "Correct! Excess zeros are common in parasite counts: some chicks may simply never have been exposed to ticks. In BIO144 we recognise the problem; the more specialised models are beyond the course.",
+  incorrect = "Compare the observed and expected numbers of zeros.",
+  allow_retry = TRUE
+)
+```
+
+**Independence.** This comes from the study design, not from the plots.
+
+```{r LO-ticks-independence, echo=FALSE}
+# LO: LO11.1.1, LO12.1.3
+learnr::question(
+  "There are 403 chicks, but they come from only 118 broods (and chicks from the same brood share a nest and parents). What does this mean for the independence assumption?",
+  learnr::answer("Chicks from the same brood are likely to have more similar tick counts than chicks from different broods, so the observations are not independent. A mixed model with brood as a random effect (Chapter 11) would deal with this properly.", correct = TRUE),
+  learnr::answer("Nothing: each chick is a separate observation, so all 403 are independent."),
+  learnr::answer("We should analyse only one chick per brood and throw away the rest."),
+  correct = "Correct! Treating the chicks as independent overstates how much independent information we have (pseudoreplication), which makes standard errors too small. Here we continue with a GLM as an approximation, but keep this in mind when interpreting the p-values. (You will see mixed models in Unit 11.)",
+  incorrect = "Think about whether two chicks from the same nest are likely to be more alike than two chicks from different nests.",
+  allow_retry = TRUE
+)
+```
+
+Now fit the quasi-Poisson model:
+
+```{r eval = FALSE, echo = TRUE}
+m_ticks_quasi <- glm(ticks ~ altitude_m + year, family = quasipoisson, data = grouse_ticks)
+summary(m_ticks_quasi)
+```
+
+Compare the estimates and standard errors with those of the Poisson model.
+
+### 5. Test whether altitude is associated with tick numbers
+
+The deviance of a GLM plays the role of the residual sum of squares in a linear model: the null deviance is the deviance of a model with only an intercept, and the residual deviance is what remains after the explanatory variables are included. To test altitude, compare the model with and without it:
+
+```{r eval = FALSE, echo = TRUE}
+m_ticks_poisson_year <- glm(ticks ~ year, family = poisson, data = grouse_ticks)
+anova(m_ticks_poisson_year, m_ticks_poisson, test = "Chisq")
+```
+
+```{r LO-ticks-deviance-change, echo=FALSE}
+# LO: LO8.1.5, LO8.1.9, LO8.1.10
+learnr::question(
+  "In this comparison of the Poisson models, the deviance falls by 1105.6 when altitude is added. On how many degrees of freedom is this chi-squared (likelihood ratio) test?",
+  learnr::answer("1, because the larger model estimates one more parameter (the altitude slope).", correct = TRUE),
+  learnr::answer("399, the residual degrees of freedom of the larger model."),
+  learnr::answer("4, the number of parameters in the larger model."),
+  learnr::answer("402, the number of observations minus one."),
+  correct = "Correct! The degrees of freedom of the test equal the difference in the number of estimated parameters between the two nested models.",
+  incorrect = "How many more parameters does the model with altitude estimate than the model without it?",
+  allow_retry = TRUE
+)
+```
+
+Because the data are overdispersed, the chi-squared test of the Poisson models is far too optimistic. With the quasi-Poisson models, use an F-test instead:
+
+```{r eval = FALSE, echo = TRUE}
+m_ticks_quasi_year <- glm(ticks ~ year, family = quasipoisson, data = grouse_ticks)
+anova(m_ticks_quasi_year, m_ticks_quasi, test = "F")
+```
+
+```{r LO-ticks-F, echo=FALSE}
+# LO: LO8.1.9, LO8.1.11
+learnr::question_numeric(
+  "What is the F-value for adding altitude to the quasi-Poisson model that already contains year?\n\n(Round to one decimal place.)",
+  learnr::answer(88.6, correct = TRUE),
+  correct = "Correct! F ≈ 88.6 on 1 and 399 degrees of freedom (p < 0.0001). Even after allowing for the overdispersion, there is very strong evidence that tick numbers are associated with altitude.",
+  incorrect = "Use anova() with test = \"F\" to compare the two quasi-Poisson models.",
+  allow_retry = TRUE,
+  tolerance = 0.1
+)
+```
+
+### 6. Interpret the effect sizes
+
+The coefficients are on the log (link) scale. Back-transform them with `exp()` to get multiplicative effects on the expected number of ticks.
+
+```{r LO-ticks-per-100m, echo=FALSE}
+# LO: LO8.1.7
+learnr::question_numeric(
+  "The altitude slope is −0.02145 (log scale, per metre). By what factor is the expected number of ticks multiplied for an increase in altitude of **100 m**?\n\n(Round to three decimal places.)",
+  learnr::answer(0.117, correct = TRUE),
+  correct = "Correct! exp(100 × −0.02145) ≈ 0.117. Each extra 100 m of altitude is associated with about 88% fewer ticks. (The data span only about 400 to 530 m, so this is a strong effect over a small range.)",
+  incorrect = "Multiply the slope by 100 first, then back-transform with exp().",
+  allow_retry = TRUE,
+  tolerance = 0.001
+)
+```
+
+To get a 95% confidence interval for this effect, calculate it on the log scale and then back-transform. With the quasi-Poisson model:
+
+```{r eval = FALSE, echo = TRUE}
+exp(100 * confint.default(m_ticks_quasi)["altitude_m", ])
+```
+
+(This gives about 0.07 to 0.19.)
+
+```{r LO-ticks-year97, echo=FALSE}
+# LO: LO8.1.7
+learnr::question(
+  "The coefficient for `year1997` is −1.685. What does it mean?",
+  learnr::answer("In 1997, chicks had on average 1.685 fewer ticks than in 1995."),
+  learnr::answer("At the same altitude, the expected number of ticks in 1997 was exp(−1.685) ≈ 0.19 times that in 1995 (the reference year), i.e. about 81% fewer.", correct = TRUE),
+  learnr::answer("Tick numbers declined by 1.685% per year."),
+  correct = "Correct! Coefficients of a factor in a Poisson GLM are differences from the reference level on the log scale, so exp() of them is a ratio of expected counts.",
+  incorrect = "Remember the log link: the coefficient is a difference in log expected counts relative to the reference level (1995).",
+  allow_retry = TRUE
+)
+```
+
+### 7. Predictions and a figure
+
+Use `predict()` with `type = "response"` to get the expected number of ticks on a chick at 400 m and at 500 m altitude in 1996:
+
+```{r eval = FALSE, echo = TRUE}
+new_sites <- data.frame(altitude_m = c(400, 500),
+                        year = factor("1996", levels = levels(grouse_ticks$year)))
+predict(m_ticks_quasi, newdata = new_sites, type = "response")
+```
+
+```{r LO-ticks-predict, echo=FALSE}
+# LO: LO8.1.8
+learnr::question_numeric(
+  "What is the expected number of ticks on a chick at **400 m** in **1996**?\n\n(Round to one decimal place.)",
+  learnr::answer(28.8, correct = TRUE),
+  correct = "Correct! About 28.8 ticks at 400 m, compared with about 3.4 at 500 m.",
+  incorrect = "Use predict() with type = \"response\" and the new data shown above.",
+  allow_retry = TRUE,
+  tolerance = 0.1
+)
+```
+
+Make a figure of the data with the fitted relationship for each year. Get the predictions with confidence intervals on the link scale (`type = "link"`, `se.fit = TRUE`), calculate the interval there, and back-transform the fit and both limits with `exp()` (the course book, Chapter 8, shows how).
+
+### 8. Report
+
+```{r LO-ticks-report, echo=FALSE}
+# LO: LO8.1.13
+learnr::question(
+  "Which is the best reporting sentence?",
+  learnr::answer("Altitude had a significant effect on ticks (p < 0.001)."),
+  learnr::answer("The number of ticks on grouse chicks declined steeply with altitude: each additional 100 m was associated with an 88% reduction in the expected number of ticks (multiplicative effect 0.12, 95% CI 0.07–0.19; quasi-Poisson GLM with year as a covariate, F(1, 399) = 88.6, p < 0.0001).", correct = TRUE),
+  learnr::answer("The altitude coefficient was −0.0215 (z = −30.2, p < 2e-16), so ticks decrease by 0.0215 per metre."),
+  correct = "Correct! It gives the direction and size of the effect on a scale readers understand (a multiplicative effect), its uncertainty, and the test, from a model that accounts for the overdispersion.",
+  incorrect = "Look for the sentence that gives an interpretable effect size with its uncertainty, from an appropriate model. Which one misinterprets a log-scale coefficient? Which one uses the overdispersed Poisson test?",
+  allow_retry = TRUE
+)
+```
+
+**Critique and reflection.** What are the limitations of this analysis? Think about the chicks being grouped in broods (and broods in locations), the excess zeros, and the fact that this is an observational study: is altitude itself the cause, or something associated with it (temperature, humidity, vegetation)?
+
+## Practical part 2 (optional): collinearity in a Poisson GLM
+
+*This part analyses a dataset where the explanatory variables are strongly correlated. It is more about collinearity (Chapter 6) than about count data, so do it if you have time.*
 
 In this exercise, you will work through an generalised linear model analysis of a real dataset on abalone age.
 
@@ -53,6 +337,7 @@ The steps to follow are, as usual:
 8. Critique and reflection
 
 ### 0. The biological question
+<!-- LO: LO8.1.1, LO8.1.2 -->
 
 Abalone (marine snails) are endangered in some parts of the world. Knowing the age of an abalone is important for conservation efforts. The age of an abalone can be estimated by counting the number of rings on its shell, similar to counting tree rings. However, this requires killing the abalone. A non-lethal method to estimate age is to use measurements of the abalone's physical characteristics, such as shell length and shell diameter. We are interested in whether a suite of explanatory variables are associated with abalone age. And how much variation in age can be explained by these variables.
 
@@ -75,6 +360,7 @@ Note that we should not use variables that can only be measured after killing th
 The response variable is `Rings`, which is a count of the number of rings on the shell. Therefore we know already that we should not use a linear model to analyse this data, but rather a generalised linear model with a Poisson error distribution would be a good starting point.
 
 ### 1. Prepare a script, load the data, and make some basic checks on the dataset.
+<!-- LO: LO2.1.7 -->
 
 As well as the usual preliminaries, please make a version of the dataset with only the variables we will use in the analysis:
 
@@ -91,6 +377,7 @@ abalone_data <- abalone_data %>%
 ```
 
 ```{r quiz-na-any-five-vars, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "How many observations have **NA values in at least one** of the five variables?",
   
@@ -103,6 +390,7 @@ learnr::question_numeric(
 ```
 
 ### 2. Visualise to answer the question.
+<!-- LO: LO6.1.11 -->
 
 Make all possible pairwise scatterplots of the variables to look for obvious relationships.
 
@@ -112,6 +400,7 @@ pairs(abalone_data)
 ```
 
 ```{r quiz-abalone-associated-variables, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "Based on the pairwise scatterplots, which of the following **explanatory variables** look to be associated with the number of **Rings**?",
   
@@ -139,6 +428,7 @@ learnr::question(
 ```
 
 ```{r quiz-abalone-why-multiple-associated, echo=FALSE}
+# LO: LO6.1.11
 learnr::question(
   "We saw that **all four explanatory variables** appear to be associated with the number of **Rings**. What is **at least one reason** why this might be the case?",
   
@@ -167,6 +457,7 @@ learnr::question(
 ```
 
 ```{r quiz-abalone-collinearity-concern, echo=FALSE}
+# LO: LO6.1.11
 learnr::question(
   "We see that the explanatory variables are **strongly correlated with each other**. Why should this concern us when fitting a multiple regression or GLM?",
   
@@ -201,6 +492,7 @@ Nevertheless, we can see from the pairwise scatterplots that all four explanator
 Anyway, it looks like the answer to the biological question is likely to be 'yes': there are associations between abalone age (Rings) and the explanatory variables. But just how strong are these associations, and which variables are most important? And how useful for predicting age? Let's find out by fitting a Poisson GLM and inspecting it in detail.
 
 ### 3. Fit an appropriate model.
+<!-- LO: LO8.1.4 -->
 
 We will fit a Poisson GLM with Rings as the response variable and all four explanatory variables included. Make this model. Do not include any interaction terms.
 
@@ -212,6 +504,7 @@ ab_glm <- glm(Rings ~ Length_mm + Diameter_mm + Height_mm + Whole_weight_g,
 ```
 
 ### 4. Check the assumptions of the model.
+<!-- LO: LO8.1.6, LO8.1.11 -->
 
 Make the four standard diagnostic plots for the Poisson GLM you have fitted.
 
@@ -221,6 +514,7 @@ autoplot(ab_glm, smooth.colour = NA)
 ```
 
 ```{r quiz-abalone-diagnostics-most-concerning, echo=FALSE}
+# LO: LO8.1.6
 learnr::question(
   "Looking at the diagnostic plots for the Poisson GLM, what do you think is the **most concerning feature**?",
   
@@ -255,6 +549,7 @@ summary(ab_glm)
 ```
 
 ```{r quiz-abalone-overdispersion, echo=FALSE}
+# LO: LO8.1.11
 learnr::question(
   "How do you assess whether there is **overdispersion** in a Poisson GLM?",
   
@@ -269,7 +564,7 @@ learnr::question(
     "By looking only at which coefficients are statistically significant."
   ),
   learnr::answer(
-    "By inspecting the AIC value."
+    "By checking whether the residuals are normally distributed."
   ),
   learnr::answer(
     "By checking whether the response variable is a count."
@@ -282,6 +577,7 @@ learnr::question(
 ```
 
 ```{r quiz-abalone-overdispersion-value, echo=FALSE}
+# LO: LO8.1.11
 learnr::question_numeric(
   "To check for overdispersion in a Poisson GLM, we calculate the ratio of the **residual deviance** to the **residual degrees of freedom**.\n\nWhat is the value of this quantity for the model shown?",
   
@@ -300,6 +596,7 @@ This discrepancy can occur because the qq-plot is sensitive to, and shows us, ex
 Addressing this issue in the model / data combination would need modelling of greater sophistication to resolve. Let us continue with the current model and see how well it performs.
 
 ### 5. Interpret the model.
+<!-- LO: LO8.1.4, LO6.1.11 -->
 
 Recall that we need to be very careful when interpreting the coefficients of this model, because the explanatory variables are strongly correlated with each other (collinearity).
 
@@ -308,6 +605,7 @@ summary(ab_glm)
 ```
 
 ```{r quiz-abalone-significant-predictors, echo=FALSE}
+# LO: LO8.1.4, LO6.1.11
 learnr::question(
   "In the Poisson GLM fitted to the abalone data, which of the four explanatory variables are **significantly associated** with the response variable **Rings**, after accounting for the others?",
   
@@ -334,7 +632,7 @@ learnr::question(
 )
 ```
 
-Now make a model without the `Height_mm` and `Diameter_mm` variables, since these were the only significant predictors in the full model. Fit this reduced model and inspect the summary.
+To see how collinearity affects which variables appear to be significant, now make a model that leaves out `Height_mm` and `Diameter_mm` (the two variables that were significant in the full model), so that it contains only `Length_mm` and `Whole_weight_g`. Fit this reduced model and inspect the summary. (This is an exercise to show the effect of collinearity, not a recommended way to choose a model: dropping or keeping variables according to their p-values gives misleading results.)
 
 ```{r eval = TRUE, echo= FALSE}
 ab_glm2 <- glm(Rings ~ Length_mm + Whole_weight_g,
@@ -362,7 +660,7 @@ In summary, we have found some associations, but the strong collinearity among p
 
 **How good is the model?**
 
-To assess the overall fit of the model, we can look at measures such as the deviance, AIC, and pseudo-R² values. However, interpreting these in the context of a Poisson GLM with collinear predictors can be challenging.
+To assess the overall fit of the model, we can compare the residual deviance with the null deviance: the larger the reduction, the more of the variation in the response the explanatory variables account for.
 
 Another method is to plot the predicted values against the observed values to visually assess the fit. Make this graph and the use linear regression to add a line of best fit. What do you expect the intercept and slope to be if the model is good? And what do you expect the r-squared to be if the model is good?
 
@@ -382,6 +680,7 @@ summary(pred_obs_model)
 ```
 
 ```{r quiz-observed-vs-predicted-line, echo=FALSE}
+# LO: none (beyond objectives)
 learnr::question(
   "When we regress the **observed values** against the **predicted values** from the model, are the **intercept and slope** different from what we would expect if the model were predicting well?",
   
@@ -407,6 +706,7 @@ learnr::question(
 
 
 ### 6. Make a visualisation of the data, good for publication.
+<!-- LO: LO8.1.8 -->
 
 Since the aim is to predict abalone age (Rings) from the explanatory variables, a useful plot would be to show the relationship between the predicted Rings from the model and the observed Rings. We have already made this plot above. You could enhance it further by adding confidence intervals or prediction intervals around the regression line, and by improving the aesthetics for publication quality.
 
@@ -433,7 +733,7 @@ ggplot(new_data, aes(x = Length_mm, y = Predicted_Rings)) +
 
 And we instantly see the unlikely result that as Length increases, predicted Rings decreases. This is a consequence of the collinearity among predictors, and shows how difficult it is to interpret individual predictor effects in the presence of strong collinearity.
 
-Let's make the same graph for the model with only `Length_mm` and `Diameter_g` as predictors:
+Let's make the same graph for the reduced model, which has only `Length_mm` and `Whole_weight_g` as explanatory variables (with `Whole_weight_g` held at its mean):
 
 ```{r echo=FALSE, message= FALSE, warning = FALSE}
 new_data2 <- expand.grid(
@@ -455,6 +755,7 @@ And now we have a more sensible result: as Length increases, predicted Rings als
 This shows just how dangerous collinearity can be for interpreting the effects of individual predictors in multiple regression and GLMs.
 
 ### 7. Write reporting sentences.
+<!-- LO: LO8.1.13 -->
 
 We could write something like this:
 
@@ -464,7 +765,10 @@ We could write something like this:
 
 We have strayed very much into a situation where we learned more about the challenges of collinearity in multiple regression and than we did about analysing count data. And much of what we learned about collinearity was already known and applies equally to linear and other models.
 
-## Practical part 2
+## Practical part 3
+<!-- LO: LO8.1.7, LO8.1.8 -->
+
+(If you skipped Part 2, first load the abalone data as described in step 1 of Part 2.)
 
 Let us again consider the abalone dataset, but simplify by only using one explanatory variable, `Length_mm`, to predict the response variable `Rings`. Then we can focus on something important: the meaning of the slope estimates in a Poisson GLM.
 
@@ -478,6 +782,7 @@ summary(ab_glm_length)
 ```
 
 ```{r quiz-abalone-length-only-slope, echo=FALSE}
+# LO: LO8.1.4
 learnr::question_numeric(
   "What is the **slope estimate** for `Length_mm` in the Poisson GLM that includes **only length as an explanatory variable**? (Give the answer rounded to two decimal places.)",
   
@@ -490,6 +795,7 @@ learnr::question_numeric(
 ```
 
 ```{r quiz-abalone-poisson-slope-interpretation, echo=FALSE}
+# LO: LO8.1.7
 learnr::question(
   "The slope estimate for `Length_mm` in the Poisson GLM is 1.53. Does this mean that **for each 1 mm increase in Length_mm, the expected number of Rings increases by 1.53**?",
   
@@ -509,6 +815,7 @@ learnr::question(
 ```
 
 ```{r quiz-abalone-why-not-additive, echo=FALSE}
+# LO: LO8.1.7
 learnr::question(
   "Why does a slope estimate of 1.53 in a Poisson GLM **not** mean that the expected number of Rings increases by 1.53 for each 1 mm increase in Length_mm?",
     learnr::answer(
@@ -539,6 +846,7 @@ learnr::question(
 The next question is a bit tricky...
 
 ```{r quiz-abalone-poisson-prediction, echo=FALSE}
+# LO: LO8.1.7, LO8.1.8
 learnr::question_numeric(
   "Assume that for a shell length of **0.5 mm** an abalone has on average **10 rings**.  
 The Poisson GLM slope for `Length_mm` is **1.532968**.\n\nWhen the shell length increases to **1.5 mm**, how many rings are expected?\n\n(*Round your answer to one decimal place. Be careful to make all calculations with accurate values, and only round the final answer.*)",
@@ -559,6 +867,7 @@ In a Poisson GLM we use a log link, which means the model does not add a fixed n
 
 
 ```{r quiz-q1-poisson-basics, echo=FALSE}
+# LO: LO8.1.1, LO8.1.3
 learnr::question(
   "Which of the following statements about Poisson regression are true? (One or more answers might be correct.)",
   
@@ -580,6 +889,7 @@ learnr::question(
 
 
 ```{r quiz-q2-poisson-coefs, echo=FALSE}
+# LO: LO8.1.7
 learnr::question(
   "You analyse data where your response variable is a counted number, and you fit a Poisson GLM with link function log. There are two covariates, x₁ and x₂, and the respective coefficients are β₁ = 0.5 and β₂ = −1.\n\nWhich of the following statements are true? (One or more answers might be correct.)",
   
@@ -598,6 +908,7 @@ learnr::question(
 
 
 ```{r quiz-q3-overdispersion, echo=FALSE}
+# LO: LO8.1.11
 learnr::question(
   "You have fitted a Poisson GLM and find a residual deviance of 112.4 on 55 degrees of freedom. What does that tell you, and what should you do? (One or more answers might be correct.)",
   
@@ -614,6 +925,7 @@ learnr::question(
 
 
 ```{r quiz-q4-prediction-scale, echo=FALSE}
+# LO: LO8.1.8
 learnr::question(
   "When using the `predict()` function to get predictions of a GLM, and you want the prediction on the scale of the raw data (not the scale of the linear predictor), which option should you include as an argument to `predict()`?",
   
@@ -631,6 +943,7 @@ learnr::question(
 
 
 ```{r quiz-q5-model-fit, echo=FALSE}
+# LO: LO8.1.9
 learnr::question(
   "You have fitted a Poisson GLM and are happy with the model diagnostics, and the coefficients look biologically sensible. To present the results, you need the chi-squared test statistic for the overall model, and its p-value.\n\nWhat function can you use to get this?",
   
@@ -647,6 +960,7 @@ learnr::question(
 
 
 ```{r quiz-q6-link-function, echo=FALSE}
+# LO: LO8.1.3
 learnr::question(
   "Which of these best describes the link function in a GLM?",
   

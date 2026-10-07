@@ -32,6 +32,7 @@ There is no other homework for this week.
 ## Practical
 
 ### Exercise 1 (of 1)
+<!-- LO: LO1.1.3, LO2.1.5, LO2.1.7, LO2.1.8, LO2.1.9 -->
 
 During the first lecture you collected data on class reaction times. The exercise this unit is for you to use R to analyse the dataset.
 
@@ -59,6 +60,7 @@ The statistical test used in the script is a t-test. Hopefully you have experien
 Here are some questions to help you think about your experience correcting the script and analysing the data.
 
 ```{r quiz-install-packages, echo=FALSE}
+# LO: LO2.1.3
 question(
     "Did you get an error when trying to run the lines:\n\nlibrary(readr)\n\nlibrary(dplyr)\n\nlibrary(ggplot2)\n\nIf you did get an error, it was probably because you had not installed one or more of these packages on your computer.\n\nWhich of these could you use to install the dplyr package? (Select all that apply.)",
     answer("In RStudio, click on the Tools menu, then Install Packages, type the name of the package you want into the Packages box, and click on Install.",
@@ -80,6 +82,7 @@ question(
 ```
 
 ```{r quiz-fixing-errors, echo=FALSE}
+# LO: LO2.1.9
 question(
   "When you ran the code to read in the data you got an error that included the text:
   could not find function read_cvs. What was the problem?",
@@ -95,6 +98,7 @@ question(
 ```
 
 ```{r quiz-code-diagnostics, echo=FALSE}
+# LO: none (beyond objectives)
 question(
     "In RStudio, in the script editor window, in the left margin, you might see on some lines some symbols, such as an X in a red circle, and an ! in a yellow triangle.\n\nIf you don't see these, have a look at this web page:\nhttps://support.rstudio.com/hc/en-us/articles/205753617-Code-Diagnostics\n\nWhat is the other symbol you might see in the script?",
     
@@ -110,6 +114,7 @@ question(
 ```
 
 ```{r quiz-degrees-of-freedom, echo=FALSE}
+# LO: LO3.1.5
 question(
     "The last part of the exercise is to report your findings, including the direction and size of the difference in reaction times between males and females, and a measure of uncertainty in that difference.\n\nWhich of these is the number of observations in the dataset (i.e. the number of people) minus the number of categories (two: male and female)?",
     
@@ -135,6 +140,7 @@ Here is a working version of the script. Please don't look at it until you have 
 In the final exam you will experience questions that ask for a numeric answer. Then you will need to give the answer with the specified precision. For example, if the question asks for pi rounded to 2 digits, you should answer 3.14. If you answer 3.1 or 3.142 you could be marked wrong. Here is what that might look like in a question. Try giving a wrong answer to see what happens!
 
 ```{r quiz2, echo=FALSE}
+# LO: LO1.1.1
 question_numeric(
   "What is pi rounded to 2 digits?",
   answer(3, message = "Too few digits"),
@@ -152,6 +158,7 @@ In the final exam you will sometimes get multiple choice questions where more th
 
 
 ```{r quiz3, echo=FALSE}
+# LO: LO1.1.1
 question_checkbox(
   "Select all the toppings that belong on a Margherita Pizza:",
   answer("tomato", correct = TRUE),
@@ -174,14 +181,15 @@ question_checkbox(
 In the final exam there may be more complex types of questions. Here is an example of one such question type. Try it out!
 
 ```{r weekly-quiz-1, echo=FALSE}
+# LO: LO1.1.3
 question(
-    "The workflow\n\nIn the workflow we use for data analysis, which order should the following come in?\n\nA. Visualisation.\nB. Statistical test.\nC. Defining the question.\nD. Data tidying and cleaning.\nE. Checking assumptions.\nF. Data collection.\n\n(Choose the best ordering.)",
-    answer("A, C, F, E, B, D"),
-    answer("C, F, D, A, E, B", correct = TRUE),
-    answer("F, D, A, E, B, C"),
-    answer("C, F, D, A, B, E"),
-    correct = "Correct!",
-    incorrect = "Don't start anything without a question. Don't do any statistics before visualising your data. Check assumptions of your model before looking at the p-value (or other statistics).",
+    "The workflow\n\nIn the workflow we use for data analysis (see the live demonstration in Chapter 1 of the course book), which order should the following come in?\n\nA. Visualisation.\nB. Statistical test.\nC. Question.\nD. Data wrangling (tidying and cleaning).\nE. Planned presentation and analysis.\nF. Data collection.\nG. Reporting and communicating.\n\n(Choose the best ordering.)",
+    answer("C, F, D, A, B, E, G"),
+    answer("C, E, F, D, A, B, G", correct = TRUE),
+    answer("F, C, D, A, B, E, G"),
+    answer("C, E, F, D, B, A, G"),
+    correct = "Correct! Notice that the presentation and analysis are planned before any data are collected.",
+    incorrect = "Don't start anything without a question. Plan how you will present and analyse the data before you collect them. Don't do any statistics before visualising your data.",
     allow_retry = TRUE
   )
 ```
@@ -189,6 +197,7 @@ question(
 And now for some more questions about this weeks content. These, like the questions in all the following Weekly Quizzes are just for you to practice with. They do not count towards your final grade. They should help you know if you're following and understanding the material.
 
 ```{r weekly-quiz-2, echo=FALSE}
+# LO: LO2.1.4
 question(
     "Getting help\n\nFor each R function there is a help file. You can get these in R by typing in the Console a question mark (?) followed immediately by the function name. For example, to see the help file for the function t.test, type ?t.test.\n\nGo to the help file for t.test. What is the name of the third argument you can give it?",
     answer("alternative", correct = TRUE),
@@ -204,6 +213,7 @@ question(
 Some questions in the weekly quizzes, and during the course might appear a bit subjective. They are designed to make you think about the material, and to reflect on your own experience. There are no right or wrong answers to these questions. (There are no questions like this in the final exam, of course!) Here is an example:
 
 ```{r weekly-quiz-3, echo=FALSE}
+# LO: LO2.1.9
 question(
     "Most common problem in R\n\nWhen you were correcting the script, you came across various things that needed fixing. Based on this experience, and your intuition: what is the most common cause of error messages we get from R?",
     answer("Variables changing name by themselves"),
@@ -219,6 +229,7 @@ question(
 Sometimes a weekly quiz question might even need you to look up something new, or something from a previous course. This is to encourage you to develop good habits of looking things up, and learning independently. Here might be an example:
 
 ```{r weekly-quiz-5, echo=FALSE}
+# LO: LO1.1.2
 question(
     "When to use a t-test\n\nWhich of the following situations is most appropriate for using a t-test?",
     answer("Comparing the means of more than two groups"),
@@ -234,6 +245,7 @@ question(
 Another example:
 
 ```{r weekly-quiz-6, echo=FALSE}
+# LO: LO2.1.1
 question(
     "Sometimes when we run a line of code we get no response from R. What does this usually mean?",
     answer("It depends on whether we see a flashing cursor or not", correct = TRUE),
@@ -248,17 +260,44 @@ question(
 Final question for this week:
 
 ```{r weekly-quiz-7, echo=FALSE}
+# LO: LO2.1.9, LO1.1.6
 question(
   "We will often get error messages from R. What is the best way to deal with these?",
   answer("Panic!", message = "Panic is not helpful. Take a deep breath and read the error message carefully."),
-  answer("Copy and paste the error message into ChatGPT and see what it says", correct = TRUE),
+  answer("Copy and paste the error message into an AI assistant and use whatever fix it suggests", message = "An AI assistant can sometimes help explain an error, but if you skip reading the message yourself you don't learn to fix errors, and you won't have an AI assistant in the exam. Use it to understand the error, not to fix it for you."),
   answer("Read the error message carefully, and try to understand what it is telling you. Then check your code for mistakes.", correct = TRUE),
-  answer("Ask a teaching assistant (TA) for help immediately", correct = TRUE),
-  correct = "Correct! Dealing with error messages is a key skill in programming. Understanding what the error message is telling you, and checking your code carefully, is the best approach. TAs can also help you when you're stuck. ChatGPT and other AI assistants can help sometimes, but be careful about trusting everything they say.",
+  answer("Ask a teaching assistant (TA) for help immediately", message = "TAs are very happy to help, but first try reading the error message and checking your code. Ask for help if you are still stuck."),
+  correct = "Correct! Dealing with error messages is a key skill in programming. Understanding what the error message is telling you, and checking your code carefully (especially for typos), is the best first step. If you are still stuck, ask a TA or on the Discussion Forum. See also the section \"Finding and fixing errors\" in Chapter 2 of the course book.",
   allow_retry = TRUE
 )
 ```
 
+And two questions about the ideas in Chapter 1 of the course book:
 
+```{r LO-four-principles, echo=FALSE}
+# LO: LO1.1.4
+learnr::question(
+  "Match each practice to the principle of high-quality data analysis (Popovic et al. 2024) that it follows.\n\n1. Deciding the question and the planned analysis before collecting the data.\n2. Using a Poisson GLM for counts, and a mixed model when the same individuals are measured repeatedly.\n3. Reporting the size of a difference with its confidence interval, and discussing whether it matters biologically.\n4. Sharing the data and the R script with the paper.\n\nA. Report methods and findings so the research is reproducible.\nB. A focused question, with planned sampling and analysis.\nC. A model that accounts for the distribution and dependence of the data.\nD. Emphasise effect sizes and biological relevance.",
+  answer("1B, 2C, 3D, 4A", correct = TRUE),
+  answer("1B, 2D, 3C, 4A"),
+  answer("1A, 2C, 3D, 4B"),
+  answer("1C, 2B, 3D, 4A"),
+  correct = "Correct! You will meet all four principles again and again during the course.",
+  incorrect = "Look again at the four principles in Chapter 1 of the course book.",
+  allow_retry = TRUE
+)
+```
 
-
+```{r LO-notation, echo=FALSE}
+# LO: LO1.1.7
+learnr::question(
+  "Which statements about the course notation are correct?",
+  answer("s is the standard deviation of a sample; σ (sigma) is the standard deviation of the population.", correct = TRUE),
+  answer("A hat shows an estimate: β̂₁ (beta-1-hat) is the estimated slope, and ŷᵢ (y-hat-i) is the fitted value for observation i.", correct = TRUE),
+  answer("x̄ (x-bar) is the mean of a sample.", correct = TRUE),
+  answer("The residual eᵢ is the fitted value minus the mean of y."),
+  correct = "Correct! (The residual eᵢ is the observed value minus the fitted value: yᵢ − ŷᵢ.) The full list is in the section 'Notation and some definitions' in Chapter 1 of the course book.",
+  incorrect = "Check the section 'Notation and some definitions' in Chapter 1 of the course book.",
+  allow_retry = TRUE
+)
+```

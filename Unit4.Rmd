@@ -46,6 +46,7 @@ You started watching a video walkthrough of regression in R during the previous 
 ## Practical part 1
 
 ### Interpreting regression results
+<!-- LO: LO4.1.3, LO4.1.7, LO4.1.8 -->
 
 Last week we worked with the financing healthcare dataset. We will continue working with this dataset this week.
 
@@ -74,6 +75,7 @@ Now that we have checked the assumptions of the linear model, we can interpret t
 We can get all of these with one function in R: `summary()`. Add this to your script, run it, and work through the following questions.
 
 ```{r quiz-estimated-intercept, echo=FALSE}
+# LO: LO3.1.10
 learnr::question_numeric(
   "What is the estimated intercept (of the regression on all 186 data points)?\n\n(Give your answer rounded to two decimal places.)",
   
@@ -86,6 +88,7 @@ learnr::question_numeric(
 ```
 
 ```{r quiz-estimated-slope, echo=FALSE}
+# LO: LO3.1.10
 learnr::question_numeric(
   "What is the estimated slope (of the regression on all 186 data points)?\n\n(Give your answer rounded to two decimal places.)",
   
@@ -102,6 +105,7 @@ A true story... when Prof. Petchey wrote this practical, he did exactly what he'
 This is a real example of how making a guess before doing the analysis and comparing this to the calculated value provides us with a method for cross checking our work. If we always build in such cross checks, we will much more frequently spot our mistakes. And if there is one thing that's certain... we will make mistakes!
 
 ```{r quiz-r-squared, echo=FALSE}
+# LO: LO4.1.3
 learnr::question_numeric(
   "What fraction (rounded to two decimal places) of the variation in log child mortality is explained?",
   
@@ -114,6 +118,7 @@ learnr::question_numeric(
 ```
 
 ```{r quiz-slope-zero-compatibility, echo=FALSE}
+# LO: LO4.1.7
 learnr::question(
   "Would you say that a slope value of zero is not compatible with the data?",
   
@@ -127,6 +132,7 @@ learnr::question(
 ```
 
 ```{r quiz-df-error-r-output, echo=FALSE}
+# LO: LO4.1.8
 learnr::question_numeric(
   "How many degrees of freedom for error does R tell us there are?",
   
@@ -142,11 +148,163 @@ learnr::question_numeric(
 **Checking back**: You made and wrote down guesses of the intercept, slope, significance, and degrees of freedom for error. Were your guesses close to the estimated values? Mine were very close. So in this case, we didn't gain any qualitative information from the regression, but we did gain some quantitative confirmation of what we already new. This is often the case for simple problems, like regression: we can see just as much from looking at the data as we can from a formal regression analysis. We do both, as then we can be more confident in our results. We should never trust only looking at our data, and we should never trust only doing an statistical test. We always should do both and compare them.
 
 
+### Uncertainty, prediction and extrapolation
+<!-- LO: LO4.1.1, LO4.1.3, LO4.1.5, LO4.1.6, LO4.1.8, LO4.1.9, LO4.1.10, LO4.1.11, LO4.1.14 -->
+
+The summary table gives us the estimates, but we also need to say how certain we are about them, and we often want to use the model to make predictions. In this section we call the model object `m_child_mort` (use whatever name you gave yours, and consider renaming it to something this meaningful).
+
+**Where does the t-value come from?** Look at the row for the slope in the summary table. The t-value is simply the estimate divided by its standard error.
+
+```{r LO-t-from-estimate, echo=FALSE}
+# LO: LO4.1.5
+learnr::question_numeric(
+  "Calculate the t-value of the slope yourself, by dividing the estimate by its standard error (both from the summary table).\n\n(Round to two decimal places.)",
+  learnr::answer(-24.09, correct = TRUE),
+  learnr::answer(24.09, correct = TRUE),
+  correct = "Correct! −0.7567 / 0.0314 ≈ −24.09, which is the t-value R reports. (The sign just shows the slope is negative.) The p-value is then the probability of a t-value at least this far from zero if the true slope were zero, using a t-distribution with the residual degrees of freedom.",
+  incorrect = "Divide the estimate of the slope by its standard error, using the unrounded values from the summary table.",
+  allow_retry = TRUE,
+  tolerance = 0.02
+)
+```
+
+**Confidence interval for the slope.** You can calculate a 95% confidence interval as the estimate ± (critical t-value × standard error). The critical t-value comes from a t-distribution with the residual degrees of freedom, here n − 2 = 184:
+
+```{r eval = FALSE, echo = TRUE}
+qt(0.975, df = 184)
+```
+
+Or, easier and safer, let R do the whole calculation:
+
+```{r eval = FALSE, echo = TRUE}
+confint(m_child_mort)
+```
+
+```{r LO-critical-t, echo=FALSE}
+# LO: LO4.1.8
+learnr::question_numeric(
+  "What is the critical t-value for a 95% confidence interval with 184 residual degrees of freedom?\n\n(Round to two decimal places.)",
+  learnr::answer(1.97, correct = TRUE),
+  correct = "Correct! qt(0.975, df = 184) is about 1.97. With this many degrees of freedom it is close to 1.96, the value for the normal distribution.",
+  incorrect = "Use qt(0.975, df = 184).",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-ci-slope-lower, echo=FALSE}
+# LO: LO4.1.9
+learnr::question_numeric(
+  "Use `confint()` on your model. What is the **lower** bound of the 95% confidence interval for the slope?\n\n(Round to two decimal places.)",
+  learnr::answer(-0.82, correct = TRUE),
+  correct = "Correct! The 95% confidence interval for the slope is −0.82 to −0.69. Values of the slope in this range are compatible with the data; a slope of zero clearly is not.",
+  incorrect = "Run confint() on your fitted model and look at the row for the slope (log_health_exp_total).",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-df-and-ci-width, echo=FALSE}
+# LO: LO4.1.6, LO3.1.7
+learnr::question(
+  "Imagine the same slope and standard error had come from a study of only **10 countries** (so 8 residual degrees of freedom). What would happen to the 95% confidence interval for the slope?",
+  learnr::answer("It would be exactly the same, because the estimate and standard error are the same."),
+  learnr::answer("It would be wider, because the critical t-value with 8 degrees of freedom (about 2.31) is larger than with 184 (about 1.97).", correct = TRUE),
+  learnr::answer("It would be narrower, because there is less data to be uncertain about."),
+  learnr::answer("It cannot be calculated with fewer than 30 data points."),
+  correct = "Correct! With few residual degrees of freedom the residual variance is estimated imprecisely, so the t-distribution has heavier tails and the critical value is larger. Confidence intervals become wider and p-values larger for the same t-statistic. (In reality the standard error would also be larger with fewer data points.)",
+  incorrect = "Think about how the t-distribution changes with the degrees of freedom. Try qt(0.975, df = 8).",
+  allow_retry = TRUE
+)
+```
+
+**Correlation versus R².** The correlation coefficient r measures the strength and direction of the linear association between two variables. R² is the proportion of the variation in the response that the model explains. Calculate the correlation between the two log-transformed variables:
+
+```{r eval = FALSE, echo = TRUE}
+cor(fh_2013$log_health_exp_total, fh_2013$log_child_mort)
+```
+
+```{r LO-correlation-r, echo=FALSE}
+# LO: LO4.1.3
+learnr::question_numeric(
+  "What is the correlation coefficient r between log health care spending and log child mortality?\n\n(Round to two decimal places.)",
+  learnr::answer(-0.87, correct = TRUE),
+  correct = "Correct! r ≈ −0.87.",
+  incorrect = "Use cor() on the two log-transformed variables, and keep the sign.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-r-vs-r2, echo=FALSE}
+# LO: LO4.1.1
+learnr::question(
+  "The correlation is r ≈ −0.87 and the model's R² ≈ 0.76. Which statements are correct?",
+  learnr::answer("In a simple linear regression, R² equals the square of r: (−0.87)² ≈ 0.76.", correct = TRUE),
+  learnr::answer("r tells us the direction of the relationship (negative here); R² does not.", correct = TRUE),
+  learnr::answer("R² is the proportion of the variation in log child mortality that is explained by log spending.", correct = TRUE),
+  learnr::answer("A large R² shows that spending causes lower child mortality."),
+  learnr::answer("r is the slope of the regression line."),
+  correct = "Correct! r measures the strength and direction of a linear association; R² measures the proportion of variation explained. Neither tells us about causation, and neither is the slope.",
+  incorrect = "Think about what each quantity measures, and how they are related in a model with a single explanatory variable.",
+  allow_retry = TRUE
+)
+```
+
+**Predictions, with confidence and prediction intervals.** Use `predict()` to get the expected child mortality for a country spending USD 100 per person per year, and for one spending USD 5,000. Remember that the model works on the log10 scale, so we give it log10 values and then back-transform the predictions with `10^`:
+
+```{r eval = FALSE, echo = TRUE}
+new_spending <- data.frame(log_health_exp_total = log10(c(100, 5000)))
+pred_conf <- predict(m_child_mort, newdata = new_spending, interval = "confidence")
+pred_pred <- predict(m_child_mort, newdata = new_spending, interval = "prediction")
+10^pred_conf
+10^pred_pred
+```
+
+```{r LO-predict-100, echo=FALSE}
+# LO: LO4.1.11
+learnr::question_numeric(
+  "What is the predicted child mortality (deaths before age five per 1000 live births) for a country spending **USD 100** per person per year?\n\n(Round to one decimal place.)",
+  learnr::answer(59.7, correct = TRUE),
+  correct = "Correct! About 59.7 deaths per 1000 live births.",
+  incorrect = "Predict on the log10 scale with log10(100) as the value of the explanatory variable, then back-transform with 10^.",
+  allow_retry = TRUE,
+  tolerance = 0.1
+)
+```
+
+```{r LO-prediction-interval-100, echo=FALSE}
+# LO: LO4.1.11, LO4.1.10
+learnr::question_numeric(
+  "What is the **lower** bound of the 95% **prediction** interval for a country spending USD 100?\n\n(Round to one decimal place.)",
+  learnr::answer(19.5, correct = TRUE),
+  correct = "Correct! The 95% prediction interval is about 19.5 to 182.2 deaths per 1000, whereas the 95% confidence interval for the expected value is only about 52.7 to 67.5. The confidence interval describes our uncertainty about the *average* child mortality of countries spending USD 100; the prediction interval describes where we expect a *single new country* to lie, so it also includes the scatter of countries around the line.",
+  incorrect = "Use interval = \"prediction\" in predict(), and back-transform the lower bound with 10^.",
+  allow_retry = TRUE,
+  tolerance = 0.1
+)
+```
+
+**Extrapolation.** Find the largest value of health care spending in the dataset. Then predict child mortality for a country spending USD 20,000 per person per year.
+
+```{r LO-extrapolation, echo=FALSE}
+# LO: LO4.1.14
+learnr::question(
+  "The highest spending in the data is about USD 6,900 (the United States). The model predicts about 1.1 deaths per 1000 for a country spending USD 20,000. How much should we trust this prediction?",
+  learnr::answer("Completely: the model fits well (R² = 0.76), so its predictions are reliable at any value of spending."),
+  learnr::answer("Very little: USD 20,000 is far outside the range of the data, so we do not know whether the relationship continues in the same way there.", correct = TRUE),
+  learnr::answer("It is reliable because the prediction interval can be calculated."),
+  learnr::answer("It shows that increasing spending to USD 20,000 would cause child mortality to fall to 1.1."),
+  correct = "Correct! This is extrapolation. The model was fitted to countries spending between about USD 19 and USD 6,900. Outside this range the relationship could level off (child mortality cannot fall below some minimum, whatever is spent), and the prediction interval does not account for that. And, as before, the data are observational, so the model does not tell us what would happen if a country changed its spending.",
+  incorrect = "Compare USD 20,000 with the range of spending in the data. Does a good fit within the range of the data guarantee anything outside it?",
+  allow_retry = TRUE
+)
+```
+
 ### Reporting the results
+<!-- LO: LO4.1.13, LO4.1.12, LO4.1.9 -->
 
 When reporting the results of a regression analysis, it is important to focus on the key components that convey the most meaningful information about the relationship being studied.
 
 ```{r quiz-good-reporting-sentence, echo=FALSE}
+# LO: LO4.1.13
 learnr::question(
   "Which of the following best describes the key components *and their priorities* in a good reporting sentence for a regression analysis?",
   
@@ -182,6 +340,7 @@ learnr::question(
 ```
 
 ```{r quiz-reporting-pattern-loglog, echo=FALSE}
+# LO: LO4.1.12, LO4.1.13
 learnr::question(
   "Which of these should we include in a statement about the pattern?\n\nOn a log–log scale, there was a ??1?? and ??2?? relationship between child mortality and health care spending, with approximately ??3?? unit of difference in log health care spent corresponding to ??4?? unit change in log child mortality.\n\nA. -0.76\nB. 1\nC. negative\nD. linear\nE. positive\nF. non-linear",
   
@@ -197,6 +356,7 @@ learnr::question(
 ```
 
 ```{r quiz-reporting-statistical-test, echo=FALSE}
+# LO: LO4.1.13
 learnr::question(
   "Which of these is an appropriate statement about the statistical test we performed?\n\nThe statements are in parentheses, as this is how we would typically include them in a report, at the end of the sentence about the pattern.\n\n(Hint: the negative sign of the t-value in the summary table can be ignored.)",
   
@@ -216,9 +376,12 @@ learnr::question(
 
 So this would be our sentence reporting the results:
 
-*On a log-log scale, there was a negative and linear relationships between child mortality and health care spending, with approximately 1 unit of difference in log health care spend corresponding to -0.76 unit change in log child mortality (linear regression, 184 degrees of freedom for error, t = 24.1, p < 0.0001).*
+*Across 186 countries in 2013, child mortality was strongly and negatively related to health care spending. On log–log scales the slope was −0.76 (95% confidence interval −0.82 to −0.69), meaning that a doubling of per capita health care spending was associated with about 41% lower child mortality (95% CI 38% to 43% lower) (linear regression, 184 degrees of freedom for error, t = 24.1, p < 0.0001, R² = 0.76).*
+
+Note three things about this sentence. First, it gives the size of the effect together with its uncertainty (the confidence interval, which you get with `confint()` on your model). Second, it translates the slope from log units into something a biologist or policy maker can understand. With log–log regression, the slope tells us the proportional change in the response for a proportional change in the explanatory variable: doubling spending multiplies child mortality by 2^−0.76 ≈ 0.59, i.e. about 41% lower. (The same calculation on the two ends of the confidence interval gives the interval for the percentage.) See the course book, Chapter 3, section *Interpreting a model with log-transformed variables*. Third, it says "associated with", not "caused": more on this below.
 
 ### Reporting graphically
+<!-- LO: LO4.1.10 -->
 
 
 Make a beautiful graph that you would be happy publishing, for all the world to see. (Use the x and y log transformed data still.)
@@ -237,6 +400,7 @@ Special distinction if you can:
 
 
 ### A linear-linear graph
+<!-- LO: LO3.1.14, LO4.1.11 -->
 
 A thorny issue remains! We have reported our results based on analysis of the log transformed data. For the purposes of you learning about regression, this is just fine. You learned what can be applied in all cases.
 
@@ -288,6 +452,7 @@ ggplot() +
 
 
 ```{r quiz-interpret-nonlinearity-spend, echo=FALSE}
+# LO: LO3.1.14, LO4.1.12
 learnr::question(
   "This graph tells us some new things.\n\nFor example, which of these seems true?",
   
@@ -305,6 +470,7 @@ learnr::question(
 ```
 
 ### Policy implications and recommendations
+<!-- LO: LO4.1.14 -->
 
 Analyses such as the one you did can be important for influencing policy, such as whether to increase or decrease spending on healthcare.
 
@@ -313,6 +479,7 @@ Do you think it would be appropriate, based on these analyses, to recommend that
 The answer is that one would have to be very cautious, in the least. And perhaps avoid this altogether.
 
 ```{r quiz-causation-vs-correlation, echo=FALSE}
+# LO: LO4.1.14
 learnr::question(
   "Which of these is the **most important reason** that we cannot assume that a change in health care spending will result in a change in child mortality?",
   
@@ -386,6 +553,7 @@ ggplot() +
 
 
 ```{r q6-predict, echo=FALSE}
+# LO: LO4.1.11
 learnr::question(
   "Which function in R is very useful for getting fitted values of the response variable from a fitted model, for some new values of the explanatory variables?",
   
@@ -404,6 +572,7 @@ learnr::question(
 ```
 
 ```{r q7-confidence-vs-prediction, echo=FALSE}
+# LO: LO4.1.10
 learnr::question(
   "After a linear regression model has been fitted, it is possible to plot **confidence** and **prediction** bands.\n\nWhich of the two bands is wider, and why?\n\n(Only one correct answer.)",
   
@@ -429,6 +598,7 @@ learnr::question(
 
 
 ```{r q-interpret-slope, echo=FALSE}
+# LO: LO4.1.12
 learnr::question(
   "In a simple linear regression, what does the estimated slope represent?",
   
@@ -447,6 +617,7 @@ learnr::question(
 ```
 
 ```{r q-calc-r-squared-ss, echo=FALSE}
+# LO: LO4.1.2
 learnr::question_numeric(
   "Suppose that for a simple linear regression you are given the following information:\n\n- Total sum of squares (SST) = 500\n- Residual sum of squares (SSR, i.e. sum of squared residuals) = 120\n\n What is the R²? (Give your answer as a decimal with two decimal places.)",
   
@@ -459,6 +630,7 @@ learnr::question_numeric(
 ```
 
 ```{r q-calc-slope-ss, echo=FALSE}
+# LO: LO3.1.3
 learnr::question_numeric(
   "Suppose you are fitting a simple linear regression model and are given the following summary quantities:\n\n- Sum of squares of x about its mean: Sxx = 200\n- Sum of cross-products of x and y about their means: Sxy = −152\n\nWhat is the value of the estimated slope? (Give your answer rounded to two decimal places.)",
   
@@ -472,6 +644,7 @@ learnr::question_numeric(
 
 
 ```{r q-calc-predicted-value, echo=FALSE}
+# LO: LO3.1.4
 learnr::question_numeric(
   "Suppose you have fitted the following simple linear regression model:\n\nŷ = 3.29 − 0.76x\n\nWhat is the predicted value of y when x = 2.0?\n\n(Give your answer rounded to two decimal places.)",
   
@@ -484,6 +657,7 @@ learnr::question_numeric(
 ```
 
 ```{r q-calc-ci-slope, echo=FALSE}
+# LO: LO4.1.9
 learnr::question_numeric(
   "Suppose you have fitted a simple linear regression model and obtained the following results:\n\n- Estimated slope (β₁) = −0.76\n- Standard error of the slope = 0.05\n- Degrees of freedom are large enough that the 95% critical value is approximately 1.96\n\nWhat is the **lower bound** of the 95% confidence interval for the slope?\n\n(Give your answer rounded to two decimal places.)",
   
@@ -496,6 +670,7 @@ learnr::question_numeric(
 ```
 
 ```{r q-definition-pvalue-slope, echo=FALSE}
+# LO: LO4.1.4, LO4.1.5
 learnr::question(
   "In a simple linear regression, what does the **p-value associated with the slope coefficient** represent?",
   

@@ -6,7 +6,7 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
@@ -31,11 +31,11 @@ All homework is for your own practice and learning. It will not be marked or gra
 
 There is a very nice and (relatively simple) walkthrough by [Dr Bodo Winter](https://bodowinter.com/index.html), a lecturer in cognitive linguistics at the University of Birmingham UK, of concepts underlying linear mixed effects models. It provides a (slightly) different perspective from those in Prof. Petchey's lecture. It also very clearly walks through an example in R. [Here is the tutorial.](https://web.archive.org/web/20170328211836/http://www.bodowinter.com/tutorial/bw_LME_tutorial2.pdf)
 
-For a somewhat more advanced treatment of LMMs and some of examples of implementing them in R, please have a look at Chapter 10 of The New Statistics with R by Hector.
+For a somewhat more advanced treatment of LMMs and some examples of implementing them in R, please have a look at Chapter 10 of The New Statistics with R by Hector.
 
 ### The analytic world
 
-Here are a series of videos recorded some time ago by Prof. Petchey, showing a small part of the world of analytical methods. Its not really important that you watch all this now, but you might find it interesting. Perhaps skip to the end and watch the last one first, so you see the whole world and then decide what parts you want to explore further. (And during the final lecture of the course, you heard about even more of this world.)
+Here are a series of videos recorded some time ago by Prof. Petchey, showing a small part of the world of analytical methods. It is not really important that you watch all this now, but you might find it interesting. Perhaps skip to the end and watch the last one first, so you see the whole world and then decide what parts you want to explore further. (And during the final lecture of the course, you heard about even more of this world.)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/t2XUNhStJ1M?si=KeHDbL4gaMGfH5Br" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -50,10 +50,11 @@ Here are a series of videos recorded some time ago by Prof. Petchey, showing a s
 
 
 ## Practical part 1
+<!-- LO: LO11.1.5, LO11.1.7, LO11.1.8 -->
 
-In the lecture and course book there were various examples and walkthroughts of linear mixed effects models (LMMs). In this practical you will experience a core feature of LMMs: the partial pooling of information across groups. This is one of the key features that distinguishes LMMs from standard linear models (LMs). It is important to understand this feature well, as it is central to the correct use and interpretation of LMMs.
+In the lecture and course book there were various examples and walkthroughs of linear mixed effects models (LMMs). In this practical you will experience a core feature of LMMs: the partial pooling of information across groups. This is one of the key features that distinguishes LMMs from standard linear models (LMs). It is important to understand this feature well, as it is central to the correct use and interpretation of LMMs.
 
-Partial pooling aross groups means that the estimates for each group are "shrunk" towards the overall mean. The amount of shrinkage depends on the amount of data available for each group and the variability within and between groups.
+Partial pooling across groups means that the estimates for each group are "shrunk" towards the overall mean. The amount of shrinkage depends on the amount of data available for each group and the variability within and between groups.
 
 Let us break this down into steps.
 
@@ -66,9 +67,9 @@ set.seed(123)
 ## number of classes
 n_classes <- 10
 ## class effects
-class_average_score <- runif(n_classes, min = 75, max = 100)
+class_average_score <- runif(n_classes, min = 60, max = 90)
 ## number of students per class
-n_students_per_class <- sample(15:20, n_classes, replace = TRUE)
+n_students_per_class <- sample(2:25, n_classes, replace = TRUE)
 ## class features data frame
 class_features <- tibble(
   class = paste0("class_", 1:n_classes),
@@ -79,7 +80,7 @@ class_features <- tibble(
 student_scores <- class_features |> 
   rowwise() |> 
   mutate(
-    scores = list(rnorm(n_students, mean = class_effect, sd = 5))
+    scores = list(rnorm(n_students, mean = class_effect, sd = 15))
   ) |> 
   unnest(cols = c(scores)) |> 
   select(class, score = scores) |> 
@@ -111,6 +112,7 @@ lm_model <- lm(score ~ class, data = student_scores)
 
 
 ```{r quiz-lmm-lm-what-estimated, echo=FALSE}
+# LO: LO11.1.5
 learnr::question(
   "In the linear model `lm(score ~ class)`, what does the model estimate for each class?",
   
@@ -168,6 +170,7 @@ new_data
 
 
 ```{r quiz-lmm-lm-vs-lmm-predictions, echo=FALSE}
+# LO: LO11.1.7
 learnr::question(
   "When you compare the class-level predictions from the standard linear model (LM) and the linear mixed-effects model (LMM), what pattern do you typically observe?",
   
@@ -175,7 +178,7 @@ learnr::question(
     "The predictions from the LMM are identical to those from the LM, because both models use the same data."
   ),
   learnr::answer(
-    "The lower LMM predictions tend to be slightly larger than the corresponding LM predictions, while the higher LMM predictions tend to be slightly smaller.",
+    "The lower LMM predictions tend to be larger than the corresponding LM predictions, while the higher LMM predictions tend to be smaller.",
     correct = TRUE
   ),
   learnr::answer(
@@ -207,6 +210,7 @@ ggplot(new_data, aes(x = class)) +
 ```
 
 ```{r quiz-lmm-graph-interpretation, echo=FALSE}
+# LO: LO11.1.7
 learnr::question(
   "Looking at the graph showing class-level predictions from the linear model (LM) and the linear mixed-effects model (LMM), together with a horizontal line indicating the overall mean, what do you observe?",
   
@@ -231,7 +235,9 @@ learnr::question(
 ```
 
 
-What do you think would happen if we simulate 1'000 classes instead of 10? Try it out if you like. You should see the same pattern, but more pronounced.
+Look at the number of students in each class (you calculated this above). Which classes were pulled most strongly towards the overall mean? How much a class is shrunk depends on how many students it has and on how variable scores are within classes compared with among classes. It does not depend on how many classes there are.
+
+To see this clearly, here is the same simulation with 1'000 classes. With so many classes, the overall pattern is easy to see.
 
 ```{r echo = FALSE, eval = TRUE}
 ## set seed for reproducibility
@@ -239,9 +245,9 @@ set.seed(123)
 ## number of classes
 n_classes <- 1000
 ## class effects
-class_average_score <- runif(n_classes, min = 75, max = 100)
+class_average_score <- runif(n_classes, min = 60, max = 90)
 ## number of students per class
-n_students_per_class <- sample(15:20, n_classes, replace = TRUE)
+n_students_per_class <- sample(2:25, n_classes, replace = TRUE)
 ## class features data frame
 class_features <- tibble(
   class = paste0("class_", 1:n_classes),
@@ -252,7 +258,7 @@ class_features <- tibble(
 student_scores <- class_features |> 
   rowwise() |> 
   mutate(
-    scores = list(rnorm(n_students, mean = class_effect, sd = 5))
+    scores = list(rnorm(n_students, mean = class_effect, sd = 15))
   ) |> 
   unnest(cols = c(scores)) |> 
   select(class, score = scores) |> 
@@ -267,7 +273,8 @@ new_data <- new_data |>
   mutate(
     predicted_lm = predict(lm_model, newdata = new_data),
     predicted_lmm = predict(lmm_model, newdata = new_data, re.form = NULL)
-  )
+  ) |>
+  left_join(select(class_features, class, n_students), by = "class")
 ```
 
 
@@ -286,7 +293,7 @@ ggplot(new_data, aes(x = class)) +
   )
 ```
 
-I love it!!! This is art that tells a story about data and models! Please make a t-shirt with this plot!!!
+This is art that tells a story about data and models.
 
 And here are the distributions of the predictions from the two models:
 
@@ -299,7 +306,25 @@ ggplot(new_data) +
   theme_minimal()
 ```
 
+And here is how much each class's estimate is shrunk towards the overall mean, against the number of students in that class. A shrinkage of 0 means the LMM estimate equals the class mean (no pooling); a shrinkage of 1 would mean it equals the overall mean (complete pooling). (Classes whose mean is very close to the overall mean are left out, because for them the proportion is unstable.)
+
+```{r echo = FALSE, eval = TRUE, message=FALSE, warning=FALSE}
+## proportion by which each class estimate is moved towards the overall mean
+overall_mean <- fixef(lmm_model)[1]
+shrinkage_data <- new_data |>
+  filter(abs(predicted_lm - overall_mean) > 2) |>
+  mutate(shrinkage = (predicted_lm - predicted_lmm) / (predicted_lm - overall_mean))
+ggplot(shrinkage_data, aes(x = n_students, y = shrinkage)) +
+  geom_point(alpha = 0.3) +
+  labs(x = "Number of students in the class",
+       y = "Shrinkage towards the overall mean (proportion)") +
+  theme_minimal()
+```
+
+Classes with only a few students are pulled in a lot (more than half the way to the overall mean for classes of two); classes with many students are pulled in much less. With few students, a class mean is a noisy estimate, so the model borrows more information from the other classes.
+
 ```{r quiz-lmm-density-interpretation, echo=FALSE}
+# LO: LO11.1.7
 learnr::question(
   "After looking at the density distributions of the class-level predictions from the linear model (LM) and the linear mixed-effects model (LMM), what is the most appropriate interpretation?",
   
@@ -324,6 +349,7 @@ learnr::question(
 ```
 
 ```{r quiz-lmm-why-this-matters, echo=FALSE}
+# LO: LO11.1.7
 learnr::question(
   "Why does the difference between the LM and LMM predictions matter in practice?",
   
@@ -351,6 +377,7 @@ learnr::question(
 Think about how the same might apply in a random slopes model, where each group has its own slope. The same principles of partial pooling apply, with group-level slope estimates being shrunk toward the overall slope.
 
 ```{r quiz-lmm-random-slopes-contrast, echo=FALSE}
+# LO: LO11.1.6, LO11.1.7
 learnr::question(
   "Suppose we now fit a **random-slopes mixed-effects model**, allowing the relationship between an explanatory variable (e.g. study time) and the response (score) to vary among classes. How does this differ conceptually from estimating separate slopes for each class using a standard linear model (e.g. an ANCOVA-style interaction)?",
     learnr::answer(
@@ -379,32 +406,244 @@ Should class be a random effect or a fixed effect? It depends on your research q
 Another way to think about this is how we are identifying (naming) the classes. If the names are arbitrary labels (e.g., class_1, class_2, etc.) that do not carry specific meaning, it is often more appropriate to treat class as a random effect. If instead of class names we had meaningful categories (e.g., different teaching methods), then treating that factor as a fixed effect would make more sense. Then it would be appropriate to make a mixed model with teaching method as a fixed effect and class (name) as a random effect.
 
 ## Practical part 2
+<!-- LO: LO11.1.1, LO11.1.2, LO11.1.3, LO11.1.4, LO11.1.6, LO11.1.8, LO11.1.9, LO11.1.10, LO11.1.11, LO11.1.12, LO11.1.13 -->
 
-The sleepstudy reaction time dataset is a particularly rich dataset to explore if you want to strengthen your understanding of linear mixed-effects models. Attempt this practical when you are feeling particularly motivated to understand LMMs better. And note that it is quite brief in description, but quite involved in terms of analysis :) You got this!
+**Sleep deprivation and reaction time: pseudoreplication, random effects and variance components.**
 
-Get the dataset into R with the following code:
+In a sleep-deprivation study, 18 people were allowed only 3 hours of sleep per night for 9 nights. Each day (day 0 to day 9) their average reaction time was measured. **Question: how much does reaction time increase with each day of sleep deprivation?**
+
+The data are in the `lme4` package:
 
 ```{r echo=TRUE, eval = FALSE}
+library(tidyverse)
 library(lme4)
 data(sleepstudy)
 ```
 
-Start by plotting reaction time against days of sleep deprivation for each subject to see how individuals differ in both their baseline reaction times and their sensitivity to sleep loss.
+The variables are `Reaction` (average reaction time, ms), `Days` (days of sleep deprivation) and `Subject` (the person).
 
-Next, fit a simple linear model that ignores subject identity and compare it to mixed-effects models that include subject as a random intercept, and then as both a random intercept and a random slope for days. As you do this, pay attention to how the estimated fixed effects change, how the residual variance is reduced, and how partial pooling affects individual-level intercepts and slopes.
+```{r LO-sleep-structure, echo=FALSE}
+# LO: LO11.1.1, LO12.1.3
+learnr::question(
+  "There are 180 rows: 18 subjects measured on 10 days each. What is the structure of these data?",
+  learnr::answer("Repeated measures: the 10 measurements of each subject are grouped, and measurements from the same person are likely to be more similar to each other than to measurements from other people.", correct = TRUE),
+  learnr::answer("180 independent observations."),
+  learnr::answer("18 independent observations, each of which is a single reaction time."),
+  correct = "Correct! The independent units are the 18 subjects. The days are repeated measurements within subjects.",
+  incorrect = "Think about who was measured, and how many times.",
+  allow_retry = TRUE
+)
+```
 
-Also examine how the degrees of freedom and p-values differ between models, and reflect on why these change when the dependence among observations is correctly accounted for.
+**1. Look at the data.** Plot reaction time against days, with a separate panel for each subject:
 
-Working through these steps will help you understand not only when linear mixed models are needed, but how their structure influences estimation, uncertainty, and statistical inference.
+```{r echo=TRUE, eval = FALSE}
+ggplot(sleepstudy, aes(x = Days, y = Reaction)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~ Subject)
+```
+
+Notice how subjects differ both in their reaction time at day 0 (their intercept) and in how quickly their reaction time increases (their slope).
+
+**2. The wrong model: ignoring the subjects.**
+
+```{r echo=TRUE, eval = FALSE}
+m_sleep_lm <- lm(Reaction ~ Days, data = sleepstudy)
+summary(m_sleep_lm)
+```
+
+```{r LO-sleep-lm-df, echo=FALSE}
+# LO: LO11.1.4, LO11.1.2
+learnr::question(
+  "The linear model reports 178 residual degrees of freedom. Why is this a warning sign?",
+  learnr::answer("Because there are only 18 independent units (subjects). The model treats the 180 repeated measurements as if they were independent, so it thinks it has much more information than it does (pseudoreplication). Its standard errors and p-values are not trustworthy.", correct = TRUE),
+  learnr::answer("It is not a warning sign: 180 − 2 = 178 is exactly right."),
+  learnr::answer("Because the degrees of freedom should be 180."),
+  correct = "Correct! Whenever the residual degrees of freedom are much larger than the number of independent units in the study, suspect pseudoreplication.",
+  incorrect = "Compare the residual degrees of freedom with the number of independent units in the study.",
+  allow_retry = TRUE
+)
+```
+
+**3. One honest solution: analyse one number per subject.** Fit a separate regression for each subject, keep the 18 slopes, and test whether their mean differs from zero:
+
+```{r echo=TRUE, eval = FALSE}
+subject_slopes <- sleepstudy |>
+  group_by(Subject) |>
+  summarise(slope = coef(lm(Reaction ~ Days))[2])
+t.test(subject_slopes$slope)
+```
+
+This is valid (one value per independent unit), but it throws away information: it ignores how precisely each slope is estimated, and it cannot easily include other explanatory variables. Mixed models use all the data while respecting the grouping. Keep the result of this t-test (t ≈ 6.77 on 17 degrees of freedom) to compare with below.
+
+**4. A random intercept model.**
+
+```{r echo=TRUE, eval = FALSE}
+library(lmerTest)  # adds degrees of freedom and p-values (Satterthwaite) to lmer output
+m_sleep_ri <- lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+summary(m_sleep_ri)
+```
+
+Look at the **Random effects** part of the output. It gives two variance components: the variance among subjects in their average reaction time (`Subject (Intercept)`), and the residual variance within subjects.
+
+```{r LO-sleep-ri-sd-subject, echo=FALSE}
+# LO: LO11.1.9
+learnr::question_numeric(
+  "What is the estimated standard deviation among subjects (the random intercept), in ms?\n\n(Round to one decimal place.)",
+  learnr::answer(37.1, correct = TRUE),
+  correct = "Correct! About 37.1 ms among subjects, compared with a residual standard deviation of about 31.0 ms within subjects.",
+  incorrect = "Look at the 'Std.Dev.' column for Subject (Intercept) in the Random effects part of summary().",
+  allow_retry = TRUE,
+  tolerance = 0.1
+)
+```
+
+```{r LO-sleep-icc, echo=FALSE}
+# LO: LO11.1.10
+learnr::question_numeric(
+  "What proportion of the total variance (after accounting for Days) is due to differences among subjects? Calculate it from the two **variances** (not standard deviations): among-subject variance / (among-subject variance + residual variance).\n\n(Round to two decimal places.)",
+  learnr::answer(0.59, correct = TRUE),
+  correct = "Correct! 1378 / (1378 + 960) ≈ 0.59. About 59% of the variation in reaction time that is not explained by days of sleep deprivation is due to consistent differences among people. Biologically: people differ a lot in their baseline reaction time, so measurements from the same person are strongly correlated, which is why they must not be treated as independent.",
+  incorrect = "Use the 'Variance' column, not the 'Std.Dev.' column.",
+  allow_retry = TRUE,
+  tolerance = 0.01
+)
+```
+
+**5. A random intercept and random slope model.** The plot showed that subjects also differ in their slopes. Allow for this:
+
+```{r echo=TRUE, eval = FALSE}
+m_sleep_rs <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+summary(m_sleep_rs)
+```
+
+```{r LO-sleep-rs-formula, echo=FALSE}
+# LO: LO11.1.6
+learnr::question(
+  "Which statement about the formula `Reaction ~ Days + (Days | Subject)` is correct?",
+  learnr::answer("It estimates an average (fixed) slope of Days, and lets both the intercept and the slope vary among subjects (random intercepts and random slopes).", correct = TRUE),
+  learnr::answer("It estimates a separate fixed slope for each subject, like an interaction in lm()."),
+  learnr::answer("It only lets the intercept vary among subjects."),
+  correct = "Correct! (1 | Subject) would give random intercepts only. If subjects were nested in, say, laboratories, we would write (1 | Laboratory/Subject); if each subject were measured in several sessions that are shared by all subjects (crossed random effects), we would write (1 | Subject) + (1 | Session).",
+  incorrect = "Look at what is to the left of the | inside the brackets.",
+  allow_retry = TRUE
+)
+```
+
+**6. Compare the fixed effect of Days across the models.** Fill in this table (on paper or in your script) for the three models: estimate of the Days slope, its standard error, and the degrees of freedom used for its test.
+
+```{r LO-sleep-se-compare, echo=FALSE}
+# LO: LO11.1.4, LO11.1.11, LO11.1.3
+learnr::question(
+  "The estimated slope is 10.47 ms per day in all three models. Its standard error is 1.24 (lm, 178 df), 0.80 (random intercepts, 161 df) and 1.55 (random intercepts and slopes, about 17 df). Which statements are correct?",
+  learnr::answer("The random slope model gives the largest standard error, because it recognises that subjects differ in their slopes: the average slope is estimated from 18 subjects, so it has about 17 degrees of freedom.", correct = TRUE),
+  learnr::answer("The random slope model's test (t ≈ 6.77, 17 df) matches the t-test on the 18 subject slopes from step 3: here the mixed model reaches the same conclusion while using all the data.", correct = TRUE),
+  learnr::answer("Degrees of freedom for fixed effects in mixed models have to be approximated (here with Satterthwaite's method, from lmerTest), and the approximation reflects how many independent units carry information about each effect.", correct = TRUE),
+  learnr::answer("The linear model is best because it has the most degrees of freedom."),
+  correct = "Correct! Ignoring the grouping (lm) or ignoring variation in slopes (random intercepts only) makes us overconfident about the effect of sleep deprivation. The model that matches the structure of the data gives an honest standard error. (With balanced data like these, it agrees exactly with the analysis of one slope per subject.)",
+  incorrect = "Compare the standard errors and degrees of freedom with the number of subjects, and with your t-test from step 3.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-sleep-random-slope-sd, echo=FALSE}
+# LO: LO11.1.9, LO11.1.10
+learnr::question_numeric(
+  "In the random slope model, what is the standard deviation among subjects in their slope (ms per day)?\n\n(Round to one decimal place.)",
+  learnr::answer(5.9, correct = TRUE),
+  correct = "Correct! About 5.9 ms per day. So, while reaction time increases by about 10.5 ms per day on average, people differ: roughly 95% of people would have slopes between about 10.5 − 2 × 5.9 ≈ −1 and 10.5 + 2 × 5.9 ≈ 22 ms per day (if slopes are normally distributed). Some people are hardly affected; others are affected about twice as much as average.",
+  incorrect = "Look at the 'Std.Dev.' of Days in the Random effects part of summary(m_sleep_rs).",
+  allow_retry = TRUE,
+  tolerance = 0.1
+)
+```
+
+**7. Check the model.** Plot the residuals against the fitted values (`plot(m_sleep_rs)`) and make a QQ-plot of the residuals (`qqnorm(resid(m_sleep_rs))`).
+
+```{r LO-sleep-limitations, echo=FALSE}
+# LO: LO11.1.12
+learnr::question(
+  "Which are assumptions or limitations of this mixed model that you should keep in mind?",
+  learnr::answer("It assumes the subject intercepts and slopes are drawn from normal distributions, and the residuals are normal with constant variance.", correct = TRUE),
+  learnr::answer("It assumes the effect of days is linear over the 10 days.", correct = TRUE),
+  learnr::answer("With only 18 subjects, the among-subject variances (especially of the slopes) are estimated imprecisely.", correct = TRUE),
+  learnr::answer("It assumes that the 180 measurements are independent."),
+  correct = "Correct! The mixed model removes the assumption that all measurements are independent (it models the dependence within subjects), but it brings its own assumptions, and variance components need a reasonable number of groups to be estimated well.",
+  incorrect = "Think about which assumptions remain from linear models, what new ones the random effects bring, and how many groups there are.",
+  allow_retry = TRUE
+)
+```
+
+**8. Report.**
+
+```{r LO-sleep-report, echo=FALSE}
+# LO: LO11.1.13
+learnr::question(
+  "Which is the best reporting sentence?",
+  learnr::answer("Reaction time increased significantly with days of sleep deprivation (p < 0.001, 178 df)."),
+  learnr::answer("Reaction time increased by on average 10.5 ms per day of sleep deprivation (95% CI 7.4–13.5 ms; linear mixed model with random intercepts and slopes for the 18 subjects, t = 6.8, df = 17, p < 0.0001), although subjects varied considerably in their sensitivity (SD of slopes among subjects 5.9 ms per day).", correct = TRUE),
+  learnr::answer("The random effects model was significant, with a variance of 1378."),
+  correct = "Correct! It gives the effect size with its uncertainty, the model and its structure, a test with degrees of freedom that reflect the number of independent units, and what the variance components say biologically.",
+  incorrect = "Look for the sentence that reports the effect with its uncertainty, uses honest degrees of freedom, and interprets the variation among subjects.",
+  allow_retry = TRUE
+)
+```
+
+(The confidence interval comes from `confint(m_sleep_rs, parm = "beta_", method = "Wald")`.)
 
 
 ## Practical part 3
+<!-- LO: LO11.2.1, LO11.2.3, LO11.2.4, LO11.2.5, LO11.2.6 -->
 
-The second part of the lecture was about what types of statistical methods might be used for questions and datasets we did not encounter during the course. There is no practical exercise for this part, but please do read the relevant sections in the course book and lecture notes.
+The second part of the lecture was about what types of statistical methods might be used for questions and datasets we did not encounter during the course. Read the relevant sections of the course book (Chapter 11.2), then try these questions. There is no data analysis in this part.
+
+```{r LO-whatnext-within-bio144, echo=FALSE}
+# LO: LO11.2.1, LO12.1.2
+learnr::question(
+  "Which of these studies could be analysed with methods covered in BIO144?",
+  learnr::answer("The number of seedlings in 60 plots in relation to light level (a Poisson or quasi-Poisson GLM).", correct = TRUE),
+  learnr::answer("Whether each of 200 lizards was infected with a parasite, in relation to body size (a binomial GLM).", correct = TRUE),
+  learnr::answer("Growth of 40 trees measured each year for 5 years, in relation to fertiliser treatment (a mixed model with tree as a random effect).", correct = TRUE),
+  learnr::answer("The abundances of 30 species at 50 sites, to describe how community composition varies among sites (ordination).", correct = TRUE),
+  learnr::answer("Daily air temperature measured at one weather station for 30 years, to forecast next year (time series analysis)."),
+  correct = "Correct! The first four are covered by linear models, GLMs, mixed models and ordination. Long time series, where each observation depends on the previous ones, need time series methods.",
+  incorrect = "Match each study to the type of response and data structure. Which one has strong dependence among successive observations over time?",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-whatnext-beyond, echo=FALSE}
+# LO: LO11.2.3, LO11.2.4
+learnr::question(
+  "A researcher records how many days each of 120 tagged fish survive after release, until the study ends after 200 days (some fish are still alive at the end). Which feature of these data calls for methods beyond BIO144, and which family of methods?",
+  learnr::answer("A time-to-event response, where some survival times are only known to be longer than 200 days: survival analysis.", correct = TRUE),
+  learnr::answer("A count response: a Poisson GLM."),
+  learnr::answer("Many response variables: ordination."),
+  correct = "Correct! Survival analysis handles time-to-event data, including individuals whose event had not happened by the end of the study (censored observations).",
+  incorrect = "What kind of response is 'number of days until death', and what is special about the fish still alive at the end?",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-whatnext-planning, echo=FALSE}
+# LO: LO11.2.5, LO11.2.6
+learnr::question(
+  "Which statements about choosing and planning an analysis are correct?",
+  learnr::answer("The analysis, including how many replicates are needed (power analysis), should be planned when the study is designed, before the data are collected.", correct = TRUE),
+  learnr::answer("The research question should determine the analysis, not the techniques we happen to know.", correct = TRUE),
+  learnr::answer("It is best to collect as much data as possible first and decide on the question and analysis afterwards."),
+  learnr::answer("If we only know linear models, we should change the question so that a linear model can answer it."),
+  correct = "Correct! Planning the analysis with the design avoids collecting data that cannot answer the question (or too few data to answer it).",
+  incorrect = "Think about the first steps of the data analysis workflow from Chapter 1.",
+  allow_retry = TRUE
+)
+```
 
 ## Weekly Quiz
 
 ```{r quiz-mm-why, echo=FALSE}
+# LO: LO11.1.2
 learnr::question(
   "What is the main reason for using a linear mixed-effects model instead of a standard linear model?",
   
@@ -424,6 +663,7 @@ learnr::question(
 
 
 ```{r quiz-mm-partial-pooling, echo=FALSE}
+# LO: LO11.1.7
 learnr::question(
   "What does *partial pooling* mean in the context of mixed-effects models?",
   
@@ -443,15 +683,16 @@ learnr::question(
 
 
 ```{r quiz-mm-shrinkage, echo=FALSE}
+# LO: LO11.1.7
 learnr::question(
   "Which groups experience the strongest shrinkage in a mixed-effects model?",
   
   learnr::answer(
-    "Groups with few observations.",
+    "Groups with few observations, all else being equal.",
     correct = TRUE
   ),
   learnr::answer("Groups with many observations."),
-  learnr::answer("Groups with extreme means."),
+  learnr::answer("Only groups with extreme means, regardless of sample size."),
   learnr::answer("All groups equally."),
   
   correct = "Correct! Groups with little data provide weaker evidence and are therefore shrunk more toward the overall mean.",
@@ -463,6 +704,7 @@ learnr::question(
 
 
 ```{r quiz-mm-random-intercept, echo=FALSE}
+# LO: LO11.1.6
 learnr::question(
   "Which model formula specifies a **random intercept for class** in `lme4`?",
   
@@ -482,6 +724,7 @@ learnr::question(
 
 
 ```{r quiz-mm-random-slopes, echo=FALSE}
+# LO: LO11.1.6
 learnr::question(
   "How does a random-slopes model differ from fitting separate slopes using an interaction in a linear model?",
   
@@ -501,6 +744,7 @@ learnr::question(
 
 
 ```{r quiz-mm-df, echo=FALSE}
+# LO: LO11.1.11
 learnr::question(
   "Why are degrees of freedom in mixed-effects models less straightforward than in standard linear models?",
   
@@ -518,7 +762,8 @@ learnr::question(
 )
 ```
 
-```{r quiz-ga12-q1-fixed-effects, echo=FALSE}
+```{r quiz-mm-fixed-effects, echo=FALSE}
+# LO: LO11.1.5
 learnr::question(
   "Which of the following are **fixed effects**?",
   
@@ -535,7 +780,8 @@ learnr::question(
 ```
 
 
-```{r quiz-ga12-q2-random-effects, echo=FALSE}
+```{r quiz-mm-random-effects, echo=FALSE}
+# LO: LO11.1.5
 learnr::question(
   "Which of these are **random effects**?",
   
@@ -552,7 +798,8 @@ learnr::question(
 ```
 
 
-```{r quiz-ga12-q3-why-multilevel, echo=FALSE}
+```{r quiz-mm-why-multilevel, echo=FALSE}
+# LO: LO11.1.3
 learnr::question(
   "Why should we prefer a **multilevel (mixed-effects) model** rather than simply averaging across groups? (Multiple answers may be correct.)",
   
@@ -572,6 +819,7 @@ learnr::question(
 
 
 ```{r quiz-what-next-nonlinear, echo=FALSE}
+# LO: LO11.2.4
 learnr::question(
   "If you suspect a smooth but non-linear relationship between an explanatory variable and a response, which approach introduced in this section would often be appropriate?",
   
@@ -590,6 +838,7 @@ learnr::question(
 ```
 
 ```{r quiz-time-series-biological, echo=FALSE}
+# LO: LO11.2.2, LO11.2.4
 learnr::question(
   "A biologist measures the population size of a plankton species in a lake every week for five years, with the goal of understanding long-term trends and seasonal dynamics. Which type of analysis is most appropriate for these data?",
   
@@ -608,6 +857,7 @@ learnr::question(
 ```
 
 ```{r quiz-sem-biological, echo=FALSE}
+# LO: LO11.2.4
 learnr::question(
   "An ecologist is studying how nutrient availability affects plant growth. Nutrients influence leaf nitrogen content, which affects photosynthetic rate, which in turn affects total biomass. At the same time, nutrient availability may also have a direct effect on biomass. The ecologist wants to quantify both direct and indirect effects in a single analysis. Which type of analysis is most appropriate?",
   
@@ -624,4 +874,3 @@ learnr::question(
   allow_retry = TRUE
 )
 ```
-

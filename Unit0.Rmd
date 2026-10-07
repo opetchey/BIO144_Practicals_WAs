@@ -1,0 +1,1239 @@
+---
+title: "BIO144 Previous Knowledge: Self-Tests"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+
+This page has self-tests to help you check your recall of things you should already know before starting BIO144, plus material to help you get set up with R and RStudio, get to know R a little, learn how to get help when you're stuck, and understand what "add-on packages" are.
+
+For the full list of what you're expected to already know, and where it comes from (MAT183 and BIO134), see the [Previous Knowledge chapter](https://opetchey.github.io/BIO144_Course_Information/1.2-previous-knowledge.html) of the BIO144 Course Information website. It's worth reading that first, then coming back here to work through the self-tests.
+
+Please make sure you work through all the sub-sections, using the navigation pane on the left: Introduction, Self-tests, Getting R & RStudio, Getting to know R, Help about R and RStudio, and What are add-on packages. Note that what's covered here is not exhaustive -- there might be other things you've previously learned that are also useful for BIO144.
+
+None of the quizzes on this page are graded, and your score doesn't contribute to anything -- they're just for you, to help you see what you remember well and what's worth reviewing before the course starts. If you press "Start Over" at the bottom of the navigation pane, you'll return to the beginning and all your progress will be reset. Feel free to do this any time you want to start again.
+
+A couple of the question types you'll see here, and throughout the course:
+
+* Checkbox questions have little **squares** and can have any number of correct answers -- tick all that apply.
+* Multiple-choice questions have little **circles** and have exactly one correct answer.
+
+Try the three examples below to get a feel for it. (Nothing here is BIO144 content -- it's just for practising with the format!)
+
+```{r q-examplequestions-42950-1, echo=FALSE}
+# LO: LO1.1.1
+question_numeric(
+  "Numerical/text input problems require you to input answer in the box.
+
+What is the value of x below?
+
+x = 2083+435-789",
+  answer(1729.0, correct = TRUE),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE
+)
+```
+
+```{r q-examplequestions-42950-2, echo=FALSE}
+# LO: LO1.1.1
+question(
+  "Checkbox problems require you to assess if each possible answer is correct or incorrect,and have little squares that you click on..
+
+(Here you are allowed to select multiple answers.)
+
+Which of these are countries in Europe?
+
+(Note: Make sure you select all of the correct options—there may be more than one!)",
+  answer("Switzerland", correct = TRUE),
+  answer("Finland", correct = TRUE),
+  answer("Brazil"),
+  answer("France", correct = TRUE),
+  answer("Japan"),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-examplequestions-42950-3, echo=FALSE}
+# LO: LO1.1.1
+question(
+  "Multiple choice problems have only one correct option, and have little circles that you click on. You can select only one answer. (See what happens if you try to select more than one!)
+
+Which of the following countries has the largest population?",
+  answer("Brazil"),
+  answer("Germany"),
+  answer("Indonesia", correct = TRUE),
+  answer("Russia"),
+  correct = "Explanation:
+
+According to September 2014 estimates:
+The population of Indonesia is approximately 250 million. 
+The population of Brazil is approximately 200 million. 
+The population of Russia is approximately 146 million. 
+The population of Germany is approximately 81 million.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+## Self-tests
+
+These self-tests cover things you should already know, mostly from MAT183 and BIO134 (plus some general numeracy). Have a go at each one. If you get several wrong in a topic, it's worth reviewing that material before the course starts -- see the [Previous Knowledge chapter](https://opetchey.github.io/BIO144_Course_Information/1.2-previous-knowledge.html) of the Course Information website for pointers to what to review.
+
+### Basic statistics
+
+```{r q-basicstatistics-08562-1, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which of these is the median?",
+  answer("The sum of all values divided by the number of values (i.e. the average)."),
+  answer("The most commonly observed value."),
+  answer("The value that lies at the midpoint of the distribution, so that there are equal number of values above and below it.", correct = TRUE),
+  answer("The number of values divided by the standard deviation of the values."),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-basicstatistics-08562-2, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which of these is the mode?",
+  answer("The sum of all values divided by the number of values (i.e. the average)."),
+  answer("The most commonly observed value.", correct = TRUE),
+  answer("The value that lies at the midpoint of the distribution, so that there are equal number of values above and below it."),
+  answer("The number of values divided by the standard deviation of the values."),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-basicstatistics-08562-3, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which of these is the mean?",
+  answer("The sum of all values divided by the number of values (i.e. the average).", correct = TRUE),
+  answer("The most commonly observed value."),
+  answer("The value that lies at the midpoint of the distribution, so that there are equal number of values above and below it."),
+  answer("The number of values divided by the standard deviation of the values."),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### On distributions
+
+```{r q-ondistributions-49410-1, echo=FALSE}
+# LO: LO1.1.2
+question_text(
+  "We usually think and talk about distributions with one peak, and not so much about distributions with two or more peaks. Write the word that describes a distribution with two peaks.",
+  answer("bimodal", correct = TRUE),
+  answer("Bimodal", correct = TRUE),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+```{r q-ondistributions-49410-2, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "A distribution of data with a long tail of high values will have:",
+  answer("Mean greater than the median.", correct = TRUE),
+  answer("Mean lower than the median."),
+  answer("Mean the same as the median."),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-ondistributions-49410-3, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which is the sum, across all observations, of the squared difference between an observation and the mean of all observations?",
+  answer("The range."),
+  answer("The interquartile range."),
+  answer("The variance."),
+  answer("The standard deviation."),
+  answer("The sum of squares.", correct = TRUE),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-ondistributions-49410-4, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "The greek letter sigma is often used for which of these?",
+  answer("The range."),
+  answer("The interquartile range."),
+  answer("The variance."),
+  answer("The standard deviation.", correct = TRUE),
+  answer("The sum of squares."),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-ondistributions-49410-5, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which is the expected value of the square of the difference between an observation and the mean of all observations?",
+  answer("The range."),
+  answer("The interquartile range."),
+  answer("The variance.", correct = TRUE),
+  answer("The standard deviation."),
+  answer("The sum of squares."),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-ondistributions-49410-6, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "What does amount of kurtosis describe?",
+  answer("How difference is the mean from the median."),
+  answer("Whether the distribution can have negative values."),
+  answer("The sharpness of the peak of the distribution.", correct = TRUE),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-ondistributions-49410-7, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which of these measures of spread is most sensitive to extreme values?",
+  answer("The range.", correct = TRUE),
+  answer("The interquartile range."),
+  answer("The standard deviation."),
+  answer("The sum of squares."),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-ondistributions-49410-8, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which is the range of the data that includes the middle half of the values?",
+  answer("The range."),
+  answer("The interquartile range.", correct = TRUE),
+  answer("The variance."),
+  answer("The standard deviation."),
+  answer("The sum of squares."),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-ondistributions-49410-9, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "And now for something a little different... data are often not symmetric in their distribution, i.e. they might have a long tail of very high values. What word to we use to described such a distribution?",
+  answer("Unbalanced."),
+  answer("Undistributed."),
+  answer("Skewed.", correct = TRUE),
+  answer("Reflected."),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-ondistributions-49410-10, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which is the square root of the variance?",
+  answer("The range."),
+  answer("The interquartile range."),
+  answer("The variance."),
+  answer("The standard deviation.", correct = TRUE),
+  answer("The sum of squares."),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### R & RStudio, the basics
+
+Say that you have an object in R that contains the heights of everyone in this class. If the question was what R code would you use to get the *mean* of these heights, and the answer was `mean(class_heights)`, what code would you use to get each of the following? (If you had trouble with these, perhaps you didn't use the power of Google! Try typing "how to get the median of some numbers R" into Google, and see what comes up. You might not see the answer immediately, but after a little reading, you should be able to figure it out.)
+
+```{r q-rrstudiothebasics-47506-1a, echo=FALSE}
+# LO: LO1.1.2
+question_text(
+  "Get the median height?",
+  answer("median(class_heights)", correct = TRUE),
+  correct = "Correct!",
+  incorrect = "Not quite -- try searching for how to get the median of some numbers in R.",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+```{r q-rrstudiothebasics-47506-1b, echo=FALSE}
+# LO: LO1.1.2
+question_text(
+  "Get the standard deviation of the heights?",
+  answer("sd(class_heights)", correct = TRUE),
+  correct = "Correct!",
+  incorrect = "Not quite -- try searching for how to get the standard deviation of some numbers in R.",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+```{r q-rrstudiothebasics-47506-1c, echo=FALSE}
+# LO: LO1.1.2
+question_text(
+  "Get the variance of the heights?",
+  answer("var(class_heights)", correct = TRUE),
+  correct = "Correct!",
+  incorrect = "Not quite -- try searching for how to get the variance of some numbers in R.",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+```{r q-rrstudiothebasics-47506-2, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "When you use R / Rstudio, how often should you be typing instructions directly into the Console?",
+  answer("Whenever you like, its just the same as doing anything else."),
+  answer("Just about never!!! You should be typing your instructions into a script file and then sending them to the Console.", correct = TRUE),
+  correct = "Explanation:
+Your script is your record of your work in R, and gives you the ability to repeat it. So everything should go in your script file. Anything you type in the Console will probably be lost forever.
+If you find yourself typing in the Console, ask yourself, very carefully, if you want to keep what you're typing. If the answer is yes, do 10 pushups, as you've just been very naughty.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-rrstudiothebasics-47506-3, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "In R, what would this code do \"x <- 5\"?",
+  answer("For pointing out that x is more important than y."),
+  answer("Its a logical operator, that asks x is less than or equal to 5."),
+  answer("It will assign the value 5 to the object x.", correct = TRUE),
+  correct = "Explanation:
+\"<-\" is the assignment arrow. The less than symbol is part of the arrow here, and is not being used as \"less than\".",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-rrstudiothebasics-47506-4, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "What do these logical operators mean / ask in R?
+
+A. <
+
+B. ==
+
+C. !=
+
+D. >=",
+  answer("A. Less than or equal. B. Greater than. C. Equals. D. Greater than."),
+  answer("A. Not equal to. B. Equals. C. Greater than. D. More than."),
+  answer("A. Less than. B. Equals. C. Not equals. D. Greater or equal than.", correct = TRUE),
+  correct = "Explanation:
+Be sure to use a double equals (==) to ask if two things are equal. Its a common mistake to use a single one (=) and this will make R complain!
+The exclamation mark (!) is generally used to say \"not\".",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-rrstudiothebasics-47506-5, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "You should use RStudio to interact with R because:",
+  answer("It has cool features that the basic version of R doesn't have.", correct = TRUE),
+  answer("It has a really nice tool for importing your data.", correct = TRUE),
+  answer("Its much easier to manage the different windows than in the base version.", correct = TRUE),
+  correct = "Explanation:
+Yes, all of these are correct. And lots more besides.
+Sometimes I (Owen) think back to the days when I was using the basic version, however, and recognise that its simplicity has some value. So feel free to give it a go if you like!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-rrstudiothebasics-47506-6, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Its a really good idea to use the nice and easy data import tool in RStudio to get your data into R. Why is this?",
+  answer("You can browse to your datafile, rather than having to type in a hellish address to the file.", correct = TRUE),
+  answer("It often, but not always, guesses correctly the formatting / arrangement of your data.", correct = TRUE),
+  answer("It is perfect, and never makes any mistakes. You could trust it with your life."),
+  correct = "Explanation:
+Never trust R or RStudio. Love them, but don't trust them.
+And remember to only use the data import tool once, and then to copy the produced code into your script file.
+If you're using the import tool many times for the same datafile, well, don't! Copy the code into your script, then you can import the data by running that line of code (one click).",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-rrstudiothebasics-47506-7, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "In R, a scalar is a single number, and a vector is a series of numbers.
+
+Which of these will successfully tell R to assign the whole numbers (i.e. integers) from 1 to 10, to the object x?
+
+(By the way, there is a small trick in the question -- be careful!) (And you could always copy the code into R, and run it, to see which does the job.)",
+  answer("x <- 1;10"),
+  answer("x <- 1 to 10"),
+  answer("x <- 1:10", correct = TRUE),
+  answer("x <- 1:-10"),
+  correct = "Explanation:
+The colon (:) asks for the whole number from 1 to 10, or more generally from x to y with x:y.
+There is a small mistake in the last answer... if you run it in R, and look at x, you should be able to work out what wrong, if you didn't already.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Probability distributions
+
+```{r q-probabilitydistribut-94116-1, echo=FALSE}
+# LO: LO1.1.2
+question_numeric(
+  "If you toss a fair coin 10 times, what is the probability of getting heads seven times? (Round your answer to two decimal places.)",
+  answer(0.12, correct = TRUE),
+  correct = "Explanation:
+In R, you can get the answer to this using the function dbinom (gives the probability density of a particular outcome). In this case, you would write dbinom(7, 10, 0.5). Seven is the outcome we're interested in finding the probability of. Ten is the number of trials (tosses). And 0.5 is the probability of getting heads (since its a fair coin).",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE
+)
+```
+
+```{r q-probabilitydistribut-94116-2, echo=FALSE}
+# LO: LO1.1.2
+question_text(
+  "How would you tell R to give you 10 random numbers drawn from a normal distribution with mean 0 and standard deviation 1.
+
+There are a number of different correct answers, so keep trying if you don't succeed first time.",
+  answer("rnorm(10)", correct = TRUE),
+  answer("rnorm(10, 0, 1)", correct = TRUE),
+  answer("rnorm(10,0,1)", correct = TRUE),
+  answer("rnorm(10, mean=0, sd=1)", correct = TRUE),
+  answer("rnorm(10,mean=0,sd=1)", correct = TRUE),
+  correct = "Explanation:
+The function is rnorm, which has defaults of mean = 0 and standard deviation (sd) = 1, so you don't need to give these, though its fine to do so.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+```{r q-probabilitydistribut-94116-3, echo=FALSE}
+# LO: LO1.1.2
+question_text(
+  "Which distribution is good for describing the process of tossing a coin?",
+  answer("binomial", correct = TRUE),
+  answer("Binomial", correct = TRUE),
+  correct = "Explanation:
+As its name suggests, the binomial distribution is for binary (i.e. yes, no / heads / tails) type processes.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+```{r q-probabilitydistribut-94116-4, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "The normal distribution is very important in statistics. Which of these are characteristics of the normal distribution?",
+  answer("It is unbounded (i.e. can in theory go from minus infinity to plus infinity).", correct = TRUE),
+  answer("Values can only be whole numbers."),
+  answer("Values are continuous (i.e. can be fractional).", correct = TRUE),
+  answer("It well describes the process of tossing a coin."),
+  answer("It is symmetric.", correct = TRUE),
+  answer("It has two parameters, the mean and the standard deviation.", correct = TRUE),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Visualising distributions
+
+```{r q-visualisingdistribut-61156-1, echo=FALSE}
+# LO: LO1.1.2
+question_text(
+  "Say you have data that is the height of every person in this class.
+
+What four letter function, beginning with the letter h, could you use to get a plot of the histogram of the data?",
+  answer("hist", correct = TRUE),
+  answer("Hist", correct = TRUE),
+  correct = "Explanation:
+There are other ways of doing this, of course. During the course, we'll show you how to use a function called qplot to make a histogram. Its really easy! We're going to use qplot a lot, because its good for making all kind of plots.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+```{r q-visualisingdistribut-61156-2, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Histograms, like any data visualisation tool, are easily abused! I.e. the same data can be displayed differently, to give a quite different impression. With histograms, you should carefully choose, by exploration, what feature?",
+  answer("The height of the bars."),
+  answer("The width of the bins.", correct = TRUE),
+  answer("The colour of the bars."),
+  correct = "Explanation:
+You must carefully explore the influence of the width of the bins. This can really change how you view the data. If you're not sure about this, make some data in R (x <- rnorm(30), and then use qplot(x, bins=5) to make a histogram, and change the 5 to some other values. ***Warning*** I'm jumping ahead a bit here, asking you to use the qplot function. If you really want to try this, great, but you will need to install the ggplot2 package and the run library(ggplot2) before you can use qplot. (ggplot2 is an add-on package. If you're not sure what these are, and how to get and use them, be patient, all will be explained in due course.)",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-visualisingdistribut-61156-3, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "When R makes a histogram, the frequency it reports on the y axis is the number of data points that lie within an interval. Unless you tell it, R guesses a good interval size. What is the name that R uses for these intervals?",
+  answer("Bags"),
+  answer("Bins", correct = TRUE),
+  answer("Wells"),
+  correct = "Explanation:
+R uses the term \"bins\", and their size is known as the \"bin width\". You can choose a bin width if you like, by giving additional arguments to the function hist.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-visualisingdistribut-61156-4, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "If we made a histogram, say using the R code hist(class_heights), what would be on the x and y axes of the graph?",
+  answer("Height on the y, frequency on the x."),
+  answer("Height on the x, frequency on the y.", correct = TRUE),
+  answer("Height on both axes."),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Data visualisations
+
+```{r q-datavisualisations-91758-1, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which of these plotting methods is good for visualising if there is a relationship between one numeric and one categorical variable?",
+  answer("Bar plot with error bars."),
+  answer("Pie chart."),
+  answer("Box and whisker plot.", correct = TRUE),
+  answer("Bivariate scatterplot."),
+  correct = "Explanation:
+You may have selected bar plot with error bars. Though you may have been advised this is appropriate, and though you'll often see them, they are really bad. Do not use them! They are really good at hiding the data. In general, attempt to plot the raw data, or as much about the raw data as possible. A box and whisker plot gives more information about the distribution of the raw data than a barplot with error bars.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-datavisualisations-91758-2, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which of these plotting methods is good for visualising if there is a relationship between two numeric variables?",
+  answer("Bar plot with error bars."),
+  answer("Pie chart."),
+  answer("Box and whisker plot."),
+  answer("Bivariate scatterplot.", correct = TRUE),
+  correct = "Explanation:
+The bivariate scatterplot is great for this. As the name implies, it is for plotting two variables, one against the other.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-datavisualisations-91758-3, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "There are lots of specific plots that you'll come across. One you have already seen in MAT183 is the QQ-plot (the two Qs are for Quantile-Quantile).
+
+What is the QQ-plot used for?",
+  answer("Looking for association between two variables."),
+  answer("Examining if the distribution of a variable corresponds closely to some other distribution, e.g. the normal distribution.", correct = TRUE),
+  answer("To visualise statistical significance."),
+  correct = "Explanation:
+
+The QQ-plot is a very important tool for checking if some data is distributed similarly to some other distribution. For example, when we use statistical tests that assume normally distributed residuals, we use the QQ-plot to assess how well this assumption is met.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-datavisualisations-91758-4, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which three of these should I never use in BIO144?",
+  answer("Bar plot with error bars.", correct = TRUE),
+  answer("Pie chart.", correct = TRUE),
+  answer("Box and whisker plot."),
+  answer("Bivariate scatterplot."),
+  answer("3D plots.", correct = TRUE),
+  correct = "Explanation:
+
+As mentioned before, bar plots with error bars hide too much. And there are usually better ways to view data than in pie charts, though not always. Hey, all rules need to be broken sometimes! Please try to avoid 3D plots... they are very difficult to make very nice, and very easy to make completely useless for readers.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Important terms
+
+```{r q-importantterms-06664-1, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which is the *dependent* variable? This is also often called the *response* variable?",
+  answer("Age"),
+  answer("Weight change", correct = TRUE),
+  answer("Drug treatment"),
+  correct = "Explanation:
+
+The response / dependent variable is the one that has the information in that we're interested in explaining.
+In BIO144 we will tend to use the term *response* variable.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-importantterms-06664-2, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "In the commonly used equation for a straight line, y = a + b*x ...
+
+Which is the slope?",
+  answer("a"),
+  answer("b", correct = TRUE),
+  answer("x"),
+  answer("y"),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-importantterms-06664-3, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "In the commonly used equation for a straight line, y = a + b*x ...
+
+Which two are parameters (also sometimes known as coefficients)?",
+  answer("a", correct = TRUE),
+  answer("b", correct = TRUE),
+  answer("x"),
+  answer("y"),
+  correct = "Explanation:
+a and b, the intercept and slope, are known as *parameters* (and sometimes coefficients). They are what are estimated when we do linear regression, for example.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-importantterms-06664-4, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "In the commonly used equation for a straight line, y = a + b*x ...
+
+Which is the response variable?",
+  answer("a"),
+  answer("b"),
+  answer("x"),
+  answer("y", correct = TRUE),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-importantterms-06664-5, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "In the commonly used equation for a straight line, y = a + b*x ...
+
+Which is the explanatory variable?",
+  answer("a"),
+  answer("b"),
+  answer("x", correct = TRUE),
+  answer("y"),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-importantterms-06664-6, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which are the two independent / explanatory variables?",
+  answer("Age", correct = TRUE),
+  answer("Weight change"),
+  answer("Drug treatment", correct = TRUE),
+  correct = "Explanation:
+
+In BIO144 we will tend to use the term *explanatory* variable, rather that independent variable, as we think this is a bit more intuitive. These are the variables that might *explain* variation in the response variable.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-importantterms-06664-7, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which are continuous variables?",
+  answer("Age", correct = TRUE),
+  answer("Weight change", correct = TRUE),
+  answer("Drug treatment"),
+  correct = "Explanation:
+
+Continuous variables are numbers that can take any value. This is true for age and weight change.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-importantterms-06664-8, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Which are categorical / discrete variables?",
+  answer("Age"),
+  answer("Weight change"),
+  answer("Drug treatment", correct = TRUE),
+  correct = "Explanation:
+
+The drug treatment variable has four discrete categories. It does not contain numbers.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-importantterms-06664-9, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "In the commonly used equation for a straight line, y = a + b*x ...
+
+Which is the intercept?",
+  answer("a", correct = TRUE),
+  answer("b"),
+  answer("x"),
+  answer("y"),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Important concepts
+
+```{r q-importantconcepts-89592-1, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "The central limit theorem is very important. It states that the sum of lots of independent random variables tends towards what type of distribution?",
+  answer("Exponential"),
+  answer("Normal", correct = TRUE),
+  answer("Poisson"),
+  answer("Weibull"),
+  correct = "Well done!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-importantconcepts-89592-2, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "The \"population\" and the \"sample\" are key concepts in statistics. Which of these is correct?",
+  answer("\"Population\" refers to a set of things, people, objects, etc, that one wants to make inference about.", correct = TRUE),
+  answer("We usually can record things about the entire population we are making inference about."),
+  answer("\"Sample\" refers to the subset of things in the population that we collect and analyse data about.", correct = TRUE),
+  answer("It is fine to non-randomly sample individuals from the population of interest, to construct our \"sample\"."),
+  correct = "Explanation:
+
+We virtually never can record information about all individuals in the population of interest, and in many cases it is impossible to do so. Imagine a drug trial, for example. We cannot possibly trial the drug on every individual in the population. We virtually always must work with a sample of individuals from the population.
+We need to be very carefully to have a \"representative\" sample from the population. One way to do this is to randomly sample individuals from the population. There are other methods that may produce even more representative samples, such as stratified random sampling. These will be covered later.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-importantconcepts-89592-3, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Hypothesis testing is a key practice in statistics. Which of these best describes it?",
+  answer("It is the process by which we calculate a p-value."),
+  answer("It is testing if our statistical test meets its assumptions."),
+  answer("It is assessing how likely is the null hypothesis.", correct = TRUE),
+  answer("It is assessing how likely is the working hypothesis."),
+  correct = "Explanation:
+
+Hypothesis testing is about figuring out whether one can accept or reject the null hypothesis, for example that a drug treatment had no effect. We usually do this by looking at the p-value of the statistical test we've done.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-importantconcepts-89592-4, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "We typically reject the null hypothesis if the p-value of our statistical test is:",
+  answer("Greater than or equal to 0.05"),
+  answer("Less than 0.01"),
+  answer("Less than 0.05", correct = TRUE),
+  answer("Greater than or equal to 0.5"),
+  correct = "Explanation:
+
+The threshold is 0.05 (or 5% or 1 in 20). The smaller the p-value, the less confidence we have in the null hypothesis. The technically correct meaning of the p-value is somewhat involved, so we leave that to later in the course.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Basic statistical tests
+
+```{r q-basicstatisticaltest-94189-1, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "A one sample t-test is used for what?",
+  answer("To test if two numeric variables are correlated."),
+  answer("To test if counts (i.e. number of times something is observed) correspond with some expected values."),
+  answer("To test if the mean of a sample differs from some value.", correct = TRUE),
+  answer("To test if there is a difference between the mean of one sample and the mean of another sample."),
+  correct = "Explanation:
+The clue is in the name: \"one sample\". It is used to test if the mean of a sample is different from some value. E.g. one could test if the change in weight of a sample of people on a diet is different from zero.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-basicstatisticaltest-94189-2, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "A chi-squared test used for what?",
+  answer("To test if two numeric variables are correlated."),
+  answer("To test if counts (i.e. number of times something is observed) correspond with some expected values.", correct = TRUE),
+  answer("To test if the mean of a sample differs from some value."),
+  answer("To test if there is a difference between the mean of one sample and the mean of another sample."),
+  correct = "Explanation:
+
+The chi-squared test is used with count data, for example testing if counts of alleles correspond with expected counts.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-basicstatisticaltest-94189-3, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "A two sample t-test used for what?",
+  answer("To test if two numeric variables are correlated."),
+  answer("To test if counts (i.e. number of times something is observed) correspond with some expected values."),
+  answer("To test if the mean of a sample differs from some value."),
+  answer("To test if there is a difference between the mean of one sample and the mean of another sample.", correct = TRUE),
+  correct = "Explanation:
+
+The clue is in the name: \"two sample\". For example, we could compare the mean height of a sample of women, and the mean height of a sample of men.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-basicstatisticaltest-94189-4, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "What is linear regression used for?",
+  answer("To test if there is an association between two numeric variables.", correct = TRUE),
+  answer("To test if counts (i.e. number of times something is observed) correspond with some expected values."),
+  answer("To test if the mean of a sample differs from some value."),
+  answer("To test if there is a difference between the mean of one sample and the mean of another sample."),
+  correct = "Explanation:",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+## Getting R & RStudio
+
+In case you don't have R and RStudio on your computer, and want some help with that, please work through this unit.
+
+### Windows
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JT5dZcc1akA" title="Getting R for Windows, part 1" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ZiwLgyJwStM" title="Getting R for Windows, part 2" frameborder="0" allowfullscreen></iframe>
+
+### Linux
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FuoLvZNB_PQ" title="Getting R for Linux" frameborder="0" allowfullscreen></iframe>
+
+### Mac
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ybrf6MWyNQU" title="Getting R for Mac" frameborder="0" allowfullscreen></iframe>
+
+## Getting to know R
+
+This unit covers the very basics of using R. It's probably well worth a look, even if you've used R before -- there might be some simple tricks that make your R life much more pleasant.
+
+Here's the script that goes with the videos below. Copy it into a script file in RStudio and work along, or type it out yourself as you watch.
+
+```{r echo=TRUE, eval=FALSE}
+1 + 1
+2 + 2
+3 + 3
+10 / 2
+5 * (2 + 2)
+
+x1 <- 4 - 20
+x1
+x2 <- 7
+x2
+x1 * x2
+
+x3 <- 1:10
+x4 <- 11:20
+x3 + x4
+
+log(x3)
+log10(x4)
+
+install.packages("tidyverse")
+library(tidyverse)
+qplot(x3, x4)
+qplot(x3, x4, geom = "line")
+```
+
+### Part 1
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EHLLmEcqRlk" title="Getting to know R, part 1" frameborder="0" allowfullscreen></iframe>
+
+```{r q-problem1-73896-1, echo=FALSE}
+# LO: LO1.1.2, LO2.1.2
+question(
+  "When you want to give R an instruction, in almost all cases where should you type it?",
+  answer("The console window"),
+  answer("The script window", correct = TRUE),
+  answer("The environment window (if you use Rstudio)"),
+  correct = "Explanation:
+Generally speaking, you should always type instruction into the script window, and then submit them to the console with the \"run\" button or hot-key (e.g., ctrl+r, or cmd+enter). Only type directly in the console in the rare cases when you absolutely know you don't need to keep what you type.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Part 2
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xQllw4WenyU" title="Getting to know R, part 2" frameborder="0" allowfullscreen></iframe>
+
+```{r q-problem2-19393-1, echo=FALSE}
+# LO: LO1.1.2, LO2.1.2
+question(
+  "What do I need to keep very safe, and backup, when using R to solve problems?",
+  answer("My data", correct = TRUE),
+  answer("The R history"),
+  answer("The R workspace image"),
+  answer("My script", correct = TRUE),
+  correct = "Explanation:
+Your data and your script are all you need to keep safe. With these you can recreate everything you did before. You don't need to keep the history of commands and results, or an image of the workspace (R asks if you want to when you quit R). Since you don't need to, don't bother... its not worth the hassle.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Part 3
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/h6uRh84_2JA" title="Getting to know R, part 3" frameborder="0" allowfullscreen></iframe>
+
+```{r q-problem3-41163-1, echo=FALSE}
+# LO: LO1.1.2, LO2.1.2
+question_text(
+  "When we ask R to do something for us, we often want R to remember the answer, so we can easily use the answer. Lets say we want to put into an object called \"ans\" the result of multiplying 4.35 by 32.75.
+
+In our script we would type:
+
+ans ?? 4.35 * 32.75
+
+Type in the box below what we would put in place of the two question marks.",
+  answer("<-", correct = TRUE),
+  correct = "Explanation
+The less than symbol followed, without a space, by a minus sign, makes what looks like a left pointing arrow. This means please put the answer to the sum on the right into the object on the left. If you tried to answer =, you are kind of correct, since this will work also. However, its not what was in the video (sorry!).",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+### Part 4
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MjHsXxgQyA4" title="Getting to know R, part 4" frameborder="0" allowfullscreen></iframe>
+
+```{r q-problem4-07313-1, echo=FALSE}
+# LO: LO1.1.2, LO2.1.2
+question_text(
+  "What function do you use to get the natural logarithm of a number?",
+  answer("log", correct = TRUE),
+  answer("Log", correct = TRUE),
+  correct = "Explanation:
+In R we must use log, and not the ln that we commonly see elsewhere. If we want to get the log in other bases, such as base 10, use log10.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+## Help about R and RStudio
+
+There are no datasets or code for this unit. The books mentioned in the videos are given here for your convenience:
+
+* *A Primer of Ecology with R*, by Stevens. Great for using R for ecological problems.
+* *Getting Started with R*, by Beckerman & Petchey. Only tries to do one thing: get you happy using R.
+* *A Handbook of Statistical Analyses Using R*, by Hothorn and Everitt. A super book for statistics in R; more advanced than Crawley or Dalgaard.
+* *Statistics: An Introduction Using R*, by Crawley. What it says on the tin.
+* *R in a Nutshell*, by Adler. A super reference book.
+* *Introductory Statistics with R*, by Dalgaard. What it says on the tin.
+
+For the problems in this unit, you get three chances to answer before you're shown the correct answer and an explanation.
+
+### Video 1
+
+> **Note (for Owen, remove once checked):** this video is hosted on UZH's Kaltura Mediaspace and was originally embedded inside OLAT. Please check it still plays correctly here before this page goes live -- if it doesn't, it will need to be re-shared/embedded from Kaltura with public or unlisted link access rather than an OLAT-restricted one.
+
+<iframe width="826" height="465" src="https://uzh.mediaspace.cast.switch.ch/embed/secure/iframe/entryId/0_6a1v8mhf/uiConfId/23449004/st/0" allowfullscreen="allowfullscreen" allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Getting help, video 1"></iframe>
+
+```{r q-problem1-91294-1, echo=FALSE}
+# LO: LO2.1.4
+question_text(
+  "Use Rseek to find information about the R package \"Rcolorbrewer\" and type below one of the three types of colour palettes provided by this package.",
+  answer("sequential", correct = TRUE),
+  answer("diverging", correct = TRUE),
+  answer("qualitative", correct = TRUE),
+  answer("Sequential", correct = TRUE),
+  answer("Diverging", correct = TRUE),
+  answer("Qualitative", correct = TRUE),
+  correct = "Explanation:
+There are three palettes, sequential, diverging, and qualitative.
+Sequential – Light colours for low data, dark for high data
+Diverging – Light colours for mid-range data, low and high contrasting dark colours
+Qualitative – Colours designed to give maximum visual difference between classes",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+### Video 2
+
+<iframe width="826" height="465" src="https://uzh.mediaspace.cast.switch.ch/embed/secure/iframe/entryId/0_yo61nmom/uiConfId/23449004/st/0" allowfullscreen="allowfullscreen" allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Getting help, video 2"></iframe>
+
+In RStudio, get the R help file for the function `lines` and read it to find the function that could be used for drawing a single straight line.
+
+```{r q-problem2-59912-1a, echo=FALSE}
+# LO: LO2.1.4
+question_text(
+  "Type that function here:",
+  answer("abline", correct = TRUE),
+  answer("Abline", correct = TRUE),
+  correct = "Correct!",
+  incorrect = "Not quite -- have another look at the 'See Also' section of the help file for lines().",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+Again in RStudio, get the help file for the function `read.csv`.
+
+```{r q-problem2-59912-1b, echo=FALSE}
+# LO: LO2.1.4
+question_text(
+  "How many different functions does this help file cover?",
+  answer("5", correct = TRUE),
+  correct = "Explanation: some help files cover a number of closely related functions. E.g. the help file for read.csv also covers read.table, read.csv2, read.delim, and read.delim2 -- five in total. This is because these functions are all very similar in what they do.",
+  incorrect = "Not quite -- count the functions listed at the top of the help file's 'Usage' section.",
+  allow_retry = TRUE,
+  trim = TRUE
+)
+```
+
+### Video 3
+
+<iframe width="826" height="465" src="https://uzh.mediaspace.cast.switch.ch/embed/secure/iframe/entryId/0_eghxx374/uiConfId/23449004/st/0" allowfullscreen="allowfullscreen" allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Getting help, video 3"></iframe>
+
+```{r q-problem3-53640-1, echo=FALSE}
+# LO: LO2.1.4
+question(
+  "Who should you first ask about getting some help with R?",
+  answer("Prof. Petchey."),
+  answer("Your parents."),
+  answer("Your classmates.", correct = TRUE),
+  answer("The class teaching assistants."),
+  answer("Dr. Willems"),
+  answer("Somebody else!"),
+  correct = "Explanation:
+Ask your classmates first. If they know the answer, this will be fast! Remember you can do this on the discussion forum also!",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+## What are add-on packages?
+
+There are no datasets or code for this unit.
+
+### Video 1
+
+> **Note (for Owen, remove once checked):** this video is hosted on UZH's Kaltura Mediaspace and was originally embedded inside OLAT. Please check it still plays correctly here before this page goes live -- if it doesn't, it will need to be re-shared/embedded from Kaltura with public or unlisted link access rather than an OLAT-restricted one.
+
+<iframe width="826" height="465" src="https://uzh.mediaspace.cast.switch.ch/embed/secure/iframe/entryId/0_iefhrwfu/uiConfId/23449004/st/0" allowfullscreen="allowfullscreen" allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Add-on packages, video 1"></iframe>
+
+```{r q-problem1-84746-1, echo=FALSE}
+# LO: LO2.1.3
+question(
+  "Every time you start R, you will need to *install* the add-on packages (e.g., the lubridate package) you want to use?
+
+(Note: Only one attempt allowed)",
+  answer("TRUE"),
+  answer("FALSE", correct = TRUE),
+  correct = "Explanation:
+
+You do not need to *install* add-on packages every time you use R. Installing packages is getting them from the internet onto your computer; you do this only once. Each time you start R, you need to load into R's brain any add-on packages you want to use, using the library function, e.g., library(lubridate)",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-problem1-84746-2, echo=FALSE}
+# LO: LO2.1.3
+question(
+  "When you install R on your computer, you get automatically get some packages. How would you best describe these?",
+  answer("Baseline packages"),
+  answer("Default packages"),
+  answer("Base packages", correct = TRUE),
+  answer("Super packages"),
+  correct = "Explanation:
+Base packages is the term for ones that come with R automatically.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+```{r q-problem1-84746-3, echo=FALSE}
+# LO: LO2.1.3
+question(
+  "When you start using R, you have to load the STATS package manually?
+
+(Note: Only one attempt allowed)",
+  answer("TRUE"),
+  answer("FALSE", correct = TRUE),
+  correct = "Explanation:
+The STATS package is a base package, so is automatically loaded into R's brain whenever you start R (i.e., you don't need to do this yourself.)",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Video 2
+
+<iframe width="826" height="465" src="https://uzh.mediaspace.cast.switch.ch/embed/secure/iframe/entryId/0_o00p76bu/uiConfId/23449004/st/0" allowfullscreen="allowfullscreen" allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Add-on packages, video 2"></iframe>
+
+```{r q-problem2-94604-1, echo=FALSE}
+# LO: LO2.1.3
+question(
+  "Why is it useful to include at the beginning of your script the code that loads the add-on packages you want to use? (Multiple answers might be correct.)",
+  answer("It is more convenient than typing them into the console each time you start R.", correct = TRUE),
+  answer("Someone else using your code can easily see the packages they need to install.", correct = TRUE),
+  answer("Your code might not work properly if the code that loads packages appears later in the script.", correct = TRUE),
+  correct = "Explanation:
+All are correct. The last is because your code might not work if in your script the packages is loaded *after* you try to use a function in that package.",
+  incorrect = "Unfortunately, your answer is wrong.",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### The tidyverse
+
+You may have noticed, and will see again, that Prof. Petchey sometimes does not load the packages `ggplot2` or `dplyr` separately in his code -- i.e. he doesn't use `library(ggplot2)`. Instead, you'll see him use `library(tidyverse)`.
+
+The `tidyverse` add-on package is a convenience package: it loads several other packages at once, such as `ggplot2`, `dplyr`, `readr`, and `tidyr`. These loaded packages are associated with what's termed "tidy" data, hence the *tidy*verse name.
+
+There is no particular reason to use the `tidyverse` package other than convenience. If people have trouble using it, it's fine to just load each library separately instead.
+
+If you want to use `library(tidyverse)` you must first install the tidyverse package, using the Install Packages tool in RStudio, or with `install.packages("tidyverse")`. (Remember, you only need to install a package once.)
+
+[More information about the tidyverse is here](https://blog.rstudio.org/2016/09/15/tidyverse-1-0-0/).

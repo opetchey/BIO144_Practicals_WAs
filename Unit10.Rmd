@@ -61,6 +61,7 @@ At each site, you measure:
 Your goal is **not** to test a specific hypothesis, but to: *Explore multivariate structure in the community data.* This is a classic situation where **ordination** is useful. Specically, how does plant community composition change along the moisture gradient?
 
 ### Step 1: Create a dataset
+<!-- LO: LO10.1.1 -->
 
 For this practical, we will simulate data for 30 sites and 5 plant species. Copy the code into your script and use it to make a dataset.
 
@@ -114,6 +115,7 @@ community
 ```
 
 ```{r ord_q1, echo = FALSE}
+# LO: LO10.1.1
 learnr::question(
   "Which best describes the species data in this dataset?",
   answer("Multivariate response data", correct = TRUE),
@@ -127,6 +129,7 @@ learnr::question(
 ```
 
 ### Step 2: Visualize species abundances
+<!-- LO: LO10.1.2, LO10.1.4 -->
 
 Before running PCA, it's useful to visualize the species abundances along the soil moisture gradient. And also to assess correlations among species.
 
@@ -148,6 +151,7 @@ Here's a rather geeky R question for you:
 
 
 ```{r ord_q2, echo = FALSE}
+# LO: LO10.1.2
 learnr::question(
   "Why is it generally better to use ggplot on the long-format version of the data, rather than creating separate plots or layers for each species?",
   answer("Because long-format data always produces more accurate plots"),
@@ -169,6 +173,7 @@ We can see that we simulated species with different responses to soil moisture.
 Also, we see that some species have high average abundances, while others are generally rare. This means that some species will have a much larger influence on PCA results than others, unless we do some kind of standardization or transformation.
 
 ```{r ord_q3, echo = FALSE}
+# LO: LO10.1.4
 learnr::question(
   "How would standardising (scaling) the species variables affect the PCA in this practical?",
   answer("It ensures that all species contribute equally regardless of their absolute abundances", correct = TRUE),
@@ -204,7 +209,8 @@ community_scaled |> summarise(across(starts_with("Species_"),
 
 The mean of each species is approximately 0, and the standard deviation is 1. So yes, it worked... at least for me :)
 
-### Step 2: Prepare data for PCA
+### Step 3: Prepare data for PCA
+<!-- LO: LO10.1.5 -->
 
 PCA requires numeric variables only and typically works on a species matrix. So make a new data frame with only the species data.
 
@@ -215,11 +221,13 @@ species_matrix <- community_scaled |>
   as.matrix()
 ```
 
-### Step 3: Run PCA
+### Step 4: Run PCA
+<!-- LO: LO10.1.5 -->
 
 Now we can run PCA using the `prcomp()` function.
 
 ```{r pca_q4, echo = FALSE}
+# LO: LO10.1.4, LO10.1.5
 learnr::question(
   "Why is it reasonable to use `center = FALSE` and `scale. = FALSE` when calling `prcomp()` in this analysis?",
   answer("Because centring and scaling are not important for PCA"),
@@ -237,7 +245,8 @@ learnr::question(
 pca_result <- prcomp(species_matrix, center = FALSE, scale. = FALSE)
 ```
 
-### Step 4: Examine PCA results
+### Step 5: Examine PCA results
+<!-- LO: LO10.1.5 -->
 
 You can examine the PCA results using the `summary()` function.
 
@@ -247,20 +256,22 @@ summary(pca_result)
 ```
 
 ```{r quiz-pca-pc1-variation, echo=FALSE}
+# LO: LO10.1.5
 learnr::question_numeric(
   "How much **variation** is represented in the **first principal component (PC1)**?\n\nGive your answer as a **percentage**, rounded to **one decimal place**.",
   
-  learnr::answer(47.3, correct = TRUE),
+  learnr::answer(48.5, correct = TRUE),
   
-  correct = "Correct! The first principal component explains 47.3% of the total variation.",
+  correct = "Correct! The first principal component explains 48.5% of the total variation.",
   incorrect = "Not quite. Check the proportion of variance explained by PC1 and convert it to a percentage, rounded to one decimal place.",
   allow_retry = TRUE
 )
 ```
 
 ```{r quiz-pca-why-pc1-so-much, echo=FALSE}
+# LO: LO10.1.3
 learnr::question(
-  "Why is **so much variation** explained by the **first principal component (PC1)** alone?",
+  "With five standardised species, each principal component would explain about 20% of the variation if the species varied independently of each other. Why does **PC1** explain much more than this?",
   
    learnr::answer(
     "Because PCA always forces the first axis to explain most of the variation."
@@ -269,7 +280,7 @@ learnr::question(
     "Because the data were standardised before running PCA."
   ),
    learnr::answer(
-    "Because the original variables are all strongly correlated with each other and largely indicate the same single underlying feature (soil moisture).",
+    "Because the species abundances are correlated with each other (some positively, some negatively), as they all respond to the same underlying gradient (soil moisture).",
     correct = TRUE
   ),
 
@@ -280,13 +291,14 @@ learnr::question(
     "Because PCA removes noise from the data."
   ),
   
-  correct = "Correct! When variables are strongly correlated and measure a common underlying property (such as overall size), most of the variation lies along a single dominant axis, which PCA captures as PC1.",
+  correct = "Correct! When variables are correlated because they respond to a common underlying gradient (here soil moisture), much of the variation lies along a single axis, which PCA captures as PC1. The correlations here are only moderate, which is why PC1 explains about half of the variation rather than nearly all of it.",
   incorrect = "Think about the relationships among the original variables and what they represent biologically.",
   allow_retry = TRUE
 )
 ```
 
-### Step 5: Visualize PCA results
+### Step 6: Visualize PCA results
+<!-- LO: LO10.1.6, LO10.1.9 -->
 
 Create a biplot to visualize the PCA results.
 
@@ -298,7 +310,8 @@ ggplot() +
 ```
 
 
-### Step 6: Interpret PCA results more
+### Step 7: Interpret PCA results more
+<!-- LO: LO10.1.6 -->
 
 The loadings indicate how each original variable contributes to each principal component.
 
@@ -309,8 +322,9 @@ loadings
 ```
 
 ```{r quiz-pca-negative-loadings, echo=FALSE}
+# LO: LO10.1.6
 learnr::question(
-  "Which of the species have **negative loadings on the first principal component (PC1)**?",
+  "Which species have **loadings on the first principal component (PC1) with the opposite sign** to the other species?\n\n(The overall sign of a principal component is arbitrary: on another computer all the PC1 loadings might have the opposite sign. What matters is which species have the same sign and which the opposite sign.)",
   
   learnr::answer(
     "Species 1 and Species 3",
@@ -323,14 +337,14 @@ learnr::question(
     "Species 2 and Species 3"
   ),
   learnr::answer(
-    "Species 2 only"
+    "Species 4 and Species 5"
   ),
   learnr::answer(
-    "None of the species"
+    "None: all species have loadings of the same sign"
   ),
   
-  correct = "Correct! Species 1 and Species 3 have negative loadings on PC1, meaning they lie on the opposite side of the main size-related gradient captured by the first principal component.",
-  incorrect = "Check the sign of the PC1 loadings for each species. Look for those with values less than zero.",
+  correct = "Correct! Species 1 and Species 3 have PC1 loadings of the opposite sign to Species 2, 4 and 5, meaning they lie at the opposite end of the main gradient captured by the first principal component (the soil moisture gradient).",
+  incorrect = "Look at the signs of the PC1 loadings for each species, and find the species whose sign differs from that of the others.",
   allow_retry = TRUE
 )
 ```
@@ -338,11 +352,44 @@ learnr::question(
 Recall that we simulated the data, and specified the effects of soil moisture on each species. Now check whether the PCA loadings align with these effects. The effects are in the `abundance_slopes` vector created during data simulation.
 
 
-### Step 7: Linking ordination to soil moisture
+### Step 8: Linking ordination to soil moisture
+<!-- LO: LO10.1.9 -->
 
 Based on your PCA results, what conclusions can you draw about the plant communities along the soil moisture gradient? Consider how species abundances change with moisture and how this is reflected in the PCA.
 
+### Step 9: Principal components as explanatory variables
+<!-- LO: LO10.1.13, LO6.1.11 -->
+
+Suppose we now wanted to use the plant community to *predict* soil moisture (for example, because species are easier to record than moisture). We could put all five species into a multiple regression, but the species abundances are correlated with each other, so their individual slopes would be imprecise and hard to interpret (collinearity, Unit 6). An alternative is to use PC1, which summarises the shared variation of the species in a single variable:
+
+```{r eval = FALSE, echo = TRUE}
+community_pca <- community_scaled |>
+  mutate(PC1 = pca_result$x[, 1])
+m_moisture_species <- lm(Soil_Moisture ~ Species_1 + Species_2 + Species_3 + Species_4 + Species_5,
+                         data = community_pca)
+m_moisture_pc1 <- lm(Soil_Moisture ~ PC1, data = community_pca)
+summary(m_moisture_species)
+summary(m_moisture_pc1)
+```
+
+Compare the two models: how many of the species slopes are clearly different from zero? How does the R² of the PC1 model compare with that of the five-species model, and how many parameters does each use?
+
+```{r LO-pc-as-predictor, echo=FALSE}
+# LO: LO10.1.13
+learnr::question(
+  "What are the advantages and costs of using PC1 instead of the five correlated species as explanatory variables?",
+  learnr::answer("Advantage: one explanatory variable instead of five, so no collinearity and more residual degrees of freedom, with a clear, precisely estimated relationship.", correct = TRUE),
+  learnr::answer("Cost: the slope of PC1 is harder to interpret biologically, because PC1 is a combination of all species (look at the loadings to see what it represents).", correct = TRUE),
+  learnr::answer("Cost: some information in the other principal components is left out, so R² can be a little lower than with all five species.", correct = TRUE),
+  learnr::answer("Using PC1 proves which species cause changes in soil moisture."),
+  correct = "Correct! Using principal components as explanatory variables is one way to deal with collinearity, at the price of interpretability.",
+  incorrect = "Think about collinearity, degrees of freedom, and what PC1 actually is.",
+  allow_retry = TRUE
+)
+```
+
 ### Summary
+<!-- LO: LO10.1.11 -->
 
 In this practical exercise you used Principal Component Analysis to explore structure in a multivariate ecological dataset. The analysis showed how ordination can reduce complex species data to a small number of synthetic axes that capture dominant patterns of variation, making high-dimensional data easier to visualise and reason about. By working with loadings, you saw how sites are positioned in ordination space, and how these positions reflect similarities and differences in community composition. The practical also highlighted the importance of centring and scaling, and how choices made during data preparation can strongly influence the resulting ordination.
 
@@ -352,6 +399,7 @@ It is important to be clear about what PCA does and does not provide. PCA is wel
 
 
 ## Practical part 2
+<!-- LO: LO10.1.7, LO10.1.8, LO10.1.9 -->
 
 Case study: Diet and the human gut microbiome. The human gut microbiome plays a crucial role in digestion, metabolism, and health. Diet is known to be one of the strongest drivers of gut microbiome composition, influencing which microbial taxa thrive in the gut.
 
@@ -441,15 +489,24 @@ Then make a Non-metric Multidimensional Scaling (NMDS) ordination based on the B
 
 ```{r echo = FALSE, message = FALSE, eval = FALSE}
 set.seed(144)
+nmds_result_2d <- metaMDS(D, k = 2, trymax = 100)
+nmds_result_2d$stress
+nmds_result_3d <- metaMDS(D, k = 3, trymax = 100)
+nmds_result_3d$stress
 nmds_result <- metaMDS(D, k = 10, trymax = 100)
+nmds_result$stress
 ```
 
 What is the stress value of the NMDS solution? Is it acceptable? Recall that stress < 0.1 is considered a good fit, while stress > 0.2 indicates a poor fit.
 
-Look at the stresplot to assess the NMDS fit. What is the linear fit, r-squared value? Is it acceptable? I (Owen) found less than 0.7 with `k = 3`, which is not great, but OK for ecological data. I increased to `k = 10` and got r-squared = 0.86, which is very good. So the data seems to need a high-dimensional solution to get a good fit.
+Start with `k = 2`, as in the course book. Then try `k = 3`, and then a much larger number of dimensions, for example `k = 10`, and compare the stress values. (I (Owen) found a stress of about 0.28 with `k = 2`, 0.22 with `k = 3`, and 0.08 with `k = 10`.)
+
+Also look at the stressplot (a Shepard plot) for each solution. What is the linear fit r-squared value? Is it acceptable? I found less than 0.7 with `k = 3`, which is not great, but OK for ecological data, and 0.86 with `k = 10`, which is very good.
+
+So these data seem to need a high-dimensional solution to get a good fit. With 200 taxa whose abundances vary largely independently of each other, a few axes cannot summarise the differences among samples well. That is useful to know in itself: a plot of the first two axes of a 10-dimensional NMDS shows only part of the structure in the data, so interpret it cautiously.
 
 ```{r eval = FALSE}
-# Procrustes plot to visualize NMDS fit
+# Shepard plot (stressplot) to assess the NMDS fit
 stressplot(nmds_result)
 ```
 
@@ -469,6 +526,20 @@ ggplot(nmds_scores, aes(x = MDS1, y = MDS2, color = Diet)) +
 
 Write a few sentences about the patterns you see in the NMDS plot. Do different diet groups cluster separately? What does this suggest about the influence of diet on gut microbiome composition? What else can you see?
 
+```{r LO-ordination-test-choice, echo=FALSE}
+# LO: LO10.1.12, LO10.1.11
+learnr::question(
+  "The NMDS plot suggests that diet groups differ in microbiome composition, but an ordination plot is not a test. Which approach would test whether the diet groups differ in their position (centroid) in multivariate space, using the Bray–Curtis dissimilarities?",
+  learnr::answer("PERMANOVA (e.g. `adonis2()` in vegan), ideally together with PERMDISP (`betadisper()`) to check whether the groups also differ in their spread.", correct = TRUE),
+  learnr::answer("A separate t-test for each of the 200 taxa."),
+  learnr::answer("A one-way ANOVA of the NMDS1 scores only."),
+  learnr::answer("envfit, which tests whether diets cause the microbiome differences."),
+  correct = "Correct! PERMANOVA tests for differences in group centroids using any distance measure, with a permutation test. Because it can also respond to differences in spread, PERMDISP is often used alongside it. (In BIO144 you need to know when to use these methods, not to run them; see the course book, Chapter 10.)",
+  incorrect = "Look at the table of questions and methods in the course book, Chapter 10.",
+  allow_retry = TRUE
+)
+```
+
 ### Heads up
 
 Analysis of genomic data, including metagenomics, proteomics, and transcriptomics, is a rapidly evolving field. New methods and best practices are continually being developed. The approach outlined here is a basic introduction to ordination of microbiome data, but more advanced techniques exist that may provide deeper insights. As you progress in your studies, consider exploring additional methods such as phylogenetic ordination, machine learning approaches, and network analysis to further investigate complex biological datasets. One place to start is the phyloseq R package, which provides tools for microbiome data analysis incorporating phylogenetic information. https://joey711.github.io/phyloseq/
@@ -478,6 +549,7 @@ Analysis of genomic data, including metagenomics, proteomics, and transcriptomic
 
 
 ```{r quiz-ordination-pca-purpose, echo=FALSE}
+# LO: LO10.1.3
 learnr::question(
   "What is the main goal of Principal Component Analysis (PCA)?",
   
@@ -497,6 +569,7 @@ learnr::question(
 
 
 ```{r quiz-ordination-pca-r, echo=FALSE}
+# LO: LO10.1.5
 learnr::question(
   "Which R function is most commonly used to perform PCA on a numeric data matrix?",
   
@@ -516,6 +589,7 @@ learnr::question(
 
 
 ```{r quiz-ordination-pca-scaling, echo=FALSE}
+# LO: LO10.1.4
 learnr::question(
   "Why is it often important to scale variables before performing PCA?",
   
@@ -535,6 +609,7 @@ learnr::question(
 
 
 ```{r quiz-ordination-nmds-concept, echo=FALSE}
+# LO: LO10.1.10
 learnr::question(
   "What aspect of the data does Non-metric Multidimensional Scaling (NMDS) aim to preserve?",
   
@@ -554,6 +629,7 @@ learnr::question(
 
 
 ```{r quiz-ordination-nmds-stress, echo=FALSE}
+# LO: LO10.1.8
 learnr::question(
   "An NMDS solution has a stress value of 0.12. How would you interpret this?",
   
@@ -574,6 +650,7 @@ learnr::question(
 
 
 ```{r quiz-ordination-nmds-r, echo=FALSE}
+# LO: LO10.1.8
 learnr::question(
   "Which R function from the vegan package is typically used to perform NMDS?",
   
@@ -595,6 +672,7 @@ learnr::question(
 
 
 ```{r quiz-ordination-nmds-axes, echo=FALSE}
+# LO: LO10.1.9
 learnr::question(
   "Which statement about NMDS axes is correct?",
   
@@ -614,6 +692,7 @@ learnr::question(
 
 
 ```{r quiz-ordination-pca-vs-nmds, echo=FALSE}
+# LO: LO10.1.10
 learnr::question(
   "Which situation would most strongly favour using NMDS rather than PCA?",
   
@@ -633,6 +712,7 @@ learnr::question(
 
 
 ```{r quiz-ordination-gotcha-interpretation, echo=FALSE}
+# LO: LO10.1.11
 learnr::question(
   "Which is the most appropriate way to interpret patterns seen in an ordination plot?",
   

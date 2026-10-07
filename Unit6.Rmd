@@ -39,6 +39,7 @@ This first video introduces the question, the data, and does some exploratory da
 <iframe width="560" height="315" src="https://www.youtube.com/embed/D8L5OUDfnu8?si=4R8i8GVmQ4252VFF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ```{r quiz-dplyr-select, echo=FALSE}
+# LO: LO2.1.7
 learnr::question(
   "What **dplyr** function was used to make a data set with **only the three variables we wanted**?",
   
@@ -58,6 +59,7 @@ learnr::question(
 ```
 
 ```{r quiz-dplyr-mutate-transform, echo=FALSE}
+# LO: LO2.1.7
 learnr::question(
   "Say we found that the body fat variable was rather non-normal, and it looked like log-transforming it might help. Which **dplyr** function would we use to add the transformed variable to the dataset?",
   
@@ -84,6 +86,7 @@ This second video talks about degrees of freedom in multiple regression and desc
 <iframe width="560" height="315" src="https://www.youtube.com/embed/3nbUwYTyrOM?si=75Rfha-aj9X_Nkdc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ```{r quiz-df-error-multiple-regression-example, echo=FALSE}
+# LO: LO6.1.5
 learnr::question_numeric(
   "If we have a dataset with **28 observations** and we plan to fit a **multiple regression model with four continuous explanatory variables**, how many **degrees of freedom for error** will we have?",
   
@@ -102,6 +105,7 @@ This third video shows how to fit a multiple regression model in R, check the mo
 <iframe width="560" height="315" src="https://www.youtube.com/embed/itpsDaAU75A?si=obxSZ9_cgkt2_0Y_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ```{r quiz-why-make-a-model, echo=FALSE}
+# LO: LO6.1.1
 learnr::question(
   "Why make a model?\n\nThinking about what we gained from making the model of the data, which of the following did we gain?",
   
@@ -134,6 +138,7 @@ This fourth video walks through visualising the results of a multiple regression
 
 
 ```{r quiz-new-data-function-expandgrid, echo=FALSE}
+# LO: LO6.1.10
 learnr::question_text(
   "When making new data for prediction, what was the name of the really useful function that helps us put multiple variables into a nice package (i.e. a data frame) that `predict()` will like?\n\n(Type the name of the function only, don't include the brackets.)",
   
@@ -152,6 +157,7 @@ This fifth video concerns reporting the results.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/XkYBpzKnU2M?si=bGpcQPhODxvc5RKF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ```{r quiz-reporting-criticism, echo=FALSE}
+# LO: LO6.1.14
 learnr::question(
   "How to report results?\n\nIf we were reporting our results and wrote something like:\n\n\"We found a significant relationship between weight and body fat (p < 0.0001).\"\n\nWhy might people criticise this sentence?",
   
@@ -190,6 +196,7 @@ The sixth video shows how we can assess if an extreme observation is having a bi
 ## Practical part 1
 
 ### 1. The question
+<!-- LO: LO6.1.1 -->
 
 This practical exercise concerns a dataset about the composition of milk across primate species, and how this is related to some features of those species, such as body mass and brain size. This dataset and example comes from a very nice (though somewhat advanced) book Statistical Rethinking by Richard McElreath. From that book, page 135 "Milk is a huge investment, being much more expensive than gestation. Such an expensive resource is likely adjusted in subtle ways, depending upon the physiological and developmental details of each primate species."
 
@@ -203,6 +210,7 @@ The dataset named `milk_rethinking.csv` is in the usual place.
 Before looking at the data, can you make some plausible hypotheses about how the energetic content of the milk (calories per gram of milk, variable `kcal.per.g`) and brain size (percentage of brain mass that is neocortex, variable `neocortex.perc`) might be related? Some suggest a positive relationship, but what might be the biological reason for this?
 
 ```{r quiz-milk-hypothesis, echo=FALSE}
+# LO: LO6.1.1
 learnr::question(
   "Before looking at the data, which of the following is a **plausible hypothesis** about the relationship between milk energy contentand neocortex size  in primates, and the biological reasoning behind it?",
   
@@ -242,6 +250,7 @@ milk_data <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/he
 We will also take into account the average female body mass (variable `mass`), hence we will be using **multiple regression** to analyse the data. (The dataset contains other variables, but we're interested in only those three for the moment.)
 
 ### 2. Explore the data
+<!-- LO: LO2.1.8, LO6.1.5, LO6.1.11 -->
 
 Open a new script and:
 
@@ -254,6 +263,7 @@ Open a new script and:
 Some questions to guide you through this...
 
 ```{r quiz-milk-n-observations, echo=FALSE}
+# LO: LO2.1.5
 learnr::question_numeric(
   "How many observations (species) are in the dataset?",
   
@@ -267,6 +277,7 @@ learnr::question_numeric(
 
 
 ```{r quiz-milk-distributions, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "Considering your graphs of the distribution of each variable, which of the following statements would you say are appropriate?",
   
@@ -320,6 +331,7 @@ And from now on work with these variables:
 
 
 ```{r quiz-milk-kcal-mass, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "Looking at a scatterplot, what kind of relationship do you see between **`log10_kcal.per.g`** and **`log10_mass`**?",
   
@@ -334,6 +346,7 @@ learnr::question(
 ```
 
 ```{r quiz-milk-kcal-neocortex, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "Looking at a scatterplot, what kind of relationship do you see between **`log10_kcal.per.g`** and **`neocortex.perc`**?",
   
@@ -349,6 +362,7 @@ learnr::question(
 
 
 ```{r quiz-milk-mass-neocortex, echo=FALSE}
+# LO: LO6.1.11
 learnr::question(
   "Looking at a scatterplot, what kind of relationship do you see between **`log10_mass`** and **`neocortex.perc`**?",
   
@@ -367,6 +381,7 @@ So, there seems to be no relationship between the response variable `log10_kcal.
 **But, hold on!!!** These graphs do not show the relationships while accounting for the other explanatory variable. This is what multiple regression does for us. So we might still find something interesting when we fit the multiple regression model.
 
 ```{r quiz-milk-collinearity, echo=FALSE}
+# LO: LO6.1.11
 learnr::question(
   "Before fitting a regression model with both explanatory variables (`log10_mass` and `neocortex.perc`), what else is already clear from the bivariate plots, and what potential problem could this cause?",
   
@@ -395,6 +410,7 @@ learnr::question(
 Before we fit the model, we need to know how many degrees of freedom for error we will have.
 
 ```{r quiz-milk-df-error-multiple-regression, echo=FALSE}
+# LO: LO6.1.5
 learnr::question_numeric(
   "How many **degrees of freedom for error** will we have for a regression model that includes **both explanatory variables** (`mass` and `neocortex.perc`)?",
   
@@ -408,6 +424,7 @@ learnr::question_numeric(
 
 
 ### 3. Fit the multiple regression model
+<!-- LO: LO6.1.3, LO6.1.4, LO6.1.7 -->
 
 Now fit the multiple regression model with `log10_kcal.per.g` as the response variable, and `neocortex.perc` and `log10_mass` as explanatory variables. Give the two explanatory variables separated with a plus.
 
@@ -422,6 +439,7 @@ autoplot(model, smooth.colour = NA)
 
 
 ```{r quiz-milk-residual-patterns, echo=FALSE}
+# LO: LO6.1.4
 learnr::question(
   "Looking at the residual plots for the regression model, do you see any clear issues with patterns in the residuals?",
   
@@ -436,6 +454,7 @@ learnr::question(
 ```
 
 ```{r quiz-milk-qqplot-ok, echo=FALSE}
+# LO: LO6.1.4
 learnr::question(
   "Do you think the QQ-plot of the residuals looks reasonably OK?",
   
@@ -456,6 +475,7 @@ summary(model)
 ```
 
 ```{r quiz-milk-slope-kcal-mass, echo=FALSE}
+# LO: LO6.1.3
 learnr::question_numeric(
   "What is the estimated slope for **`log10_mass`**?\n\n(Round your answer to **two significant figures**.)",
   
@@ -469,6 +489,7 @@ learnr::question_numeric(
 
 
 ```{r quiz-milk-slope-chance, echo=FALSE}
+# LO: LO6.1.7, LO4.1.5
 learnr::question(
   "From the regression summary table, how can you tell that the estimated slope for the relationship between **`kcal.per.g`** and **`mass`** is unlikely to have occurred purely by chance?",
   
@@ -496,6 +517,7 @@ learnr::question(
 ```
 
 ```{r quiz-milk-slope-kcal-neocortex, echo=FALSE}
+# LO: LO6.1.3
 learnr::question_numeric(
   "What is the estimated slope for **`neocortex.perc`**?\n\n(Round your answer to **two significant figures**.)",
   
@@ -508,13 +530,15 @@ learnr::question_numeric(
 ```
 
 ```{r quiz-milk-ci-neocortex-lower, echo=FALSE}
+# LO: LO4.1.8, LO4.1.9
 learnr::question_numeric(
-  "Assuming a 95% confidence interval using a critical value of **1.96**, what is the **lower bound** of the 95% confidence interval for the slope of `neocortex.perc`?\n\n(Round your answer to **four decimal places**.)",
+  "What is the **lower bound** of the 95% confidence interval for the slope of `neocortex.perc`?\n\nThe model has only 14 residual degrees of freedom, so use the critical value of the t-distribution with 14 degrees of freedom, `qt(0.975, df = 14)` (about 2.14), not 1.96. Or, easier, use `confint()` on your model.\n\n(Round your answer to **four decimal places**.)",
   
-  learnr::answer(0.0083, correct = TRUE),
+  learnr::answer(0.0073, correct = TRUE),
+  learnr::answer(0.0083, message = "That is the value you get with 1.96. With only 14 residual degrees of freedom the critical t-value is about 2.14, so the interval is wider."),
   
-  correct = "Correct! The lower bound is 0.018356 − (1.96 × 0.005134) ≈ 0.0083.",
-  incorrect = "Not quite. Use the formula: estimate − 1.96 × standard error, and then round to four decimal places.",
+  correct = "Correct! The lower bound is 0.018356 − (2.145 × 0.005134) ≈ 0.0073. This is what `confint()` gives. Using 1.96 would give 0.0083, an interval that is too narrow, because with few residual degrees of freedom the t-distribution has heavier tails than the normal distribution.",
+  incorrect = "Not quite. Use estimate − qt(0.975, df = 14) × standard error (or `confint()`), and round to four decimal places.",
   allow_retry = TRUE
 )
 ```
@@ -522,6 +546,7 @@ learnr::question_numeric(
 
 
 ```{r quiz-adjusted-vs-multiple-r2, echo=FALSE}
+# LO: LO6.1.8
 learnr::question(
   "Why is the **adjusted R-squared** smaller than the **multiple R-squared** in the regression model?",
   
@@ -551,6 +576,7 @@ learnr::question(
 Note that the degrees of freedom for error is indeed 14, as we calculated before fitting the model.
 
 ### 4. Interpret the results
+<!-- LO: LO6.1.10, LO6.1.14 -->
 
 That was a bit of a surprise eh! We would not have guessed these quite strong effects from the exploration of the data with the bivariate scatterplots. There was no evidence of these relationships.
 
@@ -561,6 +587,7 @@ Before we consider how we could end up with patterns in the multiple regression 
 Then write some sentences that would be appropriate for reporting the results. Remember to focus on the biology, not the statistics (though these you should report also).
 
 ### 5. Unique contributions of each explanatory variable
+<!-- LO: LO6.1.11, LO6.1.12 -->
 
 (This part is a bit harder perhaps, but is covered in the course book, Chapter 6, Section *Assessing the importance of an explanatory variables in the presence of collinearity*)
 
@@ -576,6 +603,7 @@ anova(model_reduced2, model)
 ```
 
 ```{r quiz-milk-f-statistic-model-comparison, echo=FALSE}
+# LO: LO6.1.12
 learnr::question_numeric(
   "Two regression models are compared:\n\n- Model 1 contains `log10_mass`\n- Model 2 contains `log10_mass` and `neocortex_perc`\n\nWhat is the value of the **F-statistic** for comparing these two models?",
   
@@ -588,6 +616,7 @@ learnr::question_numeric(
 ```
 
 ```{r quiz-milk-partial-r2, echo=FALSE}
+# LO: LO6.1.12
 learnr::question_numeric(
   "Consider the two regression models in the previous question what is the value of the **partial R-squared** for `neocortex_perc`? (Round your answer to **two decimal places**.)",
   
@@ -600,6 +629,7 @@ learnr::question_numeric(
 ```
 
 ```{r quiz-milk-partial-r2-interpretation, echo=FALSE}
+# LO: LO6.1.12
 learnr::question(
   "In words, what does the **partial R-squared** value from the model comparison mean?",
   
@@ -627,7 +657,62 @@ learnr::question(
 ```
 
 
+### 6. Collinearity and standardised coefficients
+<!-- LO: LO6.1.9, LO6.1.11 -->
+
+We saw in the scatterplots that the two explanatory variables are correlated. The variance inflation factor (VIF) tells us how much the variance of each coefficient estimate is inflated by collinearity (see the course book, Chapter 6, *Do I have a problem (with collinearity)?*). Calculate it with the `vif()` function in the `car` package (install the package first if you need to):
+
+```{r eval = FALSE, echo = TRUE}
+library(car)
+vif(model)
+```
+
+```{r LO-milk-vif, echo=FALSE}
+# LO: LO6.1.11
+learnr::question_numeric(
+  "What is the VIF of `neocortex.perc` in the model with both explanatory variables?\n\n(Round to two decimal places.)",
+  learnr::answer(2.29, correct = TRUE),
+  correct = "Correct! The VIF is about 2.29 for both variables (with only two explanatory variables the two VIFs are always equal). The variance of each slope estimate is about 2.3 times what it would be without collinearity, so the standard errors are about 1.5 times larger (√2.29). This is well below the rule-of-thumb thresholds of 5 or 10, but it is a reminder that the two effects are estimated less precisely than they would be if the variables were unrelated.",
+  incorrect = "Run vif() from the car package on the model with both explanatory variables.",
+  allow_retry = TRUE
+)
+```
+
+Which explanatory variable has the stronger association with milk energy? The two slopes are in different units (per percent of neocortex, and per log10 unit of body mass), so we cannot compare them directly. One option is to standardise all the variables (subtract the mean and divide by the standard deviation) before fitting the model:
+
+```{r eval = FALSE, echo = TRUE}
+model_standardised <- lm(scale(log10_kcal.per.g) ~ scale(neocortex.perc) + scale(log10_mass),
+                         data = milk_data)
+summary(model_standardised)
+```
+
+```{r LO-milk-standardised, echo=FALSE}
+# LO: LO6.1.9
+learnr::question_numeric(
+  "What is the standardised coefficient of `log10_mass`?\n\n(Round to two decimal places.)",
+  learnr::answer(-1.08, correct = TRUE),
+  correct = "Correct! The standardised coefficients are about 0.98 for neocortex and −1.08 for log10 mass: an increase of one standard deviation in either variable (with the other held constant) is associated with a change of about one standard deviation in log10 milk energy, in opposite directions. So the two variables are of similar importance.",
+  incorrect = "Fit the model with all three variables standardised using scale(), and look at the estimate for scale(log10_mass).",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-standardised-what-lost, echo=FALSE}
+# LO: LO6.1.9
+learnr::question(
+  "What do we lose by reporting standardised coefficients instead of the original ones?",
+  learnr::answer("The coefficients are no longer in biological units, so it is harder to say what a realistic change in each variable means for milk energy.", correct = TRUE),
+  learnr::answer("The standardised coefficients depend on how variable each explanatory variable happens to be in this particular sample.", correct = TRUE),
+  learnr::answer("The p-values of the slopes change."),
+  learnr::answer("The model no longer accounts for collinearity."),
+  correct = "Correct! Standardising makes coefficients comparable, but they are then 'per standard deviation', which depends on the sample, and they lose their biological units. The t-values and p-values of the slopes are unchanged. It is often good to report both.",
+  incorrect = "Think about the units of a standardised coefficient, and about what a standard deviation of an explanatory variable depends on.",
+  allow_retry = TRUE
+)
+```
+
 ## Practical part 2
+<!-- LO: LO6.1.8 -->
 
 You're going to explore when and why we need to use adjusted r-squared.
 
@@ -646,6 +731,7 @@ What does this tell you about r-squared (unadjusted)? What happens when we add v
 I'm not going to give the answer here, as the pattern will be obvious, and when you see it, you will understand why we should use adjusted r-squared when doing multiple regression.
 
 ```{r quiz-r2-random-variable-variability, echo=FALSE}
+# LO: LO6.1.8
 learnr::question(
   "Why does the **unadjusted R-squared** often increase when we add a completely random variable to a regression model, even though the variable is just noise?",
   
@@ -676,9 +762,125 @@ learnr::question(
 
 
 
+## Practical part 3
+<!-- LO: LO6.1.5, LO6.1.7, LO6.1.13, LO6.1.11, LO6.1.14, LO4.1.14 -->
+
+**Confounding: why we include other explanatory variables.** This part goes with the course book, Chapter 6, section *Confounding: why we include other explanatory variables*.
+
+Mayfly larvae are sensitive to the effects of agriculture on streams (e.g. sediment and nutrients), so they are often used to monitor stream health. A survey of 90 streams measured the density of mayfly larvae (`mayfly_density`, individuals per m²) and the percentage of the stream's catchment that is farmland (`farmland_percent`). The question is: **how strongly is mayfly density associated with farmland in the catchment?**
+
+There is a complication. Farmland is more common at low altitude, and altitude itself affects mayflies (for example, through water temperature). So the dataset also contains the altitude of each sampling site (`altitude_m`, metres above sea level). *(The data are simulated for teaching purposes.)*
+
+Get the dataset `stream_mayflies.csv`:
+
+```{r eval = FALSE, echo = TRUE}
+library(tidyverse)
+stream_mayflies <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/stream_mayflies.csv")
+```
+
+Before fitting anything, think about the degrees of freedom.
+
+```{r LO-mayfly-df, echo=FALSE}
+# LO: LO6.1.5, LO12.1.5
+learnr::question_numeric(
+  "How many residual degrees of freedom will a model of mayfly density with both `farmland_percent` and `altitude_m` as explanatory variables have? (There are 90 streams.)",
+  learnr::answer(87, correct = TRUE),
+  correct = "Correct! 90 observations minus 3 estimated parameters (intercept and two slopes) = 87.",
+  incorrect = "Subtract the number of estimated parameters (including the intercept) from the number of observations.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-mayfly-df-categorical, echo=FALSE}
+# LO: LO6.1.5
+learnr::question_numeric(
+  "Suppose we also added the geology of each catchment as a categorical explanatory variable with **4 categories** (e.g. limestone, granite, sandstone, clay). How many residual degrees of freedom would the model then have?",
+  learnr::answer(84, correct = TRUE),
+  correct = "Correct! A categorical variable with 4 levels needs 3 extra parameters (one difference from the reference level for each of the other 3 levels), so 87 − 3 = 84.",
+  incorrect = "A categorical variable with k levels uses k − 1 degrees of freedom.",
+  allow_retry = TRUE
+)
+```
+
+Now make graphs of mayfly density against farmland, mayfly density against altitude, and farmland against altitude. Then fit two models: one with only farmland, and one with farmland and altitude. Check the assumptions of the second model.
+
+```{r eval = FALSE, echo = TRUE}
+m_mayfly_farmland <- lm(mayfly_density ~ farmland_percent, data = stream_mayflies)
+m_mayfly_farmland_altitude <- lm(mayfly_density ~ farmland_percent + altitude_m, data = stream_mayflies)
+summary(m_mayfly_farmland)
+summary(m_mayfly_farmland_altitude)
+confint(m_mayfly_farmland_altitude)
+```
+
+```{r LO-mayfly-slope-simple, echo=FALSE}
+# LO: LO6.1.13
+learnr::question_numeric(
+  "In the model with **only** farmland, what is the estimated slope of `farmland_percent`?\n\n(Round to two decimal places.)",
+  learnr::answer(-0.65, correct = TRUE),
+  correct = "Correct! About −0.65 mayflies per m² per percent farmland.",
+  incorrect = "Look at the summary of the model with farmland as the only explanatory variable.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-mayfly-slope-adjusted, echo=FALSE}
+# LO: LO6.1.7, LO6.1.13
+learnr::question_numeric(
+  "In the model with farmland **and** altitude, what is the estimated slope of `farmland_percent`?\n\n(Round to two decimal places.)",
+  learnr::answer(-0.35, correct = TRUE),
+  correct = "Correct! About −0.35 (95% confidence interval about −0.47 to −0.22): about half the size of the slope in the simple model.",
+  incorrect = "Look at the summary of the model with both explanatory variables.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-mayfly-why-different, echo=FALSE}
+# LO: LO6.1.13, LO6.1.7
+learnr::question(
+  "Why is the slope of farmland so much more negative when altitude is **not** in the model?",
+  learnr::answer("Because altitude is a confounding variable: it is associated with farmland (less farmland at high altitude) and with mayfly density (more mayflies at high altitude). Without altitude in the model, farmland 'takes the credit' for part of the effect of altitude.", correct = TRUE),
+  learnr::answer("Because the model with two explanatory variables has fewer degrees of freedom."),
+  learnr::answer("Because adding any variable to a model always makes the other slopes smaller."),
+  learnr::answer("Because the simple model violates the assumption of normally distributed residuals."),
+  correct = "Correct! In the model with both variables, the farmland slope is the association between farmland and mayfly density with altitude held constant. In these simulated data the true value is −0.25, which lies inside the confidence interval from the model that includes altitude, but far from the estimate of the simple model.",
+  incorrect = "Look at your graph of farmland against altitude, and of mayfly density against altitude.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-mayfly-cost-of-adjusting, echo=FALSE}
+# LO: LO6.1.11, LO6.1.13
+learnr::question(
+  "Compare the standard error of the farmland slope in the two models, and calculate the VIF of the second model (`car::vif()`). Which statements are correct?",
+  learnr::answer("The standard error is larger in the model with altitude (about 0.064 vs 0.034), because farmland and altitude are correlated (VIF about 4.7).", correct = TRUE),
+  learnr::answer("Including the confounder makes the estimate less biased but also less precise.", correct = TRUE),
+  learnr::answer("Because the VIF is above 1, we should remove altitude from the model."),
+  learnr::answer("The standard error is the same in both models."),
+  correct = "Correct! Adjusting for a confounder has a cost: the collinearity between farmland and altitude inflates the standard error. Here this is a price worth paying, because leaving altitude out gives a biased estimate.",
+  incorrect = "Look at the 'Std. Error' column of both summary tables, and at the output of car::vif().",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-mayfly-causation, echo=FALSE}
+# LO: LO6.1.13, LO4.1.14
+learnr::question(
+  "Can we now conclude that converting 10% more of a catchment to farmland would **cause** mayfly density to fall by about 3.5 individuals per m²?",
+  learnr::answer("Yes, because we have adjusted for the confounder."),
+  learnr::answer("No. This is an observational study: we can only adjust for confounders we measured. An unmeasured variable associated with both farmland and mayflies (e.g. geology or stream size) could still bias the estimate.", correct = TRUE),
+  learnr::answer("Yes, because the p-value of farmland is very small."),
+  correct = "Correct! Multiple regression can reduce bias from measured confounders, but it cannot prove causation. Only randomly assigning the 'treatment' (an experiment) breaks the links with all other variables, measured or not.",
+  incorrect = "Think about what multiple regression can and cannot do with confounders that were not measured.",
+  allow_retry = TRUE
+)
+```
+
+Finally, write a reporting sentence for the association between farmland and mayfly density, giving the estimate with its confidence interval, and making clear that it is adjusted for altitude. Compare it with a neighbour's, or ask a TA for feedback.
+
 ## Weekly Quiz
 
 ```{r q1-simple-vs-multiple, echo=FALSE}
+# LO: LO6.1.1
 learnr::question(
   "What is the main difference between simple and multiple linear regression?",
   
@@ -699,6 +901,7 @@ learnr::question(
 
 
 ```{r quiz-multiple-regression-df, echo=FALSE}
+# LO: LO6.1.5
 learnr::question_numeric(
   "You fit a multiple regression model using **42 observations** and **three continuous explanatory variables**.\n\nHow many **degrees of freedom for error** does the model have?",
   
@@ -712,6 +915,7 @@ learnr::question_numeric(
 
 
 ```{r quiz-multiple-regression-interpretation, echo=FALSE}
+# LO: LO6.1.7
 learnr::question(
   "In a multiple regression model with two explanatory variables, how should the slope of one explanatory variable be interpreted?",
   
@@ -736,6 +940,7 @@ learnr::question(
 ```
 
 ```{r q2-ensemble-effect, echo=FALSE}
+# LO: LO6.1.6
 learnr::question(
   "You have fitted a multiple linear regression model.\n\nHow do you check whether the **ensemble of explanatory variables** has an effect?",
   
@@ -755,6 +960,7 @@ learnr::question(
 
 
 ```{r q4-formula-syntax, echo=FALSE}
+# LO: LO6.1.3
 learnr::question(
   "In the examples of multiple regression shown, which symbol do we use to separate the multiple explanatory variables when we use the formula interface?",
   
@@ -775,6 +981,7 @@ learnr::question(
 
 
 ```{r q5-r-squared, echo=FALSE}
+# LO: LO6.1.8
 learnr::question(
   "Which of these is true?\n\n(Recall that the title says *check that some or even all options could be correct*.)",
   
@@ -783,7 +990,7 @@ learnr::question(
     correct = TRUE
   ),
   learnr::answer(
-    "R² will always increase when a new explanatory variable is added to a model, whereas adjusted R² won’t.",
+    "R² never decreases (and almost always increases) when a new explanatory variable is added to a model, whereas adjusted R² can decrease.",
     correct = TRUE
   ),
   learnr::answer(
@@ -799,6 +1006,7 @@ learnr::question(
 
 
 ```{r quiz-milk-semi-partial-r2, echo=FALSE}
+# LO: none (beyond objectives)
 learnr::question(
   "Which of the following best describes the meaning of a **semi-partial R-squared** value for an explanatory variable in a multiple regression model?",
   
@@ -827,6 +1035,7 @@ learnr::question(
 
 
 ```{r quiz-multiple-regression-collinearity, echo=FALSE}
+# LO: LO6.1.11
 learnr::question(
   "Why can collinearity between explanatory variables be a problem in multiple regression?",
   
@@ -852,6 +1061,7 @@ learnr::question(
 
 
 ```{r quiz-confidence-vs-prediction-bands, echo=FALSE}
+# LO: LO4.1.10
 learnr::question(
   "After a linear regression model has been fitted, it is possible to plot **confidence bands** and **prediction bands**.\n\nWhich of the following statements is correct?",
   
@@ -880,6 +1090,7 @@ learnr::question(
 And finally, here is a challenging question, mostly because the multiple regression model contains a combination of continuous and binary explanatory variables. See how you get on with this one. Ask a TA for help if you'd like some help!
 
 ```{r quiz-multiple-regression-interpretation-hb, echo=FALSE}
+# LO: LO6.1.6, LO6.1.7, LO5.1.8
 learnr::question("Here is a multiple regression output:<br><br>
 <table>
   <thead>
@@ -960,3 +1171,16 @@ Which of the following statements are **true**?",
 )
 ```
 
+```{r LO-mr-equation, echo=FALSE}
+# LO: LO6.1.2
+learnr::question(
+  "A multiple regression of plant height (cm) on soil nitrogen (mg/kg) and light (% of full sun) is written as\n\nheightᵢ = β₀ + β₁ × nitrogenᵢ + β₂ × lightᵢ + eᵢ\n\nWhich statements are correct?",
+  learnr::answer("β₁ is the expected change in height (cm) for a 1 mg/kg increase in nitrogen, with light held constant.", correct = TRUE),
+  learnr::answer("β₀ is the expected height when both nitrogen and light are zero (which may not be biologically meaningful).", correct = TRUE),
+  learnr::answer("eᵢ is the residual: the part of plant i's height not explained by nitrogen and light, assumed ~ N(0, σ²).", correct = TRUE),
+  learnr::answer("β₂ is the correlation between light and height."),
+  correct = "Correct! Each slope is a partial effect: the association with that variable when the other explanatory variables are held constant.",
+  incorrect = "Think about what each term means when the other explanatory variable is held constant.",
+  allow_retry = TRUE
+)
+```

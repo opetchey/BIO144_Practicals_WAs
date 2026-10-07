@@ -56,6 +56,7 @@ Another reason is that with ggplot you can do just about anything worth doing. H
 Check some of your understanding from the course book and lecture with the following questions:
 
 ```{r quiz-dplyr-mutate, echo=FALSE}
+# LO: LO2.1.7
 question(
     "Which function in the dplyr package would you use to add to your data frame a new column of transformed data?",
     
@@ -73,6 +74,7 @@ question(
 
 
 ```{r quiz-dplyr-select, echo=FALSE}
+# LO: LO2.1.7
 question(
   "Which function in the dplyr package would you use to get specific columns of your data frame?",
     
@@ -89,6 +91,7 @@ question(
 ```
 
 ```{r quiz-dplyr-slice, echo=FALSE}
+# LO: LO2.1.7
 learnr::question(
   "Which function in the dplyr package would you use to get particular rows of your data frame (e.g. rows 1 through 10)?",
   
@@ -106,6 +109,7 @@ learnr::question(
 ```
 
 ```{r quiz-dplyr-filter, echo=FALSE}
+# LO: LO2.1.7
 learnr::question(
   "Which function in the dplyr package would you use to get the rows of your data frame that correspond to a particular condition (i.e. give all the rows where the values in a column are less than 10)?",
   
@@ -122,6 +126,7 @@ learnr::question(
 ```
 
 ```{r quiz-dplyr-arrange, echo=FALSE}
+# LO: LO2.1.7
 learnr::question(
   "Which function in the dplyr package would you use to sort the rows of your data frame into a particular order?",
   
@@ -139,6 +144,7 @@ learnr::question(
 
 
 ```{r quiz-dplyr-groupby, echo=FALSE}
+# LO: LO2.1.7
 learnr::question(
   "You use the group_by function to tell R which columns / variables in your data frame contain the information that you'd like to do the grouping by.\n\nWhat would be the first argument you give to the function?",
   
@@ -153,6 +159,7 @@ learnr::question(
 ```
 
 ```{r quiz-dplyr-groupby-second-arg, echo=FALSE}
+# LO: LO2.1.7
 learnr::question(
   "You use the group_by function to tell R which columns / variables in your data frame contain the information that you'd like to do the grouping by.\n\nWhat would be the second argument you give to the function?",
   
@@ -167,6 +174,7 @@ learnr::question(
 ```
 
 ```{r quiz-dplyr-summarise, echo=FALSE}
+# LO: LO2.1.7
 learnr::question(
   "After grouping your data frame using the group_by function, you need to use the summarise function. Assume correct names of data frame and variables.\n\nWhich of these will work (i.e. R will give the mean heights by the grouping variable)?",
   
@@ -182,6 +190,7 @@ learnr::question(
 ```
 
 ```{r quiz-ggplot-aes, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "You use the ggplot function to set up the basic features of your graph, like which variable in your data frame goes on the x-axis, which on the y-axis, and perhaps a variable that you want the points coloured according to.\n\nWhat is the name of the function that you use within the ggplot function (i.e. it is an argument to the ggplot function) with which you define these basic features?",
   
@@ -197,6 +206,7 @@ learnr::question(
 ```
 
 ```{r quiz-ggplot-first-arg, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "What do you always give ggplot as its first argument?",
   
@@ -212,6 +222,7 @@ learnr::question(
 ```
 
 ```{r quiz-ggplot-facets, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "What are facets in ggplot2?",
   
@@ -228,6 +239,7 @@ learnr::question(
 
 
 ## Practical part 2
+<!-- LO: LO2.1.2, LO2.1.5, LO2.1.7, LO2.1.8 -->
 
 The general aim of this practical exercise is to increase your confidence looking at a dataset and getting a feel for the patterns in the data. Such patterns can include:
 
@@ -258,6 +270,7 @@ Check that the dataset is correctly imported: check the types of variables are c
 Make a graph that allows you to see the frequency distribution of the response variable (bodyfat). That is the distribution of values of body fat of the individual people in the study. Hint: use the ggplot function and the geom_histogram function.
 
 ```{r quiz-normal-distribution-bodyfat, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "Do you think the values of bodyfat are normally distributed?",
   
@@ -273,6 +286,7 @@ learnr::question(
 ```
 
 ```{r quiz-bodyfat-mean-median, echo=FALSE}
+# LO: LO2.1.8, LO1.1.2
 learnr::question(
   "Which of these is likely true regarding the body fat variable / distribution?\n\nHint: Don't do any calculations, just look at the distribution, and consider the answer to the previous question.",
   
@@ -289,6 +303,7 @@ learnr::question(
 Use the filter function from the dplyr package to show the individuals with bodyfat greater than 35. Don't forget to first load the dplyr package (or tidyverse).
 
 ```{r quiz-bodyfat-count, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "How many individuals have body fat greater than 35?",
   
@@ -304,6 +319,7 @@ When we identify a potentially problematic value in the response variable, we mi
 
 
 ```{r quiz-bodyfat-bmi-outlier, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "However you find easiest, find the bmi of the individual with the highest value of bodyfat and type it in below.",
   
@@ -319,6 +335,7 @@ learnr::question_numeric(
 We have so far focused on looking at the distribution of the response variable (bodyfat in this dataset). We should also, however, look at the distribution of the other variables, for example to check if there are any rather unusual / extreme values, and whether a transformation might be in order.\n\nLook at the distribution of all the other variables.
 
 ```{r quiz-bodyfat-extreme-values, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "Which of the ones listed below seem to have at least one rather extreme / unusual value?\n\nHint: Use your current knowledge of R to make all the histograms; probably this means copy and paste the code for one, and change the variable name. There is a quicker way, that you'll see in the explanation text you will get when you answer the question.",
   
@@ -342,6 +359,7 @@ There are ways of coding this in R, but at this point in your data analysis care
 A different subject is looking for correlations between variables. In this dataset, we even have some duplicated variables (i.e., variables that measure the same thing, but in different units). For example, we have both weight in pounds, and weight in kilograms.
 
 ```{r quiz-bodyfat-duplicate-variables, echo=FALSE}
+# LO: LO2.1.5
 learnr::question_numeric(
   "How many pairs of duplicates are there?",
   
@@ -356,6 +374,7 @@ learnr::question_numeric(
 The dataset contains a variable called bmi. This is body mass index. We can calculate this ourselves, from two other variables in the dataset. Find the formula for calculating bmi, and add your own calculation of bmi to the dataset. Hints: Unfortunately the units of the measures in the dataset are not clear. You need to do some sleuthing to know if this matters for calculating bmi.
 
 ```{r quiz-bmi-calculation, echo=FALSE}
+# LO: LO1.1.5, LO2.1.10
 learnr::question(
   "Do you think it is better to calculate the bmi values in R, or to do the calculation somewhere else, as has happened with this dataset?",
   
@@ -370,6 +389,7 @@ learnr::question(
 ```
 
 ```{r quiz-bodyfat-extreme-individuals, echo=FALSE}
+# LO: LO2.1.7, LO2.1.8
 learnr::question(
   "Across all variables, which individuals (identified by the number in the Nr column) seem to have rather extreme or unusual values in at least one variable?",
   
@@ -403,6 +423,7 @@ Wow! There is a lot of graphs and information! However, focus on the column of g
 Now, about the biology. Measuring the body fat of individuals is not so easy. It involves special equipment and training. However, measuring other things about individuals is much easier. For example, measuring their weight, height, and various circumferences of body parts is much easier. The aim of the study that produced this dataset was to find out which of these easily taken measurements might be good predictors of body fat (which is itself not so easy to measure).
 
 ```{r quiz-bodyfat-predictors, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "Which of these variables do you think are likely to be good predictors of body fat?\n\nHint: look at the relationships between the variables using ggpairs in the GGally package, or just pairs().",
   
@@ -419,6 +440,7 @@ learnr::question(
 
 
 ## Practical part 3
+<!-- LO: LO2.1.5, LO2.1.7, LO2.1.8 -->
 
 ### Preliminaries
 
@@ -439,6 +461,7 @@ Each row of the dataset is a information about a country in a particular year.
 Note that the `child_mort` variable is child mortality rate (number of children per 1000 dying before the age of 5). And the `health_exp_total` variable is total per capita health care expenditure.
 
 ```{r quiz-number-of-countries, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "How many countries are in the dataset?\n\nHint: try using the summarise function in dplyr, and ask for the length of the unique list of countries.",
   
@@ -451,6 +474,7 @@ learnr::question_numeric(
 ```
 
 ```{r quiz-number-of-years, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "How many years are there?",
   
@@ -463,6 +487,7 @@ learnr::question_numeric(
 ```
 
 ```{r quiz-non-na-health-childmort, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "How many rows have a non \"NA\" value for both of the two variables we're most interested in: health_exp_total and child_mort?\n\nHint: you can ask if a value in a variable is NA with the function is.na(). Or if you use !is.na() then you get the ones that are not NA.\n\nHint: Use the ampersand symbol (&) to ask two things.\n\nHint: use filter in the dplyr library.",
   
@@ -491,6 +516,7 @@ Now, let's say we want to know the average and standard deviation of the child m
 Use the group_by() and summarise() functions of the dplyr package to calculate these.
 
 ```{r quiz-child-mort-africa-2013, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "Rounded to one decimal place, what is the average number of children that died before the age of five, per 1000 born, in Africa in 2013?\n\n(Recall that the child_mort variable gives number of deaths by age five per 1000 births.)\n\n(Make sure you do the rounding on the accurate value, and not one already rounded by R somehow.)",
   
@@ -505,6 +531,7 @@ learnr::question_numeric(
 Now make a box and whisker plot of child mortality (y-axis / response variable) for each continent (x-axis / explanatory variable). Hint: work with the dataset containing the 178 observations. Do not use the averages you just calculated. Hint: Use ggplot and geom_boxplot.
 
 ```{r quiz-child-mort-boxplot, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "Looking at your boxplot, which of these are reasonably correct?",
   
@@ -533,6 +560,7 @@ In one visualisation, assign colours to the points corresponding to their contin
 In another, make a separate graph (i.e. facet) for each continent. Hint: use ggplot because then its real easy! Hint: the ggplot default is to make the axes limits the same on all facets, but we have quite different data ranges in different continents. Using the help for facet_wrap, see if you can work out how to make the axes limits free to vary among the facets.
 
 ```{r quiz-child-mort-health-spend-facets, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "When you made the axes limits free to vary among the facets, you get a better view of the relationship between child mortality and healthcare spending.\n\nWhich of these do you think is most appropriate, given what you see?",
   
@@ -559,6 +587,7 @@ learnr::question(
 
 
 ```{r lo-exploration-distributions, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "When you look at the distribution of a response variable, you see many small values and a few much larger ones (i.e. the distribution is strongly right-skewed).\n\nWhich of the following statements are reasonable?",
   
@@ -584,6 +613,7 @@ learnr::question(
 
 
 ```{r lo-dplyr-functions, echo=FALSE}
+# LO: LO2.1.7
 learnr::question(
   "The dplyr package provides several core functions that are used again and again:\n\n1. filter()\n2. select()\n3. mutate()\n4. group_by()\n5. summarise()\n\nBelow are descriptions of what these functions do.\n\nA. Add a new variable to the dataset based on existing variables.\nB. Calculate summaries for groups of observations.\nC. Pick out some of the variables (columns) in a dataset.\nD. Define the variable(s) that contain the grouping information.\nE. Pick out some of the rows in a dataset.\n\nWhich option correctly pairs functions with descriptions?",
   
@@ -600,6 +630,7 @@ learnr::question(
 ```
 
 ```{r weekly-quiz-4, echo=FALSE}
+# LO: LO2.1.3
 question(
     "Add-on packages\n\nCheck the true statements about add-on packages.",
     answer("Add-on packages are only for experts; everything a beginner needs is in the base packages"),
@@ -616,6 +647,7 @@ question(
 
 
 ```{r lo-reproducible-workflows, echo=FALSE}
+# LO: LO1.1.5, LO2.1.10
 learnr::question(
   "You wrote some calculations on paper, then entered them into Excel, and later retyped them into R.\n\nWhich of the following statements about good data-analysis practice are reasonable?",
   
@@ -643,6 +675,7 @@ learnr::question(
 
 
 ```{r lo-visualisation-choice, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "Which graphical methods are most appropriate for each situation?\n\nSituations:\n1. Assessing whether there is a relationship between two continuous variables.\n2. Comparing the distribution of values between groups.\n3. Examining whether a single variable appears normally distributed.\n\nGraphical tools:\nA. Box and whisker plot.\nB. Histogram.\nC. Scatterplot.\n\nWhich option correctly matches situations to graphical tools?",
   
@@ -748,6 +781,7 @@ p_log <- ggplot(dat, aes(x = log(x), y = log(y))) +
 
 
 ```{r lo-transformations, echo=FALSE}
+# LO: LO3.1.13
 learnr::question(
   "You examine the plots above showing the distributions of x and y, and their relationship.\n\nWhich of the following statements are reasonable?",
   

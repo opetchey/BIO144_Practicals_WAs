@@ -82,12 +82,14 @@ The steps to follow are:
 8. Critique and reflection
 
 ### 0. The biological question
+<!-- LO: LO7.1.1, LO7.1.8, LO12.1.1 -->
 
 The seashore is a lovely place, though in Zurich we're not best placed to often enjoy one. Fortunately we have the lake. But I digress. One of the great things about some seashores is the animal and plants that live there, especially in the intertidal, the area between low and high tide where environmental conditions vary enormously over short distances and short timescales. In the intertidal, interactions among organisms can be quite important. The study you're going to work on in this practical exercise is about herbivory by organisms such as limpets, and how this might vary across the intertidal, from low in the intertidal to higher up. The example comes from the book *The Analysis of Biological Data* by Whitlock and Schluter, and was originally made and published by [Harley, C. D. G. 2003. Ecology 84: 1477-1488](https://tinyurl.com/yvymcpsm).
 
 The question is: does the effect of herbivory on algal area depend on height in the intertidal?
 
 ```{r quiz-intertidal-biological-question, echo=FALSE}
+# LO: LO7.1.1
 learnr::question(
   "In statistical terms, what are we really asking?",
   
@@ -118,6 +120,7 @@ In the experiment, 32 plots were cleared of algae just below low tide, these plo
 
 
 ```{r quiz-intertidal-factors, echo=FALSE}
+# LO: LO12.1.1
 learnr::question(
   "Which of the following are the **experimental factors/treatments** in this study?",
   
@@ -145,6 +148,7 @@ learnr::question(
 
 
 ```{r quiz-intertidal-response-explicit, echo=FALSE}
+# LO: LO12.1.1
 learnr::question(
   "What is the **response variable** in this experiment?",
   
@@ -171,6 +175,7 @@ learnr::question(
 
 
 ```{r quiz-intertidal-expected-pattern, echo=FALSE}
+# LO: LO7.1.2
 learnr::question(
   "Suppose the effect of herbivory **does depend on tidal height**. Which of the following patterns would you expect to see in a graph?",
   
@@ -196,6 +201,7 @@ learnr::question(
 ```
 
 ```{r quiz-intertidal-design-why-shuffled, echo=FALSE}
+# LO: LO12.1.4
 learnr::question(
   "Why is **“two-way fully factorial experiment”** the most appropriate term to describe the design of this study?",
   
@@ -227,6 +233,7 @@ Another way to describe the design of the experiment is: a two-way fully factori
 Now let's think about degrees of freedom in this design. There are 64 observations.
 
 ```{r quiz-intertidal-number-of-betas, echo=FALSE}
+# LO: LO7.1.8
 learnr::question_numeric(
   "If we fit a model that includes **both main effects and their interaction term** for this experiment (tidal height × herbivore access), how many **beta coefficients (group means)** are estimated?",
   
@@ -240,6 +247,7 @@ learnr::question_numeric(
 
 
 ```{r quiz-intertidal-df-error, echo=FALSE}
+# LO: LO7.1.8
 learnr::question_numeric(
   "In this experiment there are **64 plots in total**, and we fit a model with **both main effects and their interaction** (a two-way fully factorial model with two levels per factor).\n\nHow many **degrees of freedom for error** does the model have?",
   
@@ -255,6 +263,7 @@ Great, so we know how many degrees of freedom for error to expect. We can also m
 
 
 ```{r quiz-intertidal-anova-table-structure, echo=FALSE}
+# LO: LO7.1.8
 learnr::question(
   "If we analyse these data using a two-way ANOVA with **tidal height**, **herbivore access**, and their **interaction**, how will the ANOVA table appear?",
   
@@ -283,6 +292,7 @@ learnr::question(
 ```
 
 ```{r quiz-intertidal-df-model-terms, echo=FALSE}
+# LO: LO7.1.8
 learnr::question_numeric(
   "In this two-way fully factorial experiment, both factors (tidal height and herbivore access) have **two levels**, and the model includes **both main effects and their interaction**.\n\nHow many **degrees of freedom in total** are associated with the two main effects **and** the interaction term?",
   
@@ -301,6 +311,7 @@ If you're a bit uncertain about this, sketch out the ANOVA table on a piece of p
 
 
 ### 1. Prepare a script, load the data, and make some basic checks on the dataset.
+<!-- LO: LO2.1.7 -->
 
 
 
@@ -360,6 +371,7 @@ ggplot(intertidal, aes(x = Area_cm2)) +
 ```
 
 ```{r quiz-intertidal-low-values, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "Looking at the distributions of algal area for the different treatment combinations, which treatment combination shows **many very low values, close to zero or zero**, compared to the others?",
   
@@ -397,6 +409,7 @@ intertidal <- intertidal |>
 
 
 ### 2. Visualise the answer to the question
+<!-- LO: LO7.1.2 -->
 
 Now make a graph that will tell you the answer, about the effects of herbivores and height, and in particular if the effect of herbivores differs depending on height (i.e. is there an interaction?).
 
@@ -439,6 +452,7 @@ summ
 
 
 ```{r quiz-intertidal-mean-noherb-low, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "Rounded to **two decimal places**, what was the **mean square root algal area** for the **no herbivore, low height** treatment?",
   
@@ -451,6 +465,7 @@ learnr::question_numeric(
 ```
 
 ```{r quiz-intertidal-sd-withherb-midh, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "Rounded to **two decimal places**, what is the **standard deviation** of square root algal area for the **with herbivore, mid height** treatment?",
   
@@ -464,8 +479,10 @@ learnr::question_numeric(
 
 
 ### 3. Fit an appropriate statistical model
+<!-- LO: LO7.1.4 -->
 
 ```{r quiz-linear-model-interaction-syntax, echo=FALSE}
+# LO: LO7.1.4
 learnr::question(
   "In R, there are two equivalent ways to specify a linear model with **two main effects** and their **interaction term**. Which of the following correctly describes these two methods?",
   
@@ -499,6 +516,7 @@ mod1 <- lm(Area_sqrt ~ height * herbivores, data = intertidal)
 ```
 
 ### 4. Check the assumptions of model
+<!-- LO: LO3.1.11 -->
 
 Make the four plots we use to check if the model assumptions are reasonably well met by the data and our model.
 
@@ -510,6 +528,7 @@ autoplot(mod1, smooth.colour = NA)
 Write a sentence describing your assessment of how well each of the five assumptions of a linear model are met. Check in with a TA for feedback on your assessment.
 
 ### 5. Interpret the model
+<!-- LO: LO7.1.7, LO7.1.8 -->
 
 Get the ANOVA table for the model.
 
@@ -520,6 +539,7 @@ anova(mod1)
 The first thing to check, and this is really important, is the degrees of freedom for each of the terms in the ANOVA table. Do they match what you expected?
 
 ```{r quiz-anova-df-unexpected-misspecified, echo=FALSE}
+# LO: LO7.1.8
 learnr::question(
   "Suppose the **degrees of freedom for the residuals** shown in the ANOVA table are **different from what you expected** based on the experimental design.\n\nWe have already checked that:\n- there are no missing values,\n- all treatment combinations have the expected number of observations,\n- and the data are balanced.\n\nGiven this, what is the **most likely explanation** for the unexpected residual degrees of freedom?",
   
@@ -564,6 +584,7 @@ summary(mod1)
 
 
 ```{r quiz-intertidal-adjusted-r2, echo=FALSE}
+# LO: LO4.1.2
 learnr::question_numeric(
   "How much of the variability of the response does the **model with interaction** explain?\n\nGive the **UNadjusted R-squared**, rounded to **two decimal places**.",
   
@@ -579,6 +600,7 @@ learnr::question_numeric(
 Now look at the $F$ values and $p$ values. Do they match what you expected from looking at the graph?
 
 ```{r quiz-interaction-main-effects-meaning, echo=FALSE}
+# LO: LO7.1.5
 learnr::question(
   "Given that the **interaction term is statistically significant**, what do the **main effects** (even the significant one) tell us?",
   
@@ -623,6 +645,7 @@ Another really important reason to avoid this, or at least be very careful, is t
 
 
 ### 6. Make a visualisation of the data, good for publication
+<!-- LO: LO7.1.9 -->
 
 Make a publication quality figure. Build it up step by step. Check each new feature or adjustment works before making another. Work towards a figure that meets the following criteria. The criteria are intentionally "high-level", so you will have to think about what they mean in practice. This also gives you freedom to be creative in how you meet the criteria.
 
@@ -640,6 +663,7 @@ When you're done, or if you want feedback along the way, check in with a TA, or 
 
 
 ### 7. Write reporting sentence(s).
+<!-- LO: LO7.1.9 -->
 
 Write a few sentences reporting the results of your analysis. The sentences should include:
 
@@ -650,6 +674,7 @@ Write a few sentences reporting the results of your analysis. The sentences shou
 When you're done, check in with a TA and or neighbour for feedback on your reporting.
 
 ```{r quiz-reporting-df-why-useful, echo=FALSE}
+# LO: LO7.1.9
 learnr::question(
   "Why is it important to include the **degrees of freedom for the treatment term and for error** when reporting the results of an analysis (e.g. in an ANOVA or regression)?",
   
@@ -678,6 +703,7 @@ learnr::question(
 ```
 
 ### 8. Critique and reflection
+<!-- LO: LO12.1.7 -->
 
 Reflect on your analysis and reporting, and your learning. What went well? What could be improved? Discuss with a neighbour or a TA.
 
@@ -692,6 +718,7 @@ One place where we could have improved the study is to have made a hypothesis an
 
 
 ## Practical part 2
+<!-- LO: LO7.1.4, LO7.1.6, LO7.1.7 -->
 
 *I (Owen) suspect that you might not have so much time for this practical exercise. Don't worry if you don't get it done, or even don't have time to start it. Just make a note to check it out during one of the self-study weeks, or in the final week. You could even ask for a walkthrough during the final lecture of the course, which is reserved for things you want to go over.*
 
@@ -739,13 +766,14 @@ countries <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/he
 ```{r eval = FALSE}
 ggplot(countries, aes(x = rugged)) +
   geom_histogram(bins=30, fill = "lightblue", color = "black") +
-  labs(x = "GDP per capita (2000)", y = "Count")
+  labs(x = "Terrain Ruggedness Index", y = "Count")
 ```
 
 
 Good, now you're all set to work through the following questions...
 
 ```{r quiz-countries-africa, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "How many countries in the dataset are in **Africa**?\n\n*Hint: use the `table()` function.*",
   
@@ -758,6 +786,7 @@ learnr::question_numeric(
 ```
 
 ```{r quiz-countries-not-africa, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "How many countries in the dataset are **not in Africa**?\n\n*Hint: subtract the number of African countries from the total number of countries.*",
   
@@ -771,6 +800,7 @@ learnr::question_numeric(
 
 
 ```{r quiz-rugged-distribution, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "What does the distribution of the variable **`rugged`**, which describes landscape ruggedness, look like?",
   
@@ -792,6 +822,7 @@ learnr::question(
 ```
 
 ```{r quiz-rugged-lowest-country, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_text(
   "Which country has the **lowest ruggedness** (i.e. is the flattest country)?\n\n(Type the country name.)",
   
@@ -804,6 +835,7 @@ learnr::question_text(
 ```
 
 ```{r quiz-rugged-switzerland-rank, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "In the league table of landscape ruggedness, where does **Switzerland** rank?\n\n(1 = most rugged)",
   
@@ -816,6 +848,7 @@ learnr::question_numeric(
 ```
 
 ```{r quiz-gdp-na-total, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "How many **NA values** are there in the **`rgdppc_2000`** variable?",
   
@@ -829,6 +862,7 @@ learnr::question_numeric(
 
 
 ```{r quiz-gdp-na-africa, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "How many of the **NA values in `rgdppc_2000`** correspond to countries in **Africa**?",
   
@@ -842,6 +876,7 @@ learnr::question_numeric(
 
 
 ```{r quiz-gdp-na-not-africa, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "How many of the **NA values in `rgdppc_2000`** correspond to countries **not in Africa**?",
   
@@ -865,6 +900,7 @@ countries <- countries |>
 Now make a version of the dataset with no observations with NAs in any of the three variables of interest. You can use the `na.omit()` function for this, after selecting the three variables of interest. You should have a dataset with 170 rows.
 
 ```{r quiz-rugged-df-error, echo=FALSE}
+# LO: LO6.1.5, LO7.1.8
 learnr::question_numeric(
   "If we fit a model with:\n\n- `rugged` (a continuous explanatory variable)\n- `cont_africa1` (a categorical variable with **two levels**)\n\nHow many **degrees of freedom for error** would the model have?",
   
@@ -917,6 +953,73 @@ anova(mod2)
 
 Yes, we see that the interaction term is statistically significant, indicating that the relationship between GDP and ruggedness differs between African countries and those not in Africa.
 
+### Interpreting the coefficients of a model with an interaction
+<!-- LO: LO7.1.5, LO7.1.6 -->
+
+The ANOVA table tells us *that* the slope differs between Africa and the rest of the world. The coefficients tell us *how*. Look at the summary table of the model:
+
+```{r eval = FALSE, echo = TRUE}
+summary(mod2)
+```
+
+By default, R takes the level that comes first in the alphabet as the reference level, here "Africa". So in this model:
+
+* `(Intercept)` is the expected log10 GDP in Africa when ruggedness is zero;
+* `rugged` is the slope of log10 GDP against ruggedness **in Africa** (the reference level) – not an "average" slope;
+* `cont_africa1not Africa` is the difference in the intercept (at ruggedness zero) between countries outside Africa and countries in Africa;
+* `rugged:cont_africa1not Africa` is the **difference in slope** between countries outside Africa and countries in Africa.
+
+```{r LO-rugged-slope-africa, echo=FALSE}
+# LO: LO7.1.5
+learnr::question_numeric(
+  "What is the estimated slope of log10 GDP against ruggedness for countries **in Africa**?\n\n(Round to three decimal places.)",
+  learnr::answer(0.083, correct = TRUE),
+  correct = "Correct! In Africa the slope is about 0.083 (log10 GDP per unit of ruggedness): slightly positive. This is the coefficient called `rugged`, because Africa is the reference level.",
+  incorrect = "With Africa as the reference level, the slope in Africa is the coefficient of `rugged` itself.",
+  allow_retry = TRUE,
+  tolerance = 0.001
+)
+```
+
+```{r LO-rugged-slope-not-africa, echo=FALSE}
+# LO: LO7.1.5, LO7.1.6
+learnr::question_numeric(
+  "What is the estimated slope for countries **not in Africa**?\n\n(Round to three decimal places.)",
+  learnr::answer(-0.088, correct = TRUE),
+  correct = "Correct! The slope outside Africa is 0.083 + (−0.171) ≈ −0.088: the slope in the reference level plus the interaction coefficient (the difference in slope). So outside Africa, more rugged countries tend to have lower GDP; in Africa the opposite.",
+  incorrect = "Add the interaction coefficient (the difference in slope) to the slope in the reference level (the `rugged` coefficient).",
+  allow_retry = TRUE,
+  tolerance = 0.001
+)
+```
+
+```{r LO-rugged-main-effect-meaning, echo=FALSE}
+# LO: LO7.1.5
+learnr::question(
+  "In this model, the coefficient of `cont_africa1not Africa` is 0.85. What does it mean?",
+  learnr::answer("Countries outside Africa have, on average, log10 GDP 0.85 higher than African countries, whatever their ruggedness."),
+  learnr::answer("At a ruggedness of zero, countries outside Africa are expected to have log10 GDP 0.85 higher than African countries. Because the slopes differ, the difference is different at other values of ruggedness.", correct = TRUE),
+  learnr::answer("It is the slope of GDP against ruggedness outside Africa."),
+  correct = "Correct! When a model contains an interaction, a 'main effect' coefficient is the effect of that variable when the other variable is zero (or at its reference level). Here, at ruggedness 0 the difference is 0.85 log10 units, but at ruggedness 3 it is only 0.85 + 3 × (−0.171) ≈ 0.33.",
+  incorrect = "Remember that when there is an interaction, the difference between the groups depends on the value of ruggedness.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-rugged-difference-at-3, echo=FALSE}
+# LO: LO7.1.6
+learnr::question_numeric(
+  "Using the coefficients (or `predict()`), calculate the expected difference in log10 GDP between a country outside Africa and a country in Africa, **both with ruggedness 3**.\n\n(Round to two decimal places.)",
+  learnr::answer(0.33, correct = TRUE),
+  correct = "Correct! 0.846 + 3 × (−0.171) ≈ 0.33. In GDP itself, 10^0.33 ≈ 2.2, so at this ruggedness a country outside Africa is expected to have about 2.2 times the GDP per person of an African country, compared with 10^0.85 ≈ 7 times at ruggedness 0. The effect of being in Africa depends on ruggedness: that is what the interaction means.",
+  incorrect = "Difference = intercept difference + 3 × slope difference. Or use predict() with new data for ruggedness 3 in both groups and subtract.",
+  allow_retry = TRUE,
+  tolerance = 0.01
+)
+```
+
+*Interactions between two continuous variables work the same way:* in `y ~ x1 * x2`, the coefficient of `x1` is the slope of `x1` when `x2` is zero, and the interaction coefficient is how much that slope changes for each unit increase in `x2`. So the slope of `x1` at a particular value of `x2` is: coefficient of `x1` + interaction coefficient × that value of `x2`.
+
 Now make a beautiful figure suitable for publication, that shows the relationship between GDP and ruggedness in Africa and not Africa. Make sure it meets the criteria we discussed earlier.
 
 Perhaps this is appropriate:
@@ -949,6 +1052,7 @@ Critique and reflect.
 ## Weekly Quiz
 
 ```{r quiz-interaction-meaning, echo=FALSE}
+# LO: LO7.1.1
 learnr::question(
   "In a statistical model, what does a **significant interaction term** between two explanatory variables indicate?",
   
@@ -975,6 +1079,7 @@ learnr::question(
 
 
 ```{r quiz-multiple-regression-interaction, echo=FALSE}
+# LO: LO7.1.5
 learnr::question(
   "In a multiple regression model that includes an interaction between two continuous variables, how should the slope of one variable be interpreted?",
   
@@ -1000,6 +1105,7 @@ learnr::question(
 
 
 ```{r quiz-ancova-interaction, echo=FALSE}
+# LO: LO7.1.1
 learnr::question(
   "In an ANCOVA model with a categorical factor and a continuous covariate, what does a **significant interaction between the factor and the covariate** indicate?",
   
@@ -1027,6 +1133,7 @@ learnr::question(
 
 
 ```{r quiz-two-way-anova-interaction, echo=FALSE}
+# LO: LO7.1.1
 learnr::question(
   "In a two-way ANOVA with factors A and B, what does a **significant A:B interaction** imply?",
   
@@ -1051,6 +1158,7 @@ learnr::question(
 ```
 
 ```{r ga6-q4-degrees-of-freedom, echo=FALSE}
+# LO: LO7.1.8
 learnr::question_numeric(
   "Imagine you have a **randomised fully-factorial experiment** assigning patients to two treatments.\n\nOne treatment has **five categories**, and another has **three categories**. There are 10 patients in each treatment. In the model, both main effects and their interaction are included.\n\nHow many **degrees of freedom** are there for error",
   
@@ -1066,15 +1174,15 @@ learnr::question_numeric(
 
 
 ```{r ga6-q5-model-choice, echo=FALSE}
+# LO: LO7.1.3, LO7.1.1
 learnr::question(
-  "In three American states, petrol (benzine) consumption of five different car brands was investigated. Which model would be most appropriate to analyse these data when we suspect that the effect of car brand on petrol consumption may differ between cities?",
+  "In three American states, petrol (benzine) consumption of five different car brands was investigated. Which model would be most appropriate to analyse these data when we suspect that the effect of car brand on petrol consumption may differ between states?",
   
   learnr::answer(
     "One-way ANOVA of \"benzine\" against \"State\"."
   ),
   learnr::answer(
-    "Two-way ANOVA of \"benzine\" against \"Auto\" and \"State\" without an interaction term.",
-    correct = TRUE
+    "Two-way ANOVA of \"benzine\" against \"Auto\" and \"State\" without an interaction term."
   ),
   learnr::answer(
     "Two-way ANOVA of \"benzine\" against \"Auto\" and \"State\", including an interaction term between \"Auto\" and \"State\".",
@@ -1087,7 +1195,7 @@ learnr::question(
     "Two one-way ANOVAs one for \"benzine\" against \"Auto\" and one for \"benzine\" against \"State\"."
   ),
   
-  correct = "Correct! We need to include the interaction term to account for the possibility that the effect of car brand on petrol consumption differs between cities.",
+  correct = "Correct! We need to include the interaction term to account for the possibility that the effect of car brand on petrol consumption differs between states.",
   incorrect = "Try again. Remember that an interaction term is needed when the effect of one factor may depend on the level of another factor. And we should not run separate ANOVAs for each factor when we have multiple factors.",
   allow_retry = TRUE
 )
@@ -1096,6 +1204,7 @@ learnr::question(
 
 
 ```{r ga6-q6-n-data-points, echo=FALSE}
+# LO: LO7.1.8
 learnr::question_numeric(
   "We continue to do the two-way ANOVA for the above problem. We find that the error degrees of freedom is 75. How many data points were in the dataset?",
   
@@ -1115,6 +1224,7 @@ And here are some question not specific to models with interactions, but rather 
 
 
 ```{r ga6-q1-linear-models, echo=FALSE}
+# LO: LO5.1.1, LO7.1.4
 learnr::question(
   "Which of these are based on a linear model?",
   
@@ -1132,6 +1242,7 @@ learnr::question(
 
 
 ```{r ga6-q2-lm-function, echo=FALSE}
+# LO: LO3.1.15, LO7.1.4
 learnr::question(
   "Which of these can you do with the `lm()` function in R?",
   

@@ -120,6 +120,7 @@ Some participants had missing follow-up measurements. You will need to decide ho
 
 
 ### 1. Get organised and prepared
+<!-- LO: LO2.1.5, LO5.1.3 -->
 
 Get the dataset from the usual place. It is named "systbp_drug_effect.csv".
 
@@ -134,6 +135,7 @@ length(unique(systbp_data$id))
 ```
 
 ```{r quiz-anova-nrows, echo=FALSE}
+# LO: LO2.1.5
 learnr::question_numeric(
   "How many rows (participants) are there in the dataset?",
   
@@ -153,6 +155,7 @@ length(na.omit(systbp_data$sbp_change))
 ```
 
 ```{r quiz-anova-n-observations, echo=FALSE}
+# LO: LO2.1.7
 learnr::question_numeric(
   "How many observations do we have for answering our question?",
   
@@ -177,6 +180,7 @@ Before we get to those degrees of freedom, we need to know two things:
 * How many total observations (non-missing values) are there? We know this already... 98.
 
 ```{r quiz-anova-n-groups, echo=FALSE}
+# LO: LO5.1.3
 learnr::question_numeric(
   "How many treatment groups are included in this study?",
   
@@ -193,6 +197,7 @@ The degrees of freedom associated with the treatment groups is simply the number
 There are two ways to calculate the degrees of freedom associated with the residuals (error degrees of freedom). The first is to take the total number of observations and subtract the number of groups (= number of beta coefficients estimated). The second corresponds better to the ANOVA table calculation, and is to take the total number of observations minus one, and then subtract the treatment degrees of freedom, where the treatment degrees of freedom is the number of groups minus one.
 
 ```{r quiz-anova-total-df, echo=FALSE}
+# LO: LO5.1.3
 learnr::question_numeric(
   "What will be the error degrees of freedom in this analysis?",
   
@@ -205,6 +210,7 @@ learnr::question_numeric(
 ```
 
 ### 2. Visualise
+<!-- LO: LO2.1.6, LO2.1.8 -->
 
 Now make a graph to visualise the change in systolic blood pressure by treatment group.
 
@@ -222,6 +228,7 @@ ggplot(systbp_data, aes(x = treatment, y = sbp_change)) +
 ```
 
 ```{r quiz-anova-graph-choice, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "To help answer the question *“Do the mean changes in systolic blood pressure differ between the treatment groups?”*, which of the following type of graphs would be a good choice?",
   
@@ -271,6 +278,7 @@ ggplot(systbp_data, aes(x = treatment, y = sbp_change)) +
 
 
 ```{r quiz-anova-interpret-graph, echo=FALSE}
+# LO: LO2.1.8
 learnr::question(
   "Look at your graph showing systolic blood pressure change for each treatment group.\n\nWhich of the following interpretations is most appropriate?",
   
@@ -299,6 +307,7 @@ learnr::question(
 ```
 
 ```{r quiz-anova-assumptions-graph, echo=FALSE}
+# LO: LO5.1.10
 learnr::question(
   "How can your graph of systolic blood pressure change by treatment group help you assess whether the assumptions of a one-way ANOVA are reasonable?",
   
@@ -327,6 +336,7 @@ learnr::question(
 ```
 
 ```{r quiz-expected-pvalue-from-boxplot, echo=FALSE}
+# LO: LO5.1.2
 learnr::question(
   "After looking at your plot of systolic blood pressure change by treatment group, what would you **expect** the p-value from the ANOVA to be?",
   
@@ -354,6 +364,7 @@ learnr::question(
 ```
 
 ### 3. Fit a one-way ANOVA model
+<!-- LO: LO5.1.6 -->
 
 Now fit a one-way ANOVA model to test for differences between treatment groups.
 
@@ -364,10 +375,12 @@ autoplot(anova_model)
 ```
 
 ### 4. Check assumptions
+<!-- LO: LO5.1.10 -->
 
 Make the four standard diagnostic plots used when making linear models. Do the assumptions of ANOVA seem reasonable here?
 
 ```{r quiz-anova-diagnostic-plots, echo=FALSE}
+# LO: LO5.1.10
 learnr::question(
   "Which of the following do you agree with?",
   
@@ -397,6 +410,7 @@ learnr::question(
 
 
 ### 5. Interpret the ANOVA table
+<!-- LO: LO5.1.3, LO5.1.7 -->
 
 Now create the anova table, using the `anova()` function.
 
@@ -405,6 +419,7 @@ anova(anova_model)
 ```
 
 ```{r quiz-anova-df-as-expected, echo=FALSE}
+# LO: LO5.1.3
 learnr::question(
   "Are the degrees of freedom reported by the ANOVA as we expected?",
   
@@ -423,6 +438,7 @@ learnr::question(
 ```
 
 ```{r quiz-anova-table-interpretation, echo=FALSE}
+# LO: LO5.1.7, LO12.1.4
 learnr::question(
   "Consider the ANOVA table. Which of the following interpretations of the ANOVA table is most appropriate?",
   
@@ -434,7 +450,7 @@ learnr::question(
     correct = TRUE
   ),
   learnr::answer(
-    "A significant ANOVA result shows that the treatment caused the change in blood pressure.",
+    "Because participants were randomly assigned to treatments, a significant ANOVA result is evidence that the treatments caused differences in blood pressure change among the groups.",
     correct = TRUE
   ),
   learnr::answer(
@@ -444,24 +460,27 @@ learnr::question(
     "If the p-value is large, it means that the treatments have no effect at all."
   ),
   
-  correct = "Correct! The ANOVA table tests the null hypothesis that all group means are equal, not which groups differ or why they differ. Also, we can infer causation because this was a clinical trial with random assignment to treatment groups.",
-  incorrect = "Be careful: ANOVA tells us whether there is evidence for *any* difference among group means, but not which groups differ or whether the effect is causal.",
+  correct = "Correct! The ANOVA table tests the null hypothesis that all group means are equal, not which groups differ. The F-test on its own says nothing about causation; here we can make a causal interpretation because of the study design (a clinical trial with random assignment to treatment groups), not because of the ANOVA.",
+  incorrect = "Be careful: the ANOVA F-test tells us whether there is evidence for *any* difference among group means, not which groups differ. Whether a difference can be interpreted as caused by the treatment depends on the study design: here, participants were randomly assigned to treatments.",
   allow_retry = TRUE
 )
 ```
 
 ### 6. Make a great visualisation
+<!-- LO: LO5.1.13 -->
 
 Now make a publication-quality graph showing the results of your analysis. When you're done, ask a TA to have a look, suggest what you did well, and what could be even better.
 
 
 ### 7. Reporting sentence
+<!-- LO: LO5.1.8, LO5.1.13 -->
 
 Write a short reporting sentence describing your findings. When you're done, ask a TA to have a look, suggest what you did well, and what could be even better.
 
 Hint: it would be good to include an effect size or two, e.g., effect of DrugA_High compared to StandardCare. When you have set the "StandardCare" as the reference level of the treatment factor, you can get these effect sizes from the model summary table (using the `summary()` function on the model object).
 
 ```{r quiz-effect-druga-high, echo=FALSE}
+# LO: LO5.1.8, LO2.1.6
 learnr::question_numeric(
   "What is the estimated **effect of DrugA_High relative to StandardCare** on systolic blood pressure change?\n\n(Give your answer rounded to **two decimal places**.)",
   
@@ -474,6 +493,7 @@ learnr::question_numeric(
 ```
 
 ### 8. Perform a post-hoc comparisons to identify which treatments differ
+<!-- LO: LO5.1.11 -->
 
 Recall that the ANOVA F-test only tells us whether there is evidence that at least one group mean differs from the others. It does not tell us which groups differ. To find this out, we can perform post-hoc pairwise comparisons. There are many methods for doing this. Use Tukey's Honest Significant Difference (HSD) test to perform the post-hoc comparisons now.
 
@@ -486,6 +506,7 @@ Hint: You need to use the `aov()` function to convert the linear model object in
 
 
 ```{r quiz-tukey-hsd-multiple-true, echo=FALSE}
+# LO: LO5.1.11
 learnr::question(
   "The table below shows the results of a Tukey HSD post-hoc test following a one-way ANOVA of systolic blood pressure change by treatment group.\n\nWhich of the following statements are supported by the Tukey HSD results?\n\n(Select all that apply. Use a p-value of 0.05 as threshold for significance.)",
   
@@ -520,6 +541,7 @@ learnr::question(
 
 
 ### Critique
+<!-- LO: LO5.1.12 -->
 
 One issue with our analysis is that we did not consider any covariates that might influence blood pressure change, such as age and sex. We could do that using two-way ANOVA or ANCOVA. These analyses are beyond the scope of this exercise, but you will soon see them!
 
@@ -531,15 +553,20 @@ Another point we might want to address is the potential effect of the data point
 
 
 ### Some things to note
+<!-- LO: LO5.1.8, LO5.1.9 -->
 
-We did not look at the summary table of the model using the `summary()` function. This is because for one-way ANOVA, the key results are in the ANOVA table produced by the `anova()` function. The summary table provides coefficient estimates for each treatment group compared to a reference group, but it does not directly test the overall hypothesis of equal means across all groups. Therefore, for our purposes here, the ANOVA table is more informative.
+We used two different outputs from the same model, and they answer different questions:
 
-We didn't calculate the r-squared value for the model either. While r-squared can provide some information about the proportion of variance explained by the treatment groups, it is not the primary focus in one-way ANOVA. The main goal is to test whether there are significant differences between group means, which is accomplished through the F-test in the ANOVA table. R-squared is more commonly used in regression contexts where the emphasis is on prediction rather than hypothesis testing.
+* The ANOVA table (`anova()`) answers the overall question: is there evidence that the treatment group means are not all equal? This is the F-test, with its two degrees of freedom.
+* The coefficient table (`summary()`) gives the effect sizes: the estimated difference between each treatment group and the reference group (here StandardCare). Use `confint()` on the model to get 95% confidence intervals for these differences. The effect sizes and their uncertainty are what a reader most needs, so they belong in the reporting sentence, together with the F-test.
+
+The `summary()` output also gives R-squared, the proportion of the variation in blood pressure change that is explained by treatment group. It is worth looking at: a treatment effect can be statistically clear but still leave most of the variation among participants unexplained.
 
 ## Weekly Quiz
 
 
 ```{r ga5-q3-sample-size, echo=FALSE}
+# LO: LO5.1.3
 learnr::question_numeric(
   "A study is conducted to investigate the effect of different diets on the growth rate of cows. The dataset contains measurements of growth rates for cows assigned to four different diet groups. A one-way ANOVA is performed to test for differences in mean growth rates between the diet groups. The ANOVA table reports the following degrees of freedom for residuals = 233.
   How many individuals (observations) were in the study?",
@@ -555,6 +582,7 @@ learnr::question_numeric(
 
 
 ```{r ga6-q3-anova-pvalue, echo=FALSE}
+# LO: LO5.1.7
 learnr::question(
   "Our F-test in a one-way ANOVA gives a p-value smaller than 0.01. What can we infer?",
   
@@ -580,6 +608,7 @@ learnr::question(
 
 
 ```{r quiz-anova-f-statistic, echo=FALSE}
+# LO: LO5.1.2
 learnr::question(
   "In a one-way ANOVA, what does a **large F-statistic** indicate?",
   
@@ -608,6 +637,7 @@ learnr::question(
 
 
 ```{r quiz-anova-nonsignificant-pvalue, echo=FALSE}
+# LO: LO5.1.7
 learnr::question(
   "If the p-value from a one-way ANOVA is **0.42**, which conclusion is most appropriate?",
   
@@ -635,6 +665,7 @@ learnr::question(
 ```
 
 ```{r quiz-anova-causal-interpretation, echo=FALSE}
+# LO: LO12.1.4
 learnr::question(
   "Under what conditions could results from an ANOVA reasonably support a **causal interpretation**?",
   
@@ -662,6 +693,7 @@ learnr::question(
 ```
 
 ```{r quiz-effect-size-from-summary-5levels, echo=FALSE}
+# LO: LO5.1.8
 learnr::question(
   "Below is an example of a regression summary table, similar to what you would see from <code>summary(model)</code> in R.  
 The reference group is <b>control</b>.<br><br>
@@ -742,11 +774,36 @@ Which of the following best describes the <b>effect size</b> of <code>treatmentC
 
 
 
+```{r LO-anova-table-missing, echo=FALSE}
+# LO: LO5.1.4, LO5.1.5
+learnr::question_numeric(
+  "Here is part of the ANOVA table from a one-way ANOVA comparing four groups, with 40 observations:<br><br><table><tr><th></th><th>Df</th><th>Sum Sq</th><th>Mean Sq</th><th>F value</th></tr><tr><td>group</td><td>3</td><td>120</td><td>?</td><td>?</td></tr><tr><td>Residuals</td><td>36</td><td>360</td><td>?</td><td></td></tr></table><br>What is the F value?",
+  learnr::answer(4, correct = TRUE),
+  correct = "Correct! Mean squares are sums of squares divided by their degrees of freedom: 120 / 3 = 40 for groups and 360 / 36 = 10 for the residuals. F = 40 / 10 = 4.0, which is compared with an F-distribution with 3 and 36 degrees of freedom.",
+  incorrect = "First calculate each mean square (sum of squares divided by its degrees of freedom), then F = group mean square / residual mean square.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-anova-why-mean-squares, echo=FALSE}
+# LO: LO5.1.4
+learnr::question(
+  "Why does the F-test compare **mean** squares rather than the sums of squares themselves?",
+  learnr::answer("Because sums of squares grow with the number of values they are summed over; dividing by the degrees of freedom turns each into a variance estimate, so the two can be compared fairly.", correct = TRUE),
+  learnr::answer("Because mean squares are always smaller, which makes the F value larger."),
+  learnr::answer("It makes no difference; the F value would be the same with sums of squares."),
+  correct = "Correct! If there are no real differences among group means, both mean squares estimate the same residual variance, so F is expected to be around 1. The F-distribution used for the test has two degrees of freedom: those of the numerator (groups, k − 1) and of the denominator (residuals, n − k).",
+  incorrect = "Think about what happens to a sum of squares as more terms are added to it.",
+  allow_retry = TRUE
+)
+```
+
 And here are some question not specific to ANOVA, but rather about linear models in general.
 
 
 
 ```{r ga5-q7-assumptions, echo=FALSE}
+# LO: LO3.1.13
 learnr::question(
   "Assume that diagnostic plots indicate that one or more linear regression assumptions are violated.\n\nWhat are reasonable strategies to solve the problem?",
   
@@ -780,6 +837,7 @@ learnr::question(
 
 
 ```{r ga5-q6-linear-model-definition, echo=FALSE}
+# LO: LO3.1.15
 learnr::question(
   "Which of the following statements is correct about the model / equation\n\n $log(Y) = \\beta_0 + \\beta_1 X + \\beta_2 X^2 + \\epsilon$",
   

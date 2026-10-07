@@ -1,5 +1,5 @@
 ## Owen Petchey's analysis of the plant growth data
-## 11.7.14
+## 11.7.14 (updated for 2027: ggplot instead of qplot, corrected data URL and object names)
 
 ## Question:
 ## What is the effect of soil moisture on plant growth rate
@@ -16,31 +16,33 @@ library(ggfortify)
 
 
 ## import the data (direct from where it is online)
-plant_gr <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/datasets/plant_growth_rate.csv")
+plant_gr <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/3_datasets/plant_growth_rate.csv")
 
       
 ## check the data is imported correctly
 glimpse(plant_gr)
 
 ## plot the data
-qplot(x = soil.moisture.content, y = plant.growth.rate, data=plant_gr)
+ggplot(plant_gr, aes(x = soil.moisture.content, y = plant.growth.rate)) +
+  geom_point()
  
 
 ## now for the statistical model
-m1 <- lm(plant.growth.rate ~ soil.moisture.content, data=dd)
+m_growth_moisture <- lm(plant.growth.rate ~ soil.moisture.content, data = plant_gr)
 
 ## check the assumptions of the model
-autoplot(m1, smooth.colour = NA)
+autoplot(m_growth_moisture, smooth.colour = NA)
 
 ## look at the summary table
-summary(m1)
+summary(m_growth_moisture)
 
 
 ## Results sentence: Soil moisture had a positive effect on plant growth
 ## (linear regression, slope=12.7, t=12.5, p < 0.001)
 
 ## make a nice graph for communication
-qplot(x = soil.moisture.content, y = plant.growth.rate, data=plant_gr) +
+ggplot(plant_gr, aes(x = soil.moisture.content, y = plant.growth.rate)) +
+  geom_point() +
   geom_smooth(method = 'lm') +
   ylab("Plant Growth Rate (mm/week)") +
   theme_bw()

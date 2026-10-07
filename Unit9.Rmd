@@ -29,6 +29,7 @@ All homework is for your own practice and learning. It will not be marked or gra
 
 
 ### Video walkthrough; insect death!
+<!-- LO: LO9.1.3, LO9.1.7, LO9.1.12 (video only) -->
 
 Please remember that you'll get much more out of the videos if you work through the example in R, either during or after watching.
 
@@ -50,6 +51,210 @@ The third video shows how to check for overdispersion in a binomial model, and h
 
 
 ## Practical part 1
+<!-- LO: LO9.1.2, LO9.1.3, LO9.1.5, LO9.1.7, LO9.1.8, LO9.1.9, LO9.1.10, LO9.1.11, LO9.1.12, LO9.1.14 -->
+
+In this exercise you will analyse **aggregated binomial data**: for each group of insects we know how many were exposed and how many died. This part is guided step by step; Parts 2 and 3 then give you more freedom.
+
+### The biological question
+
+Three new insecticide products (A, B and C) were tested in the laboratory. Groups of 8 to 14 insects were exposed to one product at one of 21 doses, and the number that died within 24 hours was counted. Dose is given on a log scale (`logdose`; 0 is the standard field dose, −1 is a tenth of it, and so on).
+
+**Question: how does the probability of death increase with dose, and does the dose–response relationship differ among the three products?**
+
+The dataset `pesticide_mortality.csv` has one row per group of insects, with the variables `product`, `logdose`, `n` (number of insects in the group) and `dead` (number that died).
+
+```{r eval = FALSE, echo = TRUE}
+library(tidyverse)
+pesticide <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/pesticide_mortality.csv")
+pesticide <- pesticide |>
+  mutate(proportion_dead = dead / n)
+```
+
+```{r LO-pest-n-insects, echo=FALSE}
+# LO: LO9.1.2
+learnr::question_numeric(
+  "There are 63 rows (groups). How many insects were tested in total?",
+  learnr::answer(700, correct = TRUE),
+  correct = "Correct! 700 insects in 63 groups. Each row is a binomial observation: a number of 'successes' (deaths) out of a number of trials (insects).",
+  incorrect = "Sum the variable n.",
+  allow_retry = TRUE
+)
+```
+
+Make a graph of the proportion dead against log dose, with a different colour for each product.
+
+### Why not a linear model?
+
+Try fitting a linear model to the proportions, and look at its fitted values:
+
+```{r eval = FALSE, echo = TRUE}
+m_pest_lm <- lm(proportion_dead ~ logdose, data = pesticide)
+range(fitted(m_pest_lm))
+```
+
+```{r LO-pest-why-not-lm, echo=FALSE}
+# LO: LO9.1.3
+learnr::question(
+  "The fitted proportions of the linear model range from about −0.07 to 1.13. Which statements explain why a linear model is unsuitable here?",
+  learnr::answer("It predicts proportions below 0 and above 1, which are impossible.", correct = TRUE),
+  learnr::answer("The variance of a proportion depends on its mean (it is largest near 0.5 and small near 0 and 1), so the assumption of constant variance is violated.", correct = TRUE),
+  learnr::answer("It ignores the number of insects in each group: a proportion based on 14 insects is more precise than one based on 8.", correct = TRUE),
+  learnr::answer("A linear model cannot be fitted to data with more than 50 rows."),
+  correct = "Correct! A binomial GLM with a logit link solves all three problems. (A Poisson GLM of the number of deaths would also be wrong: it ignores that the number of deaths cannot exceed the number of insects.)",
+  incorrect = "Think about the range of possible values of a proportion, how its variance behaves, and what the linear model knows about group sizes.",
+  allow_retry = TRUE
+)
+```
+
+### Fit a binomial GLM
+
+For aggregated binomial data, we give `glm()` a response with two columns: the number of successes and the number of failures, using `cbind()`. We include an interaction between dose and product, because the question asks whether the dose–response relationship differs among products.
+
+```{r LO-pest-df, echo=FALSE}
+# LO: LO12.1.5, LO9.1.7
+learnr::question_numeric(
+  "How many residual degrees of freedom do you expect for a model with `logdose`, `product` (3 levels) and their interaction, fitted to the 63 groups?",
+  learnr::answer(57, correct = TRUE),
+  correct = "Correct! 6 parameters: an intercept and slope for the reference product, plus a difference in intercept and a difference in slope for each of the other two products. 63 − 6 = 57. (The degrees of freedom are based on the number of groups, not the number of insects.)",
+  incorrect = "Count the parameters: intercept, slope, 2 product differences and 2 differences in slope.",
+  allow_retry = TRUE
+)
+```
+
+```{r eval = FALSE, echo = TRUE}
+m_pest_interaction <- glm(cbind(dead, n - dead) ~ logdose * product,
+                          family = binomial, data = pesticide)
+summary(m_pest_interaction)
+```
+
+### Check the model
+
+Work through the GLM checklist from the course book (Chapter 9): residuals vs fitted, influential observations, the QQ-plot (a rough guide only), and dispersion.
+
+```{r LO-pest-dispersion, echo=FALSE}
+# LO: LO9.1.11, LO9.1.12
+learnr::question(
+  "The residual deviance is 55.65 on 57 degrees of freedom. What do you conclude?",
+  learnr::answer("The ratio is about 0.98, close to 1, so there is no evidence of overdispersion and we can use the binomial model.", correct = TRUE),
+  learnr::answer("The ratio is far above 1, so we must use a quasibinomial model."),
+  learnr::answer("This check is meaningless for these data, because they are binary."),
+  correct = "Correct! For aggregated binomial data this check is informative. (If the ratio had been well above 1.5–2, a quasibinomial model would be a pragmatic fix.) Remember that for individual-level 0/1 data, like in Parts 2 and 3, the ratio is not informative.",
+  incorrect = "Divide the residual deviance by the residual degrees of freedom, and remember that these are aggregated, not individual-level, data.",
+  allow_retry = TRUE
+)
+```
+
+### Does the dose–response relationship differ among products?
+
+Compare the models with and without the interaction:
+
+```{r eval = FALSE, echo = TRUE}
+m_pest_additive <- glm(cbind(dead, n - dead) ~ logdose + product,
+                       family = binomial, data = pesticide)
+anova(m_pest_additive, m_pest_interaction, test = "Chisq")
+```
+
+```{r LO-pest-interaction-test, echo=FALSE}
+# LO: LO9.1.10, LO8.1.10
+learnr::question(
+  "Adding the interaction reduces the deviance by 9.19. Which statement is correct?",
+  learnr::answer("This is a chi-squared test on 2 degrees of freedom (p ≈ 0.01): there is evidence that the slope of the dose–response relationship differs among products.", correct = TRUE),
+  learnr::answer("This is a chi-squared test on 6 degrees of freedom, so it is not significant."),
+  learnr::answer("A reduction in deviance of 9.19 means 9.19% more insects died."),
+  correct = "Correct! The interaction adds two parameters (two differences in slope), so the test has 2 degrees of freedom.",
+  incorrect = "The degrees of freedom of the test equal the difference in the number of parameters between the two models.",
+  allow_retry = TRUE
+)
+```
+
+### Interpret the coefficients
+
+Product A is the reference level. So the coefficient of `logdose` is the slope for product A (on the log-odds scale), and `logdose:productB` is how much the slope of product B differs from it.
+
+```{r LO-pest-or-A, echo=FALSE}
+# LO: LO9.1.8
+learnr::question_numeric(
+  "By what factor are the **odds** of death multiplied for each one-unit increase in log dose, for **product A**?\n\n(Round to two decimal places.)",
+  learnr::answer(2.68, correct = TRUE),
+  correct = "Correct! exp(0.986) ≈ 2.68: each unit increase in log dose multiplies the odds of death by about 2.7 (95% CI about 2.1 to 3.4, from exp(confint.default(m_pest_interaction))).",
+  incorrect = "Back-transform the logdose coefficient with exp().",
+  allow_retry = TRUE,
+  tolerance = 0.01
+)
+```
+
+```{r LO-pest-slope-B, echo=FALSE}
+# LO: LO9.1.8, LO7.1.5
+learnr::question_numeric(
+  "What is the slope of the dose–response relationship (on the log-odds scale) for **product B**?\n\n(Round to two decimal places.)",
+  learnr::answer(0.63, correct = TRUE),
+  correct = "Correct! 0.986 + (−0.352) ≈ 0.63, so for product B each unit increase in log dose multiplies the odds of death by only exp(0.63) ≈ 1.89. Product B's effect increases less steeply with dose than that of products A and C.",
+  incorrect = "Add the interaction coefficient for product B to the slope of the reference product.",
+  allow_retry = TRUE,
+  tolerance = 0.01
+)
+```
+
+### Predicted probabilities
+
+Predicted probabilities, with confidence intervals, should be calculated on the link (log-odds) scale and then back-transformed with `plogis()`, so that the interval stays between 0 and 1:
+
+```{r eval = FALSE, echo = TRUE}
+new_doses <- data.frame(logdose = 0, product = c("A", "B", "C"))
+pred_link <- predict(m_pest_interaction, newdata = new_doses, type = "link", se.fit = TRUE)
+new_doses <- new_doses |>
+  mutate(prob = plogis(pred_link$fit),
+         lower = plogis(pred_link$fit - 1.96 * pred_link$se.fit),
+         upper = plogis(pred_link$fit + 1.96 * pred_link$se.fit))
+new_doses
+```
+
+```{r LO-pest-predicted-prob, echo=FALSE}
+# LO: LO9.1.9, LO9.1.5
+learnr::question_numeric(
+  "What is the predicted probability of death for an insect exposed to **product B** at the standard field dose (`logdose` = 0)?\n\n(Round to two decimal places.)",
+  learnr::answer(0.56, correct = TRUE),
+  correct = "Correct! About 0.56 (95% CI about 0.48 to 0.65). At the field dose the three products kill a similar proportion of insects (A: 0.53, C: 0.59); they differ in how steeply mortality rises with dose.",
+  incorrect = "Use predict() on the link scale and back-transform with plogis(), as in the code above.",
+  allow_retry = TRUE,
+  tolerance = 0.01
+)
+```
+
+Now make a figure of the proportion dead against log dose for each product, with the fitted curves (predict over a sequence of doses for each product, and back-transform with `plogis()`).
+
+### Report
+
+```{r LO-pest-report, echo=FALSE}
+# LO: LO9.1.14
+learnr::question(
+  "Which is the best reporting sentence?",
+  learnr::answer("Dose had a significant effect on mortality (p < 0.001), and there was a significant interaction (p = 0.01)."),
+  learnr::answer("Mortality increased with dose for all three products, but less steeply for product B: each unit increase in log dose multiplied the odds of death by 2.7 for product A (95% CI 2.1–3.4) but only by 1.9 for product B (binomial GLM; dose × product interaction, χ² = 9.2, df = 2, p = 0.01). At the field dose, about 53–59% of insects died with each product.", correct = TRUE),
+  learnr::answer("The logdose coefficient was 0.986, so each unit increase in log dose increased the probability of death by 0.986."),
+  correct = "Correct! It describes the pattern and the effect sizes (odds ratios and predicted probabilities) with uncertainty and the test, in terms of the biological question.",
+  incorrect = "Look for the sentence that gives interpretable effect sizes with uncertainty. Which one misinterprets a log-odds coefficient as a change in probability?",
+  allow_retry = TRUE
+)
+```
+
+### Separation: a warning sign to recognise
+
+```{r LO-separation, echo=FALSE}
+# LO: LO9.1.13
+learnr::question(
+  "Imagine a different experiment, in which **every** insect died at doses above 0, and **none** died at doses below 0. A logistic regression gives a slope estimate of 38.2 with a standard error of 2950, and R warns 'fitted probabilities numerically 0 or 1 occurred'. What is going on?",
+  learnr::answer("Separation: the explanatory variable perfectly separates deaths from survivals, so the maximum likelihood estimate of the slope is infinitely large. The huge estimate and standard error are symptoms, and the p-value is meaningless.", correct = TRUE),
+  learnr::answer("Strong overdispersion; fit a quasibinomial model."),
+  learnr::answer("The effect of dose is not significant, because the p-value is large, so dose has no effect."),
+  correct = "Correct! Very large coefficient estimates with enormous standard errors are the classic symptom of (complete or quasi-complete) separation. The data actually show a very strong effect; the model just cannot estimate a finite slope. Methods to deal with it are beyond BIO144, but you should recognise it.",
+  incorrect = "Think about what happens to the best-fitting logistic curve when the data jump from all 0s to all 1s at one value of the explanatory variable.",
+  allow_retry = TRUE
+)
+```
+
+## Practical part 2
+<!-- LO: LO9.1.1, LO9.1.6, LO9.1.8, LO9.1.9, LO9.1.10, LO9.1.14, LO6.1.11 -->
 
 In this exercise, you will work through a binary (yes/no) type of data analysis. There is much less guidance than in previous exercises, so you will need to think about the steps to take yourself. Of course, you can always ask for help from a teaching assistant (TA) during the practical session. If you find the exercise rather overwhelming, try to focus on just one step at a time. Do not look at the whole exercise at once, but rather break it down into manageable pieces.
 
@@ -88,7 +293,8 @@ Here are some specific tasks:
 - Look on Wikipedia or elsewhere for natural history information about the White Tailed Ptarmigan, and based on this make hypotheses about which of the environmental variables in the dataset will be related to presence / absence, and the direction (positive or negative) of the relationship. (Do not look at the data in this step!)
 - Make graphs of how presence absence varies with individual environmental factors (this would be in the initial exploration of the data, before any modelling). This should give a clue about if your hypotheses are supported by the data.
 - Develop an understanding of correlations among environmental factors. Make sure you are clear about why this is important, particularly in terms of shared explanatory power.
-- Test your hypotheses about explanations of the presence / absence, using a binomial GLM.
+- Test your hypotheses about explanations of the presence / absence, using a binomial GLM. Decide which explanatory variables to include *before* you fit the model, based on your hypotheses; do not try many combinations and keep the one that looks best.
+- Check the model using the GLM checklist (course book, Chapter 9). Remember that with individual-level 0/1 data the residual plots show two bands of points and the dispersion ratio is not informative.
 - Show some of the modelled relationships between presence/absence and environmental variables, e.g. by using model predictions to show the estimated effect of one environmental variable while all others are held constant.
 - Write a sentence or two about the results that would clearly communicate your findings to other biologists.
  
@@ -96,7 +302,8 @@ I suggest you put all this together into a little report that you can be proud o
 
 
 
-## Practical part 2
+## Practical part 3
+<!-- LO: LO9.1.6, LO9.1.9 -->
 
 The biological challenge here is to predict death based on information derived from echocardiograms. Note that when the aim is to predict, we are not so much interested in understanding the underlying biological processes, but rather in getting the best possible predictions. We don't look at prediction so much in BIO144, so here is a chance for you to experience it, just a little.
 
@@ -116,12 +323,14 @@ Here are some specific tasks:
 - Look on Wikipedia or elsewhere for information about echocardiograms and hearts, and based on this make hypotheses about which of the features in the dataset will be related to death within one year, and the direction (positive or negative) of the relationship.
 - Make graphs of how death varies with individual echocardiogram features (this would be in the initial exploration of the data, before any modelling). This should give a clue about if your hypotheses are supported by the data.
 - Develop an understanding of correlations among echocardiogram features.
-- Develop an appropriate model of death within 1 year, using whatever methods you see fit to find useful explanatory variables.
+- Develop an appropriate model of death within 1 year. Choose a small number of explanatory variables in advance, based on your hypotheses and on the number of observations you have (a rough guide is at least 10–20 observations of the rarer outcome per estimated parameter; see Chapter 12 of the course book). Do not use stepwise selection or try many models: this gives misleading p-values (Chapter 12). (Methods for choosing variables purely for prediction, such as cross-validation, are beyond BIO144; see the final thoughts below.)
+- Check the model using the GLM checklist (Chapter 9), and look out for separation (very large coefficients and standard errors), which is a risk with small datasets.
 - Show some of the model predictions, e.g. by using model predictions to show the estimated effect of one echocardiogram feature while all others are held constant.
 - Write a sentence or two about the results that would clearly communicate your findings to other biologists.
  
 
 ### Final thoughts on prediction
+<!-- LO: none (beyond objectives) -->
 
 Prediction is a very big topic in statistics and machine learning. One reason is that prediction is very widely used in many fields, including medicine, finance, marketing, ecology, image recognition, and many others. This means that there is a lot of money to be made by developing better prediction methods! And there is also a lot of social good to be done by using prediction to improve healthcare, environmental management, and so on.
 
@@ -137,6 +346,7 @@ There are many methods that can be used for prediction, and many ways to assess 
 ## Weekly Quiz
 
 ```{r quiz-binomial-what-questions, echo=FALSE}
+# LO: LO9.1.1
 learnr::question(
   "Which of the following research questions is **most appropriately analysed** using a binary or binomial GLM?",
   
@@ -152,6 +362,7 @@ learnr::question(
 ```
 
 ```{r quiz-binomial-response, echo=FALSE}
+# LO: LO9.1.1
 learnr::question(
   "In a binary GLM, what is the **response variable**?",
   
@@ -168,6 +379,7 @@ learnr::question(
 
 
 ```{r quiz-logit-link, echo=FALSE}
+# LO: LO9.1.4
 learnr::question(
   "What does the **logit link function** do in a binary GLM?",
   
@@ -185,6 +397,7 @@ learnr::question(
 
 
 ```{r quiz-binomial-coef-interpretation, echo=FALSE}
+# LO: LO9.1.8
 learnr::question(
   "In a logistic regression, what does a **positive slope coefficient** indicate?",
   
@@ -201,6 +414,7 @@ learnr::question(
 
 
 ```{r quiz-odds-ratio, echo=FALSE}
+# LO: LO9.1.8
 learnr::question_numeric(
   "A logistic regression slope is **0.7**. What is the corresponding **odds ratio**?\n\n(Round to two decimal places.)",
   
@@ -214,6 +428,7 @@ learnr::question_numeric(
 
 
 ```{r quiz-prob-from-logodds, echo=FALSE}
+# LO: LO9.1.5
 learnr::question_numeric(
   "If the linear predictor (log-odds) is **0**, what is the corresponding **probability of success**?",
   
@@ -228,6 +443,7 @@ learnr::question_numeric(
 
 
 ```{r quiz-predicted-probability, echo=FALSE}
+# LO: LO9.1.5
 learnr::question_numeric(
   "A fitted logistic model gives a linear predictor value of **1.51**.\n\nWhat is the predicted probability of success?\n(Round to two decimal places.)",
   
@@ -241,6 +457,7 @@ learnr::question_numeric(
 
 
 ```{r quiz-odds-vs-probability, echo=FALSE}
+# LO: LO9.1.4
 learnr::question(
   "Which statement best describes the **difference between odds and probability**?",
   
@@ -257,6 +474,7 @@ learnr::question(
 
 
 ```{r quiz-binomial-vs-binary, echo=FALSE}
+# LO: LO9.1.2
 learnr::question(
   "What is the key difference between **binary** and **binomial** data in GLMs?",
   
@@ -272,6 +490,7 @@ learnr::question(
 ```
 
 ```{r quiz-binomial-implementation-glm, echo=FALSE}
+# LO: LO9.1.6
 learnr::question(
   "Which line of R code correctly fits a **binary logistic regression model** with response variable `survived` (0/1) and explanatory variable `temperature`?",
   
@@ -298,6 +517,7 @@ learnr::question(
 
 
 ```{r quiz-binomial-predict-probabilities, echo=FALSE}
+# LO: LO9.1.9
 learnr::question(
   "After fitting a binary GLM called `my_model`, how do you obtain **predicted probabilities** (not log-odds) for new data stored in `newdata`?",
   
@@ -325,6 +545,7 @@ learnr::question(
 
 
 ```{r quiz-binomial-exp-coef, echo=FALSE}
+# LO: LO9.1.8
 learnr::question(
   "You have fitted a logistic regression model in R and obtained the coefficient table using `summary(my_model)`.\n\nWhich R command would you use to convert the **slope coefficients into odds ratios**?",
   

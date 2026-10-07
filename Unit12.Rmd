@@ -31,12 +31,284 @@ There is no new material this week. Use this week to catch up on any material yo
 
 
 ## Practical
+<!-- LO: LO12.1.1, LO12.1.2, LO12.1.3, LO12.1.5, LO12.1.8, LO12.1.9, LO11.1.4, LO11.1.8, LO11.1.9, LO7.1.5, LO7.1.6 -->
 
-There is no new practical exercise this week. Use this week to catch up on any practical exercises you have not yet completed from previous weeks, and to practice R.
+There is no new content this week. This practical is a **capstone case study**: one analysis, from planning to reporting, that brings together much of the course. It is set up like the final exam: you get a dataset and a question, and you answer questions that need working R code, with single-choice, multiple-choice and numeric answers. Work through it on your own first, as if it were the exam, then compare with a neighbour or ask a TA.
+
+(Use any remaining time to catch up on earlier practicals and weekly quizzes, and to look at the mock exam.)
+
+### The study
+
+Does climate warming change how plants respond to nitrogen deposition? To find out, researchers used **12 growth chambers**. Six chambers were kept at ambient temperature and six were warmed by 3 °C; the temperature treatment was randomly assigned to chambers. In **each chamber there were 8 pots**, each with one plant: 4 pots received low nitrogen and 4 received high nitrogen (randomly assigned to pots within each chamber). After 8 weeks, the above-ground biomass of each plant was measured (g).
+
+**Question: does the effect of nitrogen on plant biomass depend on warming?**
+
+*(The data are simulated for teaching purposes.)*
+
+The dataset `chamber_warming.csv` has one row per pot, with the variables `chamber`, `warming` (ambient or warmed), `pot`, `nitrogen` (low or high) and `biomass_g`.
+
+### 1. Plan before you look at the data
+
+```{r LO-cap-experimental-unit, echo=FALSE}
+# LO: LO12.1.3
+learnr::question(
+  "What are the experimental units for the two treatments?",
+  learnr::answer("For warming, the chamber (12 units); for nitrogen, the pot (96 units).", correct = TRUE),
+  learnr::answer("For both treatments, the pot (96 units)."),
+  learnr::answer("For both treatments, the chamber (12 units)."),
+  learnr::answer("For warming, the pot; for nitrogen, the chamber."),
+  correct = "Correct! The experimental unit is the unit to which a treatment is independently and randomly assigned. Warming was assigned to whole chambers, so all 8 pots in a chamber share the same warming 'replicate'. Nitrogen was assigned to individual pots within chambers. (This kind of design is called a split-plot design.)",
+  incorrect = "Ask: to which units was each treatment randomly assigned?",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-cap-df-warming, echo=FALSE}
+# LO: LO12.1.5, LO11.1.4
+learnr::question_numeric(
+  "How many degrees of freedom are there for testing the effect of warming, if we respect the experimental unit? (Think: how many independent units of warming, minus the number of parameters estimated at that level, i.e. the overall mean and the warming effect.)",
+  learnr::answer(10, correct = TRUE),
+  correct = "Correct! 12 chambers − 2 = 10. That is far fewer than the 92 residual degrees of freedom a linear model would report (96 pots − 4 parameters).",
+  incorrect = "Count chambers, not pots, and subtract the two parameters estimated at the chamber level.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-cap-model-choice, echo=FALSE}
+# LO: LO12.1.2, LO12.1.1
+learnr::question(
+  "Which is the best planning sentence for this analysis?",
+  learnr::answer("The response (biomass, continuous) will be modelled with a linear model with warming, nitrogen and their interaction, treating the 96 pots as independent (92 residual df)."),
+  learnr::answer("The response (biomass, continuous) will be modelled with a linear mixed model with warming, nitrogen and their interaction as fixed effects and chamber as a random effect, because pots are grouped in chambers; the warming effect will be tested with about 10 df (12 chambers), the nitrogen effect and the interaction within chambers.", correct = TRUE),
+  learnr::answer("Biomass is a positive number, so we will use a Poisson GLM."),
+  learnr::answer("We will run a t-test of biomass between warmed and ambient pots, and another between high and low nitrogen pots."),
+  correct = "Correct! The question is about an interaction, the response is continuous, and the data are grouped (pots in chambers), so a linear mixed model with chamber as a random effect matches the design.",
+  incorrect = "Think about the type of response, the question (an interaction), and the structure of the data (pots in chambers).",
+  allow_retry = TRUE
+)
+```
+
+### 2. Import, check and visualise
+
+```{r eval = FALSE, echo = TRUE}
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+chamber_warming <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/chamber_warming.csv")
+chamber_warming <- chamber_warming |>
+  mutate(nitrogen = fct_relevel(nitrogen, "low"),
+         warming = factor(warming))
+```
+
+Check the number of rows, the number of chambers, and the number of pots per treatment combination. Then make a graph that shows the answer to the question: biomass for each combination of warming and nitrogen, with the points of each chamber identifiable (e.g. colour by chamber, or facet by chamber).
+
+```{r LO-cap-mean-cell, echo=FALSE}
+# LO: LO2.1.7
+learnr::question_numeric(
+  "What is the mean biomass of the plants that received **high nitrogen in warmed chambers**?\n\n(Round to one decimal place.)",
+  learnr::answer(15.6, correct = TRUE),
+  correct = "Correct! 15.6 g (compared with 14.46 g for high nitrogen in ambient chambers, 10.71 g for low nitrogen in ambient and 10.11 g for low nitrogen in warmed chambers).",
+  incorrect = "Use group_by(warming, nitrogen) and summarise(mean(biomass_g)).",
+  allow_retry = TRUE,
+  tolerance = 0.05
+)
+```
+
+### 3. Fit the models
+
+First fit the model that ignores the chambers, so you can see what goes wrong; then the mixed model.
+
+```{r eval = FALSE, echo = TRUE}
+m_biomass_lm <- lm(biomass_g ~ warming * nitrogen, data = chamber_warming)
+m_biomass_mixed <- lmer(biomass_g ~ warming * nitrogen + (1 | chamber), data = chamber_warming)
+summary(m_biomass_lm)
+summary(m_biomass_mixed)
+anova(m_biomass_mixed)
+```
+
+```{r LO-cap-se-warming, echo=FALSE}
+# LO: LO11.1.4, LO12.1.3
+learnr::question(
+  "Compare the standard error of the `warmingwarmed` coefficient in the two models (0.49 in the linear model, 0.81 in the mixed model), and the degrees of freedom for testing warming. Which statements are correct?",
+  learnr::answer("The linear model is overconfident about the warming effect: it treats the 8 pots in a chamber as independent replicates of warming (pseudoreplication).", correct = TRUE),
+  learnr::answer("In the mixed model the warming effect is tested with about 10 denominator degrees of freedom (in anova(); about 12 for the coefficient in summary()), matching the 12 chambers rather than the 96 pots.", correct = TRUE),
+  learnr::answer("The mixed model is worse because its standard error for warming is larger."),
+  learnr::answer("The two models give the same answer, so the choice does not matter."),
+  correct = "Correct! The mixed model gives an honest standard error for the between-chamber treatment. (Notice also that the standard errors for nitrogen and for the interaction are *smaller* in the mixed model, 0.35 and 0.50 rather than 0.49 and 0.69: these effects are estimated within chambers, so the variation among chambers no longer adds to their uncertainty.)",
+  incorrect = "Compare the standard errors and degrees of freedom with the number of chambers.",
+  allow_retry = TRUE
+)
+```
+
+### 4. Check the model
+
+Plot the residuals against the fitted values (`plot(m_biomass_mixed)`), make a QQ-plot of the residuals (`qqnorm(resid(m_biomass_mixed))`), and look at the estimated chamber effects (`ranef(m_biomass_mixed)`). Are there any obvious problems?
+
+### 5. Answer the question
+
+```{r LO-cap-interaction-test, echo=FALSE}
+# LO: LO7.1.7, LO11.1.8
+learnr::question_numeric(
+  "In `anova(m_biomass_mixed)`, what is the F-value for the warming × nitrogen interaction?\n\n(Round to one decimal place.)",
+  learnr::answer(12.8, correct = TRUE),
+  correct = "Correct! F ≈ 12.8 on 1 and 82 degrees of freedom, p ≈ 0.0006. There is clear evidence that the effect of nitrogen depends on warming.",
+  incorrect = "Look at the row for warming:nitrogen in the output of anova() on the mixed model (with lmerTest loaded).",
+  allow_retry = TRUE,
+  tolerance = 0.1
+)
+```
+
+```{r LO-cap-interaction-estimate, echo=FALSE}
+# LO: LO7.1.5, LO12.1.8
+learnr::question_numeric(
+  "What is the estimated **effect of high nitrogen (compared with low) in warmed chambers**, in grams?\n\n(Round to two decimal places.)",
+  learnr::answer(5.53, correct = TRUE),
+  correct = "Correct! The nitrogen effect in ambient chambers (the reference level) is 3.75 g; in warmed chambers it is 3.75 + 1.78 = 5.53 g. So warming increases the benefit of nitrogen by 1.78 g (95% CI 0.80 to 2.76 g, from confint(m_biomass_mixed, parm = \"beta_\", method = \"Wald\")).",
+  incorrect = "Add the interaction coefficient to the nitrogenhigh coefficient (which is the nitrogen effect in the reference level of warming, ambient).",
+  allow_retry = TRUE,
+  tolerance = 0.01
+)
+```
+
+```{r LO-cap-warming-coefficient, echo=FALSE}
+# LO: LO7.1.5
+learnr::question(
+  "The coefficient `warmingwarmed` is −0.60 (95% CI −2.19 to 0.98). What does it mean?",
+  learnr::answer("Warming reduces biomass by 0.60 g on average, across both nitrogen levels."),
+  learnr::answer("It is the estimated difference between warmed and ambient chambers **for low-nitrogen plants** (the reference level of nitrogen). The confidence interval includes zero, so the data are compatible with no effect of warming at low nitrogen.", correct = TRUE),
+  learnr::answer("It shows that warming has no effect on plants."),
+  correct = "Correct! Because there is an interaction, the warming coefficient is the warming effect at the reference level of nitrogen. At high nitrogen the warming effect is −0.60 + 1.78 ≈ 1.18 g.",
+  incorrect = "When a model has an interaction, a main-effect coefficient is that variable's effect at the reference level of the other variable.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-cap-variance-components, echo=FALSE}
+# LO: LO11.1.9, LO11.1.10
+learnr::question_numeric(
+  "What proportion of the remaining variance in biomass is among chambers (among-chamber variance / (among-chamber variance + residual variance))?\n\n(Round to two decimal places.)",
+  learnr::answer(0.52, correct = TRUE),
+  correct = "Correct! About 0.52: chambers differ substantially (SD 1.26 g among chambers vs 1.22 g among pots within a chamber), even after accounting for the treatments. Pots in the same chamber are therefore far from independent, which is why chamber must be in the model.",
+  incorrect = "Square the two standard deviations in the Random effects part of the summary (or use the Variance column), then calculate the proportion.",
+  allow_retry = TRUE,
+  tolerance = 0.01
+)
+```
+
+Now make a figure for publication: the data (e.g. chamber means, or all pots with some transparency), together with the model's predicted mean for each treatment combination and its confidence interval. Use `predict(m_biomass_mixed, newdata = ..., re.form = NA)` to get predictions for an average chamber.
+
+### 6. Report
+
+```{r LO-cap-report, echo=FALSE}
+# LO: LO12.1.9, LO11.1.13
+learnr::question(
+  "Which is the best reporting sentence?",
+  learnr::answer("There was a significant interaction between warming and nitrogen (p < 0.001)."),
+  learnr::answer("Warming increased the response of plant biomass to nitrogen: high nitrogen increased biomass by 3.7 g in ambient chambers but by 5.5 g in warmed chambers (difference 1.8 g, 95% CI 0.8–2.8 g; linear mixed model with chamber as a random effect, warming × nitrogen F(1, 82) = 12.8, p < 0.001). At low nitrogen, warming had no clear effect (−0.6 g, 95% CI −2.2 to 1.0 g; 12 chambers).", correct = TRUE),
+  learnr::answer("Warming had no effect on biomass (p = 0.47), but nitrogen did (p < 0.001)."),
+  correct = "Correct! It answers the question (does the nitrogen effect depend on warming?) with effect sizes in grams, their uncertainty, the model, and a test, and it reports the warming effect with the replication that really applies to it (chambers).",
+  incorrect = "Look for the sentence that answers the actual question, with effect sizes and their uncertainty, and does not misinterpret a main effect in the presence of an interaction.",
+  allow_retry = TRUE
+)
+```
+
+**Reflection.** How would you redesign this experiment if you were mainly interested in the effect of warming? (Hint: what limits the precision of the warming effect: the number of pots, or the number of chambers?)
 
 
 ## Weekly Quiz
 
-There are no new quiz questions this week. Use this week to catch up on any weekly quizzes you have not yet completed from previous weeks.
+These questions are about planning and designing analyses (course book, Chapter 12). There are no new data.
 
-You can also spend the time looking at the mock exam. Or by asking an AI Assistant to create exam question for you to practice with.
+```{r LO-plan-sentence, echo=FALSE}
+# LO: LO12.1.1
+learnr::question(
+  "A researcher will measure the number of bees visiting each of 60 flowering plants in 30 minutes, at plants growing either in full sun or in shade (30 of each), and will also record the number of open flowers on each plant. Which planning sentence is the most complete?",
+  learnr::answer("We will test whether sun and shade differ in bee visits."),
+  learnr::answer("The response (number of bee visits, a count) will be modelled with a Poisson GLM (quasi-Poisson if overdispersed) with light (sun/shade) and number of open flowers as explanatory variables; the 60 plants are independent units, so the model will have 60 − 3 = 57 residual degrees of freedom.", correct = TRUE),
+  learnr::answer("We will fit a linear model of bee visits against everything we measured and keep the significant terms."),
+  correct = "Correct! A planning sentence states the question, the type of response, the data structure, the explanatory variables, the planned model and the expected residual degrees of freedom.",
+  incorrect = "A good planning sentence says what the response is, what type it is, what the explanatory variables are, which model will be used, and how many residual degrees of freedom are expected.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-plan-model-choice, echo=FALSE}
+# LO: LO12.1.2
+learnr::question(
+  "Which model is most appropriate for each study?\n\n1. Whether each of 150 trees died during a drought, in relation to tree diameter.\n2. The abundances of 40 bird species at 25 sites, to describe how bird communities differ among sites.\n3. Body mass of 30 voles, each weighed once a month for 6 months, in relation to diet treatment.\n4. Leaf nitrogen content of 80 plants, in relation to soil pH.\n\nA. Linear model. B. Binomial GLM. C. Mixed model. D. Ordination.",
+  learnr::answer("1A, 2D, 3C, 4B"),
+  learnr::answer("1B, 2D, 3C, 4A", correct = TRUE),
+  learnr::answer("1B, 2C, 3D, 4A"),
+  learnr::answer("1C, 2D, 3B, 4A"),
+  correct = "Correct! Binary response → binomial GLM; many response variables → ordination; repeated measures on the same individuals → mixed model; continuous response with independent observations → linear model.",
+  incorrect = "For each study, ask: what type of response variable is it, how many response variables are there, and are the observations grouped?",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-plan-experimental-unit, echo=FALSE}
+# LO: LO12.1.3
+learnr::question(
+  "To test the effect of a pesticide on aquatic insects, 4 ponds were treated and 4 were left untreated. In each pond, 25 insect larvae were collected and their length measured, giving 200 measurements. What is the experimental unit, and how many independent replicates of the treatment are there?",
+  learnr::answer("The larva; 200 replicates."),
+  learnr::answer("The pond; 8 replicates (4 per treatment).", correct = TRUE),
+  learnr::answer("The larva; 100 replicates per treatment."),
+  correct = "Correct! The pesticide was applied to whole ponds, so the pond is the experimental unit. Analysing the 200 larvae as independent would be pseudoreplication. Analyse pond means, or use a mixed model with pond as a random effect.",
+  incorrect = "To what was the treatment applied?",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-plan-design-roles, echo=FALSE}
+# LO: LO12.1.4
+learnr::question(
+  "Match each feature of study design to its main purpose.\n\n1. Replication. 2. Randomisation. 3. Controls. 4. Blocking.\n\nA. Gives a baseline against which to compare the treatment's effect.\nB. Allows us to estimate the variation among experimental units, and so the uncertainty in treatment effects.\nC. Removes variation due to known differences among groups of units (e.g. fields, days), making treatment effects more precise.\nD. Prevents systematic differences between treatment groups, so that a treatment effect can be interpreted causally.",
+  learnr::answer("1B, 2D, 3A, 4C", correct = TRUE),
+  learnr::answer("1D, 2B, 3A, 4C"),
+  learnr::answer("1B, 2C, 3A, 4D"),
+  learnr::answer("1A, 2D, 3B, 4C"),
+  correct = "Correct! (Balance – equal numbers of units per treatment – makes estimates as precise as possible for a given total effort, and makes the analysis simpler.)",
+  incorrect = "Think about what each feature protects us against.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-plan-df-enough, echo=FALSE}
+# LO: LO12.1.5
+learnr::question_numeric(
+  "A planned study will measure 24 lizards. The model will include body size (continuous), habitat (4 categories) and sex (2 categories), and the interaction between body size and habitat. How many residual degrees of freedom will it have?",
+  learnr::answer(13, correct = TRUE),
+  correct = "Correct! Parameters: intercept (1) + body size (1) + habitat (3) + sex (1) + body size × habitat (3) = 11. 24 − 11 = 13. That is only about 2 observations per estimated parameter, well below the rough guide of 10–20, so the estimates would be very imprecise. Either collect more data or simplify the model (e.g. drop the interaction if it is not part of the question).",
+  incorrect = "Count the parameters: 1 for the intercept, 1 per continuous variable, k − 1 per categorical variable with k levels, and for an interaction between a continuous and a k-level categorical variable, k − 1.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-plan-sample-size, echo=FALSE}
+# LO: LO12.1.6
+learnr::question(
+  "Which statements about sample size are correct?",
+  learnr::answer("Standard errors shrink roughly in proportion to 1/√n, so to halve the standard error you need about four times as many independent units.", correct = TRUE),
+  learnr::answer("A power analysis, done when planning a study, estimates how many replicates are needed to have a good chance of detecting an effect of a given size.", correct = TRUE),
+  learnr::answer("With a small sample, a non-significant result is strong evidence that there is no effect."),
+  learnr::answer("Doubling the sample size halves the width of confidence intervals."),
+  correct = "Correct! Small studies have low power, so a non-significant result often just means the study could not detect the effect.",
+  incorrect = "Think about how the standard error depends on n, and about what a non-significant result from a small study does and does not show.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-plan-which-terms, echo=FALSE}
+# LO: LO12.1.7
+learnr::question(
+  "A student fits 20 different combinations of explanatory variables and reports the model in which the most terms are significant, with their p-values. What is the problem?",
+  learnr::answer("The reported p-values are misleading (too small), because the model was chosen after looking at many results; some 'significant' terms are likely to be false positives. The terms should have been chosen in advance from the question and the design (variables of interest, planned interactions, design variables, potential confounders).", correct = TRUE),
+  learnr::answer("There is no problem, as long as the final model's assumptions are met."),
+  learnr::answer("The only problem is that it takes a long time."),
+  correct = "Correct! Trying many models and keeping the most 'significant' one (including stepwise selection) inflates the rate of false positives.",
+  incorrect = "Think about multiple testing: what happens to false positives when we look at many models and keep the best-looking one?",
+  allow_retry = TRUE
+)
+```
+
+You can also spend time looking at the mock exam.
