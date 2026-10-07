@@ -239,7 +239,7 @@ learnr::question(
 
 
 ## Practical part 2
-<!-- LO: LO2.1.2, LO2.1.5, LO2.1.7, LO2.1.8 -->
+<!-- LO: LO2.1.2, LO2.1.5, LO2.1.7, LO2.1.8, LO2.1.9, LO2.1.10 -->
 
 The general aim of this practical exercise is to increase your confidence looking at a dataset and getting a feel for the patterns in the data. Such patterns can include:
 
@@ -251,13 +251,13 @@ The general aim of this practical exercise is to increase your confidence lookin
 
 ### Preliminaries
 
-Make a new script.
+Open your BIO144 RStudio project (the one you made in Unit 1: File > Open Project..., or the menu at the top right of RStudio). Then make a new script and save it in the project folder, with a meaningful name (e.g. `unit2_bodyfat.R`).
 
 Write comments in the script about what you're doing.
 
-Make the first line of R code the command that clears R's memory.
+Put the dataset in your project folder, so that you can read it in just by its name.
 
-Make the next few lines of R code ones that load some useful libraries, e.g., readr and tidyverse. (tidyverse automatically loads ggplot2, dplyr, and other useful packages).
+Make the first few lines of R code ones that load some useful libraries, e.g., readr and tidyverse. (tidyverse automatically loads ggplot2, dplyr, and other useful packages).
 
 In the next line of R code, import the dataset called "bodyfat.txt". (Remember that you can get all datasets used in the course from the usual place (the course information web page). This dataset is about the body fat of 252 individuals. Quite a lot of things were measured about these individuals... so the dataset contains nineteen variables!
 
@@ -301,6 +301,35 @@ learnr::question(
 ```
 
 Use the filter function from the dplyr package to show the individuals with bodyfat greater than 35. Don't forget to first load the dplyr package (or tidyverse).
+
+**Error messages from dplyr and ggplot2.** Errors from these packages look a bit different from those you fixed in Unit 1, but the same skills apply: read the message, find the name it mentions, and check it.
+
+```{r LO-u2-dplyr-error, echo=FALSE}
+# LO: LO2.1.9, LO2.1.7
+question(
+  "Imagine you run `filter(bodyfat, Bodyfat > 35)` and get:\n\nError in `filter()`: In argument: `Bodyfat > 35`. Caused by error: object 'Bodyfat' not found\n\nWhat is the most likely problem?",
+  answer("The variable name has the wrong capitalisation: in the dataset it is bodyfat, not Bodyfat. (R is case sensitive.)", correct = TRUE),
+  answer("The dplyr package is not installed."),
+  answer("The filter function can only be used with numbers less than 35."),
+  answer("The data file was not found."),
+  correct = "Correct! dplyr tells you which function (filter) and which argument (Bodyfat > 35) caused the problem, and then the cause: R cannot find an object called Bodyfat, because the variable is called bodyfat. Check the variable names with names(bodyfat).",
+  incorrect = "Read the last line of the message: what can R not find? Then compare it with names(bodyfat).",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-u2-ggplot-error, echo=FALSE}
+# LO: LO2.1.9, LO2.1.8
+question(
+  "You write\n\nggplot(bodyfat, aes(x = bodyfat)) |> geom_histogram()\n\nand get the error: `mapping` must be created by `aes()`. Did you use `%>%` or `|>` instead of `+`? What should you change?",
+  answer("Replace the pipe |> with +: the parts of a ggplot are added together with +, whereas data manipulation steps (dplyr) are chained with |>.", correct = TRUE),
+  answer("Remove aes() from the code."),
+  answer("Install the ggplot2 package again."),
+  correct = "Correct! Mixing up |> and + is one of the most common ggplot2 mistakes, and in this case the error message even tells you the solution.",
+  incorrect = "Read the second line of the error message carefully.",
+  allow_retry = TRUE
+)
+```
 
 ```{r quiz-bodyfat-count, echo=FALSE}
 # LO: LO2.1.7
@@ -581,6 +610,13 @@ learnr::question(
 )
 ```
 
+
+### Finally: check your scripts are reproducible
+<!-- LO: LO2.1.10, LO1.1.5 -->
+
+Before you finish, check each of the scripts you made today: Session > Restart R, then run the whole script from the top (Code > Run Region > Run All). Does it run without errors, and give the same results as before? If not, find and fix the problem: perhaps a line you ran in the console but never put in the script, a variable you created and later deleted from the script, or lines in the wrong order.
+
+Also check the object names in your scripts. Would someone else (or you, in two months) understand what `bodyfat_filtered` or `child_mort_2013` contains? What about `x2` or `data_new`?
 
 ## Weekly Quiz
 
