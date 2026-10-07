@@ -47,7 +47,7 @@ Work through the parts in order. Don't worry if you don't finish everything in t
 ### Part 1: Get working in RStudio (about 15 minutes)
 <!-- LO: LO2.1.1, LO1.1.1 -->
 
-**Everyone, please log in to the UZH RStudio Server now**, even if you plan to work on your own laptop: <https://rstudio.mnf.uzh.ch/>. Log in with your UZH username and password (the same as for your UZH email). You will use RStudio Server in the final exam, so it is important to check now that you can log in, and to get help if you can't. (If the login stalls, you may have a passkey set up for your UZH account; see the "Probeprüfung" section of the General information page of the course information website.)
+**Everyone, please log in to the UZH RStudio Server now**, even if you plan to work on your own laptop: <https://rstudio.mnf.uzh.ch/>. Log in with your UZH username and password (the same as for your UZH email). You will use RStudio Server in the final exam, so it is important to check now that you can log in, and to get help if you can't.
 
 If you will also work on your own laptop, open RStudio there too.
 
