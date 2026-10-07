@@ -28,13 +28,14 @@ All homework is for your own practice and learning. It will not be marked or gra
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
 
-### Reading
+### Code walkthrough
+<!-- 2027: replaces the old reading and video sections -->
 
-Here is some reading covering various aspects of one-way ANOVA. The reading covers the core concepts and practices of ANOVA, as well as talking about other important topics, such as degrees of freedom and hypothesis testing. You might think there is some overlap with what you've already heard and read, and in some cases you'd be right. Hopefully you can decide if what you're reading you already know, if its giving you a new perspective on something you already know, or its it really quite new to you. So, here's the reading for this week, with some notes:
+Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Analysis of variance](https://opetchey.github.io/BIO144_Course_Book/5.1-ANOVA.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
-* One-way analysis of variance, example with effects of parasites on Daphnia growth rate -- Section 5.6 from Getting Started with R, Beckerman, Childs & Petchey.
-* For a different perspective and a bit more statistical detail, see one-way analysis of variance, example of plant height and pollination, Chapter 2 of The New Statistics with R, Hector. (Section 2.4 is not so important, and there are better methods for changing between the two mentioned data formats).
-* Post-hoc tests, multiple comparisons are covered in Box 6.3 and 6.4 of the New Statistics with R. Some interesting perspective in there.
+### Optional further reading
+
+Section 5.6 (one-way ANOVA) of *Getting Started with R* (2nd edition), Beckerman, Childs & Petchey; for a little more statistical detail, Chapter 2 of *The New Statistics with R* (1st edition), Hector. (Not examinable, unless it is also in the course book.)
 
 ### ANOVA and the F-test
 
@@ -54,18 +55,6 @@ From Wikipedia "This [the F-test] is an example of an "omnibus" test, meaning th
 
 Another perspective on the same... Actually, the F-value is a ratio of two variances... it is the explained variance / unexplained variance. The explained variance is the part of the total that is "explained" when one accounts for the means of the groups / categories. The unexplained is the part of the total that then remains unexplained. There are no differences between specific groups / categories in this calculation, so the F-test can't tell us (and was not designed to) tell us anything about differences between particular categories.
 
-
-
-### Don't forget dogs!
-
-A few weeks ago we played with a graph of cats. We should also not forget dogs! If you have some spare time, see if you can get the following code to run!
-
-```{r eval = FALSE, echo = TRUE}
-install.packages("devtools")
-devtools::install_github("melissanjohnson/pupR")
-library(pupR)
-pupR()
-```
 
 
 ## Practical
@@ -129,7 +118,7 @@ Make a new script, write a comment or comments in the first lines to say what th
 
 ```{r eval = FALSE}
 library(tidyverse)
-systbp_data <- read_csv("assets/datasets/systbp_drug_effect.csv")
+systbp_data <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/systbp_drug_effect.csv")
 systbp_data
 length(unique(systbp_data$id))
 ```
@@ -215,7 +204,7 @@ learnr::question_numeric(
 Now make a graph to visualise the change in systolic blood pressure by treatment group.
 
 ```{r eval = FALSE}
-systbp_data <- systbp_data %>%
+systbp_data <- systbp_data |>
   filter(!is.na(sbp_change)) 
 ggplot(systbp_data, aes(x = treatment, y = sbp_change)) +
   geom_boxplot() +
@@ -259,7 +248,7 @@ In the graph, you likely see that the DrugA high treatment is first, from left t
 
 ```{r eval = FALSE, echo = TRUE}
 library(forcats)
-systbp_data <- systbp_data %>%
+systbp_data <- systbp_data |>
   mutate(treatment = fct_relevel(treatment,
                                  "StandardCare", "Placebo", "DrugA_Low", "DrugA_High"))
 ```
@@ -369,9 +358,9 @@ learnr::question(
 Now fit a one-way ANOVA model to test for differences between treatment groups.
 
 ```{r eval = FALSE}
-anova_model <- lm(sbp_change ~ treatment, data = systbp_data)
+m_sbp_treatment <- lm(sbp_change ~ treatment, data = systbp_data)
 library(ggfortify)
-autoplot(anova_model)
+autoplot(m_sbp_treatment)
 ```
 
 ### 4. Check assumptions
@@ -415,7 +404,7 @@ learnr::question(
 Now create the anova table, using the `anova()` function.
 
 ```{r eval = FALSE}
-anova(anova_model)
+anova(m_sbp_treatment)
 ```
 
 ```{r quiz-anova-df-as-expected, echo=FALSE}
@@ -495,20 +484,29 @@ learnr::question_numeric(
 ### 8. Perform a post-hoc comparisons to identify which treatments differ
 <!-- LO: LO5.1.11 -->
 
-Recall that the ANOVA F-test only tells us whether there is evidence that at least one group mean differs from the others. It does not tell us which groups differ. To find this out, we can perform post-hoc pairwise comparisons. There are many methods for doing this. Use Tukey's Honest Significant Difference (HSD) test to perform the post-hoc comparisons now.
+Recall that the ANOVA F-test only tells us whether there is evidence that at least one group mean differs from the others. It does not tell us which groups differ. To find this out, we can perform post-hoc pairwise comparisons, correcting for the fact that we are doing many tests (with 4 groups there are 6 pairs). Here we use the two methods from the course book (Chapter 5, *Multiple comparisons*).
 
-```{r eval = FALSE}
-tukey_results <- TukeyHSD(aov(anova_model))
-tukey_results
+**Bonferroni correction**, using pairwise t-tests:
+
+```{r eval = FALSE, echo = TRUE}
+pairwise.t.test(systbp_data$sbp_change, systbp_data$treatment,
+                p.adjust.method = "bonferroni")
 ```
 
-Hint: You need to use the `aov()` function to convert the linear model object into an ANOVA model object before passing it to `TukeyHSD()`.
+**Tukey's Honest Significant Difference (HSD)**, using the `multcomp` package (install it first if needed):
 
+```{r eval = FALSE, echo = TRUE}
+library(multcomp)
+tukey_results <- glht(m_sbp_treatment, linfct = mcp(treatment = "Tukey"))
+summary(tukey_results)
+```
+
+(For `mcp()` to work, `treatment` must be a factor; it is, if you used `fct_relevel()` in step 2.)
 
 ```{r quiz-tukey-hsd-multiple-true, echo=FALSE}
 # LO: LO5.1.11
 learnr::question(
-  "The table below shows the results of a Tukey HSD post-hoc test following a one-way ANOVA of systolic blood pressure change by treatment group.\n\nWhich of the following statements are supported by the Tukey HSD results?\n\n(Select all that apply. Use a p-value of 0.05 as threshold for significance.)",
+  "Look at your Tukey HSD results (from `glht()` in the multcomp package).\n\nWhich of the following statements are supported by the Tukey HSD results?\n\n(Select all that apply. Use a p-value of 0.05 as threshold for significance.)",
   
   learnr::answer(
     "Placebo differs significantly from StandardCare.",
@@ -533,8 +531,8 @@ learnr::question(
     "DrugA_High differs significantly from DrugA_Low."
   ),
   
-  correct = "Correct! The Tukey HSD test indicates significant differences for Placebo vs StandardCare, DrugA_High vs StandardCare, DrugA_Low vs Placebo, and DrugA_High vs Placebo. The other comparisons are not statistically significant after adjusting for multiple comparisons.",
-  incorrect = "Check the adjusted p-values carefully. Only comparisons with p adj < 0.05 are considered statistically significant.",
+  correct = "Correct! The Tukey HSD test indicates significant differences for Placebo vs StandardCare, DrugA_High vs StandardCare, DrugA_Low vs Placebo, and DrugA_High vs Placebo. The other comparisons are not statistically significant after adjusting for multiple comparisons. (Here the Bonferroni-corrected pairwise t-tests lead to the same conclusions.)",
+  incorrect = "Check the adjusted p-values (the column Pr(>|t|) in the summary of glht()) carefully. Only comparisons with an adjusted p-value < 0.05 are considered statistically significant.",
   allow_retry = TRUE
 )
 ```
@@ -860,3 +858,21 @@ learnr::question(
   allow_retry = TRUE
 )
 ```
+
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
+
+**Please read this before you open the solutions.**
+
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
+
+The example solution script for this practical is here: [unit05_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit05_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit05_practical_solution.R", destfile = "unit05_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.

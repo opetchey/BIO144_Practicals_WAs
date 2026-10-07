@@ -28,170 +28,14 @@ All homework is for your own practice and learning. It will not be marked or gra
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
 
-### Video walkthrough
+### Code walkthrough
+<!-- 2027: replaces the old reading and video sections -->
 
-Here is a video walkthrough of multiple regression. The videos are a few years old now, so some methods, such as how Owen finds the location of the data file, and does the import, are obsolete. But the concepts and R code for the analysis are still valid.
+Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Multiple regression](https://opetchey.github.io/BIO144_Course_Book/6.1-multiple-regression.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
-#### Video 1
+### Optional further reading
 
-This first video introduces the question, the data, and does some exploratory data analysis.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/D8L5OUDfnu8?si=4R8i8GVmQ4252VFF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-```{r quiz-dplyr-select, echo=FALSE}
-# LO: LO2.1.7
-learnr::question(
-  "What **dplyr** function was used to make a data set with **only the three variables we wanted**?",
-  
-  learnr::answer(
-    "select",
-    correct = TRUE
-  ),
-  learnr::answer("slice"),
-  learnr::answer("mutate"),
-  learnr::answer("variable"),
-  learnr::answer("filter"),
-  
-  correct = "Correct! The `select()` function is used to choose specific columns (variables) from a data frame.",
-  incorrect = "Think about which dplyr function is used to keep or drop **columns**, rather than rows or create new variables.",
-  allow_retry = TRUE
-)
-```
-
-```{r quiz-dplyr-mutate-transform, echo=FALSE}
-# LO: LO2.1.7
-learnr::question(
-  "Say we found that the body fat variable was rather non-normal, and it looked like log-transforming it might help. Which **dplyr** function would we use to add the transformed variable to the dataset?",
-  
- learnr::answer("filter"),
-  learnr::answer("variable"),
-  learnr::answer("select"),
- learnr::answer(
-    "mutate",
-    correct = TRUE
-  ),
- 
-  learnr::answer("slice"),
-  
-  correct = "Correct! The `mutate()` function is used to create new variables or transform existing ones and add them to the dataset.",
-  incorrect = "Think about which dplyr function is used to create new columns in a data frame.",
-  allow_retry = TRUE
-)
-```
-
-#### Video 2
-
-This second video talks about degrees of freedom in multiple regression and describes the mathematical model for multiple regression.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/3nbUwYTyrOM?si=75Rfha-aj9X_Nkdc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-```{r quiz-df-error-multiple-regression-example, echo=FALSE}
-# LO: LO6.1.5
-learnr::question_numeric(
-  "If we have a dataset with **28 observations** and we plan to fit a **multiple regression model with four continuous explanatory variables**, how many **degrees of freedom for error** will we have?",
-  
-  learnr::answer(23, correct = TRUE),
-  
-  correct = "Correct! The degrees of freedom for error are 28 − (4 + 1) = 23. We subtract one degree of freedom for each explanatory variable and one for the intercept.",
-  incorrect = "Not quite. Remember: degrees of freedom for error = number of observations − number of estimated parameters (including the intercept).",
-  allow_retry = TRUE
-)
-```
-
-#### Video 3
-
-This third video shows how to fit a multiple regression model in R, check the model assumptions, and interpret the summary table.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/itpsDaAU75A?si=obxSZ9_cgkt2_0Y_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-```{r quiz-why-make-a-model, echo=FALSE}
-# LO: LO6.1.1
-learnr::question(
-  "Why make a model?\n\nThinking about what we gained from making the model of the data, which of the following did we gain?",
-  
-  learnr::answer(
-    "We now have a quantitative method for predicting body fat from weight and abdomen measurements.",
-    correct = TRUE
-  ),
-  learnr::answer(
-    "We know two causes of body fat."
-  ),
-  learnr::answer(
-    "We found a surprise, that weight is negatively related with body fat."
-  ),
-  learnr::answer(
-    "We have a numerical value for how well the model explains the data.",
-    correct = TRUE
-  ),
-  
-  correct = "Correct! By fitting the model, we gained a quantitative predictive relationship and a numerical measure of how well the model explains the data (e.g. R-squared), but not causal knowledge.",
-  incorrect = "Think about what models provide: prediction and quantification of fit, but not proof of causation or guaranteed surprises.",
-  allow_retry = TRUE
-)
-```
-
-#### Video 4
-
-This fourth video walks through visualising the results of a multiple regression model, including conditional plots with confidence bands.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/M-WcUFIALE8?si=hlp-aOjS2l0IY0K1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
-```{r quiz-new-data-function-expandgrid, echo=FALSE}
-# LO: LO6.1.10
-learnr::question_text(
-  "When making new data for prediction, what was the name of the really useful function that helps us put multiple variables into a nice package (i.e. a data frame) that `predict()` will like?\n\n(Type the name of the function only, don't include the brackets.)",
-  
-  learnr::answer("expand.grid", correct = TRUE),
-  
-  correct = "Correct! `expand.grid()` is very useful for creating a data frame containing all combinations of predictor values for use with `predict()`.",
-  incorrect = "Think about the function that creates all combinations of values from multiple variables.",
-  allow_retry = TRUE
-)
-```
-
-#### Video 5
-
-This fifth video concerns reporting the results.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/XkYBpzKnU2M?si=bGpcQPhODxvc5RKF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-```{r quiz-reporting-criticism, echo=FALSE}
-# LO: LO6.1.14
-learnr::question(
-  "How to report results?\n\nIf we were reporting our results and wrote something like:\n\n\"We found a significant relationship between weight and body fat (p < 0.0001).\"\n\nWhy might people criticise this sentence?",
-  
-  learnr::answer(
-    "It focuses too much on statistical significance.",
-    correct = TRUE
-  ),
-  learnr::answer(
-    "It doesn't give the test statistic for the p-value."
-  ),
-  learnr::answer(
-    "It doesn't give the direction of the relationship.",
-    correct = TRUE
-  ),
-  learnr::answer(
-    "It doesn't give the strength (slope) of the relationship.",
-    correct = TRUE
-  ),
-  learnr::answer(
-    "They wouldn't, it’s perfect!"
-  ),
-  
-  correct = "Correct! The sentence focuses mainly on statistical significance and omits key information about the direction and strength of the relationship, which are essential for interpretation.",
-  incorrect = "Think about what information helps a reader understand *what actually happened* in the data, beyond just whether p < 0.05.",
-  allow_retry = TRUE
-)
-```
-
-#### Video 6
-
-The sixth video shows how we can assess if an extreme observation is having a big influence on our multiple regression results.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7X4WhD-5WCs?si=IQYdaNDhIbky4gS1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
+Section 9.1 (introduction to multiple regression), and the section on checking model conditions, in Chapter 9 of *OpenIntro Statistics* (4th edition), Diez, Çetinkaya-Rundel & Barr, free at [openintro.org](https://www.openintro.org/book/os/). (Not examinable, unless it is also in the course book.)
 
 ## Practical part 1
 
@@ -243,7 +87,7 @@ learnr::question(
 ```{r echo = FALSE, message=FALSE}
 library(tidyverse)
 # Read the data, from the github location directly
-milk_data <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/milk_rethinking.csv")
+milk_data <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/milk_rethinking.csv")
 ```
 
 
@@ -254,7 +98,7 @@ We will also take into account the average female body mass (variable `mass`), h
 
 Open a new script and:
 
-* Prepare your script (rm(list=ls()), load libraries).
+* Open your BIO144 project and prepare your script (comments saying what it is for, then load libraries).
 * Read the data into R. It is the milk_rethinking.csv dataset (get it from the usual place).
 * The data is already clean and tidy, so no wrangling or quality control is required.
 * Visualise the distributions of three variables we're currently interested in.
@@ -432,9 +276,9 @@ Make the model diagnostic graphs, and check if you think the assumptions of a li
 
 ```{r eval = FALSE}
 # Fit the multiple regression model
-model <- lm(log10_kcal.per.g ~ neocortex.perc + log10_mass, data = milk_data)
+m_milk <- lm(log10_kcal.per.g ~ neocortex.perc + log10_mass, data = milk_data)
 library(ggfortify)
-autoplot(model, smooth.colour = NA)
+autoplot(m_milk, smooth.colour = NA)
 ```
 
 
@@ -471,7 +315,7 @@ learnr::question(
 Now look at the coefficients that have been estimated. Hint: (use the summary function).
 
 ```{r eval = FALSE}
-summary(model)
+summary(m_milk)
 ```
 
 ```{r quiz-milk-slope-kcal-mass, echo=FALSE}
@@ -595,11 +439,11 @@ Now you will assess the unique contribution of each explanatory variable to the 
 
 ```{r eval = FALSE}
 # Fit reduced models
-model_reduced1 <- lm(log10_kcal.per.g ~ neocortex.perc, data = milk_data)
-model_reduced2 <- lm(log10_kcal.per.g ~ log10_mass, data = milk_data)
+m_milk_neocortex <- lm(log10_kcal.per.g ~ neocortex.perc, data = milk_data)
+m_milk_mass <- lm(log10_kcal.per.g ~ log10_mass, data = milk_data)
 # Compare each reduced model to the full model
-anova(model_reduced1, model)
-anova(model_reduced2, model)
+anova(m_milk_neocortex, m_milk)
+anova(m_milk_mass, m_milk)
 ```
 
 ```{r quiz-milk-f-statistic-model-comparison, echo=FALSE}
@@ -664,7 +508,7 @@ We saw in the scatterplots that the two explanatory variables are correlated. Th
 
 ```{r eval = FALSE, echo = TRUE}
 library(car)
-vif(model)
+vif(m_milk)
 ```
 
 ```{r LO-milk-vif, echo=FALSE}
@@ -681,9 +525,9 @@ learnr::question_numeric(
 Which explanatory variable has the stronger association with milk energy? The two slopes are in different units (per percent of neocortex, and per log10 unit of body mass), so we cannot compare them directly. One option is to standardise all the variables (subtract the mean and divide by the standard deviation) before fitting the model:
 
 ```{r eval = FALSE, echo = TRUE}
-model_standardised <- lm(scale(log10_kcal.per.g) ~ scale(neocortex.perc) + scale(log10_mass),
+m_milk_standardised <- lm(scale(log10_kcal.per.g) ~ scale(neocortex.perc) + scale(log10_mass),
                          data = milk_data)
-summary(model_standardised)
+summary(m_milk_standardised)
 ```
 
 ```{r LO-milk-standardised, echo=FALSE}
@@ -878,6 +722,65 @@ learnr::question(
 Finally, write a reporting sentence for the association between farmland and mayfly density, giving the estimate with its confidence interval, and making clear that it is adjusted for altitude. Compare it with a neighbour's, or ask a TA for feedback.
 
 ## Weekly Quiz
+
+<!-- 2027: these three questions moved here from the old video section -->
+
+```{r quiz-df-error-multiple-regression-example, echo=FALSE}
+# LO: LO6.1.5
+learnr::question_numeric(
+  "If we have a dataset with **28 observations** and we plan to fit a **multiple regression model with four continuous explanatory variables**, how many **degrees of freedom for error** will we have?",
+  
+  learnr::answer(23, correct = TRUE),
+  
+  correct = "Correct! The degrees of freedom for error are 28 − (4 + 1) = 23. We subtract one degree of freedom for each explanatory variable and one for the intercept.",
+  incorrect = "Not quite. Remember: degrees of freedom for error = number of observations − number of estimated parameters (including the intercept).",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-new-data-function-expandgrid, echo=FALSE}
+# LO: LO6.1.10
+learnr::question_text(
+  "When making new data for prediction, what is the name of the really useful function that puts all combinations of the values of several variables into a nice package (i.e. a data frame) that `predict()` will like?\n\n(Type the name of the function only, don't include the brackets.)",
+  
+  learnr::answer("expand.grid", correct = TRUE),
+  
+  correct = "Correct! `expand.grid()` is very useful for creating a data frame containing all combinations of predictor values for use with `predict()`.",
+  incorrect = "Think about the function that creates all combinations of values from multiple variables.",
+  allow_retry = TRUE
+)
+```
+
+```{r quiz-reporting-criticism, echo=FALSE}
+# LO: LO6.1.14
+learnr::question(
+  "How to report results?\n\nIf we were reporting our results and wrote something like:\n\n\"We found a significant relationship between weight and body fat (p < 0.0001).\"\n\nWhy might people criticise this sentence?",
+  
+  learnr::answer(
+    "It focuses too much on statistical significance.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "It doesn't give the test statistic for the p-value."
+  ),
+  learnr::answer(
+    "It doesn't give the direction of the relationship.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "It doesn't give the strength (slope) of the relationship.",
+    correct = TRUE
+  ),
+  learnr::answer(
+    "They wouldn't, it’s perfect!"
+  ),
+  
+  correct = "Correct! The sentence focuses mainly on statistical significance and omits key information about the direction and strength of the relationship, which are essential for interpretation.",
+  incorrect = "Think about what information helps a reader understand *what actually happened* in the data, beyond just whether p < 0.05.",
+  allow_retry = TRUE
+)
+```
+
 
 ```{r q1-simple-vs-multiple, echo=FALSE}
 # LO: LO6.1.1
@@ -1184,3 +1087,21 @@ learnr::question(
   allow_retry = TRUE
 )
 ```
+
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
+
+**Please read this before you open the solutions.**
+
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
+
+The example solution script for this practical is here: [unit06_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit06_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit06_practical_solution.R", destfile = "unit06_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.

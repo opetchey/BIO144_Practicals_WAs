@@ -28,42 +28,14 @@ All homework is for your own practice and learning. It will not be marked or gra
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
 
-### Reading
+### Code walkthrough
+<!-- 2027: replaces the old reading and video sections -->
 
-Remember, all this is optional, for your own learning and practice. You do not have to do any of this reading if you don't want to.
+Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Interactions](https://opetchey.github.io/BIO144_Course_Book/7.1-interactions.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
-* Two-way analysis of variance, example of cow growth and their diets -- Section 6.1 & 6.2 from Getting Started with R, Beckerman, Childs & Petchey.
-* One-way and two-way analysis of variance, example with plant biomass, fertilizer, and light, Chapter 6 of The New Statistics with R, Hector. (You'll see some use of the qplot function here; some people think this is a quick way of making ggplots. Prof. Petchey doesn't.)
-* Read about ANCOVA in section 6.3 of Getting Started with R, by Beckerman, Childs, and Petchey.
-* For an alternate perspective on ANCOVA, read chapter 7 of The New Statistics with R. This chapter includes Box 7.3 about something called orthogonality... which is a quite important difference between data coming from well designed experiments and data coming from elsewhere.
+### Optional further reading
 
-### Videos about ANCOVA
-
-In this series of videos, Prof. Petchey explains ANCOVA, and shows how to do it in R. He does this by showing first regression, then ANOVA, then ANCOVA, all with one dataset. The videos were made a while back, so some details of the content does not fit perfectly with the current content and structure of the course. But the statistics don't change!
-
-The first video introduces the case study and dataset, and then performs simple linear regression.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/n3Lt0-yTbNk?si=QzwpWqo9kVgZplkO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-The second video performs a one-way ANOVA, including how to interpret the beta coefficients.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/On32bU7Kbjw?si=HuanaUJv85PFtiTy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-The third video concerns ANCOVA. Finally!
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/lEDcDxa6w8o?si=YfFoHp-kB0VUpCxG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-### Don't forget dogs!
-
-A few weeks ago we played with a graph of cats. We should also not forget dogs! If you have some spare time, see if you can get the following code to run!
-
-```{r eval = FALSE}
-install.packages("devtools")
-devtools::install_github("melissanjohnson/pupR")
-library(pupR)
-pupR()
-```
-
+Sections 6.1 to 6.3 (two-way ANOVA and ANCOVA) of *Getting Started with R* (2nd edition), Beckerman, Childs & Petchey. (Not examinable, unless it is also in the course book.)
 
 ## Practical part 1
 
@@ -320,7 +292,7 @@ You've done this before a few times now. Go for it! The dataset `intertidalalgae
 
 ```{r echo = FALSE, message = FALSE}
 library(tidyverse)
-intertidal <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/intertidalalgae.csv")
+intertidal <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/intertidalalgae.csv")
 ## box and whisker with height on the x and the herbivore treatments as colour and offset on the x axis
 ```
 
@@ -346,16 +318,16 @@ intertidal |>
 Also check that the two treatments do each indeed contain only two levels. Here is how to do this with the `distinct` function.
 
 ```{r eval = FALSE, echo = TRUE}
-intertidal %>%
+intertidal |>
   distinct(height)
 ```
 
 And we need to check for NAs. A quick method is to again do a "group_by" and "summarise", this time make it on a version of the dataset with na.omit() applied. This function removes any rows with NAs in any column.
 
 ```{r eval = FALSE}
-intertidal %>%
-  na.omit() %>%
-  group_by(height, herbivores) %>%
+intertidal |>
+  na.omit() |>
+  group_by(height, herbivores) |>
   summarise(n = n())
 ```
 
@@ -442,11 +414,11 @@ And in the ANOVA table, we expect that the interaction term will have a large F 
 Just for some practice, and less so for answering any biological question, calculate the mean and the standard deviation of each of the treatment combinations. Hint: use `group_by`, include both the explanatory variables, and then use `summarise`.
 
 ```{r eval = FALSE}
-summ <- intertidal |> 
+algae_summary <- intertidal |> 
   group_by(height, herbivores) |> 
   summarise(mean = mean(Area_sqrt),
             sd = sd(Area_sqrt))
-summ
+algae_summary
 ```
 
 
@@ -512,7 +484,7 @@ learnr::question(
 Now fit the linear model with two main effect and the interaction term.
 
 ```{r}
-mod1 <- lm(Area_sqrt ~ height * herbivores, data = intertidal)
+m_algae <- lm(Area_sqrt ~ height * herbivores, data = intertidal)
 ```
 
 ### 4. Check the assumptions of model
@@ -522,7 +494,7 @@ Make the four plots we use to check if the model assumptions are reasonably well
 
 ```{r message=FALSE, warning=FALSE, eval = FALSE}
 library(ggfortify)
-autoplot(mod1, smooth.colour = NA)
+autoplot(m_algae, smooth.colour = NA)
 ```
 
 Write a sentence describing your assessment of how well each of the five assumptions of a linear model are met. Check in with a TA for feedback on your assessment.
@@ -533,7 +505,7 @@ Write a sentence describing your assessment of how well each of the five assumpt
 Get the ANOVA table for the model.
 
 ```{r eval = FALSE}
-anova(mod1)
+anova(m_algae)
 ```
 
 The first thing to check, and this is really important, is the degrees of freedom for each of the terms in the ANOVA table. Do they match what you expected?
@@ -579,7 +551,7 @@ sum((intertidal$Area_sqrt - mean(intertidal$Area_sqrt))^2)
 
 Use the total sum of squares to calculate the **UN**adjusted R squared for the model. 
 ```{r eval = FALSE}
-summary(mod1)
+summary(m_algae)
 ```
 
 
@@ -758,7 +730,7 @@ Then:
 
 ```{r eval = TRUE, echo = FALSE, message=FALSE}
 library(tidyverse)
-countries <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/rugged.csv") |> 
+countries <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/rugged.csv") |> 
   select(rugged, rgdppc_2000, cont_africa)
 ```
 
@@ -933,14 +905,14 @@ Write one or two sentences about what you see in the graph. Is there a differenc
 Fit an appropriate model to test if there is a statistically significant difference in the relationship between GDP and ruggedness between Africa and not Africa.
 
 ```{r eval = TRUE, echo = FALSE}
-mod2 <- lm(rgdppc_2000_log10 ~ rugged * cont_africa1, data = countries)
+m_gdp_rugged <- lm(rgdppc_2000_log10 ~ rugged * cont_africa1, data = countries)
 ```
 
 Check the assumptions of the model. Are they reasonably well met?
 
 ```{r eval = FALSE}
 library(ggfortify)
-autoplot(mod2, smooth.colour = NA)
+autoplot(m_gdp_rugged, smooth.colour = NA)
 ```
 
 Interpret the model. Look at the ANOVA table. Check the degrees of freedom for each term. Do they match what you expected?
@@ -948,7 +920,7 @@ Interpret the model. Look at the ANOVA table. Check the degrees of freedom for e
 What does the ANOVA table tell you about the relationship between GDP and ruggedness in Africa versus not Africa? Is there a statistically significant difference? Is Africa special in this respect?
 
 ```{r eval = FALSE}
-anova(mod2)
+anova(m_gdp_rugged)
 ```
 
 Yes, we see that the interaction term is statistically significant, indicating that the relationship between GDP and ruggedness differs between African countries and those not in Africa.
@@ -959,7 +931,7 @@ Yes, we see that the interaction term is statistically significant, indicating t
 The ANOVA table tells us *that* the slope differs between Africa and the rest of the world. The coefficients tell us *how*. Look at the summary table of the model:
 
 ```{r eval = FALSE, echo = TRUE}
-summary(mod2)
+summary(m_gdp_rugged)
 ```
 
 By default, R takes the level that comes first in the alphabet as the reference level, here "Africa". So in this model:
@@ -1030,7 +1002,7 @@ new_data <- expand.grid(
   rugged = seq(min(countries$rugged), max(countries$rugged), length.out = 100),
   cont_africa1 = c("Africa", "not Africa")
 )
-predictions <- predict(mod2, newdata = new_data, interval = "confidence")
+predictions <- predict(m_gdp_rugged, newdata = new_data, interval = "confidence")
 new_data <- cbind(new_data, as.data.frame(predictions))
 ggplot() +
   geom_point(data = countries, aes(x = rugged, y = rgdppc_2000_log10, color = cont_africa1), alpha = 0.6) +
@@ -1260,5 +1232,20 @@ learnr::question(
 )
 ```
 
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
 
+**Please read this before you open the solutions.**
 
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
+
+The example solution script for this practical is here: [unit07_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit07_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit07_practical_solution.R", destfile = "unit07_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.

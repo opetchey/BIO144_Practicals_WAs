@@ -28,27 +28,14 @@ All homework is for your own practice and learning. It will not be marked or gra
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
 
-### Video walkthrough; insect death!
-<!-- LO: LO9.1.3, LO9.1.7, LO9.1.12 (video only) -->
+### Code walkthrough
+<!-- 2027: replaces the old reading and video sections -->
 
-Please remember that you'll get much more out of the videos if you work through the example in R, either during or after watching.
+Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Binomial data](https://opetchey.github.io/BIO144_Course_Book/9.1-GLM2-binary-data.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
-Please note that these videos were made some time ago, so for example the method used to import the data is a little different to what we use now. However, the statistical concepts and R code for analysis are still relevant.
+### Optional further reading
 
-The first video introduces the biological question and the data. It also fits a linear model and checks the assumptions of the model, showing how badly things can go wrong if you don't check the assumptions!
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/PXCgb1zGK8s?si=KzfZIbPGXR0j6_32" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-The second video explains and fits a much more appropriate model for the data: a generalized linear model with a binomial error distribution and a logit link function. We see that the conclusion is very different to that from the linear model!
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/1JPsFGxdenQ?si=ZNcnymehjx65F_Gm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-The third video shows how to check for overdispersion in a binomial model, and how to make a nice visualisation of the results.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xl8XOdXXNiM?si=3TCIapMMy9rJPyll" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
-
+The sections on binomial and binary data in Chapter 9 of *The New Statistics with R* (1st edition), Hector. (Not examinable, unless it is also in the course book.)
 
 ## Practical part 1
 <!-- LO: LO9.1.2, LO9.1.3, LO9.1.5, LO9.1.7, LO9.1.8, LO9.1.9, LO9.1.10, LO9.1.11, LO9.1.12, LO9.1.14 -->
@@ -282,7 +269,7 @@ The same web page contains a `README.txt` file that explains the meaning of each
 
 ```{r eval = FALSE}
 library(tidyverse)
-ptarm <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/presabs_both_IndYears_allvars_final.csv")
+ptarm <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/presabs_both_IndYears_allvars_final.csv")
 ```
 
 Remember to go through all the workflow steps.
@@ -569,4 +556,20 @@ learnr::question(
 )
 ```
 
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
 
+**Please read this before you open the solutions.**
+
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
+
+The example solution script for this practical is here: [unit09_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit09_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit09_practical_solution.R", destfile = "unit09_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.

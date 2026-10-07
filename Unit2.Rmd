@@ -28,21 +28,20 @@ All homework is for your own practice and learning. It will not be marked or gra
 
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
-### Homework specific to Unit 2
+### Code walkthrough
+<!-- 2027: replaces the old reading and video sections -->
 
+Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [R and RStudio](https://opetchey.github.io/BIO144_Course_Book/2.1-R-and-RStudio.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
+### Optional further reading
 
-* **Getting acquainted with R and RStudio**. When you'd like to consolidate the understanding you gained from the course book and lecture, take a look at Chapter 2 of *Insights from Data with R*. A link to this book is in the [relevant course information web page](https://opetchey.github.io/BIO144_Course_Information/1.1-general-information.html#course-texts)
-
-* **Data wrangling**. When you'd like another perspective on data wrangling covered in the course book and lecture, take a look at Chapter 5 of *Insights from Data with R*.
-
-* **Data visualization**. When you're ready to get a deeper understanding of `ggplot`, take a look at Chapter 7 of *Insights from Data with R*.
+Chapters 2 (R and RStudio), 5 (data wrangling) and 7 (graphs with ggplot2) of *Insights from Data with R*, Petchey et al. (Not examinable, unless it is also in the course book.)
 
 ## Why ggplot2? It's so tricky!
 
 There are lots of ways to makes graphs in R. There are even lots of ways to make the same graph. Prof. Petchey promotes the use of the ggplot function in the ggplot2 package, so you will see this being used again and again and again during the practicals and elsewhere. You might find ggplot tricky at first (Prof. Petchey did -- really -- but maybe that was because he already knew other methods). But don't worry, Prof. Petchey now knows what he's doing with ggplot and has infinite patience explaining how it works :)
 
-You won't get penalised for using other methods for making graphs. Its just that it will be a bit harder for us to help you, since we'll first have to think about how to do it that way, rather than just how to make it work with ggplot (or qplot).
+You won't get penalised for using other methods for making graphs. Its just that it will be a bit harder for us to help you, since we'll first have to think about how to do it that way, rather than just how to make it work with ggplot.
 
 [Some reasons for using ggplot are here.](http://varianceexplained.org/r/teach_ggplot2_to_beginners/)
 
@@ -842,4 +841,20 @@ learnr::question(
 )
 ```
 
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
 
+**Please read this before you open the solutions.**
+
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
+
+The example solution script for this practical is here: [unit02_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit02_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit02_practical_solution.R", destfile = "unit02_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.

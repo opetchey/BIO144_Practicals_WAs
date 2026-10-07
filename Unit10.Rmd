@@ -27,16 +27,14 @@ All homework is for your own practice and learning. It will not be marked or gra
 
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
-## Videos for a different perspective
+### Code walkthrough
+<!-- 2027: replaces the old reading and video sections -->
 
-Here is a video that covers the basics of PCA:
+Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Ordination](https://opetchey.github.io/BIO144_Course_Book/10.1-ordination.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HMOI_lkzW08?si=Scw4q52bPiDLqHJO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+### Optional further reading
 
-And here is a video about NMDS, mostly about how to implement it in R:
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/h7OrVmT7Ja8?si=Q8lrQiDeTYCwAdxO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
+Chapter 5 (unconstrained ordination: PCA, NMDS and others) of *Numerical Ecology with R* (2nd edition), Borcard, Gillet & Legendre. (Not examinable, unless it is also in the course book.)
 
 ## Practical part 1
 
@@ -475,25 +473,25 @@ write_csv(microbiome_data, "~/Desktop/microbiome_data.csv")
 ```
 
 ```{r echo = FALSE, message = FALSE}
-biom <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/microbiome_data.csv")
+biom <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/microbiome_data.csv")
 ```
 
-The first step in the analysis is to calculate pairwise dissimilarities among samples based on their community composition. Use Bray–Curtis dissimilarity, which is well suited for relative abundance data. Use the `vegdist` function from the `vegan` package.
+The first step in the analysis is to calculate pairwise dissimilarities among samples based on their community composition. Use Bray–Curtis dissimilarity, which is well suited for relative abundance data (see the course book, Chapter 10, *Distances for community (abundance) data: Bray–Curtis*). Use the `vegdist` function from the `vegan` package.
 
 ```{r echo = FALSE, message = FALSE}
 library(vegan)
-D <- vegdist(biom |> select(starts_with("OTU_")), method = "bray")
+bray_distances <- vegdist(biom |> select(starts_with("OTU_")), method = "bray")
 ```
 
 Then make a Non-metric Multidimensional Scaling (NMDS) ordination based on the Bray–Curtis dissimilarity matrix. Use the `metaMDS` function from the `vegan` package. Choose appropriate parameters, based on information in the course book.
 
 ```{r echo = FALSE, message = FALSE, eval = FALSE}
 set.seed(144)
-nmds_result_2d <- metaMDS(D, k = 2, trymax = 100)
+nmds_result_2d <- metaMDS(bray_distances, k = 2, trymax = 100)
 nmds_result_2d$stress
-nmds_result_3d <- metaMDS(D, k = 3, trymax = 100)
+nmds_result_3d <- metaMDS(bray_distances, k = 3, trymax = 100)
 nmds_result_3d$stress
-nmds_result <- metaMDS(D, k = 10, trymax = 100)
+nmds_result <- metaMDS(bray_distances, k = 10, trymax = 100)
 nmds_result$stress
 ```
 
@@ -747,6 +745,20 @@ community_scaled <- community_scaled |>
          Soil_Moisture = community$Soil_Moisture)
 ```
 
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
 
+**Please read this before you open the solutions.**
 
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
 
+The example solution script for this practical is here: [unit10_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit10_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit10_practical_solution.R", destfile = "unit10_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.

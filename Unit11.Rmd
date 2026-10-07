@@ -27,27 +27,14 @@ All homework is for your own practice and learning. It will not be marked or gra
 
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
-### Homework specific to this week
+### Code walkthrough
+<!-- 2027: replaces the old reading and video sections -->
 
-There is a very nice and (relatively simple) walkthrough by [Dr Bodo Winter](https://bodowinter.com/index.html), a lecturer in cognitive linguistics at the University of Birmingham UK, of concepts underlying linear mixed effects models. It provides a (slightly) different perspective from those in Prof. Petchey's lecture. It also very clearly walks through an example in R. [Here is the tutorial.](https://web.archive.org/web/20170328211836/http://www.bodowinter.com/tutorial/bw_LME_tutorial2.pdf)
+Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Mixed models](https://opetchey.github.io/BIO144_Course_Book/11.1-mixed-models.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
-For a somewhat more advanced treatment of LMMs and some examples of implementing them in R, please have a look at Chapter 10 of The New Statistics with R by Hector.
+### Optional further reading
 
-### The analytic world
-
-Here are a series of videos recorded some time ago by Prof. Petchey, showing a small part of the world of analytical methods. It is not really important that you watch all this now, but you might find it interesting. Perhaps skip to the end and watch the last one first, so you see the whole world and then decide what parts you want to explore further. (And during the final lecture of the course, you heard about even more of this world.)
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/t2XUNhStJ1M?si=KeHDbL4gaMGfH5Br" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/pCa9PctaEi0?si=VBIIA0qLHqqsatPm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/wztQAz-12iY?si=JRNHtv3b_KyeClT2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/T4cGt8OZRgI?si=CTL5WflivzJgBH_q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HSUhJjRQDRo?si=jyF7XPGWLvNT05Jc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
+Bodo Winter's tutorials [Linear models and linear mixed effects models in R with linguistic applications](https://arxiv.org/abs/1308.5499) (the second part is on mixed models): a clear and relatively simple introduction, with examples in R. (Not examinable, unless it is also in the course book.)
 
 ## Practical part 1
 <!-- LO: LO11.1.5, LO11.1.7, LO11.1.8 -->
@@ -107,7 +94,7 @@ Then make a standard linear model with the intention to predict student scores b
 
 ```{r}
 ## standard linear model
-lm_model <- lm(score ~ class, data = student_scores)
+m_scores_lm <- lm(score ~ class, data = student_scores)
 ```
 
 
@@ -134,7 +121,7 @@ Make a dataset that contains the means of each class from the linear model.
 
 ```{r}
 new_data <- data.frame(class = unique(student_scores$class))
-new_data$predicted_lm <- predict(lm_model, newdata = new_data)
+new_data$predicted_lm <- predict(m_scores_lm, newdata = new_data)
 new_data
 ```
 
@@ -156,14 +143,14 @@ Now, let's fit a linear mixed effects model (LMM) to the same data, treating cla
 ```{r message=FALSE, warning=FALSE}
 library(lme4)
 ## linear mixed effects model
-lmm_model <- lmer(score ~ 1 + (1 | class), data = student_scores)
+m_scores_lmm <- lmer(score ~ 1 + (1 | class), data = student_scores)
 ```
 
 Now, make predictions from the LMM for each class
 
 ```{r}
 new_data <- new_data |> 
-  mutate(predicted_lmm = predict(lmm_model, newdata = new_data, re.form = NULL))
+  mutate(predicted_lmm = predict(m_scores_lmm, newdata = new_data, re.form = NULL))
 new_data
 ```
 
@@ -264,15 +251,15 @@ student_scores <- class_features |>
   select(class, score = scores) |> 
   mutate(student_id = paste0("student_", row_number()))
 ## standard linear model
-lm_model <- lm(score ~ class, data = student_scores)
+m_scores_lm <- lm(score ~ class, data = student_scores)
 ## linear mixed effects model
-lmm_model <- lmer(score ~ 1 + (1 | class), data = student_scores)
+m_scores_lmm <- lmer(score ~ 1 + (1 | class), data = student_scores)
 ## make new data for predictions
 new_data <- data.frame(class = unique(student_scores$class))
 new_data <- new_data |>
   mutate(
-    predicted_lm = predict(lm_model, newdata = new_data),
-    predicted_lmm = predict(lmm_model, newdata = new_data, re.form = NULL)
+    predicted_lm = predict(m_scores_lm, newdata = new_data),
+    predicted_lmm = predict(m_scores_lmm, newdata = new_data, re.form = NULL)
   ) |>
   left_join(select(class_features, class, n_students), by = "class")
 ```
@@ -310,7 +297,7 @@ And here is how much each class's estimate is shrunk towards the overall mean, a
 
 ```{r echo = FALSE, eval = TRUE, message=FALSE, warning=FALSE}
 ## proportion by which each class estimate is moved towards the overall mean
-overall_mean <- fixef(lmm_model)[1]
+overall_mean <- fixef(m_scores_lmm)[1]
 shrinkage_data <- new_data |>
   filter(abs(predicted_lm - overall_mean) > 2) |>
   mutate(shrinkage = (predicted_lm - predicted_lmm) / (predicted_lm - overall_mean))
@@ -559,7 +546,7 @@ learnr::question_numeric(
 )
 ```
 
-**7. Check the model.** Plot the residuals against the fitted values (`plot(m_sleep_rs)`) and make a QQ-plot of the residuals (`qqnorm(resid(m_sleep_rs))`).
+**7. Check the model.** Plot the residuals against the fitted values (`plot(m_sleep_rs)`; `autoplot()` does not work for mixed models) and make a QQ-plot of the residuals (`qqnorm(resid(m_sleep_rs))`).
 
 ```{r LO-sleep-limitations, echo=FALSE}
 # LO: LO11.1.12
@@ -874,3 +861,21 @@ learnr::question(
   allow_retry = TRUE
 )
 ```
+
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
+
+**Please read this before you open the solutions.**
+
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
+
+The example solution script for this practical is here: [unit11_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit11_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit11_practical_solution.R", destfile = "unit11_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.

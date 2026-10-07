@@ -7,16 +7,13 @@
 
 ## Data organised in excel, and checked.
 
-## Clear R's memory
-rm(list=ls())
-
 library(tidyverse)
 library(readr)
 library(ggfortify)
 
 
 ## import the data (direct from where it is online)
-plant_gr <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144/master/3_datasets/plant_growth_rate.csv")
+plant_gr <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/plant_growth_rate.csv")
 
       
 ## check the data is imported correctly

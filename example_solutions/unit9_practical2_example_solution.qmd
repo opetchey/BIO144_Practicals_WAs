@@ -22,7 +22,7 @@ theme_set(theme_bw(base_size = 12))
 
 ## Note from Owen Petchey
 
-Please note that this report includes some methods and approaches, such as AIC-based model selection, that are not part of the Data Analysis in Biology (BIO144) course. This is partly because Codex was not constrained to use only methods covered in the course, and partly because this particular problem is about building a predictive model rather than explaining a biological process. Prediction is therefore somewhat outside the main scope of BIO144.
+Please note that this report includes some methods and approaches, such as assessing predictions with a train/test split, that are not part of the Data Analysis in Biology (BIO144) course. This is because this particular problem is about building a predictive model rather than explaining a biological process. (Revised in October 2026 to remove AIC-based stepwise variable selection, which the course advises against: the explanatory variables are now chosen in advance.) Prediction is therefore somewhat outside the main scope of BIO144.
 
 ## Additional note from Owen Petchey
 
@@ -282,44 +282,35 @@ dim(echo_model)
 table(echo_model$death_within_1)
 ```
 
-I start with a full binomial GLM. I standardise the continuous variables so the coefficients are on comparable scales.
+How many explanatory variables can this dataset support? There are only `r nrow(echo_model)` complete cases, and the rarer outcome occurs only `r min(table(echo_model$death_within_1))` times. With the rough guide of 10–20 observations of the rarer outcome per estimated parameter (course book, Chapter 12), we can afford one or two explanatory variables, not six.
 
-```{r full-model}
+So, **before fitting any model**, I choose the two variables for which the hypotheses in section 3 are strongest: age at heart attack (age is an established risk factor) and the wall-motion index (a summary of how abnormally the heart wall moves, which the dataset documentation recommends using). I fit only this planned model. I do not try other combinations and keep the best-looking one: choosing variables that way gives misleading p-values (course book, Chapter 12, *Deciding which terms go into a model*). I standardise the two continuous variables so that their coefficients are on comparable scales.
+
+```{r planned-model}
 echo_model <- echo_model |>
   mutate(
     z_age_at_heart_attack = as.numeric(scale(age_at_heart_attack)),
-    z_fractional_shortening = as.numeric(scale(fractional_shortening)),
-    z_epss = as.numeric(scale(epss)),
-    z_lvdd = as.numeric(scale(lvdd)),
     z_wall_motion_index = as.numeric(scale(wall_motion_index))
   )
 
-full_glm <- glm(
-  death_within_1 ~ z_age_at_heart_attack + pericardial_effusion +
-    z_fractional_shortening + z_epss + z_lvdd + z_wall_motion_index,
+planned_glm <- glm(
+  death_within_1 ~ z_age_at_heart_attack + z_wall_motion_index,
   data = echo_model,
   family = binomial
 )
 
-summary(full_glm)
+summary(planned_glm)
 ```
 
-For a simple variable-selection step, I use AIC-based stepwise selection. This is not the only possible method, and it is unstable in small datasets, but it gives a clear example of searching for a simpler predictive model.
-
-```{r selected-model}
-selected_glm <- step(full_glm, trace = 0)
-summary(selected_glm)
-```
-
-```{r selected-model-table}
-tidy(selected_glm, conf.int = TRUE, exponentiate = TRUE) |>
+```{r planned-model-table}
+tidy(planned_glm, conf.int = TRUE, exponentiate = TRUE) |>
   mutate(across(where(is.numeric), function(x) round(x, 3))) |>
   kable(
-    caption = "Selected model coefficients shown as odds ratios for the death outcome."
+    caption = "Planned model coefficients shown as odds ratios for the death outcome."
   )
 ```
 
-The selected model keeps age at heart attack and wall-motion index. In this dataset, both fitted coefficients are negative for the death outcome, which is opposite to my biological expectation. I would not over-interpret that direction biologically. It may reflect the small sample size, missing data, the derived response variable, or quirks in how the original follow-up data were collected.
+In this dataset, both fitted coefficients are negative for the death outcome, which is opposite to my biological expectation. I would not over-interpret that direction biologically. It may reflect the small sample size, missing data, the derived response variable, or quirks in how the original follow-up data were collected.
 
 For prediction, the more important question is whether the model separates the two outcome classes.
 
@@ -336,14 +327,14 @@ table(echo_model$death_within_1)
 ```
 
 ```{r assumption-overdispersion}
-overdispersion_ratio <- sum(residuals(selected_glm, type = "pearson")^2) / df.residual(selected_glm)
+overdispersion_ratio <- sum(residuals(planned_glm, type = "pearson")^2) / df.residual(planned_glm)
 overdispersion_ratio
 ```
 
 The overdispersion ratio is `r round(overdispersion_ratio, 2)`, close to 1, so there is no obvious overdispersion problem.
 
 ```{r assumption-residuals, fig.width=6, fig.height=4}
-augment(selected_glm, type.predict = "response", type.residuals = "pearson") |>
+augment(planned_glm, type.predict = "response", type.residuals = "pearson") |>
   ggplot(aes(x = .fitted, y = .resid)) +
   geom_point(alpha = 0.6) +
   geom_hline(yintercept = 0, linetype = "dashed") +
@@ -356,7 +347,7 @@ augment(selected_glm, type.predict = "response", type.residuals = "pearson") |>
 ```
 
 ```{r assumption-influence, fig.width=6, fig.height=4}
-augment(selected_glm) |>
+augment(planned_glm) |>
   mutate(row = row_number()) |>
   ggplot(aes(x = row, y = .cooksd)) +
   geom_col(width = 1, fill = "grey40") +
@@ -411,7 +402,7 @@ In this split, the model accuracy is slightly better than simply predicting the 
 
 > Show some of the model predictions, e.g. by using model predictions to show the estimated effect of one echocardiogram feature while all others are held constant.
 
-The selected model uses standardised variables, so I create prediction grids on the standardised scale while labelling the x-axes using the original units.
+The planned model uses standardised variables, so I create prediction grids on the standardised scale while labelling the x-axes using the original units.
 
 ```{r prediction-grids}
 z_value <- function(x, variable) {
@@ -428,7 +419,7 @@ age_grid <- tibble(
   z_wall_motion_index = 0
 )
 
-age_grid$predicted_probability <- predict(selected_glm, newdata = age_grid, type = "response")
+age_grid$predicted_probability <- predict(planned_glm, newdata = age_grid, type = "response")
 
 wall_grid <- tibble(
   wall_motion_index = seq(
@@ -440,7 +431,7 @@ wall_grid <- tibble(
   z_wall_motion_index = z_value(wall_motion_index, "wall_motion_index")
 )
 
-wall_grid$predicted_probability <- predict(selected_glm, newdata = wall_grid, type = "response")
+wall_grid$predicted_probability <- predict(planned_glm, newdata = wall_grid, type = "response")
 ```
 
 ```{r age-prediction-plot, fig.width=7, fig.height=4.5}
@@ -473,11 +464,11 @@ These prediction plots show the fitted model, not necessarily causal biological 
 
 > Write a sentence or two about the results that would clearly communicate your findings to other biologists.
 
-Before the written summary, I would make a compact plot of the fitted probabilities from the selected model.
+Before the written summary, I would make a compact plot of the fitted probabilities from the planned model.
 
 ```{r publication-plot, fig.width=7, fig.height=5}
 echo_model |>
-  mutate(predicted_probability = predict(selected_glm, type = "response")) |>
+  mutate(predicted_probability = predict(planned_glm, type = "response")) |>
   ggplot(aes(x = predicted_probability, y = factor(death_within_1))) +
   geom_jitter(height = 0.08, width = 0, alpha = 0.7, size = 2) +
   labs(
@@ -495,7 +486,7 @@ This figure shows that many patients with the death outcome receive higher predi
 
 > Write a sentence or two about the results that would clearly communicate your findings to other biologists.
 
-In this small echocardiogram dataset, an AIC-selected binomial GLM retained age at heart attack and wall-motion index as predictors of the one-year death outcome, and it achieved modest held-out predictive accuracy in a simple train/test split. However, the fitted coefficient directions were biologically surprising, so I would describe this as a limited predictive exercise rather than strong evidence about the biological causes of post-heart-attack mortality.
+In this small echocardiogram dataset, a binomial GLM with two explanatory variables chosen in advance (age at heart attack and wall-motion index) achieved modest held-out predictive accuracy in a simple train/test split. However, the fitted coefficient directions were biologically surprising, so I would describe this as a limited predictive exercise rather than strong evidence about the biological causes of post-heart-attack mortality.
 
 ## 12. Critique and reflection
 

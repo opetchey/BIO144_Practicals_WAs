@@ -338,16 +338,10 @@ Here is a compact comparison of model fit:
 ```{r model-fit}
 null_glm <- glm(pres ~ 1, data = ptarm_model, family = binomial)
 
-tibble(
-  model = c("Null model", "Environmental model"),
-  AIC = c(AIC(null_glm), AIC(ptarm_glm)),
-  residual_deviance = c(deviance(null_glm), deviance(ptarm_glm))
-) |>
-  mutate(across(where(is.numeric), round, 1)) |>
-  kable()
+anova(null_glm, ptarm_glm, test = "Chisq")
 ```
 
-The environmental model has much lower AIC and residual deviance than the null model, so the environmental variables explain a large amount of variation in presence/absence.
+The environmental model has a much lower residual deviance than the null model (a likelihood ratio test, with degrees of freedom equal to the number of extra parameters in the environmental model), so together the environmental variables explain a large amount of variation in presence/absence.
 
 As a simple classification summary, using 0.5 as a probability threshold:
 

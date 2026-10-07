@@ -30,6 +30,15 @@ There is no new material this week. Use this week to catch up on any material yo
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. **You can also ask questions during the lectures.** -- this is important because there is the only thing we will look at in the lecture this week... things you ask us to look at again.
 
 
+### Code walkthrough
+<!-- 2027: replaces the old reading and video sections -->
+
+Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Review: planning and implementing statistical analyses](https://opetchey.github.io/BIO144_Course_Book/12.1-review.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
+
+### Optional further reading
+
+Popovic et al. (2024) [Four principles for improved statistical ecology](https://research-repository.st-andrews.ac.uk/handle/10023/29128), *Methods in Ecology and Evolution* 15, 266–281: a short paper that sums up much of the course. (Not examinable, unless it is also in the course book.)
+
 ## Practical
 <!-- LO: LO12.1.1, LO12.1.2, LO12.1.3, LO12.1.5, LO12.1.8, LO12.1.9, LO11.1.4, LO11.1.8, LO11.1.9, LO7.1.5, LO7.1.6 -->
 
@@ -142,7 +151,7 @@ learnr::question(
 
 ### 4. Check the model
 
-Plot the residuals against the fitted values (`plot(m_biomass_mixed)`), make a QQ-plot of the residuals (`qqnorm(resid(m_biomass_mixed))`), and look at the estimated chamber effects (`ranef(m_biomass_mixed)`). Are there any obvious problems?
+Plot the residuals against the fitted values (`plot(m_biomass_mixed)`; `autoplot()` does not work for mixed models), make a QQ-plot of the residuals (`qqnorm(resid(m_biomass_mixed))`), and look at the estimated chamber effects (`ranef(m_biomass_mixed)`). Are there any obvious problems?
 
 ### 5. Answer the question
 
@@ -312,3 +321,21 @@ learnr::question(
 ```
 
 You can also spend time looking at the mock exam.
+
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
+
+**Please read this before you open the solutions.**
+
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
+
+The example solution script for this practical is here: [unit12_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit12_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit12_practical_solution.R", destfile = "unit12_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.

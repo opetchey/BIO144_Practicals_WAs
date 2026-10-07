@@ -28,13 +28,14 @@ All homework is for your own practice and learning. It will not be marked or gra
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
 
-### Reading
+### Code walkthrough
+<!-- 2027: replaces the old reading and video sections -->
 
-* Chapter 7 of *Getting Started with R*, by Beckerman, Childs, and Petchey. 
-* Chapter 8 of First Edition *The New Statistics in R* by Hector. This introduces the general concept of generalised linear models quite nicely. There is a section on the Box-Cox transformation which you might find interesting, but is not really an integral part of generalised linear models. (In the Second Edition, this is Chapter 15.)
-* Section 9.4 of Chapter 9 of First Edition *The New Statistics in R* by Hector. This offers a different perspective, and slightly more complex one than in GSwR, on analysing count data with a poisson GLM. (In this Second Edition, this is Chapter 16.)
- 
+Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Count data](https://opetchey.github.io/BIO144_Course_Book/8.1-GLM1-count-data.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
+### Optional further reading
+
+Chapter 7 (generalised linear models for count data) of *Getting Started with R* (2nd edition), Beckerman, Childs & Petchey. (Not examinable, unless it is also in the course book.)
 
 ## Practical part 1
 <!-- LO: LO8.1.1, LO8.1.2, LO8.1.4, LO8.1.5, LO8.1.6, LO8.1.7, LO8.1.8, LO8.1.9, LO8.1.10, LO8.1.11, LO8.1.12, LO8.1.13 -->
@@ -120,7 +121,7 @@ summary(m_ticks_poisson)
 
 ### 4. Check the model (GLM checklist)
 
-Work through the GLM checklist from the course book. Make the diagnostic plots (`plot(m_ticks_poisson)` or `autoplot()` from `ggfortify`), and calculate the dispersion:
+Work through the GLM checklist from the course book. Make the diagnostic plots with `autoplot(m_ticks_poisson)` from the `ggfortify` package (or `plot(m_ticks_poisson)`), and calculate the dispersion:
 
 ```{r eval = FALSE, echo = TRUE}
 deviance(m_ticks_poisson) / df.residual(m_ticks_poisson)
@@ -367,11 +368,11 @@ As well as the usual preliminaries, please make a version of the dataset with on
 ```{r echo = FALSE, message= FALSE, warning = FALSE}
 # Load necessary libraries
 library(tidyverse)
-abalone_data <- read.csv("https://raw.githubusercontent.com/opetchey/BIO144/refs/heads/master/3_datasets/abalone_age.csv")
+abalone_data <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/abalone_age.csv")
 ```
 
 ```{r}
-abalone_data <- abalone_data %>%
+abalone_data <- abalone_data |>
   select(Rings, Length_mm, Diameter_mm, Height_mm, Whole_weight_g) |> 
   na.omit()
 ```
@@ -498,7 +499,7 @@ We will fit a Poisson GLM with Rings as the response variable and all four expla
 
 ```{r  eval = TRUE, echo= FALSE}
 # Fit Poisson GLM
-ab_glm <- glm(Rings ~ Length_mm + Diameter_mm + Height_mm + Whole_weight_g,
+m_rings_all <- glm(Rings ~ Length_mm + Diameter_mm + Height_mm + Whole_weight_g,
                data = abalone_data,
                family = poisson)
 ```
@@ -510,7 +511,7 @@ Make the four standard diagnostic plots for the Poisson GLM you have fitted.
 
 ```{r echo=FALSE, message= FALSE, warning = FALSE, eval = FALSE}
 library(ggfortify)
-autoplot(ab_glm, smooth.colour = NA)
+autoplot(m_rings_all, smooth.colour = NA)
 ```
 
 ```{r quiz-abalone-diagnostics-most-concerning, echo=FALSE}
@@ -545,7 +546,7 @@ learnr::question(
 So, we have a problem: the QQ-plot shows that the largest residuals are much larger than expected under the Poisson model. This suggests that the data may be overdispersed relative to the Poisson distribution, or that the model is not capturing all relevant structure in the data.
 
 ```{r eval = FALSE}
-summary(ab_glm)
+summary(m_rings_all)
 ```
 
 ```{r quiz-abalone-overdispersion, echo=FALSE}
@@ -601,7 +602,7 @@ Addressing this issue in the model / data combination would need modelling of gr
 Recall that we need to be very careful when interpreting the coefficients of this model, because the explanatory variables are strongly correlated with each other (collinearity).
 
 ```{r eval = FALSE}
-summary(ab_glm)
+summary(m_rings_all)
 ```
 
 ```{r quiz-abalone-significant-predictors, echo=FALSE}
@@ -635,10 +636,10 @@ learnr::question(
 To see how collinearity affects which variables appear to be significant, now make a model that leaves out `Height_mm` and `Diameter_mm` (the two variables that were significant in the full model), so that it contains only `Length_mm` and `Whole_weight_g`. Fit this reduced model and inspect the summary. (This is an exercise to show the effect of collinearity, not a recommended way to choose a model: dropping or keeping variables according to their p-values gives misleading results.)
 
 ```{r eval = TRUE, echo= FALSE}
-ab_glm2 <- glm(Rings ~ Length_mm + Whole_weight_g,
+m_rings_length_weight <- glm(Rings ~ Length_mm + Whole_weight_g,
                data = abalone_data,
                family = poisson)
-#summary(ab_glm2)
+#summary(m_rings_length_weight)
 ```
 
 You should see that `Length_mm` is now significant, while `Whole_weight_g` remains non-significant. This illustrates how collinearity can affect the significance of predictors in a multiple regression or GLM.
@@ -646,10 +647,10 @@ You should see that `Length_mm` is now significant, while `Whole_weight_g` remai
 What about if we make a model with only `Whole_weight_g` as the explanatory variable? Do this and inspect the summary.
 
 ```{r eval = TRUE, echo= FALSE}
-ab_glm3 <- glm(Rings ~ Whole_weight_g,
+m_rings_weight <- glm(Rings ~ Whole_weight_g,
                data = abalone_data,
                family = poisson)
-#summary(ab_glm3)
+#summary(m_rings_weight)
 ```
 
 Wow! Now `Whole_weight_g` is highly significant. This again shows how collinearity can affect the interpretation of predictors. When considered alone, `Whole_weight_g` appears strongly associated with Rings, but when considered alongside the other correlated predictors, its significance disappears.
@@ -666,7 +667,7 @@ Another method is to plot the predicted values against the observed values to vi
 
 ```{r echo=FALSE, message= FALSE, warning = FALSE, eval = FALSE}
 # Predicted vs Observed plot
-predicted_values <- predict(ab_glm, type = "response")
+predicted_values <- predict(m_rings_all, type = "response")
 abalone_data <- abalone_data |> 
   mutate(Predicted_Rings = predicted_values)
 ggplot(abalone_data, aes(x = Predicted_Rings, y = Rings)) +
@@ -721,7 +722,7 @@ new_data <- expand.grid(
   Height_mm = mean(abalone_data$Height_mm),
   Whole_weight_g = mean(abalone_data$Whole_weight_g)
 )
-predictions <- predict(ab_glm, newdata = new_data, type = "response")
+predictions <- predict(m_rings_all, newdata = new_data, type = "response")
 new_data <- new_data |> 
   mutate(Predicted_Rings = predictions)
 ggplot(new_data, aes(x = Length_mm, y = Predicted_Rings)) +
@@ -740,7 +741,7 @@ new_data2 <- expand.grid(
   Length_mm = seq(min(abalone_data$Length_mm), max(abalone_data$Length_mm), length.out = 100),
   Whole_weight_g = mean(abalone_data$Whole_weight_g)
 )
-predictions2 <- predict(ab_glm2, newdata = new_data2, type = "response")
+predictions2 <- predict(m_rings_length_weight, newdata = new_data2, type = "response")
 new_data2 <- new_data2 |> 
   mutate(Predicted_Rings = predictions2)
 ggplot(new_data2, aes(x = Length_mm, y = Predicted_Rings)) +
@@ -775,10 +776,10 @@ Let us again consider the abalone dataset, but simplify by only using one explan
 First make a model with only `Length_mm` as the explanatory variable. Then look at the summary of this model using `summary()`.
 
 ```{r eval = FALSE}
-ab_glm_length <- glm(Rings ~ Length_mm,
+m_rings_length <- glm(Rings ~ Length_mm,
                data = abalone_data,
                family = poisson)
-summary(ab_glm_length)
+summary(m_rings_length)
 ```
 
 ```{r quiz-abalone-length-only-slope, echo=FALSE}
@@ -974,3 +975,21 @@ learnr::question(
   allow_retry = TRUE
 )
 ```
+
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
+
+**Please read this before you open the solutions.**
+
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
+
+The example solution script for this practical is here: [unit08_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit08_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit08_practical_solution.R", destfile = "unit08_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.

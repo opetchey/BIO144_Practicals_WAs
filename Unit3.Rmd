@@ -28,77 +28,20 @@ All homework is for your own practice and learning. It will not be marked or gra
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
 
-### Reading
+### Code walkthrough
+<!-- 2027: replaces the old reading and video sections -->
 
-This homework aims to help you learn how to do linear regression in R. The various steps involved are below.
+Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Regression Part 1](https://opetchey.github.io/BIO144_Course_Book/3.1-regression-part1.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
-* Being sure of the question and data. 
-* Preparing your script (e.g., introductory comments, load libraries, etc).
-* Read the data into R.
-* Wrangle and quality control the data.
-* Visualise the data, with question in mind.
-* Make guesses of model parameters (intercept, slope) and statistical significance.
-* Figure out degrees of freedom.
-* Fit the line.
-* Check the assumptions and whether they are badly violated.
+### Optional further reading
 
-(In Unit 4, we will interpret the regression model, for example by calculating and reporting R-squared, p-values, confidence intervals, etc.)
-
-A great starting point for a demonstration and explanation of these steps, in R, is in Section 5.4 and 5.5 - 5.5.4 of Beckerman, Childs, and Petchey. This would be good to read and work through before the practical class.
-
-### Video walkthrough
-
-You can, if you wish, watch and hear Prof. Petchey going through the analysis of the plant growth experiment in the two videos below. A few things to note, however:
-
-* The second video includes a little bit of interpretation of the regression model, which we will cover in Unit 4. You can ignore that part for now.
-
-* These videos are quite old now and contain some older methods, such as an old method for making graphs. Please use the method in the course book sections. More specifically, here is the code to use in place of the code in the videos, by line number of the code in the video:
-
-Preliminaries: the videos do not load the packages ggplot2 and ggfortify. You must do this: library(ggplot2) and library(ggfortify).
-
-Line 15. Use `ggplot(data=dd, aes(x = soil.moisture.content, y = plant.growth.rate))`
-
-Line 18. You obviously won't be able to paste in the text here, as the text in line 15 in your script will be different (see above!).
-
-Line 32-36. This is the old way to make a nice looking graph for communication. Replace this with a graph made with ggplot, by adding to and adjusting what you used in line 15. (On page 117 of Beckerman, Childs, and Petchey, you can see the code to make a relatively beautiful graph, in case you need a hand.)
-
-
-**Regression walkthrough -- part 1**
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/MHev9Edu1cs?si=47Ji5gxOEMgowY3c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-**Regression walkthrough -- part 2**
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jFfFvP3sqo8?si=Spu7GYQOJdwyUBxs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-The [full R script of this walkthrough is here](
-https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/Plant_growth_rate_script.R), 
-though note that some comments have been added and hence the line numbers do not match those above. Note that there are four videos in this series. You will have the chance to watch the final video in the next unit. 
-
+Sections 5.4 to 5.5.4 (simple linear regression) of *Getting Started with R* (2nd edition), Beckerman, Childs & Petchey. (Not examinable, unless it is also in the course book.)
 
 ### Fun with regression
 
 Some things to try, if you feel the need... [Here’s an interactive tool](https://gallery.shinyapps.io/simple_regression/) that challenges you to find the best intercept and slope to fit a straight line through some data. This is you doing the regression modelling! Have a play with this.
 
 Here is another interactive tool. [This one lets you make some data, and then shows what linear regression makes of this data](https://paternogbc.shinyapps.io/SS_regression/), in terms of sums of squares, residuals, and estimates of coefficients. * If you make some data with no relationship (i.e. slope = 0), which sum of squares is small and which large, and why? Approximately what percentage of variance in the data is explained by the regression? * If you make some data with a strong relationship (i.e. slope = 2) and little variation (i.e. standard deviation close to zero), which sum of squares is small and which large, and why? Approximately what percentage of variance in the data is explained by the regression?
-
-
-
-### But I like cats!
-
-Some light relief from all this statistics... see if you can get this code to run:
-
-```{r eval = FALSE, echo = TRUE}
-install.packages("devtools")
-library(devtools)
-install_github("Gibbsdavidl/CatterPlots")
-library(CatterPlots)
-meow <- multicat(xs=runif(21), ys=rnorm(21),
-                 cat=c(1,2,3,4,5,6,7,8,9,10),
-                 catcolor=list(c(1,1,1,1)),
-                 canvas=c(-0.1,1.1, -0.1, 1.1),
-                 xlab="some cats", ylab="other cats", main="Random Cats")
-```
 
 
 
@@ -367,8 +310,9 @@ learnr::question(
 **Influential observations.** One more check: are there any observations with a large influence on the estimated line? Make the residuals-vs-leverage plot, which also shows Cook's distance:
 
 ```{r eval = FALSE, echo = TRUE}
-plot(my_model, which = 5)
-# or, with ggfortify: autoplot(my_model, which = 5)
+library(ggfortify)
+autoplot(my_model, which = 5)
+# (without ggfortify: plot(my_model, which = 5))
 # and the Cook's distances themselves:
 sort(cooks.distance(my_model), decreasing = TRUE)[1:5]
 ```
@@ -804,3 +748,21 @@ learnr::question(
   allow_retry = TRUE
 )
 ```
+
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
+
+**Please read this before you open the solutions.**
+
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
+
+The example solution script for this practical is here: [unit03_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit03_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit03_practical_solution.R", destfile = "unit03_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.

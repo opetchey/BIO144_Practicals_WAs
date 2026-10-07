@@ -27,16 +27,14 @@ All homework is for your own practice and learning. It will not be marked or gra
 
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
-### Reading
+### Code walkthrough
+<!-- 2027: replaces the old reading and video sections -->
 
-Finish reading section 5.5 of Beckerman, Childs, and Petchey.
+Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Regression Part 2](https://opetchey.github.io/BIO144_Course_Book/4.1-regression-part2.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
-### Video walkthrough
+### Optional further reading
 
-You started watching a video walkthrough of regression in R during the previous Unit. In the video below you can continue watching. The video will automatically start at 9 min 15 sec, since before that is not so relevant.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/e2gJtXbQsdw?si=4OuLIgsYsInN6FIt&amp;start=555" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
+The rest of section 5.5 (interpreting a regression model) of *Getting Started with R* (2nd edition), Beckerman, Childs & Petchey. (Not examinable, unless it is also in the course book.)
 
 ### Seeing theory
 
@@ -418,7 +416,7 @@ fh_2013 <- fh_data |>
     log_health_exp_total = log10(health_exp_total),
     log_child_mort = log10(child_mort)
   )
-mod1 <- lm(log_child_mort ~ log_health_exp_total, data = fh_2013)
+m_child_mort <- lm(log_child_mort ~ log_health_exp_total, data = fh_2013)
 new_data <- data.frame(
   health_exp_total = seq(min(fh_2013$health_exp_total), max(fh_2013$health_exp_total), length.out = 100)
 )
@@ -426,7 +424,7 @@ new_data <- new_data |>
   dplyr::mutate(
     log_health_exp_total = log10(health_exp_total)
   )
-preds <- predict(mod1, newdata = new_data, interval = "confidence")
+preds <- predict(m_child_mort, newdata = new_data, interval = "confidence")
 new_data <- new_data |> 
   dplyr::mutate(
     log_child_mort_fit = preds[, "fit"],
@@ -515,7 +513,7 @@ fh_2013 <- fh_data |>
     log_health_exp_total = log10(health_exp_total),
     log_child_mort = log10(child_mort)
   )
-mod1 <- lm(log_child_mort ~ log_health_exp_total, data = fh_2013)
+m_child_mort <- lm(log_child_mort ~ log_health_exp_total, data = fh_2013)
 new_data <- data.frame(
   health_exp_total = seq(min(fh_2013$health_exp_total), max(fh_2013$health_exp_total), length.out = 100)
 )
@@ -523,7 +521,7 @@ new_data <- new_data |>
   dplyr::mutate(
     log_health_exp_total = log10(health_exp_total)
   )
-preds <- predict(mod1, newdata = new_data, interval = "confidence")
+preds <- predict(m_child_mort, newdata = new_data, interval = "confidence")
 new_data <- new_data |> 
   dplyr::mutate(
     log_child_mort_fit = preds[, "fit"],
@@ -701,5 +699,20 @@ learnr::question(
 )
 ```
 
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
 
+**Please read this before you open the solutions.**
 
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
+
+The example solution script for this practical is here: [unit04_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit04_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit04_practical_solution.R", destfile = "unit04_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.

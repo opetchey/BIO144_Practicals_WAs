@@ -32,6 +32,10 @@ All homework is for your own practice and learning. It will not be marked or gra
 * Read the [Previous knowledge](https://opetchey.github.io/BIO144_Course_Information/1.2-previous-knowledge.html) page of the course information website, and work through the [BIO144 Previous Knowledge self-tests](https://rstudio.mnf.uzh.ch:3939/content/6902b39f-65cc-4952-9a24-17cca0fe3ae2). Make a note of anything you are unsure about.
 * If you want to use R on your own laptop, install R and RStudio (see the "Getting R & RStudio" section of the self-tests). If you would rather not, you can use the UZH RStudio Server for everything.
 
+**Code walkthrough:** the code of the reaction time analysis in the first lecture is in the code walkthrough script, linked (with its video walkthrough) at the top of the course book chapter [Introduction](https://opetchey.github.io/BIO144_Course_Book/1.1-intro.html). Its last section ("Practical toolbox") shows code that this practical uses.
+
+**Optional further reading:** The data analysis workflow, in a little more detail, on the [Insights from Data website](https://insightsfromdata.io/insights-workflow.html#insights-workflow). (Not examinable, unless it is also in the course book.)
+
 ## Practical
 
 The aims of this first practical are that by the end of it you can:
@@ -491,3 +495,21 @@ question(
   allow_retry = TRUE
 )
 ```
+
+## Solutions
+<!-- 2027 addition: link to the example solution script -->
+
+**Please read this before you open the solutions.**
+
+* You will learn much more if you solve the practical yourself first, ideally together with other students, and ask a teaching assistant when you are stuck. Use the solution script afterwards, to check and compare your own work.
+* The solution script shows **one** way to solve the practical. It is not the only way: different code that gives the same answers is just as good.
+
+The example solution script for this practical is here: [unit01_practical_solution.R](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit01_practical_solution.R)
+
+To download it straight into your RStudio project folder, run this line in the Console:
+
+```
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/solutions/unit01_practical_solution.R", destfile = "unit01_practical_solution.R")
+```
+
+Then open it in RStudio and work through it line by line, comparing it with your own script. The comments explain each step and give the answers to the questions in the practical.
