@@ -20,66 +20,185 @@ In this set of web pages, in the left margin you will see a navigation pane. You
 
 ## Homework
 
-In every week there will be the following homework. In some weeks there may be additional homework. All homework is for your own practice and learning. It will not be marked or graded.
+All homework is for your own practice and learning. It will not be marked or graded.
 
 **Homework common to all weeks:**
 
 * Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
 * When you find things you don't understand or have trouble doing (e.g., in R), make a note of these. You can then ask a teaching assistant (TA) for help during the practical session, and you can ask on the Discussion Forum on OLAT. You can also ask questions during the lectures.
 
-There is no other homework for this week.
+**Homework specific to this week (ideally before the practical):**
+
+* Read the [Previous knowledge](https://opetchey.github.io/BIO144_Course_Information/1.2-previous-knowledge.html) page of the course information website, and work through the [BIO144 Previous Knowledge self-tests](https://rstudio.mnf.uzh.ch:3939/content/6902b39f-65cc-4952-9a24-17cca0fe3ae2). Make a note of anything you are unsure about.
+* If you want to use R on your own laptop, install R and RStudio (see the "Getting R & RStudio" section of the self-tests). If you would rather not, you can use the UZH RStudio Server for everything.
 
 ## Practical
 
-### Exercise 1 (of 1)
-<!-- LO: LO1.1.3, LO2.1.5, LO2.1.7, LO2.1.8, LO2.1.9 -->
+The aims of this first practical are that by the end of it you can:
 
-During the first lecture you collected data on class reaction times. The exercise this unit is for you to use R to analyse the dataset.
+* use RStudio, both on the UZH RStudio Server (which you will use in the exam) and, if you wish, on your own laptop;
+* organise your work in an RStudio project, and install and load add-on packages;
+* get a data file into R;
+* find and fix errors in R code (everyone makes them, all the time!);
+* know what previous knowledge is expected, and which parts of it you need to revise.
 
-To help, we give you a nearly complete and working script of R code. The script does, however, contain some deliberate errors! You'll need to find and correct these! This is a common feature of code we write -- we usually make a mistake of some kind, get and error message, and need to troubleshoot and correct. So this exercise is good practice for what you'll experience during the course!
+Work through the parts in order. Don't worry if you don't finish everything in the practical session: finish at home, and ask on the Discussion Forum if you get stuck.
 
-The script also contains some "???" that you need to replace with appropriate text. The errors get a bit harder as you go through the script. Good luck!
+### Part 1: Get working in RStudio (about 15 minutes)
+<!-- LO: LO2.1.1, LO1.1.1 -->
 
-Click on the links below, and hopefully the files will download. If they appears in your browser do `Save As...` and save them to somewhere safe on your computer. Do not add a file extension. Do not let a file extension be added (e.g., the Chrome browser automatically attempts to add a `.txt` file extension... you have to delete it!). Leave the file extension as they are (only `.r` or `.csv`) . Do not open the data file in Excel or any other program.
+**Everyone, please log in to the UZH RStudio Server now**, even if you plan to work on your own laptop: <https://rstudio.mnf.uzh.ch/>. Log in with your UZH username and password (the same as for your UZH email). You will use RStudio Server in the final exam, so it is important to check now that you can log in, and to get help if you can't. (If the login stalls, you may have a passkey set up for your UZH account; see the "Probeprüfung" section of the General information page of the course information website.)
 
-Script file: [reaction_time_analysis.r](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/reaction_time_analysis_needs_fixing.r)
+If you will also work on your own laptop, open RStudio there too.
 
-Data file: <a href="https://tinyurl.com/ye255bdm" target="_blank">
-  Link to Reaction Time Dataset
-</a>
+Check that you can:
 
-Get organised by setting up a project folder on your computer and downloading the above files into it. This will be important so you can know where your copy of the data files is located. You must know this to be able to read the data into R.
+1. Find the four panes of RStudio: the script editor (top left; open a new script with File > New File > R Script), the console (bottom left), the environment (top right) and files/plots/packages/help (bottom right).
+2. Type `1 + 1` in the console and press Enter.
+3. Type `my_number <- 1 + 1` in the script, then run that line (put the cursor on the line and press Ctrl+Enter on Windows/Linux, or Cmd+Enter on a Mac). Look for `my_number` in the environment pane.
 
-Then open the script in RStudio and get it working, not forgetting to think about the questions in the script, about assumptions, effect size, biological significance, statistical significance, and so on.
+```{r LO-u1-panes, echo=FALSE}
+# LO: LO2.1.1
+question(
+  "Match each part of RStudio to what it is for.\n\n1. Script editor\n2. Console\n3. Environment\n\nA. Shows the objects (data, results) that currently exist in R's memory.\nB. Where you write, save and edit your code, so that you have a record of your analysis.\nC. Where R runs commands and prints the results (and error messages).",
+  answer("1B, 2C, 3A", correct = TRUE),
+  answer("1C, 2B, 3A"),
+  answer("1A, 2C, 3B"),
+  answer("1B, 2A, 3C"),
+  correct = "Correct! Write your code in a script (not directly in the console), so that you can save it, re-run it and share it.",
+  incorrect = "Try again. Where did the result of 1 + 1 appear? Where did my_number appear after you ran the line in the script?",
+  allow_retry = TRUE
+)
+```
 
-Write a sentence about the finding. Cover statistical and practical significance. Be critical. Ask a teaching assistant (TA) for feedback, see if they can make suggests of how you could improve what you've done.
+### Part 2: An RStudio project and add-on packages (about 15 minutes)
+<!-- LO: LO2.1.3, LO2.1.10 -->
 
-The statistical test used in the script is a t-test. Hopefully you have experienced this in previous studies. Please ensure you have reviewed that material if you are not familiar with it anymore. If you are new to t-tests, please ask a TA for help.
+**Make an RStudio project for BIO144.** An RStudio project is a folder that holds everything for one piece of work (scripts, data, results), and that RStudio remembers. When you open the project, R automatically looks for files in that folder, so reading data files "just works".
 
+In RStudio: File > New Project... > New Directory > New Project. Name it `BIO144` and choose where to put it. RStudio will restart in the new project (you will see "BIO144" at the top right). Do this wherever you will work (on RStudio Server, and on your laptop if you use it). Each time you work on BIO144, open this project first (File > Open Project..., or the menu at the top right).
 
-Here are some questions to help you think about your experience correcting the script and analysing the data.
+```{r LO-u1-project-why, echo=FALSE}
+# LO: LO2.1.10
+question(
+  "Why is it a good idea to keep each piece of work in an RStudio project?",
+  answer("When the project is open, R looks for files in the project folder, so you can read a data file just by its name.", correct = TRUE),
+  answer("Everything for the work (scripts, data, results) is in one place, which makes it easy to find, back up and share.", correct = TRUE),
+  answer("R runs faster inside a project."),
+  answer("Projects stop you from making errors in your code."),
+  correct = "Correct!",
+  incorrect = "Think about where R looks for files, and about keeping things organised.",
+  allow_retry = TRUE
+)
+```
 
-```{r quiz-install-packages, echo=FALSE}
+**Install the add-on packages we will use.** In the console, run:
+
+```{r eval = FALSE, echo = TRUE}
+install.packages("tidyverse")
+```
+
+This installs a set of packages, including `readr`, `dplyr`, `tidyr` and `ggplot2`. It can take a few minutes. (On RStudio Server they may already be installed.) Then load them with:
+
+```{r eval = FALSE, echo = TRUE}
+library(tidyverse)
+```
+
+```{r LO-u1-install-load, echo=FALSE}
 # LO: LO2.1.3
 question(
-    "Did you get an error when trying to run the lines:\n\nlibrary(readr)\n\nlibrary(dplyr)\n\nlibrary(ggplot2)\n\nIf you did get an error, it was probably because you had not installed one or more of these packages on your computer.\n\nWhich of these could you use to install the dplyr package? (Select all that apply.)",
-    answer("In RStudio, click on the Tools menu, then Install Packages, type the name of the package you want into the Packages box, and click on Install.",
-      correct = TRUE
-    ),
-    answer(
-      "In RStudio, go to the Packages pane, click Install, type the name of the package you want into the Packages box, and click on Install.",
-      correct = TRUE
-    ),
-    answer(
-      "In the Console, type install.packages(\"dplyr\")",
-      correct = TRUE
-    ),
-    
-    correct = "Correct! All of these methods will install the dplyr package.",
-    incorrect = "All three options shown are valid ways to install an R package. You only need to install a package once, but you must load it with library() each time you start R.",
-    allow_retry = TRUE
-  )
+  "Which statements about add-on packages are correct?",
+  answer("You install a package only once on each computer (e.g. with install.packages(), or the Install button in the Packages pane).", correct = TRUE),
+  answer("You load a package with library() every time you start R and want to use it.", correct = TRUE),
+  answer("You need to run install.packages() at the start of every script."),
+  answer("Once a package is installed, its functions are available without loading it."),
+  correct = "Correct! Installing gets the package onto your computer (once); loading makes its functions available in the current R session (each time). Put library() lines at the top of your scripts, but not install.packages().",
+  incorrect = "Think about the difference between getting a package onto the computer, and making it available in the current R session.",
+  allow_retry = TRUE
+)
 ```
+
+### Part 3: Get the data into R (about 15 minutes)
+<!-- LO: LO2.1.5, LO2.1.9 -->
+
+In the lecture you recorded your reaction times. The class data are in a file called `reaction_times_2027.csv`. Download the file into your project folder by running this line in the console (with your BIO144 project open):
+
+```{r eval = FALSE, echo = TRUE}
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/reaction_times_2027.csv",
+              destfile = "reaction_times_2027.csv")
+```
+
+Look in the Files pane: you should see the file in your project folder. (You can also click on it and choose "View File" to see what's inside. But **do not open it in Excel and save it**: Excel can change data in ways that cause problems for R.)
+
+Now open a new script, save it in the project folder (e.g. as `unit1_practice.R`), and write and run:
+
+```{r eval = FALSE, echo = TRUE}
+library(readr)
+class_RTs <- read_csv("reaction_times_2027.csv")
+class_RTs
+str(class_RTs)
+summary(class_RTs)
+```
+
+How many rows (participants) and columns (variables) are there? Does that make sense? Are the reaction times numbers (`<dbl>`) and is sex at birth text (`<chr>`)?
+
+```{r LO-u1-file-not-found, echo=FALSE}
+# LO: LO2.1.5, LO2.1.9
+question(
+  "Suppose read_csv() gives the error: 'reaction_times_2027.csv' does not exist in current working directory. What are likely causes?",
+  answer("The file name in the code is not exactly the same as the name of the file (check spelling, capital letters and the .csv ending).", correct = TRUE),
+  answer("The file is not in the project folder (or the project is not open), so R is looking in a different folder.", correct = TRUE),
+  answer("When downloading through a web browser, an extra ending (e.g. .txt) was added to the file name.", correct = TRUE),
+  answer("The readr package is not installed."),
+  correct = "Correct! This is the most common problem when starting with R. Check the Files pane: is the file there, and is its name exactly what you typed? (If readr were not loaded, the error would instead say could not find function \"read_csv\".)",
+  incorrect = "The message says R could not find the file. Think about the file's name, and where R is looking.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-u1-variable-types, echo=FALSE}
+# LO: LO2.1.5
+question(
+  "Why is it important to check the variable types (e.g. with str()) straight after reading in data?",
+  answer("Because if a column of numbers contains something that is not a number (e.g. '250ms' or a comma as decimal separator), R reads the whole column as text, and calculations on it will fail or be wrong.", correct = TRUE),
+  answer("Because R often changes the values when it reads a file."),
+  answer("It isn't important; R always gets the types right."),
+  correct = "Correct! Checking the number of rows and columns and the variable types catches most import problems before they cause confusing errors later.",
+  incorrect = "Think about what happens if a single value in a numeric column contains a letter.",
+  allow_retry = TRUE
+)
+```
+
+### Part 4: Fix the reaction time script (about 40 minutes)
+<!-- LO: LO2.1.9, LO1.1.5, LO1.1.6, LO2.1.10 -->
+
+We give you a script that does a version of the analysis from the lecture's live demonstration: it reads in the class data, tidies it, makes some graphs, and does a t-test comparing the reaction times of females and males. **But the script contains about ten deliberate errors.** Your task is to find and fix them, so that the script runs from top to bottom.
+
+Some of the code uses functions from the `dplyr`, `tidyr` and `ggplot2` packages. **You will learn how these work in Unit 2.** For now, read the comments in the script to see what each step does. You do not need to understand how these functions work to fix the errors: they are the kinds of mistakes everyone makes (typos, a missing comma or bracket, and so on).
+
+Download the script into your project folder:
+
+```{r eval = FALSE, echo = TRUE}
+download.file("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/reaction_time_analysis_needs_fixing.r",
+              destfile = "reaction_time_analysis_needs_fixing.r")
+```
+
+Open it from the Files pane. Then run it **one command at a time from the top** (Ctrl/Cmd+Enter runs the current line, or the whole command if it spans several lines). After each one, look at the console. If there is an error, fix it, and run that line again before moving on.
+
+**How to read an error message.** The message is R telling you what it could not do. Read it carefully, and look for names you recognise. Here is what some common messages usually mean:
+
+| Error message (part of it) | Usual cause | What to check |
+|---|---|---|
+| `could not find function "xyz"` | Typo in the function name, or the package containing the function is not loaded | Spelling; a `library()` line for the package |
+| `object 'xyz' not found` | Typo in the name of an object, or the object was never created (perhaps because an earlier line failed) | Spelling and capital letters; did the line that creates it run without error? |
+| `... does not exist in current working directory` | Wrong file name, or the file is not in the project folder | The Files pane |
+| `unexpected string constant`, `unexpected symbol`, `unexpected ')'` | Missing or extra comma, bracket or quote | The line, and the one before it |
+| `Column 'xyz' is not found` | Typo in a variable name (including capital letters) | `names()` of the data |
+| The console shows `+` instead of `>` | R is waiting for you to finish the command: usually a missing closing bracket or quote | Press Esc, then fix the line |
+
+There is more about this in the section *Finding and fixing errors* in Chapter 2 of the course book.
+
+**Watch out for errors that give no error message!** At least one of the errors makes the code run without complaint, but does the wrong thing. Read the comments, and check that each step gives the result it should.
 
 ```{r quiz-fixing-errors, echo=FALSE}
 # LO: LO2.1.9
@@ -97,43 +216,101 @@ question(
 )
 ```
 
-```{r quiz-code-diagnostics, echo=FALSE}
-# LO: none (beyond objectives)
+```{r LO-u1-error-match, echo=FALSE}
+# LO: LO2.1.9
 question(
-    "In RStudio, in the script editor window, in the left margin, you might see on some lines some symbols, such as an X in a red circle, and an ! in a yellow triangle.\n\nIf you don't see these, have a look at this web page:\nhttps://support.rstudio.com/hc/en-us/articles/205753617-Code-Diagnostics\n\nWhat is the other symbol you might see in the script?",
-    
-    learnr::answer("a sad face"),
-    learnr::answer("an i in a blue circle", correct = TRUE),
-    learnr::answer("a thumbs up"),
-    learnr::answer("a happy face"),
-    
-    correct = "Correct! The information symbol (an i in a blue circle) is also used in RStudio code diagnostics.",
-    incorrect = "You won't see this symbol!",
-    allow_retry = TRUE
-  )
+  "Match each error message to its most likely cause.\n\n1. could not find function \"read_cvs\"\n2. 'reaction_time_2027.csv' does not exist in current working directory\n3. object 'class_RT' not found\n4. Error: unexpected string constant\n\nA. A misspelt name of an object (data or result).\nB. A typo in a function name (or the package is not loaded).\nC. A missing comma between items, e.g. in c().\nD. A wrong file name, or the file is not in the project folder.",
+  answer("1B, 2D, 3A, 4C", correct = TRUE),
+  answer("1A, 2D, 3B, 4C"),
+  answer("1B, 2C, 3A, 4D"),
+  answer("1D, 2B, 3A, 4C"),
+  correct = "Correct! With a little practice, error messages become very helpful.",
+  incorrect = "Use the table above.",
+  allow_retry = TRUE
+)
 ```
 
-```{r quiz-degrees-of-freedom, echo=FALSE}
-# LO: LO3.1.5
+```{r LO-u1-same-message, echo=FALSE}
+# LO: LO2.1.9, LO2.1.3
 question(
-    "The last part of the exercise is to report your findings, including the direction and size of the difference in reaction times between males and females, and a measure of uncertainty in that difference.\n\nWhich of these is the number of observations in the dataset (i.e. the number of people) minus the number of categories (two: male and female)?",
-    
-    learnr::answer("The p-value"),
-    learnr::answer("The degrees of freedom", correct = TRUE),
-    learnr::answer("The 95% confidence interval"),
-    learnr::answer("The t-statistics"),
-    
-    correct = "Correct! For a two-sample t-test, the degrees of freedom are equal to the number of observations minus the number of groups.",
-    incorrect = "The quantity described is the degrees of freedom. It depends on the sample size and the number of groups being compared, not on the p-value, confidence interval, or t-statistic.",
-    allow_retry = TRUE
-  )
+  "Later in the script you get: could not find function \"pivot_longer\". The function name is spelled correctly. What is the problem?",
+  answer("The package that contains the function (tidyr) is not loaded: a library(tidyr) line is missing.", correct = TRUE),
+  answer("pivot_longer is not a real function."),
+  answer("The data file was not found."),
+  correct = "Correct! The same message can have different causes: a typo in the function name (as with read_cvs), or the package not being loaded (as here). You can find which package a function is in with ??pivot_longer, or by searching online.",
+  incorrect = "If the spelling is right, why else might R not know about a function?",
+  allow_retry = TRUE
+)
 ```
 
+```{r LO-u1-silent-error, echo=FALSE}
+# LO: LO2.1.9
+question(
+  "After the step that removes implausible values, nrow() says there are 0 participants left, and the t-test then fails with 'not enough observations'. But the filter line itself gave no error. What is going on?",
+  answer("The filter condition is the wrong way round: it keeps values below 50 *and* above 500, which no value can be. The comment says what it should do: keep values above 50 and below 500.", correct = TRUE),
+  answer("All the reaction times in the class were implausible."),
+  answer("The t-test function is broken."),
+  correct = "Correct! This is the most dangerous kind of error: the code runs, but does the wrong thing. That is why we check the result of each step (here, with nrow()) against what we expect.",
+  incorrect = "Compare the code of the filter step with the comment above it.",
+  allow_retry = TRUE
+)
+```
 
-If you finish early and are happy with everything so far, and you want a challenge, figure out how to use RMarkdown to create a word document, html file, or pdf of your findings.
+**Using an AI assistant to understand an error.** Choose one of the error messages you met. Paste the message (and the line of code) into an AI assistant and ask it to *explain what the message means*, rather than to fix the code for you. Compare its explanation with your own understanding and with the table above. Then fix the code yourself.
 
-Here is a working version of the script. Please don't look at it until you have finished your own corrections! [working_reaction_time_analysis.r](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/reaction_time_analysis_working.r)
+```{r LO-u1-ai-use, echo=FALSE}
+# LO: LO1.1.6
+question(
+  "Which of these are appropriate uses of an AI assistant while learning data analysis in BIO144?",
+  answer("Asking it to explain what an error message means, then fixing the code yourself.", correct = TRUE),
+  answer("Asking it to explain a statistical concept in a different way, and checking its explanation against the course book.", correct = TRUE),
+  answer("Pasting in the whole practical and copying its answers without trying yourself first."),
+  answer("Using it during the final exam."),
+  correct = "Correct! Use AI to help you understand, not to do the learning for you. AI assistants can be wrong, so check what they say. And you will not have one in the exam (Copilot is switched off on RStudio Server in exam mode), so you need to be able to read errors and write code yourself.",
+  incorrect = "Think about what helps you learn, and about the exam conditions.",
+  allow_retry = TRUE
+)
+```
 
+**Finally, check the script is reproducible.** When you have fixed all the errors: Session > Restart R, then run the whole script from the top (Code > Run Region > Run All). If it runs without any errors, from a fresh start, then it will give the same results every time, for you and for anyone you share it with.
+
+```{r LO-u1-restart, echo=FALSE}
+# LO: LO1.1.5, LO2.1.10
+question(
+  "Why restart R and run the whole script from the top at the end?",
+  answer("To check that the script works on its own, and does not depend on objects you created earlier by running lines out of order or typing in the console.", correct = TRUE),
+  answer("Because R becomes slower the longer it runs."),
+  answer("To delete the data file."),
+  correct = "Correct! A script that runs from top to bottom in a fresh R session is a complete, repeatable record of your analysis.",
+  incorrect = "Think about what could be in R's memory that is not created by the script itself.",
+  allow_retry = TRUE
+)
+```
+
+If you got stuck, here is the corrected script. Please only look at it after trying to fix the errors yourself: [reaction_time_analysis_working.r](https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/scripts/reaction_time_analysis_working.r)
+
+*If you finish early:* change the code that makes the box plot, so that the axis labels are more informative (hint: add `+ labs(x = "Sex at birth", y = "Mean reaction time (ms)")`). Or look at the t-test output: what is the estimated difference between the groups, and its 95% confidence interval? (We will look at reporting results in later units.)
+
+### Part 5: Previous knowledge check-in (about 10 minutes, or at home)
+<!-- LO: LO1.1.2 -->
+
+BIO144 builds on things you learned in previous courses (in particular MAT183 and BIO134): for example descriptive statistics, probability distributions, hypothesis testing and t-tests, and basic R. The full list is on the [Previous knowledge](https://opetchey.github.io/BIO144_Course_Information/1.2-previous-knowledge.html) page.
+
+* If you have not done so yet, work through the [BIO144 Previous Knowledge self-tests](https://rstudio.mnf.uzh.ch:3939/content/6902b39f-65cc-4952-9a24-17cca0fe3ae2).
+* Write down the two or three topics you feel least sure about. Ask a TA about one of them now, and plan when you will revise the others (before Unit 3 is a good target).
+
+```{r LO-u1-prior-knowledge, echo=FALSE}
+# LO: LO1.1.2
+question(
+  "Where can you find out what previous knowledge BIO144 expects, and check your own?",
+  answer("On the Previous knowledge page of the course information website, and in the BIO144 Previous Knowledge self-tests.", correct = TRUE),
+  answer("Only in the final exam."),
+  answer("There is no expected previous knowledge."),
+  correct = "Correct! None of the self-tests are graded: they are there to help you find what to revise.",
+  incorrect = "Look at the links above.",
+  allow_retry = TRUE
+)
+```
 
 ## Weekly Quiz
 
@@ -298,6 +475,19 @@ learnr::question(
   answer("The residual eᵢ is the fitted value minus the mean of y."),
   correct = "Correct! (The residual eᵢ is the observed value minus the fitted value: yᵢ − ŷᵢ.) The full list is in the section 'Notation and some definitions' in Chapter 1 of the course book.",
   incorrect = "Check the section 'Notation and some definitions' in Chapter 1 of the course book.",
+  allow_retry = TRUE
+)
+```
+
+```{r LO-u1-where-help, echo=FALSE}
+# LO: LO1.1.1
+question(
+  "You are stuck on an R problem at home, two days before the next practical. What is a good way to get help?",
+  answer("Post on the BIO144 Discussion Forum on OLAT, including your code, the full error message, and what you have already tried.", correct = TRUE),
+  answer("Bring it to the next practical and ask a TA.", correct = TRUE),
+  answer("Give up on that part of the course."),
+  correct = "Correct! The FAQ page of the course information website explains how to ask a question so that we can help quickly. Posts can be anonymous, and others probably have the same question.",
+  incorrect = "Look at the 'Getting help' section of the General information page of the course information website.",
   allow_retry = TRUE
 )
 ```
