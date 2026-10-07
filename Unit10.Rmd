@@ -408,7 +408,7 @@ Study design:
 * Stool samples were collected from 60 adult individuals
 * Individuals followed one of three long-term diets: Omnivorous, Vegetarian, Vegan
 * DNA was extracted from each sample and analysed using shotgun metagenomic sequencing.
-* Sequencing reads were assigned to microbial taxa, producing relative abundance estimates for a set of bacterial taxa.
+* Sequencing reads were assigned to microbial taxa, producing abundance estimates for a set of bacterial taxa. <!-- 2027 fix: the data are abundances, not relative abundances -->
 
 Biological question: Does gut microbiome composition differ among individuals with different diets?
 
@@ -417,8 +417,8 @@ To address this, we will use ordination (NMDS) based on community dissimilarity.
 Structure of the dataset:
 
 * Each row = one individual
-* Each column = relative abundance of a microbial taxon
-* Values represent relative abundance (proportions summing to ~1)
+* Each column = abundance of a microbial taxon
+* Values represent abundance (not proportions: the total abundance differs among individuals, from about 360 to 600)
 * Additional metadata columns: SampleID, and Diet
 
 This structure is typical of microbiome data used in ordination analyses.
@@ -457,8 +457,10 @@ for (i in 1:n_samples) {
   abundance_matrix[i, ] <- rgamma(n_taxa, shape = lambda, scale = 1)
 }
 
-# Convert to relative abundances
-abundance_matrix <- abundance_matrix / rowSums(abundance_matrix)
+# (The values are left as abundances. To convert them to relative abundances,
+# i.e. proportions that sum to 1 for each individual, you could use:
+# abundance_matrix <- abundance_matrix / rowSums(abundance_matrix)
+# The dataset microbiome_data.csv contains abundances, not proportions.)
 
 # Add column names
 colnames(abundance_matrix) <- paste0("OTU_", 1:n_taxa)
@@ -476,7 +478,7 @@ write_csv(microbiome_data, "~/Desktop/microbiome_data.csv")
 biom <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/microbiome_data.csv")
 ```
 
-The first step in the analysis is to calculate pairwise dissimilarities among samples based on their community composition. Use Bray–Curtis dissimilarity, which is well suited for relative abundance data (see the course book, Chapter 10, *Distances for community (abundance) data: Bray–Curtis*). Use the `vegdist` function from the `vegan` package.
+The first step in the analysis is to calculate pairwise dissimilarities among samples based on their community composition. Use Bray–Curtis dissimilarity, which is well suited for abundance data, whether counts or relative abundances (see the course book, Chapter 10, *Distances for community (abundance) data: Bray–Curtis*). Use the `vegdist` function from the `vegan` package.
 
 ```{r echo = FALSE, message = FALSE}
 library(vegan)

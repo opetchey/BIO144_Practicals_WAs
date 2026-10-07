@@ -731,7 +731,7 @@ Then:
 ```{r eval = TRUE, echo = FALSE, message=FALSE}
 library(tidyverse)
 countries <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/rugged.csv") |> 
-  select(rugged, rgdppc_2000, cont_africa)
+  select(country, rugged, rgdppc_2000, cont_africa)  # 2027 fix: keep country (needed for the Tokelau and Switzerland questions)
 ```
 
 

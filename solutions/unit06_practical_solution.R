@@ -246,10 +246,10 @@ summary(m_milk_standardised)
 # Part 2: Why we use adjusted R-squared ----
 # We add random explanatory variables (pure noise) one at a time, and record
 # R-squared and adjusted R-squared each time.
-# set.seed() makes the random numbers the same each time you run the script.
-# Your own random numbers will be different, so your numbers will differ a
-# little, but the pattern will be the same.
-set.seed(3)
+# set.seed(32) makes the random numbers the same each time you run the
+# script, and the same as in the practical instructions, as long as r1 to r10
+# are made with rnorm(17), in that order, straight after set.seed(32).
+set.seed(32)
 
 # Row 0: the model with no random variables (m_milk from Part 1).
 r2_table <- tibble(
@@ -286,14 +286,15 @@ r2_table |>
   geom_line() +
   labs(x = "Number of random explanatory variables", y = "Value", colour = "")
 # Look at: R-squared goes up every time we add a random variable (it can
-# never go down), from 0.54 to 0.74 here, even though the random variables
+# never go down), from 0.54 to 0.63 here, even though the random variables
 # contain no information at all. Adjusted R-squared does not do this: here it
-# falls from 0.48 to below zero, because it penalises each extra explanatory
-# variable. This is why we use adjusted R-squared in multiple regression.
+# falls with every random variable, from 0.48 to -0.47, because it penalises
+# each extra explanatory variable. This is why we use adjusted R-squared in
+# multiple regression.
 # Be aware: with only 17 species, adjusted R-squared is itself quite
-# variable. Change the number in set.seed() and run this part again a few
-# times. Sometimes adjusted R-squared also goes up by chance, because with
-# 10 random variables only 17 - 13 = 4 residual degrees of freedom are left.
+# variable. With other seeds it sometimes goes up a little by chance, because
+# with 10 random variables only 17 - 13 = 4 residual degrees of freedom are
+# left. (That is why the practical uses set.seed(32).)
 # But unadjusted R-squared ALWAYS goes up.
 # Answer (why does unadjusted R-squared increase?): by chance alone, a random
 # variable usually explains a small amount of the variation in the response,

@@ -560,15 +560,19 @@ learnr::question(
 
 You're going to explore when and why we need to use adjusted r-squared.
 
-Go to the bottom of your script for analysing the milk composition data and make a new variable, say r1, and put in it 17 random numbers. Something like this:
+Go to the bottom of your script for analysing the milk composition data and make a new variable, say r1, and put in it 17 random numbers. First set the "seed" of the random number generator to 32, so that everyone gets the same random numbers (and the same results). Run `set.seed(32)` only once, just before you make `r1`:
 
-`r1 <- rnorm(17)`
+```{r}
+set.seed(32)
+r1 <- rnorm(17)
+```
+<!-- 2027 fix: seed set so that the pattern in adjusted R-squared is clear (with seed 32 it falls with every added random variable, from 0.48 to -0.47); with other seeds and only 17 species it is not always clear -->
 
 Now do a multiple regression that includes the `log10_mass` and `neocortex.perc` variable and the variable you just made (`r1`). Find and write down the r-squared and the adjusted r-squared of this model with three explanatory variables.
 
 Now make a table (on a piece of paper) with three columns: number of random explanatory variables, r-squared, and adjusted r-squared. Write in the first row 0 (i.e. no random variables) and the r-squared and adjusted r-squared of the model with no random variables (i.e. the model you made in the previous exercise). In the second row write 1 random variable, and the r-squared and the adjusted r-squared.
 
-Now make another random variable, called it `r2` for example, add it to the model, and fill in the next row of the table. Keep going, until you've added 10 random variables, and filled in the table.
+Now make another random variable, call it `r2` (`r2 <- rnorm(17)`; do not set the seed again), add it to the model, and fill in the next row of the table. Keep going, until you've added 10 random variables (`r3`, `r4`, ... `r10`, each made with `rnorm(17)`, in that order), and filled in the table. (If you run any other code that uses random numbers in between, or set the seed again, your numbers will differ from your classmates'. Then just start again from `set.seed(32)`.)
 
 What does this tell you about r-squared (unadjusted)? What happens when we add variables, even random ones containing no relevant information, to the r-squared? What happens to the adjusted r-squared, on the other hand?
 

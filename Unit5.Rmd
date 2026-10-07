@@ -381,18 +381,19 @@ learnr::question(
     "The residuals show a clear pattern in the residuals vs fitted plot (as would occur if there is a non-linear relationship between the response and explanatory variable).",
   ),
   learnr::answer(
-    "The scale–location plot shows that the variance of the residuals is roughly constant across fitted values (i.e. homoscedasticity.",
+    "The scale–location plot shows that the variance of the residuals is roughly constant across fitted values (i.e. homoscedasticity).",
     correct = TRUE
   ),
   learnr::answer(
-    "There are a few data points with high residuals that could unduly influence the model fit.",
+    "There are a few highly influential data points, that on their own change the model fit a lot.",
+    message = "Not supported by the plots. An influential data point is one that changes the estimates a lot when it is removed. Influence depends on both the size of the residual and the leverage of the point, and is measured by Cook's distance (see the residuals vs leverage plot, or plot Cook's distance with autoplot(m_sbp_treatment, which = 4)). Here one participant has a large residual, but all Cook's distances are small (below 0.2), so no point is highly influential."
   ),
   learnr::answer(
     "The qq plot clearly shows that the residuals are independent."
   ),
   
-  correct = "Correct! The residuals vs fitted plot helps assess linearity, the QQ-plot assesses normality of residuals, and the scale–location plot helps assess homoscedasticity.",
-  incorrect = "Carefully consider what each diagnostic plot is designed to reveal. Independence usually cannot be assessed directly from these plots.",
+  correct = "Correct! The residuals vs fitted plot helps assess linearity, the QQ-plot assesses normality of residuals, and the scale–location plot helps assess homoscedasticity. Influence (how much a single data point changes the model fit) is shown by Cook's distance: here one point has a large residual, but no point has a large Cook's distance.",
+  incorrect = "Carefully consider what each diagnostic plot is designed to reveal. Independence usually cannot be assessed directly from these plots. Remember that a large residual does not by itself make a point influential: influence (measured by Cook's distance) depends on both the residual and the leverage of the point.",
   allow_retry = TRUE
 )
 ```

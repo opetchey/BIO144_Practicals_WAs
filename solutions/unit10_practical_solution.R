@@ -262,8 +262,8 @@ biom <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_W
 dim(biom)           # 60 rows (individuals), 202 columns (SampleID, Diet, 200 taxa)
 biom |> count(Diet) # 20 individuals per diet
 biom |> select(1:6) |> head()
-# Note: the values in this file are not proportions that add up to 1 (each
-# row adds up to several hundred). For Bray-Curtis this does not matter much;
+# Note: as the practical says, the values are abundances, not proportions
+# (each row adds up to several hundred). For Bray-Curtis this is fine;
 # if you want true relative abundances you could divide each row by its sum,
 # e.g. with decostand(..., method = "total") from vegan.
 
