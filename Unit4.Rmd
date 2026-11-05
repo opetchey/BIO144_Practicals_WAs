@@ -21,7 +21,7 @@ All other information for the course is on the OLAT course webpages, and web pag
 
 All homework is for your own practice and learning. It will not be marked or graded.
 
-### Homework common to all weeks:**
+### Homework common to all weeks:
 
 * Review the material from the lecture(s) this week. Make sure you understand the concepts and ideas presented. Ensure you can follow any mathematical or statistical explanations. Ensure you can do the R that is needed for the week's learning objectives.
 

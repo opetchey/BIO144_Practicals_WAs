@@ -356,3 +356,4 @@ anova(betadisper(bray_distances, biom$Diet)) # PERMDISP: do spreads differ?
 # Finally: Session > Restart R, then run the whole script again from the top
 # (Ctrl+Shift+Enter, or Cmd+Shift+Enter on a Mac). If it runs without errors
 # and gives the same answers, your analysis is reproducible.
+

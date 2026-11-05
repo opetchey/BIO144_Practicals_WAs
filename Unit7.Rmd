@@ -699,14 +699,14 @@ In this practical part, you will work through an analysis of covariance. Please 
 0. Get introduced to and think about the biological question.
 1. Prepare a script, load the data, and make some basic checks on the dataset.
 2. Visualise to answer the question.
-3. Fit an appropriate model. treatments.
+3. Fit an appropriate model.
 4. Check the assumptions of the model.
 5. Interpret the model.
 6. Make a visualisation of the data, good for publication.
 7. Write a short reporting sentence describing your findings.
 8. Critique and reflection
 
-*In this practical part, there is less guidance for you, and fewer questions. This is intentional. As you experience more, you become more capable to do what you already experienced, and more able and confident to tackle new things. As you get the hang of these, we increase our expectations of you! This is how learning works. Of course, reach out for support at any point!*
+*In this practical part, there is less guidance for you. This is intentional. As you experience more, you become more capable to do what you already experienced, and more able and confident to tackle new things. As you get the hang of these, we increase our expectations of you! This is how learning works. Of course, reach out for support at any point!*
 
 (The dataset in this exercise, and some text (itallic below) comes from the excellent book *Statistical Rethinking* by Richard McElreath.)
 

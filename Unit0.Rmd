@@ -1068,8 +1068,6 @@ For the problems in this unit, you get three chances to answer before you're sho
 
 ### Video 1
 
-> **Note (for Owen, remove once checked):** this video is hosted on UZH's Kaltura Mediaspace and was originally embedded inside OLAT. Please check it still plays correctly here before this page goes live -- if it doesn't, it will need to be re-shared/embedded from Kaltura with public or unlisted link access rather than an OLAT-restricted one.
-
 <iframe width="826" height="465" src="https://uzh.mediaspace.cast.switch.ch/embed/secure/iframe/entryId/0_6a1v8mhf/uiConfId/23449004/st/0" allowfullscreen="allowfullscreen" allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Getting help, video 1"></iframe>
 
 ```{r q-problem1-91294-1, echo=FALSE}
@@ -1154,7 +1152,6 @@ There are no datasets or code for this unit.
 
 ### Video 1
 
-> **Note (for Owen, remove once checked):** this video is hosted on UZH's Kaltura Mediaspace and was originally embedded inside OLAT. Please check it still plays correctly here before this page goes live -- if it doesn't, it will need to be re-shared/embedded from Kaltura with public or unlisted link access rather than an OLAT-restricted one.
 
 <iframe width="826" height="465" src="https://uzh.mediaspace.cast.switch.ch/embed/secure/iframe/entryId/0_iefhrwfu/uiConfId/23449004/st/0" allowfullscreen="allowfullscreen" allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Add-on packages, video 1"></iframe>
 
