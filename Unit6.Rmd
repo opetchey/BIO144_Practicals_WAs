@@ -35,7 +35,7 @@ Work through the code walkthrough script for this week's course book chapter, an
 
 ### Optional further reading
 
-Section 9.1 (introduction to multiple regression), and the section on checking model conditions, in Chapter 9 of *OpenIntro Statistics* (4th edition), Diez, Çetinkaya-Rundel & Barr, free at [openintro.org](https://www.openintro.org/book/os/). (Not examinable, unless it is also in the course book.)
+There is no optional reading for this unit.
 
 ## Practical part 1
 
