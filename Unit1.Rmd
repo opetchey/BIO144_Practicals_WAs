@@ -32,7 +32,7 @@ All homework is for your own practice and learning. It will not be marked or gra
 * Read the [Previous knowledge](https://opetchey.github.io/BIO144_Course_Information/1.2-previous-knowledge.html) page of the course information website, and work through the [BIO144 Previous Knowledge self-tests](https://rstudio.mnf.uzh.ch:3939/content/6902b39f-65cc-4952-9a24-17cca0fe3ae2). Make a note of anything you are unsure about.
 * If you want to use R on your own laptop, install R and RStudio (see the "Getting R & RStudio" section of the self-tests). If you would rather not, you can use the UZH RStudio Server for everything.
 
-**Code walkthrough:** the code of the reaction time analysis in the first lecture is in the code walkthrough script, linked (with its video walkthrough) at the top of the course book chapter [Introduction](https://opetchey.github.io/BIO144_Course_Book/1.1-intro.html). Its last section ("Practical toolbox") shows code that this practical uses.
+**Code walkthrough:** the code of the reaction time analysis in the first lecture is in the code walkthrough script, linked (with its video walkthrough) from the [Unit 1 page](https://opetchey.github.io/BIO144_Course_Information/Unit1.html) of the course information website. Its last section ("Practical toolbox") shows code that this practical uses.
 
 **Optional further reading:** The data analysis workflow, in a little more detail, on the [Insights from Data website](https://insightsfromdata.io/insights-workflow.html#insights-workflow). (Not examinable, unless it is also in the course book.)
 
@@ -250,7 +250,7 @@ question(
 ```{r LO-u1-silent-error, echo=FALSE}
 # LO: LO2.1.9
 question(
-  "After the step that removes implausible values, nrow() says there are 0 participants left, and the t-test then fails with 'not enough observations'. But the filter line itself gave no error. What is going on?",
+  "After the step that removes implausible values, the t-test then fails. But the filter line itself gave no error. What is going on?",
   answer("The filter condition is the wrong way round: it keeps values below 50 *and* above 500, which no value can be. The comment says what it should do: keep values above 50 and below 500.", correct = TRUE),
   answer("All the reaction times in the class were implausible."),
   answer("The t-test function is broken."),

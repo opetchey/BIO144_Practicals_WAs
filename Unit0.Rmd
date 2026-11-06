@@ -513,7 +513,7 @@ What four letter function, beginning with the letter h, could you use to get a p
   answer("hist", correct = TRUE),
   answer("Hist", correct = TRUE),
   correct = "Explanation:
-There are other ways of doing this, of course. During the course, we'll show you how to use a function called qplot to make a histogram. Its really easy! We're going to use qplot a lot, because its good for making all kind of plots.",
+There are other ways of doing this, of course. During the course, we'll show you how to use the function ggplot (from the ggplot2 package) to make a histogram, and all kinds of other graphs. We use ggplot a lot.",
   incorrect = "Unfortunately, your answer is wrong.",
   allow_retry = TRUE,
   trim = TRUE
@@ -528,7 +528,7 @@ question(
   answer("The width of the bins.", correct = TRUE),
   answer("The colour of the bars."),
   correct = "Explanation:
-You must carefully explore the influence of the width of the bins. This can really change how you view the data. If you're not sure about this, make some data in R (x <- rnorm(30), and then use qplot(x, bins=5) to make a histogram, and change the 5 to some other values. ***Warning*** I'm jumping ahead a bit here, asking you to use the qplot function. If you really want to try this, great, but you will need to install the ggplot2 package and the run library(ggplot2) before you can use qplot. (ggplot2 is an add-on package. If you're not sure what these are, and how to get and use them, be patient, all will be explained in due course.)",
+You must carefully explore the influence of the width of the bins. This can really change how you view the data. If you're not sure about this, make some data in R (x <- rnorm(30)), and then use ggplot(data.frame(x), aes(x = x)) + geom_histogram(bins = 5) to make a histogram, and change the 5 to some other values. ***Warning*** I'm jumping ahead a bit here, asking you to use the ggplot function. If you really want to try this, great, but you will need to install the ggplot2 package and then run library(ggplot2) before you can use ggplot. (ggplot2 is an add-on package. If you're not sure what these are, and how to get and use them, be patient, all will be explained in due course.)",
   incorrect = "Unfortunately, your answer is wrong.",
   allow_retry = TRUE,
   random_answer_order = TRUE
@@ -945,7 +945,7 @@ In case you don't have R and RStudio on your computer, and want some help with t
 
 This unit covers the very basics of using R. It's probably well worth a look, even if you've used R before -- there might be some simple tricks that make your R life much more pleasant.
 
-Here's the script that goes with the videos below. Copy it into a script file in RStudio and work along, or type it out yourself as you watch.
+Here's the script that goes with the videos below. Copy it into a script file in RStudio and work along, or type it out yourself as you watch. (The videos use `qplot()` to make the two graphs at the end. `qplot()` is an older shortcut that is no longer recommended, so the script below uses `ggplot()` instead, as in the rest of the course.)
 
 ```{r echo=TRUE, eval=FALSE}
 1 + 1
@@ -969,8 +969,8 @@ log10(x4)
 
 install.packages("tidyverse")
 library(tidyverse)
-qplot(x3, x4)
-qplot(x3, x4, geom = "line")
+ggplot(data.frame(x3, x4), aes(x = x3, y = x4)) + geom_point()
+ggplot(data.frame(x3, x4), aes(x = x3, y = x4)) + geom_line()
 ```
 
 ### Part 1

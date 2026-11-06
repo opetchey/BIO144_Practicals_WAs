@@ -31,7 +31,7 @@ All homework is for your own practice and learning. It will not be marked or gra
 ### Code walkthrough
 <!-- 2027: replaces the old reading and video sections -->
 
-Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Binomial data](https://opetchey.github.io/BIO144_Course_Book/9.1-GLM2-binary-data.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
+Work through the code walkthrough script for this week's course book chapter ([Binomial data](https://opetchey.github.io/BIO144_Course_Book/9.1-GLM2-binary-data.html)), and watch the video walkthrough of it. Both are linked from the [Unit 9 page](https://opetchey.github.io/BIO144_Course_Information/Unit9.html) of the course information website. The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
 ### Optional further reading
 

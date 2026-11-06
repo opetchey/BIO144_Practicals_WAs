@@ -31,7 +31,7 @@ All homework is for your own practice and learning. It will not be marked or gra
 ### Code walkthrough
 <!-- 2027: replaces the old reading and video sections -->
 
-Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Regression Part 1](https://opetchey.github.io/BIO144_Course_Book/3.1-regression-part1.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
+Work through the code walkthrough script for this week's course book chapter ([Regression Part 1](https://opetchey.github.io/BIO144_Course_Book/3.1-regression-part1.html)), and watch the video walkthrough of it. Both are linked from the [Unit 3 page](https://opetchey.github.io/BIO144_Course_Information/Unit3.html) of the course information website. The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
 ### Optional further reading
 
@@ -431,6 +431,7 @@ And here is a quiz for you...
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ## poisson qq plot
+set.seed(1)  # same random values every time the tutorial is built
 resids_poisson <- rpois(1000, lambda = 3)
 qqnorm(resids_poisson)
 qqline(resids_poisson)
@@ -442,6 +443,7 @@ qqline(resids_poisson)
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ## binomial qq plot
+set.seed(2)  # same random values every time the tutorial is built
 resids_binomial <- rbinom(1000, size = 10, prob = 0.5)
 qqnorm(resids_binomial)
 qqline(resids_binomial)
@@ -453,6 +455,7 @@ qqline(resids_binomial)
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ## very left skewed qq plot
+set.seed(3)  # same random values every time the tutorial is built
 resids_left_skewed <- rbeta(1000, 5, 2)
 #hist(resids_left_skewed)
 qqnorm(resids_left_skewed)
@@ -465,6 +468,7 @@ qqline(resids_left_skewed)
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ## right skewed qq plot
+set.seed(4)  # same random values every time the tutorial is built
 resids_right_skewed <- rbeta(1000, 2, 5)
 #hist(resids_right_skewed)
 qqnorm(resids_right_skewed)
@@ -477,6 +481,7 @@ qqline(resids_right_skewed)
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ## normal qq plot
+set.seed(5)  # same random values every time the tutorial is built
 resids_normal <- rnorm(1000, 0, 1)
 qqnorm(resids_normal)
 qqline(resids_normal)
@@ -488,6 +493,7 @@ qqline(resids_normal)
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ## uniform qq plot
+set.seed(6)  # same random values every time the tutorial is built
 resids_uniform <- runif(1000, min = 0, max = 1)
 qqnorm(resids_uniform)
 qqline(resids_uniform)

@@ -31,7 +31,7 @@ All homework is for your own practice and learning. It will not be marked or gra
 ### Code walkthrough
 <!-- 2027: replaces the old reading and video sections -->
 
-Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [R and RStudio](https://opetchey.github.io/BIO144_Course_Book/2.1-R-and-RStudio.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
+Work through the code walkthrough script for this week's course book chapter ([R and RStudio](https://opetchey.github.io/BIO144_Course_Book/2.1-R-and-RStudio.html)), and watch the video walkthrough of it. Both are linked from the [Unit 2 page](https://opetchey.github.io/BIO144_Course_Information/Unit2.html) of the course information website. The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
 ### Optional further reading
 
@@ -434,6 +434,8 @@ learnr::question(
 
 (If you'd like to see how this can be done programmatically, have a look at this section of the Course Book: [Finding observations with extreme values.](https://opetchey.github.io/BIO144_Course_Book/2.1-R-and-RStudio.html#finding-observations-with-extreme-values).)
 
+**An impossible value.** Not every problem in a dataset shows up as an extreme value. Look at the individual with `Nr` 182: their body fat is 0%. That is impossible, because every living person has some body fat. This value is probably a mistake in measuring or recording the data. It is not an extreme value at the top of a distribution, so it is easy to miss. Always check that values are biologically possible, as well as looking for extreme ones (for example with `filter(bodyfat, bodyfat < 2)`). If you find an impossible value, the usual approach is to exclude that individual, and to report that you did so and why.
+
 
 Make a copy of the data that doesn't include the individuals in the correct answer to the previous question.
 
@@ -595,7 +597,7 @@ learnr::question(
   learnr::answer("There is little evidence of a relationship in Asia."),
   learnr::answer("In the Americas there is an odd positive relationship."),
   learnr::answer(
-    "In Europe there is very low child mortality in all countries, such that there seems to be little relationship with healthcare spend.",
+    "In Europe there tends to be lower child mortality with higher healthcare spend.",
     correct = TRUE
   ),
   learnr::answer(
@@ -603,8 +605,8 @@ learnr::question(
     correct = TRUE
   ),
   
-  correct = "Correct! In Europe, child mortality is uniformly low, so there is little visible relationship with healthcare spending. In Africa, there is a clear negative relationship, but with substantial scatter among countries.",
-  incorrect = "Look carefully at the faceted plots with free axes. Europe shows uniformly low child mortality, while Africa shows a negative relationship with considerable scatter.",
+  correct = "Correct! In Europe, lower child mortality is associated with higher healthcare spending. In Africa, there is a clear negative relationship, but with substantial scatter among countries.",
+  incorrect = "Look carefully at the faceted plots with free axes.",
   allow_retry = TRUE
 )
 ```

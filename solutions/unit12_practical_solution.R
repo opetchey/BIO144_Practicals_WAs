@@ -22,6 +22,7 @@
 library(tidyverse)  # read_csv(), dplyr, forcats, ggplot2
 library(lme4)       # lmer(): linear mixed models
 library(lmerTest)   # adds degrees of freedom and p-values to lmer() output
+library(emmeans)    # predicted means with confidence intervals
 
 
 # Step 1: Plan before you look at the data ----
@@ -172,20 +173,18 @@ new_biomass <- expand_grid(warming = levels(chamber_warming$warming),
   mutate(warming = factor(warming, levels = levels(chamber_warming$warming)),
          nitrogen = factor(nitrogen, levels = levels(chamber_warming$nitrogen)))
 # 2) predictions for an average chamber: re.form = NA ignores the random effects
-new_biomass <- new_biomass |>
+new_biomass |>
   mutate(fit = predict(m_biomass_mixed, newdata = new_biomass, re.form = NA))
-# 3) predict() for mixed models gives no confidence intervals, so we calculate
-# the standard error of each prediction from the model's coefficient
-# uncertainty (vcov), and use fit +/- 1.96 x SE (a Wald interval, like
-# confint(..., method = "Wald")). You do not need to know this matrix
-# calculation for the exam.
-X <- model.matrix(~ warming * nitrogen, data = new_biomass)
-new_biomass <- new_biomass |>
-  mutate(se = sqrt(diag(X %*% as.matrix(vcov(m_biomass_mixed)) %*% t(X))),
-         lwr = fit - 1.96 * se,
-         upr = fit + 1.96 * se)
+# 3) predict() gives no confidence intervals for a mixed model. emmeans()
+# gives the same predicted means (column emmean), with their 95% confidence
+# intervals (lower.CL, upper.CL). We rename the columns for the graph.
+biomass_emmeans <- emmeans(m_biomass_mixed, ~ warming * nitrogen)
+biomass_emmeans
+new_biomass <- as_tibble(biomass_emmeans) |>
+  rename(fit = emmean, lwr = lower.CL, upr = upper.CL)
 new_biomass
-# Check: the fitted values equal the four cell means from step 2.
+# Check: the predicted means are the same as from predict(), and equal the
+# four cell means from step 2.
 
 # 4) plot chamber means (the data at the level of the experimental unit for
 # warming) and the model predictions with their 95% CI

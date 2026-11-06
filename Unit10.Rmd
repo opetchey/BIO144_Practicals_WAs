@@ -30,7 +30,7 @@ All homework is for your own practice and learning. It will not be marked or gra
 ### Code walkthrough
 <!-- 2027: replaces the old reading and video sections -->
 
-Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Ordination](https://opetchey.github.io/BIO144_Course_Book/10.1-ordination.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
+Work through the code walkthrough script for this week's course book chapter ([Ordination](https://opetchey.github.io/BIO144_Course_Book/10.1-ordination.html)), and watch the video walkthrough of it. Both are linked from the [Unit 10 page](https://opetchey.github.io/BIO144_Course_Information/Unit10.html) of the course information website. The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
 ### Optional further reading
 

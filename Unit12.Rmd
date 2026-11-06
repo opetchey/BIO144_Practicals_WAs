@@ -33,7 +33,7 @@ There is no new material this week. Use this week to catch up on any material yo
 ### Code walkthrough
 <!-- 2027: replaces the old reading and video sections -->
 
-Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Review: planning and implementing statistical analyses](https://opetchey.github.io/BIO144_Course_Book/12.1-review.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
+Work through the code walkthrough script for this week's course book chapter ([Review: planning and implementing statistical analyses](https://opetchey.github.io/BIO144_Course_Book/12.1-review.html)), and watch the video walkthrough of it. Both are linked from the [Unit 12 page](https://opetchey.github.io/BIO144_Course_Information/Unit12.html) of the course information website. The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
 ### Optional further reading
 
@@ -204,7 +204,7 @@ learnr::question_numeric(
 )
 ```
 
-Now make a figure for publication: the data (e.g. chamber means, or all pots with some transparency), together with the model's predicted mean for each treatment combination and its confidence interval. Use `predict(m_biomass_mixed, newdata = ..., re.form = NA)` to get predictions for an average chamber.
+Now make a figure for publication: the data (e.g. chamber means, or all pots with some transparency), together with the model's predicted mean for each treatment combination and its confidence interval. Use `predict(m_biomass_mixed, newdata = ..., re.form = NA)` to get predictions for an average chamber. For a mixed model, `predict()` gives no confidence intervals, so use `emmeans(m_biomass_mixed, ~ warming * nitrogen)` from the emmeans package (load it with `library(emmeans)`), which gives the predicted mean of each treatment combination with its 95% confidence interval. (See also the Practical toolbox at the end of the Chapter 12 code walkthrough script.)
 
 ### 6. Report
 

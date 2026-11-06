@@ -31,7 +31,7 @@ All homework is for your own practice and learning. It will not be marked or gra
 ### Code walkthrough
 <!-- 2027: replaces the old reading and video sections -->
 
-Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Multiple regression](https://opetchey.github.io/BIO144_Course_Book/6.1-multiple-regression.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
+Work through the code walkthrough script for this week's course book chapter ([Multiple regression](https://opetchey.github.io/BIO144_Course_Book/6.1-multiple-regression.html)), and watch the video walkthrough of it. Both are linked from the [Unit 6 page](https://opetchey.github.io/BIO144_Course_Information/Unit6.html) of the course information website. The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
 ### Optional further reading
 
@@ -56,7 +56,7 @@ Before looking at the data, can you make some plausible hypotheses about how the
 ```{r quiz-milk-hypothesis, echo=FALSE}
 # LO: LO6.1.1
 learnr::question(
-  "Before looking at the data, which of the following is a **plausible hypothesis** about the relationship between milk energy contentand neocortex size  in primates, and the biological reasoning behind it?",
+  "Before looking at the data, which of the following is a **plausible hypothesis** about the relationship between milk energy content and neocortex size in primates, and the biological reasoning behind it?",
   
   learnr::answer(
     "There should be a negative relationship, because species with larger brains invest less energy in milk and more in gestation."
@@ -424,7 +424,7 @@ Note that the degrees of freedom for error is indeed 14, as we calculated before
 
 That was a bit of a surprise eh! We would not have guessed these quite strong effects from the exploration of the data with the bivariate scatterplots. There was no evidence of these relationships.
 
-Before we consider how we could end up with patterns in the multiple regression output, but not be able to see them in the raw data, please make a graph that show the estimated relationship between `log10_kcal.per.g` and `log10_ mass` conditioned on `neocortex.perc`. Also make another graph that shows the estimated relationship between `log10_kcal.per.g` and `neocortex.perc` conditioned on `log10_mass`. For each graph, also add a 95% confidence band around the estimated relationship.
+Before we consider how we could end up with patterns in the multiple regression output, but not be able to see them in the raw data, please make a graph that show the estimated relationship between `log10_kcal.per.g` and `log10_mass` conditioned on `neocortex.perc`. Also make another graph that shows the estimated relationship between `log10_kcal.per.g` and `neocortex.perc` conditioned on `log10_mass`. For each graph, also add a 95% confidence band around the estimated relationship.
 
 (An example of how to do this is in the Course Book, section Chapter 6, Section *Question 5: How do we make predictions?*)
 
@@ -449,7 +449,7 @@ anova(m_milk_mass, m_milk)
 ```{r quiz-milk-f-statistic-model-comparison, echo=FALSE}
 # LO: LO6.1.12
 learnr::question_numeric(
-  "Two regression models are compared:\n\n- Model 1 contains `log10_mass`\n- Model 2 contains `log10_mass` and `neocortex_perc`\n\nWhat is the value of the **F-statistic** for comparing these two models?",
+  "Two regression models are compared:\n\n- Model 1 contains `log10_mass`\n- Model 2 contains `log10_mass` and `neocortex.perc`\n\nWhat is the value of the **F-statistic** for comparing these two models?",
   
   learnr::answer(12.78, correct = TRUE),
   
@@ -462,7 +462,7 @@ learnr::question_numeric(
 ```{r quiz-milk-partial-r2, echo=FALSE}
 # LO: LO6.1.12
 learnr::question_numeric(
-  "Consider the two regression models in the previous question what is the value of the **partial R-squared** for `neocortex_perc`? (Round your answer to **two decimal places**.)",
+  "Consider the two regression models in the previous question what is the value of the **partial R-squared** for `neocortex.perc`? (Round your answer to **two decimal places**.)",
   
   learnr::answer(0.48, correct = TRUE),
   
@@ -481,20 +481,20 @@ learnr::question(
     "It is the proportion of the total variation in the response explained by the full model."
   ),
   learnr::answer(
-    "It is the proportion of the remaining variation (after accounting for `log10_mass`) that is explained by adding `neocortex_perc` to the model.",
+    "It is the proportion of the remaining variation (after accounting for `log10_mass`) that is explained by adding `neocortex.perc` to the model.",
     correct = TRUE
   ),
   learnr::answer(
-    "It is the probability that `neocortex_perc` has no effect."
+    "It is the probability that `neocortex.perc` has no effect."
   ),
   learnr::answer(
-    "It is the correlation between `log10_mass` and `neocortex_perc`."
+    "It is the correlation between `log10_mass` and `neocortex.perc`."
   ),
   learnr::answer(
-    "It is the proportion of variation explained by `neocortex_perc` alone, ignoring all other variables."
+    "It is the proportion of variation explained by `neocortex.perc` alone, ignoring all other variables."
   ),
   
-  correct = "Correct! The partial R-squared tells us how much of the variation that was *not* explained by `log10_mass` is explained by adding `neocortex_perc` to the model.",
+  correct = "Correct! The partial R-squared tells us how much of the variation that was *not* explained by `log10_mass` is explained by adding `neocortex.perc` to the model.",
   incorrect = "Think about what changes between the two models: partial R-squared measures the improvement in fit when a new variable is added, relative to what remained unexplained before.",
   allow_retry = TRUE
 )
@@ -605,6 +605,12 @@ learnr::question(
   allow_retry = TRUE
 )
 ```
+
+**Can adjusted R-squared be negative?** Yes, and you probably saw it happen in your table. Adjusted R-squared is not a "squared" quantity. It is R-squared with a penalty for each explanatory variable:
+
+$$R^2_{adj} = 1 - (1 - R^2)\frac{n - 1}{n - p - 1}$$
+
+Here $n$ is the number of observations and $p$ the number of explanatory variables. With all 10 random variables, $n = 17$ and $p = 12$, so the penalty factor is $16/4 = 4$. Then $1 - (1 - R^2) \times 4$ is below zero whenever $R^2$ is below 0.75. A negative adjusted R-squared means that, once we account for the degrees of freedom the model has used, it explains the data no better than simply using the mean of the response. Treat it as "about zero": the model is overfitted.
 
 
 

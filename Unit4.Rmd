@@ -30,7 +30,7 @@ All homework is for your own practice and learning. It will not be marked or gra
 ### Code walkthrough
 <!-- 2027: replaces the old reading and video sections -->
 
-Work through the code walkthrough script for this week's course book chapter, and watch the video walkthrough of it. Both are linked at the top of the chapter: [Regression Part 2](https://opetchey.github.io/BIO144_Course_Book/4.1-regression-part2.html). The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
+Work through the code walkthrough script for this week's course book chapter ([Regression Part 2](https://opetchey.github.io/BIO144_Course_Book/4.1-regression-part2.html)), and watch the video walkthrough of it. Both are linked from the [Unit 4 page](https://opetchey.github.io/BIO144_Course_Information/Unit4.html) of the course information website. The last section of the script ("Practical toolbox") shows code that this practical uses but the chapter does not.
 
 ### Optional further reading
 
@@ -396,6 +396,8 @@ Special distinction if you can:
 * Add some labels to the data points, so one can see which countries are which.
 * Colour the points by continent, and include a graphical key.
 
+(To colour by continent, your data need the `continent` column. If you followed the steps last week, your `select()` kept only `country`, `health_exp_total` and `child_mort`, so `continent` is missing. Go back to that step and add `continent` to the `select()`. You should still have 186 countries.)
+
 
 ### A linear-linear graph
 <!-- LO: LO3.1.14, LO4.1.11 -->
@@ -504,7 +506,7 @@ learnr::question(
 ### Code to make the untransformed graph
 
 ```{r untransformed-graph-code, eval = FALSE, echo = TRUE}
-fh_data <- read_csv("financing_healthcare.csv")
+fh_data <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practicals_WAs/refs/heads/main/assets/datasets/financing_healthcare.csv")
 fh_2013 <- fh_data |>
   dplyr::filter(year == 2013) |>
   dplyr::select(country, health_exp_total, child_mort) |>
