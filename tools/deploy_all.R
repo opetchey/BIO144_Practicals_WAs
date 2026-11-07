@@ -1,8 +1,19 @@
 ## Deploy all BIO144 Unit tutorials (homework, practical, weekly quiz) to RStudio Connect.
 ## Run from the root of BIO144_Practicals_WAs (open uzhbio144.Rproj first), then:
 ##   source("tools/deploy_all.R")
-## Each Unit is deployed on its own (only that .Rmd and what it needs), so one
-## failure does not stop the others. A summary is printed at the end.
+## Each Unit is deployed on its own, so one failure does not stop the others.
+## A summary is printed at the end.
+##
+## Why each Unit is copied to its own temporary folder (fix of 2026-11-07):
+## for Shiny documents (runtime: shiny_prerendered), rsconnect::deployDoc()
+## uploads the whole folder, i.e. all thirteen UnitN.Rmd files. On 6 Nov 2026
+## every Unit then showed Unit 0 (the first .Rmd in alphabetical order).
+## Each Unit .Rmd needs no other local files (datasets and scripts are read
+## from GitHub), so each one is now uploaded alone from a folder of its own.
+##
+## test_only: TRUE deploys only Unit 1. Check that its page title on Connect
+## says "Unit 1", then set it to FALSE and run the script again for all Units.
+test_only <- TRUE
 
 library(rsconnect)
 
@@ -46,13 +57,22 @@ units <- data.frame(
 
 ## To deploy only some Units, subset here, e.g.:
 ## units <- units[units$file %in% c("Unit1.Rmd", "Unit8.Rmd"), ]
+if (test_only) units <- units[units$file == "Unit1.Rmd", ]
 
 ## 2. Deploy -----------------------------------------------------------------------
 deploy_unit <- function(file, name, guid) {
   message("\n==================== Deploying ", file, " ====================")
   tryCatch({
-    rsconnect::deployDoc(
-      doc = file,
+    if (!file.exists(file)) stop("file not found: ", file)
+    ## A fresh folder containing only this Unit's .Rmd
+    bundle_dir <- file.path(tempdir(), paste0("deploy_", name))
+    unlink(bundle_dir, recursive = TRUE)
+    dir.create(bundle_dir)
+    file.copy(file, bundle_dir)
+    rsconnect::deployApp(
+      appDir = bundle_dir,
+      appFiles = file,
+      appPrimaryDoc = file,
       appName = name,
       appId = guid,
       server = server,
@@ -69,3 +89,7 @@ results <- mapply(deploy_unit, units$file, units$name, units$guid)
 ## 3. Summary ----------------------------------------------------------------------
 message("\n==================== Summary ====================")
 print(data.frame(unit = units$file, result = unname(results)), row.names = FALSE)
+message("\nNow open each Unit's page on Connect (signed in) and check that its title ",
+        "names the right Unit, e.g. \"Unit 1 BIO144 Homework, Practical, and Quiz\".")
+if (test_only) message("test_only is TRUE: only Unit 1 was deployed. If it is right, ",
+                       "set test_only <- FALSE and run the script again.")
