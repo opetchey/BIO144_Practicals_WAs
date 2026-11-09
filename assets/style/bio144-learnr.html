@@ -23,7 +23,7 @@ h2::after { content: ""; display: block; width: 3rem; height: 4px; border-radius
 a, a:hover { color: var(--b144-green); text-underline-offset: 2px; }
 
 /* Code and the exercise editors */
-code, pre, kbd, .ace_editor, .ace_editor * { font-family: var(--f-mono) !important; }
+code, pre, kbd, .ace_editor, .ace_editor * { font-family: var(--f-mono) !important; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
 code { color: #8A3552; background: transparent; padding: 0; }
 pre { background: var(--b144-code-bg); border: 1px solid var(--b144-line); border-radius: .6rem; }
 .tutorial-exercise .ace_editor, .tutorial-exercise-code-editor { border-radius: .6rem; }
