@@ -21,6 +21,10 @@
 # Load the packages ----
 library(tidyverse)  # read_csv(), dplyr functions, ggplot2
 library(ggfortify)  # autoplot() for model diagnostic plots
+## ggfortify (which provides autoplot()) still uses some old ggplot2 features. This gives
+## harmless deprecation warnings (e.g. about fortify(<lm>) and the size aesthetic).
+## This line hides them:
+options(lifecycle_verbosity = "quiet")
 library(car)        # vif() for collinearity
 library(patchwork)  # put several ggplots side by side
 library(GGally)     # ggpairs(): all pairwise scatter plots at once

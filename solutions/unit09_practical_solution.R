@@ -28,6 +28,10 @@
 
 library(tidyverse)  # read_csv(), ggplot2, dplyr, and more
 library(ggfortify)  # autoplot() for model diagnostic plots
+## ggfortify (which provides autoplot()) still uses some old ggplot2 features. This gives
+## harmless deprecation warnings (e.g. about fortify(<lm>) and the size aesthetic).
+## This line hides them:
+options(lifecycle_verbosity = "quiet")
 library(GGally)     # ggpairs(): all pairwise scatterplots
 library(car)        # vif(): variance inflation factors (collinearity)
 
@@ -167,8 +171,7 @@ ggplot(pesticide, aes(x = logdose, y = proportion_dead, colour = product)) +
   geom_line(data = new_curves, linewidth = 1) +
   geom_point(alpha = 0.7) +
   labs(x = "Log dose (0 = standard field dose)", y = "Proportion of insects dead",
-       colour = "Product", fill = "Product") +
-  theme_bw()
+       colour = "Product", fill = "Product")
 
 
 # Part 1, step 8: Report ----
@@ -396,8 +399,7 @@ ggplot(ptarm, aes(x = Elevation, y = pres)) +
   geom_line(data = new_ptarm, linewidth = 1) +
   labs(x = "Elevation (m)",
        y = "Probability of White-tailed Ptarmigan presence",
-       caption = "Line: binomial GLM prediction (95% CI), other variables at their means") +
-  theme_bw()
+       caption = "Line: binomial GLM prediction (95% CI), other variables at their means")
 
 # The same for aspect, with the other variables at their means.
 new_aspect <- tibble(
@@ -417,8 +419,7 @@ ggplot(new_aspect, aes(x = Aspect, y = pres)) +
   geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.3) +
   geom_line(linewidth = 1) +
   labs(x = "Aspect index (low = cool, north-facing; high = warm, south-facing)",
-       y = "Probability of presence") +
-  theme_bw()
+       y = "Probability of presence")
 
 
 # Part 2, step 10: Write a sentence or two ----

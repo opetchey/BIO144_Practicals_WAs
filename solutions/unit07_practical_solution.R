@@ -21,6 +21,10 @@
 # Load the packages ----
 library(tidyverse)  # read_csv(), dplyr functions, ggplot2
 library(ggfortify)  # autoplot() for model diagnostic plots
+## ggfortify (which provides autoplot()) still uses some old ggplot2 features. This gives
+## harmless deprecation warnings (e.g. about fortify(<lm>) and the size aesthetic).
+## This line hides them:
+options(lifecycle_verbosity = "quiet")
 
 
 # Part 1, step 0: The biological question ----
@@ -51,8 +55,7 @@ intertidal
 # A first look at the data (the graph given in the practical):
 ggplot(intertidal, aes(x = height, y = Area_cm2, colour = herbivores)) +
   geom_boxplot(position = position_dodge(width = 0.75)) +
-  labs(x = "Tidal height", y = "Algal area (cm2)", colour = "Herbivore access") +
-  theme_classic()
+  labs(x = "Tidal height", y = "Algal area (cm2)", colour = "Herbivore access")
 
 # Number of plots in each treatment combination:
 intertidal |>

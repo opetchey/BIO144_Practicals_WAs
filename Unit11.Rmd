@@ -8,6 +8,8 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
+## ggfortify (autoplot()) gives harmless ggplot2 deprecation warnings; hide them
+options(lifecycle_verbosity = "quiet")
 library(learnr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -195,7 +197,6 @@ ggplot(new_data, aes(x = class)) +
   geom_point(aes(y = predicted_lmm, color = "LMM Predictions"), size = 3, alpha = 0.5) +
   geom_hline(yintercept = mean(student_scores$score), linetype = "dashed", color = "black") +
   labs(y = "Score", color = "Legend") +
-  theme_minimal() +
   coord_flip()
 ```
 
@@ -292,8 +293,7 @@ And here are the distributions of the predictions from the two models:
 ggplot(new_data) +
   geom_density(aes(x = predicted_lm, color = "LM Predictions"), size = 1) +
   geom_density(aes(x = predicted_lmm, color = "LMM Predictions"), size = 1) +
-  labs(x = "Predicted Score", color = "Legend") +
-  theme_minimal()
+  labs(x = "Predicted Score", color = "Legend")
 ```
 
 And here is how much each class's estimate is shrunk towards the overall mean, against the number of students in that class. A shrinkage of 0 means the LMM estimate equals the class mean (no pooling); a shrinkage of 1 would mean it equals the overall mean (complete pooling). (Classes whose mean is very close to the overall mean are left out, because for them the proportion is unstable.)
@@ -307,8 +307,7 @@ shrinkage_data <- new_data |>
 ggplot(shrinkage_data, aes(x = n_students, y = shrinkage)) +
   geom_point(alpha = 0.3) +
   labs(x = "Number of students in the class",
-       y = "Shrinkage towards the overall mean (proportion)") +
-  theme_minimal()
+       y = "Shrinkage towards the overall mean (proportion)")
 ```
 
 Classes with only a few students are pulled in a lot (more than half the way to the overall mean for classes of two); classes with many students are pulled in much less. With few students, a class mean is a noisy estimate, so the model borrows more information from the other classes.

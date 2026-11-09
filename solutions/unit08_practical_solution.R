@@ -23,6 +23,10 @@
 
 library(tidyverse)  # read_csv(), ggplot2, dplyr, and more
 library(ggfortify)  # autoplot() for model diagnostic plots
+## ggfortify (which provides autoplot()) still uses some old ggplot2 features. This gives
+## harmless deprecation warnings (e.g. about fortify(<lm>) and the size aesthetic).
+## This line hides them:
+options(lifecycle_verbosity = "quiet")
 library(GGally)     # ggpairs(): all pairwise scatterplots
 library(car)        # vif(): variance inflation factors (collinearity)
 
@@ -225,8 +229,7 @@ ggplot(grouse_ticks, aes(x = altitude_m, y = ticks, colour = year)) +
               alpha = 0.2, colour = NA) +
   geom_line(data = new_ticks, linewidth = 1) +
   labs(x = "Altitude (m)", y = "Number of ticks per chick",
-       colour = "Year", fill = "Year") +
-  theme_bw()
+       colour = "Year", fill = "Year")
 
 
 # Part 1, step 8: Report ----

@@ -8,6 +8,8 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
+## ggfortify (autoplot()) gives harmless ggplot2 deprecation warnings; hide them
+options(lifecycle_verbosity = "quiet")
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -303,8 +305,7 @@ intertidal <- read_csv("https://raw.githubusercontent.com/opetchey/BIO144_Practi
 ```{r eval = FALSE, message = FALSE}
 ggplot(intertidal, aes(x = height, y = Area_cm2, color = herbivores)) +
   geom_boxplot(position = position_dodge(width = 0.75)) +
-  labs(x = "Tidal height", y = "Algal area (cm2)", color = "Herbivore access") +
-  theme_classic()
+  labs(x = "Tidal height", y = "Algal area (cm2)", color = "Herbivore access")
 ```
 
 The experimental design is known as "balanced" because there were equal number of replicates (16) per treatment combination. This is important to know, because in a balanced design, the statistical analysis is simpler and more robust.

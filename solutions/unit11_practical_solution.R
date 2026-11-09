@@ -22,6 +22,10 @@
 library(tidyverse)  # dplyr, tidyr, ggplot2
 library(lme4)       # lmer() and the sleepstudy data
 library(lmerTest)   # adds degrees of freedom and p-values to lmer() output
+## ggfortify (which provides autoplot()) still uses some old ggplot2 features. This gives
+## harmless deprecation warnings (e.g. about fortify(<lm>) and the size aesthetic).
+## This line hides them:
+options(lifecycle_verbosity = "quiet")
 # Note: once lmerTest is loaded, lmer() is the lmerTest version. It fits
 # exactly the same model as lme4::lmer(); it only adds df and p-values.
 
@@ -108,7 +112,6 @@ ggplot(new_data, aes(x = class)) +
   geom_point(aes(y = predicted_lmm, color = "LMM Predictions"), size = 3, alpha = 0.5) +
   geom_hline(yintercept = mean(student_scores$score), linetype = "dashed", color = "black") +
   labs(y = "Score", color = "Legend") +
-  theme_minimal() +
   coord_flip()
 
 # Question: what do you observe in the graph?
@@ -170,8 +173,7 @@ ggplot(new_data_1000, aes(x = class)) +
 ggplot(new_data_1000) +
   geom_density(aes(x = predicted_lm, color = "LM Predictions"), linewidth = 1) +
   geom_density(aes(x = predicted_lmm, color = "LMM Predictions"), linewidth = 1) +
-  labs(x = "Predicted score", color = "Legend") +
-  theme_minimal()
+  labs(x = "Predicted score", color = "Legend")
 
 # Question: how do you interpret the two density curves?
 # Answer: the LMM predictions have a narrower distribution than the LM
@@ -186,8 +188,7 @@ shrinkage_data <- new_data_1000 |>
 ggplot(shrinkage_data, aes(x = n_students, y = shrinkage)) +
   geom_point(alpha = 0.3) +
   labs(x = "Number of students in the class",
-       y = "Shrinkage towards the overall mean (proportion)") +
-  theme_minimal()
+       y = "Shrinkage towards the overall mean (proportion)")
 # Look at: classes of 2 students are moved more than half way to the overall
 # mean (median shrinkage about 0.6); classes of 25 students only about 0.1.
 

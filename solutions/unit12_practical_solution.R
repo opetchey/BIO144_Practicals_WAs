@@ -23,6 +23,10 @@ library(tidyverse)  # read_csv(), dplyr, forcats, ggplot2
 library(lme4)       # lmer(): linear mixed models
 library(lmerTest)   # adds degrees of freedom and p-values to lmer() output
 library(emmeans)    # predicted means with confidence intervals
+## ggfortify (which provides autoplot()) still uses some old ggplot2 features. This gives
+## harmless deprecation warnings (e.g. about fortify(<lm>) and the size aesthetic).
+## This line hides them:
+options(lifecycle_verbosity = "quiet")
 
 
 # Step 1: Plan before you look at the data ----
@@ -195,8 +199,7 @@ ggplot(chamber_means, aes(x = nitrogen, y = mean_biomass, color = warming)) +
                   position = position_dodge(width = 0.4), size = 0.6) +
   geom_line(data = new_biomass, aes(y = fit, group = warming),
             position = position_dodge(width = 0.4)) +
-  labs(x = "Nitrogen", y = "Above-ground biomass (g)", color = "Temperature") +
-  theme_classic()
+  labs(x = "Nitrogen", y = "Above-ground biomass (g)", color = "Temperature")
 # Small points: the mean of each chamber; large points and bars: model
 # prediction for an average chamber with its 95% CI. The steeper line for
 # warmed chambers shows the interaction.

@@ -27,6 +27,10 @@
 library(multcomp)   # Tukey HSD post-hoc tests with glht()
 library(tidyverse)  # readr, dplyr, forcats, ggplot2 and more
 library(ggfortify)  # autoplot() for model checking plots
+## ggfortify (which provides autoplot()) still uses some old ggplot2 features. This gives
+## harmless deprecation warnings (e.g. about fortify(<lm>) and the size aesthetic).
+## This line hides them:
+options(lifecycle_verbosity = "quiet")
 
 
 # Step 1: Get organised: read the data and check it ----
@@ -184,8 +188,7 @@ ggplot() +
   scale_x_discrete(labels = c("Standard care", "Placebo",
                               "Drug A (low dose)", "Drug A (high dose)")) +
   labs(x = "Treatment",
-       y = "Change in systolic blood pressure\nafter 8 weeks (mmHg)") +
-  theme_bw(base_size = 14)
+       y = "Change in systolic blood pressure\nafter 8 weeks (mmHg)")
 # Grey points: participants. Red: estimated mean change with 95% confidence
 # interval. Values below the dashed line are reductions in blood pressure.
 

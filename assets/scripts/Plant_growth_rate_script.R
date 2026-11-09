@@ -10,6 +10,10 @@
 library(tidyverse)
 library(readr)
 library(ggfortify)
+## ggfortify (which provides autoplot()) still uses some old ggplot2 features. This gives
+## harmless deprecation warnings (e.g. about fortify(<lm>) and the size aesthetic).
+## This line hides them:
+options(lifecycle_verbosity = "quiet")
 
 
 ## import the data (direct from where it is online)

@@ -21,6 +21,10 @@
 # Load the packages ----
 library(tidyverse)  # readr, dplyr, tidyr, ggplot2 and more
 library(ggfortify)  # autoplot() for model checking plots
+## ggfortify (which provides autoplot()) still uses some old ggplot2 features. This gives
+## harmless deprecation warnings (e.g. about fortify(<lm>) and the size aesthetic).
+## This line hides them:
+options(lifecycle_verbosity = "quiet")
 
 
 # Part 1, step 1: Last week's script: read, wrangle, fit, check ----
@@ -210,8 +214,7 @@ ggplot(fh_2013, aes(x = log_health_exp_total, y = log_child_mort)) +
             size = 3, vjust = -0.9) +
   labs(x = "log10(Health care spending, USD per person per year)",
        y = "log10(Child mortality, deaths per 1000 live births)",
-       colour = "Continent") +
-  theme_bw(base_size = 14)
+       colour = "Continent")
 # Note: geom_smooth(method = "lm") fits the same model as m_child_mort, so the
 # line and the grey band are the fitted line and its 95% confidence band.
 
@@ -226,8 +229,7 @@ ggplot(fh_2013, aes(x = health_exp_total, y = child_mort)) +
   scale_y_log10() +
   labs(x = "Health care spending (USD per person per year, log scale)",
        y = "Child mortality (deaths per 1000 live births, log scale)",
-       colour = "Continent") +
-  theme_bw(base_size = 14)
+       colour = "Continent")
 
 
 # Part 1, step 11: A linear-linear graph ----

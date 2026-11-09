@@ -8,6 +8,8 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
+## ggfortify (autoplot()) gives harmless ggplot2 deprecation warnings; hide them
+options(lifecycle_verbosity = "quiet")
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
