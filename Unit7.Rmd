@@ -1,6 +1,9 @@
 ---
 title: "Unit 7 BIO144 Course Content"
-output: learnr::tutorial
+output:
+  learnr::tutorial:
+    includes:
+      after_body: assets/style/bio144-learnr.html
 runtime: shiny_prerendered
 ---
 

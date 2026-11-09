@@ -1,0 +1,125 @@
+<!-- BIO144 house style "Spring Term" for the learnr practicals: styles and script in one file.
+     Source: BIO144_Style/learnr/bio144-learnr.html. Copy to BIO144_Practicals_WAs/assets/style/ after editing. -->
+<style>
+/* BIO144 house style "Spring Term" for the learnr practicals (homework, practical, weekly quiz).
+   Included in each page through includes: after_body (the css: option of learnr::tutorial was not applied). */
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=JetBrains+Mono:wght@400;600&display=swap");
+
+:root {
+  --b144-bg: #FBFDF8; --b144-paper: #FFFFFF; --b144-ink: #1E3226; --b144-muted: #566E5F; --b144-line: #D5E0CF;
+  --b144-green: #2F6B45; --b144-green-soft: #E3EEDB; --b144-pink: #D96C8A; --b144-pink-ink: #A8405C; --b144-pink-soft: #FBE9EE;
+  --b144-code-bg: #F1F6EC; --b144-on-unit: #1E3226;
+  --unit: #C3D9B9; /* set per Unit by bio144-learnr.html */
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-head: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+body { font-family: var(--f-body); color: var(--b144-ink); background: var(--b144-bg); -webkit-font-smoothing: antialiased; }
+p, li { line-height: 1.55; }
+h1, h2, h3, h4 { font-family: var(--f-head); font-weight: 700; color: var(--b144-ink); letter-spacing: -.01em; }
+h2 { color: var(--b144-green); }
+h2::after { content: ""; display: block; width: 3rem; height: 4px; border-radius: 2px; margin-top: .35rem; background: var(--unit); }
+a, a:hover { color: var(--b144-green); text-underline-offset: 2px; }
+
+/* Code and the exercise editors */
+code, pre, kbd, .ace_editor, .ace_editor * { font-family: var(--f-mono) !important; }
+code { color: #8A3552; background: transparent; padding: 0; }
+pre { background: var(--b144-code-bg); border: 1px solid var(--b144-line); border-radius: .6rem; }
+.tutorial-exercise .ace_editor, .tutorial-exercise-code-editor { border-radius: .6rem; }
+
+/* Sidebar (list of sections) */
+.topicsContainer, .topicsList { font-family: var(--f-body); }
+.topicsHeader h1, .topicsHeader .title, .tutorialTitle { font-family: var(--f-head) !important; font-weight: 800; color: var(--b144-green) !important; }
+.topicsList .topic { border-left: 4px solid transparent; border-radius: 0 .5rem .5rem 0; }
+.topicsList .topic.current { background: var(--unit) !important; color: var(--b144-on-unit) !important; border-left-color: var(--b144-green); }
+.topicsList .topic:hover:not(.current) { background: var(--b144-green-soft); }
+
+/* Buttons */
+.btn { border-radius: 999px; font-family: var(--f-head); font-weight: 700; }
+.btn-primary, .btn-primary:focus { background: var(--b144-green) !important; border-color: var(--b144-green) !important; color: #fff !important; }
+.btn-primary:hover { background: #24573A !important; border-color: #24573A !important; }
+.btn-default { border-color: var(--b144-line); color: var(--b144-ink); }
+.btn-default:hover { background: var(--b144-green-soft); }
+.btn:focus-visible { outline: 3px solid var(--b144-pink); outline-offset: 2px; }
+
+/* Questions and feedback */
+.panel-default, .tutorial-question.panel { border: 1px solid var(--b144-line); border-left: 6px solid var(--b144-green); border-radius: .75rem; box-shadow: none; overflow: hidden; }
+.panel-default > .panel-heading { background: var(--b144-green-soft); border-color: var(--b144-line); font-family: var(--f-head); }
+.alert { border-radius: .6rem; }
+.alert-success { background: var(--b144-green-soft); border-color: #B9D3AD; color: var(--b144-ink); }
+.alert-danger { background: var(--b144-pink-soft); border-color: #F0C3CF; color: var(--b144-ink); }
+.alert-info, .alert-warning { border-radius: .6rem; }
+input[type="radio"], input[type="checkbox"] { accent-color: var(--b144-green); }
+
+/* Unit badge and 12-unit map (inserted by bio144-learnr.html) */
+.b144-unitbar { margin: .5rem 0 1.5rem; }
+.b144-badge { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--f-head); font-weight: 600; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--b144-muted); margin-bottom: .6rem; }
+.b144-badge b { display: inline-grid; place-items: center; width: 2.2rem; height: 2.2rem; background: var(--unit); color: var(--b144-on-unit); border-radius: 0 60% 0 60%; font-size: 1rem; letter-spacing: 0; font-weight: 800; }
+.b144-map { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3px; padding: 4px; border: 1px solid var(--b144-line); border-radius: 999px; background: var(--b144-paper); list-style: none; margin: 0; }
+.b144-map li { margin: 0; min-width: 0; }
+.b144-map a { display: flex; align-items: center; justify-content: center; padding: .35rem .1rem; border-radius: 999px; text-decoration: none !important; color: var(--b144-on-unit) !important; font-family: var(--f-head); font-weight: 700; font-size: .9rem; min-height: 2rem; }
+.b144-map a:hover { outline: 2px solid var(--b144-green); }
+.b144-map [aria-current="page"] { box-shadow: 0 0 0 2px var(--b144-paper), 0 0 0 4px var(--b144-pink); }
+@media (max-width: 700px) { .b144-map a { font-size: .75rem; } }
+</style>
+<script>
+/* BIO144 house style for the learnr practicals: season colour per Unit, unit badge and
+   a 12-unit map linking to the other practicals on RStudio Connect.
+   Source: BIO144_Style/learnr/. Edit UNITS / SEASON / GUID here only. */
+(function () {
+  var UNITS = ["Intro", "R", "Reg I", "Reg II", "ANOVA", "Mult. reg", "Interact.",
+               "GLM count", "GLM binary", "Ordination", "Mixed & more", "Review"];
+  var SEASON = ["#B9C7D3", "#BCCDCA", "#C0D3C2", "#C3D9B9", "#C1DBAF", "#ADD395",
+                "#A3CF87", "#90C573", "#86C16E", "#7DBC69", "#6FB260", "#92B65C"];
+  /* Connect content GUIDs, Unit 0 to 12 (same as tools/deploy_all.R) */
+  var GUID = ["6902b39f-65cc-4952-9a24-17cca0fe3ae2", "1913b078-b142-457f-8f08-8d66cc562490",
+              "415e9279-c26a-4756-8570-fb1f9daab65c", "b448ba8b-4d13-4e69-83ed-4250a8bada0c",
+              "d6c3f6eb-c513-44c8-af74-d3db7f4d00a7", "550e6fb0-423a-4087-9bb2-49e9be0a86c7",
+              "63692bfe-bf6e-442f-a216-b676b85bb663", "bfebafca-fa87-4852-9df8-c715bf8439fe",
+              "6c82eb18-dd0f-4fab-a464-b37b710c4c65", "0385940d-cbc4-4c60-9bb7-fb54316459b4",
+              "131990d2-3b5d-40cb-b673-b13e0b6f1a26", "f916093b-9fa2-4dde-977a-3eec00e5c9cf",
+              "fa0a83c4-fec9-4557-9f34-d0f36a41cf62"];
+  var BASE = "https://rstudio.mnf.uzh.ch:3939/content/";
+
+  function whichUnit() {
+    for (var i = 0; i < GUID.length; i++) if (location.href.indexOf(GUID[i]) >= 0) return i;
+    var m = (document.title || "").match(/^\s*Unit\s+(\d+)\b/i);   /* e.g. when run locally */
+    if (m) return +m[1];
+    if (/previous knowledge/i.test(document.title || "")) return 0;
+    return null;
+  }
+
+  function build() {
+    if (document.querySelector(".b144-unitbar")) return true;
+    var unit = whichUnit();
+    if (unit === null) return true;
+    /* learnr moves the sections into .topics after the page loads: wait for it,
+       and fall back to the first section only if it never appears */
+    var host = document.querySelector(".topics") || (tries > 20 && document.querySelector(".section.level2"));
+    if (!host) return false;
+    if (unit >= 1) document.documentElement.style.setProperty("--unit", SEASON[unit - 1]);
+    var two = function (n) { return (n < 10 ? "0" : "") + n; };
+    var label = unit === 0 ? "Previous knowledge" : "Unit " + unit + " · " + UNITS[unit - 1];
+    var html = '<div class="b144-badge"><b>' + two(unit) + '</b><span>' + label + '</span></div>';
+    html += '<ol class="b144-map" aria-label="The practicals of the 12 BIO144 units">';
+    for (var i = 1; i <= 12; i++) {
+      var cur = i === unit ? ' aria-current="page"' : "";
+      var style = ' style="background:' + SEASON[i - 1] + (unit && i > unit ? ';opacity:.7' : '') + '"';
+      html += '<li><a href="' + BASE + GUID[i] + '/" target="_top"' + cur + style +
+              ' title="Unit ' + i + ': ' + UNITS[i - 1] + ' (homework, practical and quiz)">' + two(i) + '</a></li>';
+    }
+    html += "</ol>";
+    var bar = document.createElement("div");
+    bar.className = "b144-unitbar";
+    bar.innerHTML = html;
+    host.insertBefore(bar, host.firstChild);
+    return true;
+  }
+
+  var tries = 0;
+  function attempt() { if (!build() && tries++ < 40) setTimeout(attempt, 250); }
+  if (document.readyState === "complete") setTimeout(attempt, 100);
+  else window.addEventListener("load", function () { setTimeout(attempt, 100); });
+})();
+</script>

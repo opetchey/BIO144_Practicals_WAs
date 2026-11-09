@@ -9,7 +9,8 @@
 ## uploads the whole folder, i.e. all thirteen UnitN.Rmd files. On 6 Nov 2026
 ## every Unit then showed Unit 0 (the first .Rmd in alphabetical order).
 ## Each Unit .Rmd needs no other local files (datasets and scripts are read
-## from GitHub), so each one is now uploaded alone from a folder of its own.
+## from GitHub) except the house-style file in assets/style/, so each one
+## is uploaded with just that from a folder of its own.
 ##
 ## test_only: TRUE deploys only Unit 1. Check that its page title on Connect
 ## says "Unit 1", then set it to FALSE and run the script again for all Units.
@@ -69,9 +70,13 @@ deploy_unit <- function(file, name, guid) {
     unlink(bundle_dir, recursive = TRUE)
     dir.create(bundle_dir)
     file.copy(file, bundle_dir)
+    ## The house-style file (2026-11-09) goes with every Unit
+    style_files <- "assets/style/bio144-learnr.html"
+    dir.create(file.path(bundle_dir, "assets", "style"), recursive = TRUE)
+    file.copy(style_files, file.path(bundle_dir, "assets", "style"))
     rsconnect::deployApp(
       appDir = bundle_dir,
-      appFiles = file,
+      appFiles = c(file, style_files),
       appPrimaryDoc = file,
       appName = name,
       appId = guid,

@@ -1,6 +1,9 @@
 ---
 title: "BIO144 Previous Knowledge: Self-Tests"
-output: learnr::tutorial
+output:
+  learnr::tutorial:
+    includes:
+      after_body: assets/style/bio144-learnr.html
 runtime: shiny_prerendered
 ---
 
